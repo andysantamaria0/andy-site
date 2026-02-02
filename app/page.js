@@ -29,13 +29,16 @@ export default function Home() {
         <p className="links-intro">I'm here and there.</p>
         <div className="links">
           <a href="https://www.linkedin.com/in/andrew-santamaria-95a40869/" target="_blank" rel="noopener noreferrer">
-            LinkedIn
+            <span className="link-label">LinkedIn</span>
+            <span className="link-arrow">&rarr;</span>
           </a>
           <a href="https://canonsociety.substack.com/" target="_blank" rel="noopener noreferrer">
-            Substack
+            <span className="link-label">Substack</span>
+            <span className="link-arrow">&rarr;</span>
           </a>
           <a href="https://commandk.xyz" target="_blank" rel="noopener noreferrer">
-            commandk.xyz
+            <span className="link-label">commandk.xyz</span>
+            <span className="link-arrow">&rarr;</span>
           </a>
         </div>
       </div>
