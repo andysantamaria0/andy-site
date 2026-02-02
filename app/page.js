@@ -2,15 +2,8 @@ export default function Home() {
   return (
     <main className="container">
       <h1 className="name">Andy Santamaria</h1>
-      <p className="tagline">Startup Co-Founder, Reading, Writing, Some Backgammon</p>
+      <p className="tagline">My site. Some links, some writing, reading, some backgammon.</p>
       <div className="divider" />
-
-      <div className="bio">
-        <p>
-          I am based in NYC and am the co-founder of{' '}
-          <a href="https://villagers.xyz" target="_blank" rel="noopener noreferrer">villagers</a> &{' '}
-          <a href="https://commandk.xyz" target="_blank" rel="noopener noreferrer">command+k</a>.
-        </p>
 
         <p>
           I've been working in product for over 10 years at early stage startups where the
