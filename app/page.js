@@ -5,19 +5,6 @@ export default function Home() {
       <p className="tagline">My site. Some links, some writing, reading, some backgammon.</p>
       <div className="divider" />
 
-        <p>
-          I've been working in product for over 10 years at early stage startups where the
-          product function is closely tied to customer sales.
-        </p>
-
-        <p>
-          In my free time I like to read and write, mostly for myself. I've completed 2
-          screenplays (shorts). I recently got into backgammon and I'm in a club here in
-          the city. I also do consulting. I help founders and early stage startups by
-          matching them with founding engineers and under-the-radar tech talent.
-        </p>
-      </div>
-
       <div className="links-section">
         <p className="links-intro">I'm here and there.</p>
         <div className="links">
