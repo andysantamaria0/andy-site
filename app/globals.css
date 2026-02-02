@@ -43,27 +43,6 @@ body {
   margin-bottom: 48px;
 }
 
-.bio {
-  margin-bottom: 56px;
-}
-
-.bio p {
-  font-size: 1.0625rem;
-  margin-bottom: 20px;
-  color: rgba(244, 244, 237, 0.8);
-  line-height: 1.7;
-}
-
-.bio a {
-  color: #DFB288;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(223, 178, 136, 0.3);
-  transition: border-color 0.2s ease;
-}
-
-.bio a:hover {
-  border-bottom-color: #DFB288;
-}
 
 .links-section {
   margin-bottom: 56px;
@@ -190,14 +169,23 @@ body {
 
   .tagline {
     font-size: 0.875rem;
+    margin-bottom: 40px;
   }
 
-  .bio p,
+  .divider {
+    margin-bottom: 36px;
+  }
+
   .links-intro {
     font-size: 1rem;
   }
 
-  .links {
-    gap: 20px;
+  .links-section,
+  .projects-section {
+    margin-bottom: 40px;
+  }
+
+  .image-section img {
+    max-width: 100%;
   }
 }
