@@ -2018,73 +2018,148 @@
 
 /* Landing responsive */
 @media (max-width: 768px) {
+  .v-landing-nav {
+    padding: 16px 20px;
+  }
+
+  .v-landing-nav-brand {
+    font-size: 1.25rem;
+    gap: 8px;
+  }
+
+  .v-landing-nav-cta {
+    font-size: 0.75rem;
+    padding: 6px 16px;
+  }
+
+  .v-landing-trip {
+    padding: 68px 20px 24px;
+  }
+
+  .v-landing-trip-inner {
+    padding: 24px 20px;
+    border-radius: 12px;
+  }
+
+  .v-landing-trip-destination {
+    font-size: 0.7rem;
+  }
+
+  .v-landing-trip-name {
+    font-size: 1.25rem;
+  }
+
+  .v-landing-trip-dates {
+    font-size: 0.8125rem;
+    margin-bottom: 16px;
+  }
+
+  .v-landing-trip-cta {
+    font-size: 0.8rem;
+    padding: 10px 24px;
+  }
+
   .v-landing-hero {
     flex-direction: column;
-    gap: 48px;
-    padding: 40px 24px 60px;
+    gap: 32px;
+    padding: 32px 24px 48px;
     min-height: auto;
+    text-align: center;
   }
 
   .v-landing-title {
-    font-size: 3.25rem;
+    font-size: 2.75rem;
   }
 
   .v-landing-subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  .v-landing-cta {
+    font-size: 0.9rem;
+    padding: 12px 24px;
   }
 
   .v-landing-hero-visual {
-    width: 260px;
-    height: 300px;
+    width: 280px;
+    height: 260px;
+    margin: 0 auto;
   }
 
   .v-landing-card {
-    width: 220px;
-    padding: 20px 18px;
+    width: 200px;
+    padding: 18px 16px;
+  }
+
+  .v-landing-card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .v-landing-card-label {
+    font-size: 0.95rem;
+  }
+
+  .v-landing-card-detail {
+    font-size: 0.75rem;
   }
 
   .v-landing-card-2 {
-    top: 60px;
-    left: 30px;
+    top: 55px;
+    left: 60px;
   }
 
   .v-landing-card-3 {
-    top: 130px;
-    left: 5px;
+    top: 120px;
+    left: 20px;
   }
 
   .v-landing-features {
     grid-template-columns: 1fr;
-    gap: 32px;
-    padding: 48px 24px 80px;
+    gap: 28px;
+    padding: 40px 24px 64px;
   }
 
-  .v-landing-trip {
-    padding: 80px 20px 40px;
+  .v-landing-feature-number {
+    font-size: 2rem;
+    margin-bottom: 8px;
   }
 
-  .v-landing-trip-inner {
-    padding: 28px 20px;
+  .v-landing-feature h3 {
+    font-size: 1.1rem;
   }
 
-  .v-landing-trip-name {
-    font-size: 1.375rem;
-  }
-
-  .v-landing-trip-dates {
-    font-size: 0.875rem;
-  }
-
-  .v-landing-trip-desc {
-    font-size: 0.875rem;
-  }
-
-  .v-landing-trip-cta {
+  .v-landing-feature p {
     font-size: 0.85rem;
-    padding: 10px 24px;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
+/* Small phones */
+@media (max-width: 390px) {
+  .v-landing-title {
+    font-size: 2.25rem;
   }
 
-  .v-landing-nav {
-    padding: 16px 20px;
+  .v-landing-hero-visual {
+    width: 240px;
+    height: 220px;
+  }
+
+  .v-landing-card {
+    width: 180px;
+    padding: 14px 14px;
+  }
+
+  .v-landing-card-2 {
+    top: 45px;
+    left: 45px;
+  }
+
+  .v-landing-card-3 {
+    top: 100px;
+    left: 10px;
   }
 }
