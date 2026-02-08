@@ -19,7 +19,8 @@ export default async function LandingPage() {
     .from('trips')
     .select('*')
     .eq('featured', true)
-    .maybeSingle();
+    .maybeSingle()
+    .catch(() => ({ data: null }));
 
   const duration = featuredTrip?.start_date && featuredTrip?.end_date
     ? tripDuration(featuredTrip.start_date, featuredTrip.end_date)
