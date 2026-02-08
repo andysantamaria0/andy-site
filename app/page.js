@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { createClient } from '../lib/supabase/server';
 import { redirect } from 'next/navigation';
+import { formatDateRange, tripDuration } from '../lib/utils/dates';
 
 export const metadata = {
   title: 'Vialoure — Travel Together',
@@ -13,6 +14,16 @@ export default async function LandingPage() {
   if (user) {
     redirect('/trips');
   }
+
+  const { data: featuredTrip } = await supabase
+    .from('trips')
+    .select('*')
+    .eq('featured', true)
+    .single();
+
+  const duration = featuredTrip?.start_date && featuredTrip?.end_date
+    ? tripDuration(featuredTrip.start_date, featuredTrip.end_date)
+    : null;
 
   return (
     <div className="v-landing">
@@ -64,6 +75,27 @@ export default async function LandingPage() {
           </div>
         </div>
       </section>
+
+      {featuredTrip && (
+        <section className="v-landing-trip">
+          <div className="v-landing-trip-inner">
+            <div className="v-landing-trip-destination">{featuredTrip.destination}</div>
+            <h2 className="v-landing-trip-name">{featuredTrip.name}</h2>
+            {featuredTrip.start_date && featuredTrip.end_date && (
+              <p className="v-landing-trip-dates">
+                {formatDateRange(featuredTrip.start_date, featuredTrip.end_date)}
+                {duration !== null && <span> &middot; {duration} nights</span>}
+              </p>
+            )}
+            {featuredTrip.description && (
+              <p className="v-landing-trip-desc">{featuredTrip.description}</p>
+            )}
+            <Link href="/trips/login" className="v-btn v-btn-primary v-landing-trip-cta">
+              Sign in to join
+            </Link>
+          </div>
+        </section>
+      )}
 
       <section className="v-landing-features">
         <div className="v-landing-feature">

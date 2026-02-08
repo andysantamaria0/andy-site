@@ -1904,6 +1904,62 @@
   color: var(--v-ivory-dim);
 }
 
+/* Featured Trip */
+.v-landing-trip {
+  text-align: center;
+  padding: 0 32px 80px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.v-landing-trip-inner {
+  background-color: var(--v-charcoal-light);
+  border: 1px solid var(--v-ivory-faint);
+  border-radius: 16px;
+  padding: 48px 40px;
+}
+
+.v-landing-trip-destination {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.75rem;
+  color: var(--v-hide);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.v-landing-trip-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.v-landing-trip-dates {
+  font-size: 1rem;
+  color: var(--v-ivory-dim);
+  margin: 0 0 16px 0;
+}
+
+.v-landing-trip-desc {
+  font-size: 0.9375rem;
+  color: var(--v-ivory-dim);
+  line-height: 1.6;
+  margin: 0 0 28px 0;
+}
+
+.v-landing-trip-cta {
+  font-size: 0.9rem;
+  padding: 12px 28px;
+}
+
+/* Featured Toggle */
+.v-featured-toggle {
+  font-size: 0.75rem;
+  padding: 6px 14px;
+}
+
 /* Features */
 .v-landing-features {
   display: grid;
@@ -2005,6 +2061,18 @@
     grid-template-columns: 1fr;
     gap: 32px;
     padding: 48px 24px 80px;
+  }
+
+  .v-landing-trip {
+    padding: 0 24px 60px;
+  }
+
+  .v-landing-trip-inner {
+    padding: 32px 24px;
+  }
+
+  .v-landing-trip-name {
+    font-size: 1.5rem;
   }
 
   .v-landing-nav {

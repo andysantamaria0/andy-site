@@ -4,6 +4,7 @@ import { getMemberDisplayInfo } from '../../../lib/utils/members';
 import MemberAvatar from '../../../components/trips/MemberAvatar';
 import StayTimeline from '../../../components/trips/StayTimeline';
 import TripDatesEditor from '../../../components/trips/TripDatesEditor';
+import FeaturedToggle from '../../../components/trips/FeaturedToggle';
 
 export default async function TripOverviewPage({ params }) {
   const { tripId } = await params;
@@ -39,6 +40,12 @@ export default async function TripOverviewPage({ params }) {
 
   return (
     <div className="v-page">
+      {isOwner && (
+        <div style={{ marginBottom: 24 }}>
+          <FeaturedToggle tripId={trip.id} featured={!!trip.featured} />
+        </div>
+      )}
+
       {/* Summary Cards */}
       <div className="v-overview-grid">
         {isOwner ? (
