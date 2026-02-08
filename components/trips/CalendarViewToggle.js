@@ -5,7 +5,7 @@ import CalendarDayList from './CalendarDayList';
 import CalendarMonthGrid from './CalendarMonthGrid';
 
 export default function CalendarViewToggle({ trip, members, events, logistics, isOwner }) {
-  const [view, setView] = useState('list');
+  const [view, setView] = useState('month');
 
   return (
     <div>

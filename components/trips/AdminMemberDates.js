@@ -28,6 +28,7 @@ export default function AdminMemberDates({ member, tripStart, tripEnd }) {
 
     setSaving(false);
     if (error) {
+      console.error('Save error:', error);
       setStatus('error');
     } else {
       setStatus('saved');
@@ -58,8 +59,6 @@ export default function AdminMemberDates({ member, tripStart, tripEnd }) {
           className="v-form-input"
           type="date"
           value={stayStart}
-          min={tripStart || undefined}
-          max={tripEnd || undefined}
           onChange={(e) => setStayStart(e.target.value)}
         />
         <span style={{ color: 'var(--v-ivory-dim)', fontSize: '0.75rem' }}>to</span>
@@ -67,8 +66,7 @@ export default function AdminMemberDates({ member, tripStart, tripEnd }) {
           className="v-form-input"
           type="date"
           value={stayEnd}
-          min={stayStart || tripStart || undefined}
-          max={tripEnd || undefined}
+          min={stayStart || undefined}
           onChange={(e) => setStayEnd(e.target.value)}
         />
         {changed && (

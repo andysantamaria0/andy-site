@@ -1,7 +1,9 @@
 import { createClient } from '../../../lib/supabase/server';
 import { formatDateRange, tripDuration } from '../../../lib/utils/dates';
+import { getMemberDisplayInfo } from '../../../lib/utils/members';
 import MemberAvatar from '../../../components/trips/MemberAvatar';
 import StayTimeline from '../../../components/trips/StayTimeline';
+import TripDatesEditor from '../../../components/trips/TripDatesEditor';
 
 export default async function TripOverviewPage({ params }) {
   const { tripId } = await params;
@@ -27,6 +29,10 @@ export default async function TripOverviewPage({ params }) {
     .eq('trip_id', tripId)
     .order('joined_at', { ascending: true });
 
+  const { data: { user } } = await supabase.auth.getUser();
+  const myMembership = (members || []).find((m) => m.user_id === user?.id);
+  const isOwner = myMembership?.role === 'owner';
+
   const duration = trip.start_date && trip.end_date
     ? tripDuration(trip.start_date, trip.end_date)
     : null;
@@ -35,7 +41,9 @@ export default async function TripOverviewPage({ params }) {
     <div className="v-page">
       {/* Summary Cards */}
       <div className="v-overview-grid">
-        {trip.start_date && trip.end_date && (
+        {isOwner ? (
+          <TripDatesEditor trip={trip} />
+        ) : trip.start_date && trip.end_date ? (
           <div className="v-overview-card">
             <div className="v-overview-card-label">Dates</div>
             <div className="v-overview-card-value" style={{ fontSize: '1.125rem' }}>
@@ -45,7 +53,7 @@ export default async function TripOverviewPage({ params }) {
               <div className="v-overview-card-sub">{duration} nights</div>
             )}
           </div>
-        )}
+        ) : null}
 
         <div className="v-overview-card">
           <div className="v-overview-card-label">Travelers</div>
@@ -78,20 +86,20 @@ export default async function TripOverviewPage({ params }) {
       <h2 className="v-section-title">Who&apos;s Going</h2>
       <div className="v-members-list">
         {(members || []).map((member) => {
-          const profile = member.profiles;
+          const info = getMemberDisplayInfo(member);
           return (
             <div key={member.id} className="v-member-row">
               <MemberAvatar
                 member={{
-                  display_name: profile?.display_name,
-                  avatar_url: profile?.avatar_url,
-                  email: profile?.email,
-                  color: member.color,
+                  display_name: info.name,
+                  avatar_url: info.avatarUrl,
+                  email: info.email,
+                  color: info.color,
                 }}
               />
               <div className="v-member-info">
                 <div className="v-member-name">
-                  {profile?.display_name || profile?.email || 'Unknown'}
+                  {info.name}
                 </div>
                 <span className={`v-badge ${member.role === 'owner' ? 'v-badge-owner' : 'v-badge-member'}`}>
                   {member.role}

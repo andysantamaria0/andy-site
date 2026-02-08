@@ -16,6 +16,7 @@ import {
   isWithinInterval,
 } from 'date-fns';
 import { getMemberDisplayInfo } from '../../lib/utils/members';
+import MemberAvatar from './MemberAvatar';
 import EventCard from './EventCard';
 import EventForm from './EventForm';
 import LogisticsCard from './LogisticsCard';
@@ -25,7 +26,7 @@ const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export default function CalendarMonthGrid({ trip, members, events, logistics, isOwner }) {
   const tripStart = trip.start_date ? parseISO(trip.start_date) : new Date();
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(tripStart));
-  const [expandedDay, setExpandedDay] = useState(null); // 'yyyy-MM-dd' or null
+  const [expandedDay, setExpandedDay] = useState(null);
   const [formState, setFormState] = useState(null);
 
   const monthStart = startOfMonth(currentMonth);
@@ -52,6 +53,20 @@ export default function CalendarMonthGrid({ trip, members, events, logistics, is
       } catch {
         return false;
       }
+    });
+  }
+
+  function getArrivals(day) {
+    return (members || []).filter((m) => {
+      if (!m.stay_start) return false;
+      try { return isSameDay(parseISO(m.stay_start), day); } catch { return false; }
+    });
+  }
+
+  function getDepartures(day) {
+    return (members || []).filter((m) => {
+      if (!m.stay_end) return false;
+      try { return isSameDay(parseISO(m.stay_end), day); } catch { return false; }
     });
   }
 
@@ -83,7 +98,6 @@ export default function CalendarMonthGrid({ trip, members, events, logistics, is
     setExpandedDay((prev) => (prev === dayStr ? null : dayStr));
   }
 
-  // Group days into weeks
   const weeks = [];
   for (let i = 0; i < calDays.length; i += 7) {
     weeks.push(calDays.slice(i, i + 7));
@@ -106,7 +120,6 @@ export default function CalendarMonthGrid({ trip, members, events, logistics, is
       <div className="v-month-grid">
         {weeks.map((week, wi) => {
           const weekKey = format(week[0], 'yyyy-MM-dd');
-          // Check if any day in this week is expanded
           const expandedInWeek = week.find((d) => format(d, 'yyyy-MM-dd') === expandedDay);
 
           return (
@@ -118,6 +131,8 @@ export default function CalendarMonthGrid({ trip, members, events, logistics, is
                   const isToday = isSameDay(day, today);
                   const inTrip = isTripDay(day);
                   const present = getMembersPresent(day);
+                  const arrivals = getArrivals(day);
+                  const departures = getDepartures(day);
                   const dayEvents = getEventsForDay(dayStr);
                   const isExpanded = expandedDay === dayStr;
 
@@ -137,25 +152,65 @@ export default function CalendarMonthGrid({ trip, members, events, logistics, is
                       <div className={`v-month-cell-day ${isToday ? 'v-month-cell-today' : ''}`}>
                         {format(day, 'd')}
                       </div>
+
+                      {/* Member avatars for who's present */}
                       {present.length > 0 && (
-                        <div className="v-month-cell-dots">
-                          {present.slice(0, 6).map((m) => (
-                            <div
-                              key={m.id}
-                              className="v-month-cell-dot"
-                              style={{ backgroundColor: m.color || '#4A35D7' }}
-                            />
-                          ))}
+                        <div className="v-month-cell-avatars">
+                          {present.slice(0, 5).map((m) => {
+                            const info = getMemberDisplayInfo(m);
+                            return (
+                              <div key={m.id} className="v-month-cell-avatar" title={info.name}>
+                                <MemberAvatar
+                                  member={{
+                                    display_name: info.name,
+                                    avatar_url: info.avatarUrl,
+                                    email: info.email,
+                                    color: info.color,
+                                  }}
+                                  size={18}
+                                />
+                              </div>
+                            );
+                          })}
+                          {present.length > 5 && (
+                            <span className="v-month-cell-avatar-more">+{present.length - 5}</span>
+                          )}
                         </div>
                       )}
+
+                      {/* Arrival / departure badges */}
+                      {(arrivals.length > 0 || departures.length > 0) && (
+                        <div className="v-month-cell-badges">
+                          {arrivals.map((m) => {
+                            const info = getMemberDisplayInfo(m);
+                            return (
+                              <span key={`arr-${m.id}`} className="v-month-badge v-month-badge-arrive" title={`${info.name} arrives`}>
+                                <span className="v-month-badge-arrow">&darr;</span>
+                                <span className="v-month-badge-name">{info.name.split(' ')[0]}</span>
+                              </span>
+                            );
+                          })}
+                          {departures.map((m) => {
+                            const info = getMemberDisplayInfo(m);
+                            return (
+                              <span key={`dep-${m.id}`} className="v-month-badge v-month-badge-depart" title={`${info.name} departs`}>
+                                <span className="v-month-badge-arrow">&uarr;</span>
+                                <span className="v-month-badge-name">{info.name.split(' ')[0]}</span>
+                              </span>
+                            );
+                          })}
+                        </div>
+                      )}
+
+                      {/* Event preview lines */}
                       <div className="v-month-cell-events">
-                        {dayEvents.slice(0, 3).map((ev) => (
+                        {dayEvents.slice(0, 2).map((ev) => (
                           <div key={ev.id} className="v-month-cell-event-line">
                             {ev.title}
                           </div>
                         ))}
-                        {dayEvents.length > 3 && (
-                          <div className="v-month-cell-event-more">+{dayEvents.length - 3} more</div>
+                        {dayEvents.length > 2 && (
+                          <div className="v-month-cell-event-more">+{dayEvents.length - 2} more</div>
                         )}
                       </div>
                     </div>
@@ -163,11 +218,13 @@ export default function CalendarMonthGrid({ trip, members, events, logistics, is
                 })}
               </div>
 
-              {/* Expanded day detail panel — renders between week rows */}
+              {/* Expanded day detail panel */}
               {expandedInWeek && (() => {
                 const dayStr = expandedDay;
                 const day = expandedInWeek;
                 const present = getMembersPresent(day);
+                const arrivals = getArrivals(day);
+                const departures = getDepartures(day);
                 const dayEvents = getEventsForDay(dayStr);
                 const dayLogistics = getLogisticsForDay(dayStr);
 
@@ -178,16 +235,56 @@ export default function CalendarMonthGrid({ trip, members, events, logistics, is
                       <button className="v-modal-close" onClick={() => setExpandedDay(null)}>&times;</button>
                     </div>
 
-                    {present.length > 0 && (
-                      <div className="v-month-expanded-members">
-                        {present.map((m) => {
+                    {/* Arrivals & departures */}
+                    {(arrivals.length > 0 || departures.length > 0) && (
+                      <div className="v-month-expanded-movements">
+                        {arrivals.map((m) => {
                           const info = getMemberDisplayInfo(m);
                           return (
-                            <span key={m.id} className="v-month-expanded-member">
-                              {info.name}
-                            </span>
+                            <div key={`arr-${m.id}`} className="v-month-expanded-movement v-movement-arrive">
+                              <MemberAvatar
+                                member={{ display_name: info.name, avatar_url: info.avatarUrl, email: info.email, color: info.color }}
+                                size={22}
+                              />
+                              <span>{info.name} arrives</span>
+                            </div>
                           );
                         })}
+                        {departures.map((m) => {
+                          const info = getMemberDisplayInfo(m);
+                          return (
+                            <div key={`dep-${m.id}`} className="v-month-expanded-movement v-movement-depart">
+                              <MemberAvatar
+                                member={{ display_name: info.name, avatar_url: info.avatarUrl, email: info.email, color: info.color }}
+                                size={22}
+                              />
+                              <span>{info.name} departs</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* Present members */}
+                    {present.length > 0 && (
+                      <div className="v-month-expanded-members">
+                        <div className="v-month-expanded-members-label">
+                          {present.length} {present.length === 1 ? 'person' : 'people'} here
+                        </div>
+                        <div className="v-month-expanded-members-row">
+                          {present.map((m) => {
+                            const info = getMemberDisplayInfo(m);
+                            return (
+                              <div key={m.id} className="v-month-expanded-member-chip">
+                                <MemberAvatar
+                                  member={{ display_name: info.name, avatar_url: info.avatarUrl, email: info.email, color: info.color }}
+                                  size={24}
+                                />
+                                <span>{info.name.split(' ')[0]}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
                     )}
 

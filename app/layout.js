@@ -1,4 +1,5 @@
 import './globals.css';
+import './trips/trips.css';
 
 export const metadata = {
   title: 'Andy Santamaria',

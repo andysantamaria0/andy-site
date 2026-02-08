@@ -10,10 +10,24 @@ export async function GET(request) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
+      // Check if this user's email matches any unclaimed manual members
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user?.email) {
+        const { data: claimable } = await supabase
+          .from('trip_members')
+          .select('id')
+          .is('user_id', null)
+          .ilike('email', user.email)
+          .limit(1);
+
+        if (claimable && claimable.length > 0) {
+          return NextResponse.redirect(`${origin}/trips/claim`);
+        }
+      }
+
       return NextResponse.redirect(`${origin}${next}`);
     }
   }
 
-  // Auth error — redirect to login
   return NextResponse.redirect(`${origin}/trips/login`);
 }

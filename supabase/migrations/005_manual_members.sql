@@ -20,7 +20,7 @@ CREATE POLICY "Users can add themselves or owners add manual members"
   ON trip_members FOR INSERT TO authenticated
   WITH CHECK (
     auth.uid() = user_id
-    OR (user_id IS NULL AND trip_id IN (SELECT get_my_owned_trip_ids()))
+    OR (user_id IS NULL AND trip_id IN (SELECT public.get_my_owned_trip_ids()))
   );
 
 -- Update UPDATE policy: owners can update manual members too
