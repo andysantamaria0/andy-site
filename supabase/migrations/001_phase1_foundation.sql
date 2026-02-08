@@ -64,6 +64,16 @@ as $$
   select trip_id from public.trip_members where user_id = auth.uid();
 $$;
 
+create or replace function public.get_my_owned_trip_ids()
+returns setof uuid
+language sql
+security definer
+set search_path = ''
+stable
+as $$
+  select trip_id from public.trip_members where user_id = auth.uid() and role = 'owner';
+$$;
+
 -- =====================
 -- 4. Profiles policies
 -- =====================
@@ -124,10 +134,7 @@ create policy "Owners can remove members or self-remove"
   on public.trip_members for delete
   using (
     auth.uid() = user_id
-    or trip_id in (
-      select tm.trip_id from public.trip_members tm
-      where tm.user_id = auth.uid() and tm.role = 'owner'
-    )
+    or trip_id in (select public.get_my_owned_trip_ids())
   );
 
 -- =====================

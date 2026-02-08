@@ -45,13 +45,19 @@ export default function CreateTripForm() {
     }
 
     // Add creator as owner member
-    await supabase.from('trip_members').insert({
+    const { error: memberError } = await supabase.from('trip_members').insert({
       trip_id: trip.id,
       user_id: user.id,
       role: 'owner',
       stay_start: start_date || null,
       stay_end: end_date || null,
     });
+
+    if (memberError) {
+      setError('Trip created but failed to add you as owner. Please try refreshing.');
+      setLoading(false);
+      return;
+    }
 
     router.push(`/trips/${trip.id}`);
     router.refresh();

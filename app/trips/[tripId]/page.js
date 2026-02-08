@@ -1,6 +1,7 @@
 import { createClient } from '../../../lib/supabase/server';
 import { formatDateRange, tripDuration } from '../../../lib/utils/dates';
 import MemberAvatar from '../../../components/trips/MemberAvatar';
+import StayTimeline from '../../../components/trips/StayTimeline';
 
 export default async function TripOverviewPage({ params }) {
   const { tripId } = await params;
@@ -70,6 +71,9 @@ export default async function TripOverviewPage({ params }) {
         </div>
       )}
 
+      {/* Stay Timeline */}
+      <StayTimeline trip={trip} members={members} />
+
       {/* Members */}
       <h2 className="v-section-title">Who&apos;s Going</h2>
       <div className="v-members-list">
@@ -93,9 +97,13 @@ export default async function TripOverviewPage({ params }) {
                   {member.role}
                 </span>
               </div>
-              {member.stay_start && member.stay_end && (
+              {member.stay_start && member.stay_end ? (
                 <div className="v-member-dates">
                   {formatDateRange(member.stay_start, member.stay_end)}
+                </div>
+              ) : (
+                <div className="v-member-dates" style={{ fontStyle: 'italic', opacity: 0.5 }}>
+                  Dates not set
                 </div>
               )}
             </div>
