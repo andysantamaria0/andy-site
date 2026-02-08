@@ -8,25 +8,23 @@ export default function FeaturedToggle({ tripId, featured }) {
   const supabase = createClient();
   const router = useRouter();
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState(null);
 
   async function handleToggle() {
     setSaving(true);
+    setError(null);
 
-    if (!featured) {
-      // Unfeature any currently-featured trip first
-      await supabase
-        .from('trips')
-        .update({ featured: false })
-        .eq('featured', true);
-    }
-
-    await supabase
-      .from('trips')
-      .update({ featured: !featured })
-      .eq('id', tripId);
+    const { error: rpcError } = await supabase.rpc('set_trip_featured', {
+      trip_id: tripId,
+      is_featured: !featured,
+    });
 
     setSaving(false);
-    router.refresh();
+    if (rpcError) {
+      setError(rpcError.message);
+    } else {
+      router.refresh();
+    }
   }
 
   return (
@@ -36,6 +34,7 @@ export default function FeaturedToggle({ tripId, featured }) {
       disabled={saving}
     >
       {saving ? '...' : featured ? 'Unfeature' : 'Feature on Landing'}
+      {error && <span style={{ color: 'var(--v-coral)', fontSize: '0.75rem', marginLeft: 8 }}>{error}</span>}
     </button>
   );
 }

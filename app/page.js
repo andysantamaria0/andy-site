@@ -19,7 +19,7 @@ export default async function LandingPage() {
     .from('trips')
     .select('*')
     .eq('featured', true)
-    .single();
+    .maybeSingle();
 
   const duration = featuredTrip?.start_date && featuredTrip?.end_date
     ? tripDuration(featuredTrip.start_date, featuredTrip.end_date)
@@ -36,6 +36,31 @@ export default async function LandingPage() {
           Sign In
         </Link>
       </nav>
+
+      {featuredTrip && (
+        <section id="featured" className="v-landing-trip">
+          <div
+            className="v-landing-trip-inner"
+            style={featuredTrip.cover_image_url ? {
+              backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.7) 100%), url(${featuredTrip.cover_image_url})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            } : undefined}
+          >
+            <div className="v-landing-trip-destination">{featuredTrip.destination}</div>
+            <h2 className="v-landing-trip-name">{featuredTrip.name}</h2>
+            {featuredTrip.start_date && featuredTrip.end_date && (
+              <p className="v-landing-trip-dates">
+                {formatDateRange(featuredTrip.start_date, featuredTrip.end_date)}
+                {duration !== null && <span> &middot; {duration} nights</span>}
+              </p>
+            )}
+            <Link href="/trips/login" className="v-btn v-btn-primary v-landing-trip-cta">
+              Sign in to join
+            </Link>
+          </div>
+        </section>
+      )}
 
       <section className="v-landing-hero">
         <div className="v-landing-hero-content">
@@ -75,27 +100,6 @@ export default async function LandingPage() {
           </div>
         </div>
       </section>
-
-      {featuredTrip && (
-        <section className="v-landing-trip">
-          <div className="v-landing-trip-inner">
-            <div className="v-landing-trip-destination">{featuredTrip.destination}</div>
-            <h2 className="v-landing-trip-name">{featuredTrip.name}</h2>
-            {featuredTrip.start_date && featuredTrip.end_date && (
-              <p className="v-landing-trip-dates">
-                {formatDateRange(featuredTrip.start_date, featuredTrip.end_date)}
-                {duration !== null && <span> &middot; {duration} nights</span>}
-              </p>
-            )}
-            {featuredTrip.description && (
-              <p className="v-landing-trip-desc">{featuredTrip.description}</p>
-            )}
-            <Link href="/trips/login" className="v-btn v-btn-primary v-landing-trip-cta">
-              Sign in to join
-            </Link>
-          </div>
-        </section>
-      )}
 
       <section className="v-landing-features">
         <div className="v-landing-feature">

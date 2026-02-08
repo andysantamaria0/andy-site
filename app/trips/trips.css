@@ -1802,8 +1802,8 @@
   align-items: center;
   justify-content: center;
   gap: 80px;
-  min-height: 100vh;
-  padding: 120px 32px 80px;
+  min-height: auto;
+  padding: 80px 32px;
 }
 
 .v-landing-hero-content {
@@ -1907,46 +1907,42 @@
 /* Featured Trip */
 .v-landing-trip {
   text-align: center;
-  padding: 0 32px 80px;
+  padding: 100px 32px 60px;
   max-width: 640px;
   margin: 0 auto;
 }
 
 .v-landing-trip-inner {
   background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
+  border: 1px solid rgba(223, 178, 136, 0.25);
   border-radius: 16px;
-  padding: 48px 40px;
+  padding: 36px 40px;
+  overflow: hidden;
+  position: relative;
 }
 
 .v-landing-trip-destination {
   font-family: 'Karla', sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: var(--v-hide);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 500;
-  margin-bottom: 8px;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  margin-bottom: 6px;
 }
 
 .v-landing-trip-name {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
+  color: var(--v-ivory);
 }
 
 .v-landing-trip-dates {
-  font-size: 1rem;
-  color: var(--v-ivory-dim);
-  margin: 0 0 16px 0;
-}
-
-.v-landing-trip-desc {
   font-size: 0.9375rem;
-  color: var(--v-ivory-dim);
-  line-height: 1.6;
-  margin: 0 0 28px 0;
+  color: rgba(244, 244, 237, 0.8);
+  margin: 0 0 20px 0;
 }
 
 .v-landing-trip-cta {
@@ -2025,7 +2021,7 @@
   .v-landing-hero {
     flex-direction: column;
     gap: 48px;
-    padding: 100px 24px 60px;
+    padding: 40px 24px 60px;
     min-height: auto;
   }
 
@@ -2064,15 +2060,28 @@
   }
 
   .v-landing-trip {
-    padding: 0 24px 60px;
+    padding: 80px 20px 40px;
   }
 
   .v-landing-trip-inner {
-    padding: 32px 24px;
+    padding: 28px 20px;
   }
 
   .v-landing-trip-name {
-    font-size: 1.5rem;
+    font-size: 1.375rem;
+  }
+
+  .v-landing-trip-dates {
+    font-size: 0.875rem;
+  }
+
+  .v-landing-trip-desc {
+    font-size: 0.875rem;
+  }
+
+  .v-landing-trip-cta {
+    font-size: 0.85rem;
+    padding: 10px 24px;
   }
 
   .v-landing-nav {
