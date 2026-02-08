@@ -15,12 +15,17 @@ export default async function LandingPage() {
     redirect('/trips');
   }
 
-  const { data: featuredTrip } = await supabase
-    .from('trips')
-    .select('*')
-    .eq('featured', true)
-    .maybeSingle()
-    .catch(() => ({ data: null }));
+  let featuredTrip = null;
+  try {
+    const result = await supabase
+      .from('trips')
+      .select('*')
+      .eq('featured', true)
+      .maybeSingle();
+    featuredTrip = result.data;
+  } catch {
+    // Featured trip query failed (e.g. schema cache stale) — skip gracefully
+  }
 
   const duration = featuredTrip?.start_date && featuredTrip?.end_date
     ? tripDuration(featuredTrip.start_date, featuredTrip.end_date)
