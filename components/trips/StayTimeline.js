@@ -1,4 +1,5 @@
 import { differenceInDays, parseISO, format } from 'date-fns';
+import { getMemberDisplayInfo } from '../../lib/utils/members';
 
 const MEMBER_COLORS = ['#4A35D7', '#FF7D73', '#DFB288', '#34A853', '#4285F4', '#E040FB', '#FF6D00', '#00BFA5'];
 
@@ -56,7 +57,7 @@ export default function StayTimeline({ trip, members }) {
         {/* Track for full trip */}
         <div className="v-timeline-track">
           {membersWithDates.map((member, i) => {
-            const profile = member.profiles;
+            const info = getMemberDisplayInfo(member);
             const memberStart = parseISO(member.stay_start);
             const memberEnd = parseISO(member.stay_end);
 
@@ -67,7 +68,7 @@ export default function StayTimeline({ trip, members }) {
             return (
               <div key={member.id} className="v-timeline-row">
                 <div className="v-timeline-row-label">
-                  {profile?.display_name || profile?.email?.split('@')[0] || 'Member'}
+                  {info.name}
                 </div>
                 <div className="v-timeline-row-track">
                   <div

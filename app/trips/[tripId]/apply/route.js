@@ -1,4 +1,5 @@
 import { createClient } from '../../../../lib/supabase/server';
+import { getNextColor } from '../../../../lib/utils/members';
 import { NextResponse } from 'next/server';
 
 export async function POST(request, { params }) {
@@ -23,7 +24,7 @@ export async function POST(request, { params }) {
   }
 
   const { member_updates, new_travelers, logistics, events } = await request.json();
-  const results = { updated: 0, logistics_added: 0, events_added: 0, travelers_noted: 0, errors: [] };
+  const results = { updated: 0, members_added: 0, logistics_added: 0, events_added: 0, errors: [] };
 
   // Apply member stay date updates
   if (member_updates && member_updates.length > 0) {
@@ -50,11 +51,40 @@ export async function POST(request, { params }) {
     }
   }
 
-  // Note new travelers (they can't be fully added without auth accounts,
-  // but we track them so the admin knows they were captured)
+  // Create manual members for new travelers
   if (new_travelers && new_travelers.length > 0) {
-    results.travelers_noted = new_travelers.length;
-    results.new_traveler_names = new_travelers.map((t) => t.name);
+    // Get current members for color assignment
+    const { data: currentMembers } = await supabase
+      .from('trip_members')
+      .select('color')
+      .eq('trip_id', tripId);
+
+    let membersList = currentMembers || [];
+
+    for (const traveler of new_travelers) {
+      const color = getNextColor(membersList);
+
+      const { error } = await supabase
+        .from('trip_members')
+        .insert({
+          trip_id: tripId,
+          user_id: null,
+          role: 'member',
+          display_name: traveler.name,
+          email: traveler.email || null,
+          phone: traveler.phone || null,
+          stay_start: traveler.stay_start || null,
+          stay_end: traveler.stay_end || null,
+          color,
+        });
+
+      if (error) {
+        results.errors.push(`Failed to add ${traveler.name}: ${error.message}`);
+      } else {
+        results.members_added = (results.members_added || 0) + 1;
+        membersList = [...membersList, { color }];
+      }
+    }
   }
 
   // Add logistics entries
@@ -62,19 +92,19 @@ export async function POST(request, { params }) {
     // Get members to match person names to user IDs
     const { data: members } = await supabase
       .from('trip_members')
-      .select('user_id, profiles:user_id(display_name, email)')
+      .select('user_id, display_name, email, profiles:user_id(display_name, email)')
       .eq('trip_id', tripId);
 
     for (const entry of logistics) {
       // Try to match person to a member
       const personName = (entry.person_name || '').toLowerCase().trim();
       const matched = personName ? (members || []).find((m) => {
-        const name = m.profiles?.display_name?.toLowerCase() || '';
-        const email = m.profiles?.email?.toLowerCase() || '';
+        const name = (m.profiles?.display_name || m.display_name || '').toLowerCase();
+        const email = (m.profiles?.email || m.email || '').toLowerCase();
         return name.includes(personName) || personName.includes(name) || email.includes(personName);
       }) : null;
 
-      if (!matched) {
+      if (!matched || !matched.user_id) {
         results.errors.push(`Could not match "${entry.person_name}" to a trip member for logistics "${entry.title}". Skipped.`);
         continue;
       }
@@ -103,7 +133,7 @@ export async function POST(request, { params }) {
     // Get members for attendee name matching
     const { data: eventMembers } = await supabase
       .from('trip_members')
-      .select('id, user_id, profiles:user_id(display_name, email)')
+      .select('id, user_id, display_name, email, profiles:user_id(display_name, email)')
       .eq('trip_id', tripId);
 
     for (const entry of events) {
@@ -137,8 +167,8 @@ export async function POST(request, { params }) {
         for (const attendeeName of entry.attendee_names) {
           const nameLower = attendeeName.toLowerCase().trim();
           const matched = eventMembers.find((m) => {
-            const name = m.profiles?.display_name?.toLowerCase() || '';
-            const email = m.profiles?.email?.toLowerCase() || '';
+            const name = (m.profiles?.display_name || m.display_name || '').toLowerCase();
+            const email = (m.profiles?.email || m.email || '').toLowerCase();
             return name.includes(nameLower) || nameLower.includes(name) || email.includes(nameLower);
           });
           if (matched) {

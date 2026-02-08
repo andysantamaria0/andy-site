@@ -126,7 +126,7 @@ export default function SmartPaste({ tripId }) {
 
           {parsed.new_travelers?.length > 0 && (
             <div className="v-parsed-section">
-              <div className="v-parsed-section-title">New Travelers</div>
+              <div className="v-parsed-section-title">New Members</div>
               {parsed.new_travelers.map((t, i) => (
                 <div key={i} className="v-parsed-item">
                   <span className="v-parsed-item-name">{t.name}</span>
@@ -135,6 +135,7 @@ export default function SmartPaste({ tripId }) {
                       ? `${t.stay_start} to ${t.stay_end}`
                       : t.email || 'No details'}
                   </span>
+                  <span className="v-badge v-badge-owner">Will be added</span>
                 </div>
               ))}
             </div>
@@ -196,9 +197,9 @@ export default function SmartPaste({ tripId }) {
         <div className="v-parsed-results">
           <div className="v-parsed-summary" style={{ color: 'var(--v-hide)' }}>
             Done! Updated {result.updated} member{result.updated !== 1 ? 's' : ''}
+            {result.members_added > 0 && `, added ${result.members_added} new member${result.members_added !== 1 ? 's' : ''}`}
             {result.logistics_added > 0 && `, added ${result.logistics_added} logistics entr${result.logistics_added !== 1 ? 'ies' : 'y'}`}
-            {result.events_added > 0 && `, created ${result.events_added} event${result.events_added !== 1 ? 's' : ''}`}
-            {result.travelers_noted > 0 && `. Noted ${result.travelers_noted} new traveler${result.travelers_noted !== 1 ? 's' : ''}: ${result.new_traveler_names?.join(', ')}`}.
+            {result.events_added > 0 && `, created ${result.events_added} event${result.events_added !== 1 ? 's' : ''}`}.
             {result.errors?.length > 0 && ` (${result.errors.length} error${result.errors.length !== 1 ? 's' : ''})`}
           </div>
           {result.errors?.length > 0 && (

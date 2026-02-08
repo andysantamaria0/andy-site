@@ -3,7 +3,9 @@ import MemberAvatar from '../../../../components/trips/MemberAvatar';
 import StayDatesEditor from '../../../../components/trips/StayDatesEditor';
 import AdminMemberDates from '../../../../components/trips/AdminMemberDates';
 import SmartPaste from '../../../../components/trips/SmartPaste';
+import AddMemberForm from '../../../../components/trips/AddMemberForm';
 import { formatDateRange } from '../../../../lib/utils/dates';
+import { getMemberDisplayInfo } from '../../../../lib/utils/members';
 
 export default async function MembersPage({ params }) {
   const { tripId } = await params;
@@ -51,6 +53,15 @@ export default async function MembersPage({ params }) {
         {isOwner ? 'Manage Members' : 'Members'}
       </h2>
 
+      {isOwner && (
+        <AddMemberForm
+          tripId={tripId}
+          tripStart={trip?.start_date}
+          tripEnd={trip?.end_date}
+          existingMembers={members || []}
+        />
+      )}
+
       {isOwner ? (
         // Admin view — inline date editing for all members
         <div className="v-members-list">
@@ -67,21 +78,21 @@ export default async function MembersPage({ params }) {
         // Regular member view — read-only list
         <div className="v-members-list">
           {(members || []).map((member) => {
-            const profile = member.profiles;
+            const info = getMemberDisplayInfo(member);
             const isMe = member.user_id === user.id;
             return (
               <div key={member.id} className="v-member-row">
                 <MemberAvatar
                   member={{
-                    display_name: profile?.display_name,
-                    avatar_url: profile?.avatar_url,
-                    email: profile?.email,
-                    color: member.color,
+                    display_name: info.name,
+                    avatar_url: info.avatarUrl,
+                    email: info.email,
+                    color: info.color,
                   }}
                 />
                 <div className="v-member-info">
                   <div className="v-member-name">
-                    {profile?.display_name || profile?.email || 'Unknown'}
+                    {info.name}
                     {isMe && <span style={{ color: 'var(--v-ivory-dim)', fontWeight: 400 }}> (you)</span>}
                   </div>
                   <span className={`v-badge ${member.role === 'owner' ? 'v-badge-owner' : 'v-badge-member'}`}>

@@ -52,8 +52,9 @@ export async function POST(request, { params }) {
   const memberContext = (members || []).map((m) => ({
     member_id: m.id,
     user_id: m.user_id,
-    name: m.profiles?.display_name || m.profiles?.email || 'Unknown',
-    email: m.profiles?.email,
+    name: m.profiles?.display_name || m.display_name || m.profiles?.email || m.email || 'Unknown',
+    email: m.profiles?.email || m.email,
+    is_manual: !m.user_id,
     current_stay_start: m.stay_start,
     current_stay_end: m.stay_end,
   }));

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '../../lib/supabase/client';
 import { CATEGORY_EMOJI } from './EventCard';
+import { getMemberDisplayInfo } from '../../lib/utils/members';
 import MemberAvatar from './MemberAvatar';
 
 const SPLIT_TYPES = [
@@ -346,8 +347,7 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
             </label>
             <div className="v-attendee-grid">
               {(members || []).map((m) => {
-                const profile = m.profiles;
-                const name = profile?.display_name || profile?.email || 'Member';
+                const info = getMemberDisplayInfo(m);
                 const isActive = everyoneInvited || selectedMembers.includes(m.id);
                 return (
                   <button
@@ -359,14 +359,14 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
                   >
                     <MemberAvatar
                       member={{
-                        display_name: profile?.display_name,
-                        avatar_url: profile?.avatar_url,
-                        email: profile?.email,
-                        color: m.color,
+                        display_name: info.name,
+                        avatar_url: info.avatarUrl,
+                        email: info.email,
+                        color: info.color,
                       }}
                       size={24}
                     />
-                    <span className="v-attendee-chip-name">{name.split(' ')[0]}</span>
+                    <span className="v-attendee-chip-name">{info.name.split(' ')[0]}</span>
                   </button>
                 );
               })}
@@ -426,11 +426,14 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
                       onChange={(e) => setCostPaidBy(e.target.value)}
                     >
                       <option value="">Select...</option>
-                      {(members || []).map((m) => (
-                        <option key={m.id} value={m.id}>
-                          {m.profiles?.display_name || m.profiles?.email || 'Member'}
-                        </option>
-                      ))}
+                      {(members || []).map((m) => {
+                        const info = getMemberDisplayInfo(m);
+                        return (
+                          <option key={m.id} value={m.id}>
+                            {info.name}
+                          </option>
+                        );
+                      })}
                     </select>
                   </div>
                   <div className="v-form-group" style={{ display: 'flex', alignItems: 'flex-end', paddingBottom: 24 }}>
@@ -464,10 +467,10 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
                 {(splitType === 'custom_amount' || splitType === 'custom_percent') && (
                   <div className="v-custom-splits">
                     {(members || []).map((m) => {
-                      const name = m.profiles?.display_name || m.profiles?.email || 'Member';
+                      const info = getMemberDisplayInfo(m);
                       return (
                         <div key={m.id} className="v-custom-split-row">
-                          <span className="v-custom-split-name">{name}</span>
+                          <span className="v-custom-split-name">{info.name}</span>
                           <input
                             className="v-form-input v-custom-split-input"
                             type="number"

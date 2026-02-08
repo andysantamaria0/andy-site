@@ -3,11 +3,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '../../lib/supabase/client';
+import { getMemberDisplayInfo } from '../../lib/utils/members';
 
 export default function AdminMemberDates({ member, tripStart, tripEnd }) {
   const supabase = createClient();
   const router = useRouter();
-  const profile = member.profiles;
+  const info = getMemberDisplayInfo(member);
   const [stayStart, setStayStart] = useState(member.stay_start || '');
   const [stayEnd, setStayEnd] = useState(member.stay_end || '');
   const [saving, setSaving] = useState(false);
@@ -41,11 +42,16 @@ export default function AdminMemberDates({ member, tripStart, tripEnd }) {
     <div className="v-admin-member-row">
       <div style={{ flex: 1 }}>
         <div className="v-member-name">
-          {profile?.display_name || profile?.email || 'Unknown'}
+          {info.name}
         </div>
         <span className={`v-badge ${member.role === 'owner' ? 'v-badge-owner' : 'v-badge-member'}`}>
           {member.role}
         </span>
+        {!member.user_id && (
+          <div style={{ fontSize: '0.75rem', color: 'var(--v-ivory-dim)', marginTop: 2 }}>
+            {[info.email, member.phone].filter(Boolean).join(' \u00B7 ')}
+          </div>
+        )}
       </div>
       <div className="v-admin-dates">
         <input

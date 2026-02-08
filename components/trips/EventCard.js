@@ -1,6 +1,7 @@
 'use client';
 
 import { formatTime } from '../../lib/utils/dates';
+import { getMemberDisplayInfo } from '../../lib/utils/members';
 import MemberAvatar from './MemberAvatar';
 
 const CATEGORY_EMOJI = {
@@ -45,18 +46,21 @@ export default function EventCard({ event, members, onClick }) {
         {isEveryone ? (
           <span className="v-event-card-everyone">Everyone</span>
         ) : (
-          attendeeMembers.slice(0, 4).map((m) => (
-            <MemberAvatar
-              key={m.id}
-              member={{
-                display_name: m.profiles?.display_name,
-                avatar_url: m.profiles?.avatar_url,
-                email: m.profiles?.email,
-                color: m.color,
-              }}
-              size={24}
-            />
-          ))
+          attendeeMembers.slice(0, 4).map((m) => {
+            const info = getMemberDisplayInfo(m);
+            return (
+              <MemberAvatar
+                key={m.id}
+                member={{
+                  display_name: info.name,
+                  avatar_url: info.avatarUrl,
+                  email: info.email,
+                  color: info.color,
+                }}
+                size={24}
+              />
+            );
+          })
         )}
         {attendeeMembers.length > 4 && (
           <span className="v-event-card-more">+{attendeeMembers.length - 4}</span>

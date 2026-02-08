@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { format, parseISO, isWithinInterval } from 'date-fns';
 import { daysInRange } from '../../lib/utils/dates';
+import { getMemberDisplayInfo } from '../../lib/utils/members';
 import EventCard from './EventCard';
 import EventForm from './EventForm';
 import LogisticsCard from './LogisticsCard';
@@ -24,7 +25,7 @@ export default function CalendarDayList({ trip, members, events, logistics, isOw
   (members || []).forEach((m) => { membersById[m.id] = m; });
   // Also index by user_id for logistics which use user_id
   const membersByUserId = {};
-  (members || []).forEach((m) => { membersByUserId[m.user_id] = m; });
+  (members || []).forEach((m) => { if (m.user_id) membersByUserId[m.user_id] = m; });
 
   function getMembersPresent(day) {
     return (members || []).filter((m) => {
@@ -86,14 +87,17 @@ export default function CalendarDayList({ trip, members, events, logistics, isOw
                 </div>
                 {present.length > 0 && (
                   <div className="v-calendar-presence">
-                    {present.map((m) => (
-                      <div
-                        key={m.id}
-                        className="v-presence-dot"
-                        style={{ backgroundColor: m.color || '#4A35D7' }}
-                        title={m.profiles?.display_name || m.profiles?.email || 'Member'}
-                      />
-                    ))}
+                    {present.map((m) => {
+                      const info = getMemberDisplayInfo(m);
+                      return (
+                        <div
+                          key={m.id}
+                          className="v-presence-dot"
+                          style={{ backgroundColor: m.color || '#4A35D7' }}
+                          title={info.name}
+                        />
+                      );
+                    })}
                   </div>
                 )}
               </div>

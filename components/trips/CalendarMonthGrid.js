@@ -15,6 +15,7 @@ import {
   isSameDay,
   isWithinInterval,
 } from 'date-fns';
+import { getMemberDisplayInfo } from '../../lib/utils/members';
 import EventCard from './EventCard';
 import EventForm from './EventForm';
 import LogisticsCard from './LogisticsCard';
@@ -38,7 +39,7 @@ export default function CalendarMonthGrid({ trip, members, events, logistics, is
   const tripEndDate = trip.end_date ? parseISO(trip.end_date) : null;
 
   const membersByUserId = {};
-  (members || []).forEach((m) => { membersByUserId[m.user_id] = m; });
+  (members || []).forEach((m) => { if (m.user_id) membersByUserId[m.user_id] = m; });
 
   function getMembersPresent(day) {
     return (members || []).filter((m) => {
@@ -179,11 +180,14 @@ export default function CalendarMonthGrid({ trip, members, events, logistics, is
 
                     {present.length > 0 && (
                       <div className="v-month-expanded-members">
-                        {present.map((m) => (
-                          <span key={m.id} className="v-month-expanded-member">
-                            {m.profiles?.display_name || m.profiles?.email?.split('@')[0] || 'Member'}
-                          </span>
-                        ))}
+                        {present.map((m) => {
+                          const info = getMemberDisplayInfo(m);
+                          return (
+                            <span key={m.id} className="v-month-expanded-member">
+                              {info.name}
+                            </span>
+                          );
+                        })}
                       </div>
                     )}
 
