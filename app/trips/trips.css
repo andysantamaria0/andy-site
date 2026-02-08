@@ -1745,6 +1745,17 @@
 
 .v-landing {
   min-height: 100vh;
+  background:
+    linear-gradient(
+      to top,
+      rgba(235, 155, 90, 0.25) 0%,
+      rgba(220, 100, 80, 0.20) 12%,
+      rgba(200, 70, 95, 0.18) 25%,
+      rgba(160, 50, 120, 0.15) 40%,
+      rgba(100, 45, 160, 0.10) 55%,
+      rgba(74, 53, 215, 0.06) 70%,
+      var(--v-charcoal) 88%
+    );
   background-color: var(--v-charcoal);
   color: var(--v-ivory);
   overflow-x: hidden;
