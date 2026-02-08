@@ -4,10 +4,38 @@
   box-sizing: border-box;
 }
 
+:root {
+  --bg: #2F2F2F;
+  --text: #F4F4ED;
+  --accent: #DFB288;
+  --coral: #FF7D73;
+  --text-dim: rgba(244, 244, 237, 0.6);
+  --text-faint: rgba(244, 244, 237, 0.5);
+  --text-muted: rgba(244, 244, 237, 0.8);
+  --border: rgba(244, 244, 237, 0.1);
+  --arrow: rgba(244, 244, 237, 0.3);
+  --accent-border: rgba(223, 178, 136, 0.3);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #F4F4ED;
+    --text: #2F2F2F;
+    --accent: #9A6B3A;
+    --coral: #D9534F;
+    --text-dim: rgba(47, 47, 47, 0.6);
+    --text-faint: rgba(47, 47, 47, 0.5);
+    --text-muted: rgba(47, 47, 47, 0.8);
+    --border: rgba(47, 47, 47, 0.12);
+    --arrow: rgba(47, 47, 47, 0.3);
+    --accent-border: rgba(154, 107, 58, 0.3);
+  }
+}
+
 body {
   font-family: 'Karla', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: #2F2F2F;
-  color: #F4F4ED;
+  background-color: var(--bg);
+  color: var(--text);
   line-height: 1.6;
 }
 
@@ -23,13 +51,13 @@ body {
   font-weight: 700;
   margin-bottom: 8px;
   letter-spacing: -0.02em;
-  color: #F4F4ED;
+  color: var(--text);
 }
 
 .tagline {
   font-family: 'Karla', sans-serif;
   font-size: 1rem;
-  color: #DFB288;
+  color: var(--accent);
   margin-bottom: 56px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -39,7 +67,7 @@ body {
 .divider {
   width: 48px;
   height: 2px;
-  background-color: #DFB288;
+  background-color: var(--accent);
   margin-bottom: 48px;
 }
 
@@ -52,7 +80,7 @@ body {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.125rem;
   font-style: italic;
-  color: rgba(244, 244, 237, 0.6);
+  color: var(--text-dim);
   margin-bottom: 20px;
 }
 
@@ -67,18 +95,18 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 16px 0;
-  color: #F4F4ED;
+  color: var(--text);
   text-decoration: none;
-  border-bottom: 1px solid rgba(244, 244, 237, 0.1);
+  border-bottom: 1px solid var(--border);
   transition: color 0.2s ease;
 }
 
 .links a:first-child {
-  border-top: 1px solid rgba(244, 244, 237, 0.1);
+  border-top: 1px solid var(--border);
 }
 
 .links a:hover {
-  color: #DFB288;
+  color: var(--accent);
 }
 
 .link-label {
@@ -90,12 +118,12 @@ body {
 
 .link-arrow {
   font-size: 1.125rem;
-  color: rgba(244, 244, 237, 0.3);
+  color: var(--arrow);
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .links a:hover .link-arrow {
-  color: #DFB288;
+  color: var(--accent);
   transform: translateX(4px);
 }
 
@@ -106,7 +134,7 @@ body {
 .projects-intro {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 1rem;
-  color: rgba(244, 244, 237, 0.5);
+  color: var(--text-faint);
   font-style: italic;
   margin-bottom: 20px;
 }
@@ -118,7 +146,7 @@ body {
 
 .projects li {
   font-size: 1rem;
-  color: rgba(244, 244, 237, 0.8);
+  color: var(--text-muted);
   margin-bottom: 16px;
   padding-left: 16px;
   position: relative;
@@ -132,18 +160,18 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: #FF7D73;
+  background-color: var(--coral);
 }
 
 .projects a {
-  color: #DFB288;
+  color: var(--accent);
   text-decoration: none;
-  border-bottom: 1px solid rgba(223, 178, 136, 0.3);
+  border-bottom: 1px solid var(--accent-border);
   transition: border-color 0.2s ease;
 }
 
 .projects a:hover {
-  border-bottom-color: #DFB288;
+  border-bottom-color: var(--accent);
 }
 
 .image-section {

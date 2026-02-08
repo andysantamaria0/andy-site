@@ -1,0 +1,691 @@
+/* ============================================
+   Vialoure — Trip Planning App Styles
+   All classes use the v- prefix
+   ============================================ */
+
+:root {
+  --v-charcoal: #2F2F2F;
+  --v-ivory: #F4F4ED;
+  --v-hide: #DFB288;
+  --v-royal: #4A35D7;
+  --v-coral: #FF7D73;
+  --v-charcoal-light: #3A3A3A;
+  --v-charcoal-lighter: #454545;
+  --v-ivory-dim: rgba(244, 244, 237, 0.6);
+  --v-ivory-faint: rgba(244, 244, 237, 0.1);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --v-charcoal: #F4F4ED;
+    --v-ivory: #2F2F2F;
+    --v-hide: #9A6B3A;
+    --v-royal: #4A35D7;
+    --v-coral: #D9534F;
+    --v-charcoal-light: #E8E8E0;
+    --v-charcoal-lighter: #DDDDD5;
+    --v-ivory-dim: rgba(47, 47, 47, 0.6);
+    --v-ivory-faint: rgba(47, 47, 47, 0.1);
+  }
+
+  .v-btn-google {
+    background-color: #2F2F2F;
+    color: #F4F4ED;
+  }
+
+  .v-btn-google:hover {
+    background-color: #3A3A3A;
+  }
+}
+
+/* ---- Layout Shell ---- */
+
+.v-layout {
+  min-height: 100vh;
+  background-color: var(--v-charcoal);
+  color: var(--v-ivory);
+}
+
+.v-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--v-ivory-faint);
+}
+
+.v-header-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.v-header-logo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--v-ivory);
+  text-decoration: none;
+}
+
+.v-header-logo:hover {
+  color: var(--v-hide);
+}
+
+.v-header-tagline {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.75rem;
+  color: var(--v-hide);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+.v-header-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.v-header-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.v-header-name {
+  font-size: 0.875rem;
+  color: var(--v-ivory-dim);
+}
+
+.v-signout-btn {
+  background: none;
+  border: 1px solid var(--v-ivory-faint);
+  color: var(--v-ivory-dim);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-family: 'Karla', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.v-signout-btn:hover {
+  border-color: var(--v-coral);
+  color: var(--v-coral);
+}
+
+/* ---- Page Container ---- */
+
+.v-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.v-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.v-page-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* ---- Buttons ---- */
+
+.v-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: 'Karla', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  border: none;
+}
+
+.v-btn-primary {
+  background-color: var(--v-royal);
+  color: white;
+}
+
+.v-btn-primary:hover {
+  background-color: #3a28b0;
+}
+
+.v-btn-secondary {
+  background-color: transparent;
+  color: var(--v-ivory);
+  border: 1px solid var(--v-ivory-faint);
+}
+
+.v-btn-secondary:hover {
+  border-color: var(--v-hide);
+  color: var(--v-hide);
+}
+
+.v-btn-google {
+  background-color: white;
+  color: #333;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.v-btn-google:hover {
+  background-color: #f0f0f0;
+}
+
+.v-btn-danger {
+  background-color: transparent;
+  color: var(--v-coral);
+  border: 1px solid var(--v-coral);
+}
+
+.v-btn-danger:hover {
+  background-color: var(--v-coral);
+  color: white;
+}
+
+/* ---- Login Page ---- */
+
+.v-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--v-charcoal);
+  padding: 24px;
+}
+
+.v-login-brand {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.v-login-logo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--v-ivory);
+  margin-bottom: 8px;
+}
+
+.v-login-tagline {
+  font-family: 'Karla', sans-serif;
+  font-size: 1rem;
+  color: var(--v-hide);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+
+.v-login-card {
+  background-color: var(--v-charcoal-light);
+  border: 1px solid var(--v-ivory-faint);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.v-login-card p {
+  color: var(--v-ivory-dim);
+  font-size: 0.9375rem;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+/* ---- Trip Cards ---- */
+
+.v-trip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+.v-trip-card {
+  background-color: var(--v-charcoal-light);
+  border: 1px solid var(--v-ivory-faint);
+  border-radius: 12px;
+  padding: 24px;
+  text-decoration: none;
+  color: var(--v-ivory);
+  transition: all 0.2s ease;
+  display: block;
+}
+
+.v-trip-card:hover {
+  border-color: var(--v-hide);
+  transform: translateY(-2px);
+}
+
+.v-trip-card-destination {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.75rem;
+  color: var(--v-hide);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.v-trip-card-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.v-trip-card-dates {
+  font-size: 0.875rem;
+  color: var(--v-ivory-dim);
+  margin-bottom: 16px;
+}
+
+.v-trip-card-members {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.v-trip-card-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--v-charcoal-light);
+  object-fit: cover;
+}
+
+.v-trip-card-avatar:not(:first-child) {
+  margin-left: -8px;
+}
+
+.v-trip-card-count {
+  font-size: 0.75rem;
+  color: var(--v-ivory-dim);
+  margin-left: 8px;
+}
+
+/* ---- Empty State ---- */
+
+.v-empty {
+  text-align: center;
+  padding: 80px 24px;
+}
+
+.v-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  opacity: 0.4;
+}
+
+.v-empty-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.v-empty-text {
+  color: var(--v-ivory-dim);
+  font-size: 0.9375rem;
+  margin-bottom: 24px;
+}
+
+/* ---- Forms ---- */
+
+.v-form {
+  max-width: 500px;
+}
+
+.v-form-group {
+  margin-bottom: 24px;
+}
+
+.v-form-label {
+  display: block;
+  font-family: 'Karla', sans-serif;
+  font-size: 0.75rem;
+  color: var(--v-hide);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.v-form-input,
+.v-form-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: var(--v-charcoal-light);
+  border: 1px solid var(--v-ivory-faint);
+  border-radius: 8px;
+  color: var(--v-ivory);
+  font-family: 'Karla', sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.v-form-input:focus,
+.v-form-textarea:focus {
+  outline: none;
+  border-color: var(--v-royal);
+}
+
+.v-form-input::placeholder,
+.v-form-textarea::placeholder {
+  color: rgba(244, 244, 237, 0.3);
+}
+
+.v-form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.v-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.v-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+/* ---- Trip Detail Layout ---- */
+
+.v-trip-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--v-ivory-faint);
+}
+
+.v-trip-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.v-trip-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.v-trip-destination {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.875rem;
+  color: var(--v-hide);
+  margin-bottom: 16px;
+}
+
+.v-trip-nav {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.v-trip-nav-link {
+  padding: 10px 16px;
+  font-family: 'Karla', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--v-ivory-dim);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.v-trip-nav-link:hover {
+  color: var(--v-ivory);
+}
+
+.v-trip-nav-link.active {
+  color: var(--v-hide);
+  border-bottom-color: var(--v-hide);
+}
+
+/* ---- Trip Overview ---- */
+
+.v-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.v-overview-card {
+  background-color: var(--v-charcoal-light);
+  border: 1px solid var(--v-ivory-faint);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.v-overview-card-label {
+  font-size: 0.75rem;
+  color: var(--v-ivory-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.v-overview-card-value {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.v-overview-card-sub {
+  font-size: 0.8125rem;
+  color: var(--v-ivory-dim);
+  margin-top: 4px;
+}
+
+/* ---- Members ---- */
+
+.v-members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.v-member-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: var(--v-charcoal-light);
+  border: 1px solid var(--v-ivory-faint);
+  border-radius: 10px;
+}
+
+.v-member-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.v-member-avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: white;
+}
+
+.v-member-info {
+  flex: 1;
+}
+
+.v-member-name {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.v-member-role {
+  font-size: 0.75rem;
+  color: var(--v-ivory-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.v-member-dates {
+  font-size: 0.8125rem;
+  color: var(--v-ivory-dim);
+}
+
+/* ---- Section Titles ---- */
+
+.v-section-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* ---- Back Link ---- */
+
+.v-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--v-ivory-dim);
+  text-decoration: none;
+  font-size: 0.875rem;
+  margin-bottom: 24px;
+  transition: color 0.2s ease;
+}
+
+.v-back:hover {
+  color: var(--v-hide);
+}
+
+/* ---- Loading ---- */
+
+.v-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  color: var(--v-ivory-dim);
+}
+
+/* ---- Badge ---- */
+
+.v-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.v-badge-owner {
+  background-color: rgba(74, 53, 215, 0.2);
+  color: #7B6BF0;
+}
+
+.v-badge-member {
+  background-color: rgba(223, 178, 136, 0.15);
+  color: var(--v-hide);
+}
+
+/* ---- Placeholder pages ---- */
+
+.v-placeholder {
+  text-align: center;
+  padding: 60px 24px;
+  color: var(--v-ivory-dim);
+}
+
+.v-placeholder-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  color: var(--v-ivory);
+  margin-bottom: 8px;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 600px) {
+  .v-header {
+    padding: 16px 16px;
+  }
+
+  .v-header-logo {
+    font-size: 1.25rem;
+  }
+
+  .v-header-name {
+    display: none;
+  }
+
+  .v-page {
+    padding: 24px 16px;
+  }
+
+  .v-page-title {
+    font-size: 1.5rem;
+  }
+
+  .v-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .v-trip-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .v-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .v-overview-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .v-trip-name {
+    font-size: 1.375rem;
+  }
+
+  .v-trip-nav-link {
+    padding: 10px 12px;
+    font-size: 0.75rem;
+  }
+
+  .v-login-logo {
+    font-size: 2.25rem;
+  }
+
+  .v-login-card {
+    padding: 24px;
+  }
+}
