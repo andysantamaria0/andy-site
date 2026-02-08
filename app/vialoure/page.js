@@ -4,8 +4,20 @@ import { redirect } from 'next/navigation';
 import { formatDateRange, tripDuration } from '../../lib/utils/dates';
 
 export const metadata = {
-  title: 'Vialoure — Travel Together',
+  title: 'Vialoure — For Friends',
   description: 'Plan trips with your crew. Shared calendars, expenses, logistics, and a living travel log.',
+  openGraph: {
+    title: 'Vialoure — For Friends',
+    description: 'Plan trips with your crew. Shared calendars, expenses, logistics, and a living travel log.',
+    url: 'https://andysantamaria.com/vialoure',
+    siteName: 'Vialoure',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Vialoure — For Friends',
+    description: 'Plan trips with your crew. Shared calendars, expenses, logistics, and a living travel log.',
+  },
 };
 
 export default async function LandingPage() {
