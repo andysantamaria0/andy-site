@@ -22,8 +22,8 @@ export async function POST(request, { params }) {
     return NextResponse.json({ error: 'Only trip owners can apply changes' }, { status: 403 });
   }
 
-  const { member_updates, new_travelers, logistics } = await request.json();
-  const results = { updated: 0, logistics_added: 0, travelers_noted: 0, errors: [] };
+  const { member_updates, new_travelers, logistics, events } = await request.json();
+  const results = { updated: 0, logistics_added: 0, events_added: 0, travelers_noted: 0, errors: [] };
 
   // Apply member stay date updates
   if (member_updates && member_updates.length > 0) {
@@ -95,6 +95,62 @@ export async function POST(request, { params }) {
       } else {
         results.logistics_added++;
       }
+    }
+  }
+
+  // Add events
+  if (events && events.length > 0) {
+    // Get members for attendee name matching
+    const { data: eventMembers } = await supabase
+      .from('trip_members')
+      .select('id, user_id, profiles:user_id(display_name, email)')
+      .eq('trip_id', tripId);
+
+    for (const entry of events) {
+      const validCategories = ['dinner_out', 'dinner_home', 'activity', 'outing', 'party', 'sightseeing', 'other'];
+      const category = validCategories.includes(entry.category) ? entry.category : 'other';
+
+      const { data: newEvent, error: eventError } = await supabase
+        .from('events')
+        .insert({
+          trip_id: tripId,
+          title: entry.title || 'Event',
+          category,
+          event_date: entry.event_date,
+          start_time: entry.start_time || null,
+          end_time: entry.end_time || null,
+          location: entry.location || null,
+          notes: entry.notes || null,
+          created_by: user.id,
+        })
+        .select('id')
+        .single();
+
+      if (eventError) {
+        results.errors.push(`Failed to create event "${entry.title}": ${eventError.message}`);
+        continue;
+      }
+
+      // Match attendee names to trip members
+      if (entry.attendee_names && entry.attendee_names.length > 0 && eventMembers) {
+        const attendeeRows = [];
+        for (const attendeeName of entry.attendee_names) {
+          const nameLower = attendeeName.toLowerCase().trim();
+          const matched = eventMembers.find((m) => {
+            const name = m.profiles?.display_name?.toLowerCase() || '';
+            const email = m.profiles?.email?.toLowerCase() || '';
+            return name.includes(nameLower) || nameLower.includes(name) || email.includes(nameLower);
+          });
+          if (matched) {
+            attendeeRows.push({ event_id: newEvent.id, member_id: matched.id });
+          }
+        }
+        if (attendeeRows.length > 0) {
+          await supabase.from('event_attendees').insert(attendeeRows);
+        }
+      }
+
+      results.events_added++;
     }
   }
 

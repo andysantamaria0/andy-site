@@ -81,7 +81,8 @@ Extract any of the following you can find:
 1. **Member updates**: arrival/departure dates for people (match to existing members by name if possible)
 2. **New travelers**: people mentioned who aren't current members (with whatever info is available)
 3. **Logistics**: flights, trains, accommodations, car rentals — with dates, confirmation numbers, airlines, etc.
-4. **Notes**: anything else relevant to the trip
+4. **Events**: dinners, parties, activities, outings, sightseeing plans — with dates, times, locations, and who's attending
+5. **Notes**: anything else relevant to the trip
 
 Respond with ONLY valid JSON in this exact format:
 {
@@ -120,11 +121,23 @@ Respond with ONLY valid JSON in this exact format:
       "notes": "any additional info"
     }
   ],
+  "events": [
+    {
+      "title": "short description",
+      "category": "dinner_out|dinner_home|activity|outing|party|sightseeing|other",
+      "event_date": "YYYY-MM-DD",
+      "start_time": "HH:MM or null",
+      "end_time": "HH:MM or null",
+      "location": "venue/place name or null",
+      "notes": "any additional info or null",
+      "attendee_names": ["name1", "name2"]
+    }
+  ],
   "notes": "any other relevant info extracted",
   "summary": "1-2 sentence human-readable summary of what was extracted"
 }
 
-If a field can't be determined, use null. For dates, use the trip year (${trip.start_date ? trip.start_date.slice(0, 4) : new Date().getFullYear()}) if only month/day are given.`
+If a field can't be determined, use null. For dates, use the trip year (${trip.start_date ? trip.start_date.slice(0, 4) : new Date().getFullYear()}) if only month/day are given. For event attendee_names, list the names of people attending (empty array means everyone). For event times, use 24-hour HH:MM format.`
       }
     ],
   });

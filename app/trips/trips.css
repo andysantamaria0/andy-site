@@ -839,6 +839,227 @@
   margin-bottom: 8px;
 }
 
+/* ---- Calendar Day List ---- */
+
+.v-calendar-days {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.v-calendar-day {
+  padding: 16px 20px;
+  background-color: var(--v-charcoal-light);
+  border: 1px solid var(--v-ivory-faint);
+  border-radius: 10px;
+}
+
+.v-calendar-day-today {
+  border-color: var(--v-hide);
+}
+
+.v-calendar-day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.v-calendar-day-label {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.v-calendar-day-name {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.v-calendar-day-num {
+  font-size: 0.75rem;
+  color: var(--v-ivory-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.v-calendar-presence {
+  display: flex;
+  gap: 4px;
+}
+
+.v-presence-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.85;
+}
+
+.v-calendar-events {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.v-calendar-add-btn {
+  background: none;
+  border: none;
+  color: var(--v-ivory-dim);
+  font-family: 'Karla', sans-serif;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  padding: 6px 0;
+  margin-top: 4px;
+  transition: color 0.2s ease;
+  text-align: left;
+}
+
+.v-calendar-add-btn:hover {
+  color: var(--v-hide);
+}
+
+/* ---- Event Card ---- */
+
+.v-event-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background-color: var(--v-charcoal);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.v-event-card:hover {
+  background-color: var(--v-charcoal-lighter);
+}
+
+.v-event-card-emoji {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.v-event-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.v-event-card-title {
+  font-weight: 600;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v-event-card-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 0.75rem;
+  color: var(--v-ivory-dim);
+  margin-top: 2px;
+}
+
+.v-event-card-attendees {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.v-event-card-attendees .v-member-avatar,
+.v-event-card-attendees .v-member-avatar-placeholder {
+  border: 2px solid var(--v-charcoal);
+}
+
+.v-event-card-attendees .v-member-avatar:not(:first-child),
+.v-event-card-attendees .v-member-avatar-placeholder:not(:first-child) {
+  margin-left: -6px;
+}
+
+.v-event-card-everyone {
+  font-size: 0.6875rem;
+  color: var(--v-ivory-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+.v-event-card-more {
+  font-size: 0.6875rem;
+  color: var(--v-ivory-dim);
+  margin-left: 4px;
+}
+
+/* ---- Modal ---- */
+
+.v-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+}
+
+.v-modal {
+  background-color: var(--v-charcoal-light);
+  border: 1px solid var(--v-ivory-faint);
+  border-radius: 12px;
+  padding: 28px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.v-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.v-modal-close {
+  background: none;
+  border: none;
+  color: var(--v-ivory-dim);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.v-modal-close:hover {
+  color: var(--v-ivory);
+}
+
+/* ---- Checkbox Row ---- */
+
+.v-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.v-checkbox-row input[type="checkbox"] {
+  accent-color: var(--v-royal);
+  width: 16px;
+  height: 16px;
+}
+
+.v-attendee-list {
+  margin-top: 8px;
+  padding-left: 4px;
+}
+
 /* ---- Responsive ---- */
 
 @media (max-width: 600px) {
@@ -905,5 +1126,19 @@
   .v-timeline-row-label {
     width: 70px;
     font-size: 0.75rem;
+  }
+
+  .v-calendar-day {
+    padding: 12px 14px;
+  }
+
+  .v-modal {
+    padding: 20px;
+    max-height: 85vh;
+  }
+
+  .v-event-card-meta {
+    flex-direction: column;
+    gap: 2px;
   }
 }

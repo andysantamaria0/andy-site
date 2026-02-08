@@ -47,6 +47,7 @@ export default function SmartPaste({ tripId }) {
           member_updates: parsed.member_updates,
           new_travelers: parsed.new_travelers,
           logistics: parsed.logistics,
+          events: parsed.events,
         }),
       });
       const data = await res.json();
@@ -154,6 +155,21 @@ export default function SmartPaste({ tripId }) {
             </div>
           )}
 
+          {parsed.events?.length > 0 && (
+            <div className="v-parsed-section">
+              <div className="v-parsed-section-title">Events</div>
+              {parsed.events.map((ev, i) => (
+                <div key={i} className="v-parsed-item">
+                  <span className="v-badge v-badge-member" style={{ marginRight: 8 }}>{ev.category}</span>
+                  <span className="v-parsed-item-name">{ev.title}</span>
+                  <span className="v-parsed-item-detail">
+                    {ev.event_date}{ev.start_time ? ` at ${ev.start_time}` : ''}{ev.location ? ` — ${ev.location}` : ''}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+
           {parsed.notes && (
             <div className="v-parsed-section">
               <div className="v-parsed-section-title">Notes</div>
@@ -181,6 +197,7 @@ export default function SmartPaste({ tripId }) {
           <div className="v-parsed-summary" style={{ color: 'var(--v-hide)' }}>
             Done! Updated {result.updated} member{result.updated !== 1 ? 's' : ''}
             {result.logistics_added > 0 && `, added ${result.logistics_added} logistics entr${result.logistics_added !== 1 ? 'ies' : 'y'}`}
+            {result.events_added > 0 && `, created ${result.events_added} event${result.events_added !== 1 ? 's' : ''}`}
             {result.travelers_noted > 0 && `. Noted ${result.travelers_noted} new traveler${result.travelers_noted !== 1 ? 's' : ''}: ${result.new_traveler_names?.join(', ')}`}.
             {result.errors?.length > 0 && ` (${result.errors.length} error${result.errors.length !== 1 ? 's' : ''})`}
           </div>
