@@ -35,6 +35,12 @@ export default function EventCard({ event, members, onClick }) {
           {event.location && <span>{event.location}</span>}
         </div>
       </div>
+      {event.has_cost && event.cost_amount && (
+        <div className="v-event-card-cost">
+          <span>{event.cost_amount}{event.cost_currency ? ` ${event.cost_currency}` : ''}</span>
+          {event.use_friends_card && <span className="v-event-card-fc">FC</span>}
+        </div>
+      )}
       <div className="v-event-card-attendees">
         {isEveryone ? (
           <span className="v-event-card-everyone">Everyone</span>

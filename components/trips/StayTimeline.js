@@ -77,9 +77,11 @@ export default function StayTimeline({ trip, members }) {
                       width: `${widthPct}%`,
                       backgroundColor: color,
                     }}
-                    title={`${format(memberStart, 'MMM d')} – ${format(memberEnd, 'MMM d')}`}
                   />
                 </div>
+                <span className="v-timeline-row-dates">
+                  {format(memberStart, 'MMM d')} – {format(memberEnd, 'MMM d')}
+                </span>
               </div>
             );
           })}

@@ -4,14 +4,23 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '../../lib/supabase/client';
 import { CATEGORY_EMOJI } from './EventCard';
+import MemberAvatar from './MemberAvatar';
 
-export default function EventForm({ tripId, members, event, initialDate, onClose }) {
+const SPLIT_TYPES = [
+  { key: 'host_covers', label: 'Host covers' },
+  { key: 'equal', label: 'Split evenly' },
+  { key: 'custom_amount', label: 'Custom amounts' },
+  { key: 'custom_percent', label: 'Custom %' },
+];
+
+export default function EventForm({ tripId, members, event, initialDate, onClose, tripCurrency }) {
   const router = useRouter();
   const supabase = createClient();
   const overlayRef = useRef(null);
 
   const isEdit = !!event;
   const existingAttendeeIds = (event?.event_attendees || []).map((a) => a.member_id);
+  const allMemberIds = (members || []).map((m) => m.id);
 
   const [title, setTitle] = useState(event?.title || '');
   const [category, setCategory] = useState(event?.category || 'other');
@@ -21,11 +30,39 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
   const [location, setLocation] = useState(event?.location || '');
   const [notes, setNotes] = useState(event?.notes || '');
   const [selectedMembers, setSelectedMembers] = useState(
-    isEdit ? (existingAttendeeIds.length > 0 ? existingAttendeeIds : []) : []
+    isEdit ? (existingAttendeeIds.length > 0 ? existingAttendeeIds : allMemberIds) : allMemberIds
   );
   const [everyoneInvited, setEveryoneInvited] = useState(
     isEdit ? existingAttendeeIds.length === 0 : true
   );
+
+  // Cost fields
+  const [hasCost, setHasCost] = useState(event?.has_cost || false);
+  const [costAmount, setCostAmount] = useState(event?.cost_amount || '');
+  const [costCurrency, setCostCurrency] = useState(event?.cost_currency || tripCurrency || 'EUR');
+  const [costPaidBy, setCostPaidBy] = useState(event?.cost_paid_by || '');
+  const [useFriendsCard, setUseFriendsCard] = useState(event?.use_friends_card || false);
+  const [splitType, setSplitType] = useState(event?.split_type || 'equal');
+  const [customSplits, setCustomSplits] = useState(() => {
+    const splits = {};
+    (members || []).forEach((m) => { splits[m.id] = ''; });
+    if (event?.event_cost_splits) {
+      event.event_cost_splits.forEach((s) => {
+        if (splitType === 'custom_percent' || event?.split_type === 'custom_percent') {
+          splits[s.member_id] = s.percentage || '';
+        } else {
+          splits[s.member_id] = s.amount || '';
+        }
+      });
+    }
+    return splits;
+  });
+
+  // External invites
+  const [invites, setInvites] = useState(event?.event_invites || []);
+  const [newInviteName, setNewInviteName] = useState('');
+  const [newInviteContact, setNewInviteContact] = useState('');
+
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState(null);
@@ -50,6 +87,38 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
     );
   }
 
+  function handleEveryoneToggle(checked) {
+    setEveryoneInvited(checked);
+    if (!checked) {
+      setSelectedMembers(allMemberIds);
+    }
+  }
+
+  function addInvite() {
+    if (!newInviteName.trim()) return;
+    const contact = newInviteContact.trim();
+    const isEmail = contact.includes('@');
+    setInvites((prev) => [...prev, {
+      name: newInviteName.trim(),
+      email: isEmail ? contact : null,
+      phone: !isEmail && contact ? contact : null,
+    }]);
+    setNewInviteName('');
+    setNewInviteContact('');
+  }
+
+  function removeInvite(index) {
+    setInvites((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  function updateCustomSplit(memberId, value) {
+    setCustomSplits((prev) => ({ ...prev, [memberId]: value }));
+  }
+
+  function getCustomTotal() {
+    return Object.values(customSplits).reduce((sum, v) => sum + (parseFloat(v) || 0), 0);
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     if (!title.trim() || !eventDate) return;
@@ -65,6 +134,12 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
       end_time: endTime || null,
       location: location.trim() || null,
       notes: notes.trim() || null,
+      has_cost: hasCost,
+      cost_amount: hasCost && costAmount ? parseFloat(costAmount) : null,
+      cost_currency: hasCost ? costCurrency : null,
+      cost_paid_by: hasCost && costPaidBy ? costPaidBy : null,
+      use_friends_card: hasCost ? useFriendsCard : false,
+      split_type: hasCost ? splitType : 'equal',
     };
 
     let eventId = event?.id;
@@ -113,6 +188,38 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
         setSaving(false);
         return;
       }
+    }
+
+    // Sync cost splits
+    if (isEdit) {
+      await supabase.from('event_cost_splits').delete().eq('event_id', eventId);
+    }
+    if (hasCost && (splitType === 'custom_amount' || splitType === 'custom_percent')) {
+      const splitRows = Object.entries(customSplits)
+        .filter(([, v]) => parseFloat(v) > 0)
+        .map(([member_id, v]) => ({
+          event_id: eventId,
+          member_id,
+          amount: splitType === 'custom_amount' ? parseFloat(v) : null,
+          percentage: splitType === 'custom_percent' ? parseFloat(v) : null,
+        }));
+      if (splitRows.length > 0) {
+        await supabase.from('event_cost_splits').insert(splitRows);
+      }
+    }
+
+    // Sync external invites
+    if (isEdit) {
+      await supabase.from('event_invites').delete().eq('event_id', eventId);
+    }
+    if (invites.length > 0) {
+      const inviteRows = invites.map((inv) => ({
+        event_id: eventId,
+        name: inv.name,
+        email: inv.email || null,
+        phone: inv.phone || null,
+      }));
+      await supabase.from('event_invites').insert(inviteRows);
     }
 
     setSaving(false);
@@ -226,34 +333,202 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
             />
           </div>
 
+          {/* Attendees — avatar chips */}
           <div className="v-form-group">
             <label className="v-form-label">Attendees</label>
             <label className="v-checkbox-row">
               <input
                 type="checkbox"
                 checked={everyoneInvited}
-                onChange={(e) => setEveryoneInvited(e.target.checked)}
+                onChange={(e) => handleEveryoneToggle(e.target.checked)}
               />
               <span>Everyone invited</span>
             </label>
-            {!everyoneInvited && (
-              <div className="v-attendee-list">
-                {(members || []).map((m) => {
-                  const profile = m.profiles;
-                  const name = profile?.display_name || profile?.email || 'Member';
-                  return (
-                    <label key={m.id} className="v-checkbox-row">
+            <div className="v-attendee-grid">
+              {(members || []).map((m) => {
+                const profile = m.profiles;
+                const name = profile?.display_name || profile?.email || 'Member';
+                const isActive = everyoneInvited || selectedMembers.includes(m.id);
+                return (
+                  <button
+                    key={m.id}
+                    type="button"
+                    className={`v-attendee-chip ${isActive ? 'v-attendee-chip-active' : ''}`}
+                    onClick={() => !everyoneInvited && toggleMember(m.id)}
+                    disabled={everyoneInvited}
+                  >
+                    <MemberAvatar
+                      member={{
+                        display_name: profile?.display_name,
+                        avatar_url: profile?.avatar_url,
+                        email: profile?.email,
+                        color: m.color,
+                      }}
+                      size={24}
+                    />
+                    <span className="v-attendee-chip-name">{name.split(' ')[0]}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Cost & billing */}
+          <div className="v-form-group">
+            <label className="v-checkbox-row">
+              <input
+                type="checkbox"
+                checked={hasCost}
+                onChange={(e) => setHasCost(e.target.checked)}
+              />
+              <span>This event costs money</span>
+            </label>
+
+            {hasCost && (
+              <div className="v-cost-section">
+                <div className="v-form-row" style={{ marginTop: 12 }}>
+                  <div className="v-form-group">
+                    <label className="v-form-label">Amount</label>
+                    <input
+                      className="v-form-input"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      value={costAmount}
+                      onChange={(e) => setCostAmount(e.target.value)}
+                      placeholder="0.00"
+                    />
+                  </div>
+                  <div className="v-form-group">
+                    <label className="v-form-label">Currency</label>
+                    <select
+                      className="v-form-input"
+                      value={costCurrency}
+                      onChange={(e) => setCostCurrency(e.target.value)}
+                    >
+                      <option value="EUR">EUR</option>
+                      <option value="USD">USD</option>
+                      <option value="GBP">GBP</option>
+                      <option value="CHF">CHF</option>
+                      <option value="SEK">SEK</option>
+                      <option value="NOK">NOK</option>
+                      <option value="DKK">DKK</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="v-form-row">
+                  <div className="v-form-group">
+                    <label className="v-form-label">Paid by</label>
+                    <select
+                      className="v-form-input"
+                      value={costPaidBy}
+                      onChange={(e) => setCostPaidBy(e.target.value)}
+                    >
+                      <option value="">Select...</option>
+                      {(members || []).map((m) => (
+                        <option key={m.id} value={m.id}>
+                          {m.profiles?.display_name || m.profiles?.email || 'Member'}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="v-form-group" style={{ display: 'flex', alignItems: 'flex-end', paddingBottom: 24 }}>
+                    <label className="v-checkbox-row">
                       <input
                         type="checkbox"
-                        checked={selectedMembers.includes(m.id)}
-                        onChange={() => toggleMember(m.id)}
+                        checked={useFriendsCard}
+                        onChange={(e) => setUseFriendsCard(e.target.checked)}
                       />
-                      <span>{name}</span>
+                      <span>Friends Card</span>
                     </label>
-                  );
-                })}
+                  </div>
+                </div>
+
+                <div className="v-form-group">
+                  <label className="v-form-label">Split type</label>
+                  <div className="v-split-pills">
+                    {SPLIT_TYPES.map((st) => (
+                      <button
+                        key={st.key}
+                        type="button"
+                        className={`v-split-pill ${splitType === st.key ? 'v-split-pill-active' : ''}`}
+                        onClick={() => setSplitType(st.key)}
+                      >
+                        {st.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {(splitType === 'custom_amount' || splitType === 'custom_percent') && (
+                  <div className="v-custom-splits">
+                    {(members || []).map((m) => {
+                      const name = m.profiles?.display_name || m.profiles?.email || 'Member';
+                      return (
+                        <div key={m.id} className="v-custom-split-row">
+                          <span className="v-custom-split-name">{name}</span>
+                          <input
+                            className="v-form-input v-custom-split-input"
+                            type="number"
+                            step={splitType === 'custom_percent' ? '1' : '0.01'}
+                            min="0"
+                            value={customSplits[m.id] || ''}
+                            onChange={(e) => updateCustomSplit(m.id, e.target.value)}
+                            placeholder={splitType === 'custom_percent' ? '%' : '0.00'}
+                          />
+                        </div>
+                      );
+                    })}
+                    <div className="v-custom-split-total">
+                      Total: {getCustomTotal().toFixed(splitType === 'custom_percent' ? 0 : 2)}
+                      {splitType === 'custom_percent' ? '%' : ` ${costCurrency}`}
+                      {splitType === 'custom_percent' && getCustomTotal() !== 100 && (
+                        <span className="v-split-warn"> (should be 100%)</span>
+                      )}
+                      {splitType === 'custom_amount' && costAmount && getCustomTotal() !== parseFloat(costAmount) && (
+                        <span className="v-split-warn"> (should equal {costAmount})</span>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
+          </div>
+
+          {/* External invites */}
+          <div className="v-form-group">
+            <label className="v-form-label">External Guests</label>
+            {invites.length > 0 && (
+              <div className="v-invite-list">
+                {invites.map((inv, i) => (
+                  <div key={i} className="v-invite-row">
+                    <span className="v-invite-name">{inv.name}</span>
+                    <span className="v-invite-contact">{inv.email || inv.phone || ''}</span>
+                    <button type="button" className="v-invite-remove" onClick={() => removeInvite(i)}>&times;</button>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="v-invite-add-row">
+              <input
+                className="v-form-input"
+                value={newInviteName}
+                onChange={(e) => setNewInviteName(e.target.value)}
+                placeholder="Name"
+                style={{ flex: 1 }}
+              />
+              <input
+                className="v-form-input"
+                value={newInviteContact}
+                onChange={(e) => setNewInviteContact(e.target.value)}
+                placeholder="Email or phone"
+                style={{ flex: 1 }}
+              />
+              <button type="button" className="v-btn v-btn-secondary" onClick={addInvite} disabled={!newInviteName.trim()}>
+                Add
+              </button>
+            </div>
           </div>
 
           {error && (

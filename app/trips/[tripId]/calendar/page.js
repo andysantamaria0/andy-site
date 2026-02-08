@@ -1,6 +1,6 @@
 import { createClient } from '../../../../lib/supabase/server';
 import StayTimeline from '../../../../components/trips/StayTimeline';
-import CalendarDayList from '../../../../components/trips/CalendarDayList';
+import CalendarViewToggle from '../../../../components/trips/CalendarViewToggle';
 
 export default async function CalendarPage({ params }) {
   const { tripId } = await params;
@@ -34,10 +34,35 @@ export default async function CalendarPage({ params }) {
       event_attendees (
         id,
         member_id
+      ),
+      event_cost_splits (
+        id,
+        member_id,
+        amount,
+        percentage
+      ),
+      event_invites (
+        id,
+        name,
+        email,
+        phone
       )
     `)
     .eq('trip_id', tripId)
     .order('event_date', { ascending: true })
+    .order('start_time', { ascending: true, nullsFirst: false });
+
+  const { data: logistics } = await supabase
+    .from('logistics')
+    .select(`
+      *,
+      profiles:user_id (
+        display_name,
+        avatar_url,
+        email
+      )
+    `)
+    .eq('trip_id', tripId)
     .order('start_time', { ascending: true, nullsFirst: false });
 
   const membership = (members || []).find((m) => m.user_id === user?.id);
@@ -46,10 +71,11 @@ export default async function CalendarPage({ params }) {
   return (
     <div className="v-page">
       <StayTimeline trip={trip} members={members} />
-      <CalendarDayList
+      <CalendarViewToggle
         trip={trip}
         members={members || []}
         events={events || []}
+        logistics={logistics || []}
         isOwner={isOwner}
       />
     </div>

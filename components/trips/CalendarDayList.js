@@ -5,8 +5,9 @@ import { format, parseISO, isWithinInterval } from 'date-fns';
 import { daysInRange } from '../../lib/utils/dates';
 import EventCard from './EventCard';
 import EventForm from './EventForm';
+import LogisticsCard from './LogisticsCard';
 
-export default function CalendarDayList({ trip, members, events, isOwner }) {
+export default function CalendarDayList({ trip, members, events, logistics, isOwner }) {
   const [formState, setFormState] = useState(null); // null | { date, event? }
 
   if (!trip.start_date || !trip.end_date) {
@@ -18,7 +19,12 @@ export default function CalendarDayList({ trip, members, events, isOwner }) {
   }
 
   const days = daysInRange(trip.start_date, trip.end_date);
-  const tripStart = parseISO(trip.start_date);
+
+  const membersById = {};
+  (members || []).forEach((m) => { membersById[m.id] = m; });
+  // Also index by user_id for logistics which use user_id
+  const membersByUserId = {};
+  (members || []).forEach((m) => { membersByUserId[m.user_id] = m; });
 
   function getMembersPresent(day) {
     return (members || []).filter((m) => {
@@ -38,6 +44,28 @@ export default function CalendarDayList({ trip, members, events, isOwner }) {
     return (events || []).filter((e) => e.event_date === dayStr);
   }
 
+  function getLogisticsForDay(dayStr) {
+    return (logistics || []).filter((l) => {
+      if (l.start_time) {
+        try {
+          const d = new Date(l.start_time);
+          return format(d, 'yyyy-MM-dd') === dayStr;
+        } catch {
+          return false;
+        }
+      }
+      if (l.end_time) {
+        try {
+          const d = new Date(l.end_time);
+          return format(d, 'yyyy-MM-dd') === dayStr;
+        } catch {
+          return false;
+        }
+      }
+      return false;
+    });
+  }
+
   return (
     <>
       <div className="v-calendar-days">
@@ -46,6 +74,7 @@ export default function CalendarDayList({ trip, members, events, isOwner }) {
           const dayNum = i + 1;
           const present = getMembersPresent(day);
           const dayEvents = getEventsForDay(dayStr);
+          const dayLogistics = getLogisticsForDay(dayStr);
           const isToday = dayStr === format(new Date(), 'yyyy-MM-dd');
 
           return (
@@ -68,6 +97,18 @@ export default function CalendarDayList({ trip, members, events, isOwner }) {
                   </div>
                 )}
               </div>
+
+              {dayLogistics.length > 0 && (
+                <div className="v-calendar-logistics">
+                  {dayLogistics.map((entry) => (
+                    <LogisticsCard
+                      key={entry.id}
+                      entry={entry}
+                      member={membersByUserId[entry.user_id]}
+                    />
+                  ))}
+                </div>
+              )}
 
               {dayEvents.length > 0 && (
                 <div className="v-calendar-events">
@@ -102,6 +143,7 @@ export default function CalendarDayList({ trip, members, events, isOwner }) {
           event={formState.event || null}
           initialDate={formState.date}
           onClose={() => setFormState(null)}
+          tripCurrency={trip.currency}
         />
       )}
     </>
