@@ -10,36 +10,109 @@ export default function InboxItem({ email, tripId, isOwner }) {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [expanded, setExpanded] = useState(email.status === 'pending');
+  const [editing, setEditing] = useState(false);
+  const [editData, setEditData] = useState(null);
 
   const parsed = email.parsed_data;
 
-  async function handleApply() {
-    if (!parsed) return;
+  function startEditing() {
+    setEditData(JSON.parse(JSON.stringify(parsed)));
+    setEditing(true);
+  }
+
+  function cancelEditing() {
+    setEditing(false);
+    setEditData(null);
+  }
+
+  function updateEvent(index, field, value) {
+    setEditData(prev => {
+      const next = { ...prev, events: [...prev.events] };
+      next.events[index] = { ...next.events[index], [field]: value };
+      return next;
+    });
+  }
+
+  function removeEvent(index) {
+    setEditData(prev => ({
+      ...prev,
+      events: prev.events.filter((_, i) => i !== index),
+    }));
+  }
+
+  function updateLogistic(index, field, value) {
+    setEditData(prev => {
+      const next = { ...prev, logistics: [...prev.logistics] };
+      next.logistics[index] = { ...next.logistics[index], [field]: value };
+      return next;
+    });
+  }
+
+  function removeLogistic(index) {
+    setEditData(prev => ({
+      ...prev,
+      logistics: prev.logistics.filter((_, i) => i !== index),
+    }));
+  }
+
+  function updateMemberUpdate(index, field, value) {
+    setEditData(prev => {
+      const next = { ...prev, member_updates: [...prev.member_updates] };
+      next.member_updates[index] = { ...next.member_updates[index], [field]: value };
+      return next;
+    });
+  }
+
+  function removeMemberUpdate(index) {
+    setEditData(prev => ({
+      ...prev,
+      member_updates: prev.member_updates.filter((_, i) => i !== index),
+    }));
+  }
+
+  function updateNewTraveler(index, field, value) {
+    setEditData(prev => {
+      const next = { ...prev, new_travelers: [...prev.new_travelers] };
+      next.new_travelers[index] = { ...next.new_travelers[index], [field]: value };
+      return next;
+    });
+  }
+
+  function removeNewTraveler(index) {
+    setEditData(prev => ({
+      ...prev,
+      new_travelers: prev.new_travelers.filter((_, i) => i !== index),
+    }));
+  }
+
+  async function handleAccept() {
+    const data = editing ? editData : parsed;
+    if (!data) return;
     setApplying(true);
     setError(null);
 
     try {
-      // Apply changes via the existing apply route
       const applyRes = await fetch(`/trips/${tripId}/apply`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          member_updates: parsed.member_updates,
-          new_travelers: parsed.new_travelers,
-          logistics: parsed.logistics,
-          events: parsed.events,
+          member_updates: data.member_updates,
+          new_travelers: data.new_travelers,
+          logistics: data.logistics,
+          events: data.events,
         }),
       });
       const applyData = await applyRes.json();
       setResult(applyData);
 
-      // Mark email as applied
       await fetch(`/trips/${tripId}/inbox/${email.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'applied' }),
       });
 
+      setEditing(false);
+      setEditData(null);
       router.refresh();
     } catch (e) {
       setError('Failed to apply changes.');
@@ -98,7 +171,7 @@ export default function InboxItem({ email, tripId, isOwner }) {
             </div>
           )}
 
-          {parsed && !result && (
+          {parsed && !result && !editing && (
             <div className="v-parsed-results">
               <div className="v-parsed-summary">{parsed.summary}</div>
 
@@ -179,6 +252,70 @@ export default function InboxItem({ email, tripId, isOwner }) {
             </div>
           )}
 
+          {editing && editData && !result && (
+            <div className="v-parsed-results v-inbox-editing">
+              {editData.member_updates?.length > 0 && (
+                <div className="v-parsed-section">
+                  <div className="v-parsed-section-title">Stay Date Updates</div>
+                  {editData.member_updates.map((u, i) => (
+                    <div key={i} className="v-inbox-edit-row">
+                      <input className="v-form-input v-inbox-edit-input" value={u.name} onChange={e => updateMemberUpdate(i, 'name', e.target.value)} placeholder="Name" />
+                      <input className="v-form-input v-inbox-edit-input" type="date" value={u.stay_start || ''} onChange={e => updateMemberUpdate(i, 'stay_start', e.target.value)} />
+                      <input className="v-form-input v-inbox-edit-input" type="date" value={u.stay_end || ''} onChange={e => updateMemberUpdate(i, 'stay_end', e.target.value)} />
+                      <button className="v-inbox-edit-remove" onClick={() => removeMemberUpdate(i)} title="Remove">&times;</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {editData.new_travelers?.length > 0 && (
+                <div className="v-parsed-section">
+                  <div className="v-parsed-section-title">New Members</div>
+                  {editData.new_travelers.map((t, i) => (
+                    <div key={i} className="v-inbox-edit-row">
+                      <input className="v-form-input v-inbox-edit-input" value={t.name} onChange={e => updateNewTraveler(i, 'name', e.target.value)} placeholder="Name" />
+                      <input className="v-form-input v-inbox-edit-input" value={t.email || ''} onChange={e => updateNewTraveler(i, 'email', e.target.value)} placeholder="Email" />
+                      <input className="v-form-input v-inbox-edit-input" type="date" value={t.stay_start || ''} onChange={e => updateNewTraveler(i, 'stay_start', e.target.value)} />
+                      <input className="v-form-input v-inbox-edit-input" type="date" value={t.stay_end || ''} onChange={e => updateNewTraveler(i, 'stay_end', e.target.value)} />
+                      <button className="v-inbox-edit-remove" onClick={() => removeNewTraveler(i)} title="Remove">&times;</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {editData.logistics?.length > 0 && (
+                <div className="v-parsed-section">
+                  <div className="v-parsed-section-title">Logistics</div>
+                  {editData.logistics.map((l, i) => (
+                    <div key={i} className="v-inbox-edit-row">
+                      <input className="v-form-input v-inbox-edit-input v-inbox-edit-input-sm" value={l.type} onChange={e => updateLogistic(i, 'type', e.target.value)} placeholder="Type" />
+                      <input className="v-form-input v-inbox-edit-input" value={l.title} onChange={e => updateLogistic(i, 'title', e.target.value)} placeholder="Title" />
+                      <input className="v-form-input v-inbox-edit-input" value={l.person_name || ''} onChange={e => updateLogistic(i, 'person_name', e.target.value)} placeholder="Person" />
+                      <input className="v-form-input v-inbox-edit-input" value={l.start_time || ''} onChange={e => updateLogistic(i, 'start_time', e.target.value)} placeholder="Time" />
+                      <button className="v-inbox-edit-remove" onClick={() => removeLogistic(i)} title="Remove">&times;</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {editData.events?.length > 0 && (
+                <div className="v-parsed-section">
+                  <div className="v-parsed-section-title">Events</div>
+                  {editData.events.map((ev, i) => (
+                    <div key={i} className="v-inbox-edit-row">
+                      <input className="v-form-input v-inbox-edit-input v-inbox-edit-input-sm" value={ev.category} onChange={e => updateEvent(i, 'category', e.target.value)} placeholder="Category" />
+                      <input className="v-form-input v-inbox-edit-input" value={ev.title} onChange={e => updateEvent(i, 'title', e.target.value)} placeholder="Title" />
+                      <input className="v-form-input v-inbox-edit-input" type="date" value={ev.event_date || ''} onChange={e => updateEvent(i, 'event_date', e.target.value)} />
+                      <input className="v-form-input v-inbox-edit-input v-inbox-edit-input-sm" value={ev.start_time || ''} onChange={e => updateEvent(i, 'start_time', e.target.value)} placeholder="Time" />
+                      <input className="v-form-input v-inbox-edit-input" value={ev.location || ''} onChange={e => updateEvent(i, 'location', e.target.value)} placeholder="Location" />
+                      <button className="v-inbox-edit-remove" onClick={() => removeEvent(i)} title="Remove">&times;</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
           {result && (
             <div className="v-parsed-results">
               <div className="v-parsed-summary" style={{ color: 'var(--v-hide)' }}>
@@ -198,11 +335,26 @@ export default function InboxItem({ email, tripId, isOwner }) {
             <div style={{ display: 'flex', gap: 12, marginTop: 16 }}>
               <button
                 className="v-btn v-btn-primary"
-                onClick={handleApply}
+                onClick={handleAccept}
                 disabled={applying}
               >
-                {applying ? 'Applying...' : 'Apply Changes'}
+                {applying ? 'Accepting...' : 'Accept'}
               </button>
+              {!editing ? (
+                <button
+                  className="v-btn v-btn-secondary"
+                  onClick={startEditing}
+                >
+                  Edit
+                </button>
+              ) : (
+                <button
+                  className="v-btn v-btn-secondary"
+                  onClick={cancelEditing}
+                >
+                  Cancel
+                </button>
+              )}
               <button
                 className="v-btn v-btn-secondary"
                 onClick={handleDismiss}

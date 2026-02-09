@@ -2339,6 +2339,41 @@
   line-height: 1;
 }
 
+.v-inbox-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.v-inbox-edit-input {
+  padding: 6px 10px;
+  font-size: 0.8125rem;
+  flex: 1;
+  min-width: 100px;
+}
+
+.v-inbox-edit-input-sm {
+  flex: 0 0 auto;
+  width: 100px;
+}
+
+.v-inbox-edit-remove {
+  background: none;
+  border: none;
+  color: var(--v-ivory-dim);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.v-inbox-edit-remove:hover {
+  color: var(--v-coral);
+}
+
 @media (max-width: 600px) {
   .v-forwarding-address-row {
     flex-direction: column;
