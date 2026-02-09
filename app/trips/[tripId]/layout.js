@@ -41,6 +41,13 @@ export default async function TripLayout({ children, params }) {
     .single();
   const isOwner = membership?.role === 'owner';
 
+  // Get pending inbox count
+  const { count: inboxCount } = await supabase
+    .from('inbound_emails')
+    .select('id', { count: 'exact', head: true })
+    .eq('trip_id', tripId)
+    .eq('status', 'pending');
+
   return (
     <>
       {trip.cover_image_url && (
@@ -70,7 +77,7 @@ export default async function TripLayout({ children, params }) {
             <div className="v-trip-destination">{trip.destination}</div>
           </>
         )}
-        <TripNav tripId={tripId} />
+        <TripNav tripId={tripId} inboxCount={inboxCount || 0} />
       </div>
       {children}
     </>

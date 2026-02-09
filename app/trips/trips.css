@@ -2209,3 +2209,151 @@
     left: 10px;
   }
 }
+
+/* ---- Forwarding Address ---- */
+
+.v-forwarding-address {
+  background-color: var(--v-charcoal-light);
+  border: 1px solid var(--v-ivory-faint);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.v-forwarding-address-label {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.75rem;
+  color: var(--v-hide);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.v-forwarding-address-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.v-forwarding-address-email {
+  flex: 1;
+  font-size: 0.9375rem;
+  color: var(--v-ivory);
+  background-color: var(--v-charcoal);
+  padding: 8px 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.v-forwarding-address-copy {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  padding: 8px 16px;
+}
+
+/* ---- Inbox ---- */
+
+.v-inbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.v-inbox-item {
+  background-color: var(--v-charcoal-light);
+  border: 1px solid var(--v-ivory-faint);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.v-inbox-item-processed {
+  opacity: 0.7;
+}
+
+.v-inbox-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.v-inbox-item-header:hover {
+  background-color: var(--v-charcoal-lighter);
+}
+
+.v-inbox-item-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.v-inbox-item-subject {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v-inbox-item-meta {
+  font-size: 0.8125rem;
+  color: var(--v-ivory-dim);
+}
+
+.v-inbox-item-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.v-inbox-item-chevron {
+  color: var(--v-ivory-dim);
+  font-size: 0.875rem;
+}
+
+.v-inbox-item-body {
+  padding: 0 20px 20px;
+}
+
+.v-inbox-badge-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background-color: var(--v-coral);
+  color: white;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  margin-left: 6px;
+  line-height: 1;
+}
+
+@media (max-width: 600px) {
+  .v-forwarding-address-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .v-forwarding-address-email {
+    font-size: 0.8125rem;
+  }
+
+  .v-inbox-item-header {
+    padding: 12px 14px;
+  }
+
+  .v-inbox-item-body {
+    padding: 0 14px 14px;
+  }
+}

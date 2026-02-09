@@ -9,9 +9,10 @@ const tabs = [
   { label: 'Expenses', path: '/expenses' },
   { label: 'Logistics', path: '/logistics' },
   { label: 'Members', path: '/members' },
+  { label: 'Inbox', path: '/inbox' },
 ];
 
-export default function TripNav({ tripId }) {
+export default function TripNav({ tripId, inboxCount = 0 }) {
   const pathname = usePathname();
   const base = `/trips/${tripId}`;
 
@@ -29,6 +30,9 @@ export default function TripNav({ tripId }) {
             className={`v-trip-nav-link${isActive ? ' active' : ''}`}
           >
             {tab.label}
+            {tab.label === 'Inbox' && inboxCount > 0 && (
+              <span className="v-inbox-badge-count">{inboxCount}</span>
+            )}
           </Link>
         );
       })}

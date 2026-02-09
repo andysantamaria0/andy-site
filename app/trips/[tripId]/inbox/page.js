@@ -1,0 +1,75 @@
+import { createClient } from '../../../../lib/supabase/server';
+import { redirect } from 'next/navigation';
+import InboxItem from '../../../../components/trips/InboxItem';
+import ForwardingAddress from '../../../../components/trips/ForwardingAddress';
+
+export default async function InboxPage({ params }) {
+  const { tripId } = await params;
+  const supabase = await createClient();
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect('/login');
+
+  const { data: membership } = await supabase
+    .from('trip_members')
+    .select('role')
+    .eq('trip_id', tripId)
+    .eq('user_id', user.id)
+    .single();
+
+  if (!membership) redirect('/trips');
+
+  const isOwner = membership.role === 'owner';
+
+  // Get trip for forwarding address
+  const { data: trip } = await supabase
+    .from('trips')
+    .select('inbound_email')
+    .eq('id', tripId)
+    .single();
+
+  // Get all inbound emails, pending first
+  const { data: emails } = await supabase
+    .from('inbound_emails')
+    .select('*')
+    .eq('trip_id', tripId)
+    .order('created_at', { ascending: false });
+
+  const pending = (emails || []).filter((e) => e.status === 'pending');
+  const processed = (emails || []).filter((e) => e.status !== 'pending');
+
+  return (
+    <div className="v-page">
+      {isOwner && trip?.inbound_email && (
+        <ForwardingAddress email={trip.inbound_email} />
+      )}
+
+      <h2 className="v-section-title" style={{ marginTop: isOwner ? 24 : 0 }}>
+        Pending {pending.length > 0 && `(${pending.length})`}
+      </h2>
+
+      {pending.length === 0 ? (
+        <p style={{ color: 'var(--v-ivory-dim)', fontSize: '0.9375rem' }}>
+          No pending emails. Forward booking confirmations, flight details, or reservation emails to the address above.
+        </p>
+      ) : (
+        <div className="v-inbox-list">
+          {pending.map((email) => (
+            <InboxItem key={email.id} email={email} tripId={tripId} isOwner={isOwner} />
+          ))}
+        </div>
+      )}
+
+      {processed.length > 0 && (
+        <>
+          <h2 className="v-section-title" style={{ marginTop: 32 }}>History</h2>
+          <div className="v-inbox-list">
+            {processed.map((email) => (
+              <InboxItem key={email.id} email={email} tripId={tripId} isOwner={isOwner} />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
