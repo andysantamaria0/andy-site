@@ -414,6 +414,13 @@
   border-bottom: 1px solid var(--v-ivory-faint);
 }
 
+.v-trip-header-cover {
+  padding: 40px 24px 24px;
+  border-bottom: none;
+  border-radius: 0;
+  position: relative;
+}
+
 .v-trip-header-top {
   display: flex;
   align-items: center;

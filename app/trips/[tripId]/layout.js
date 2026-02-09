@@ -41,9 +41,18 @@ export default async function TripLayout({ children, params }) {
     .single();
   const isOwner = membership?.role === 'owner';
 
+  const headerStyle = trip.cover_image_url ? {
+    backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.65) 100%), url(${trip.cover_image_url})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  } : undefined;
+
   return (
     <>
-      <div className="v-trip-header">
+      <div
+        className={`v-trip-header${trip.cover_image_url ? ' v-trip-header-cover' : ''}`}
+        style={headerStyle}
+      >
         {isOwner ? (
           <TripHeaderEditor trip={trip} />
         ) : (
