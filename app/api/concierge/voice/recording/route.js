@@ -113,9 +113,14 @@ export async function POST(request) {
         messages: [{ role: 'user', content }],
       });
 
-      const responseText = message.content[0].text;
-      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-      parsedData = JSON.parse(jsonMatch ? jsonMatch[0] : responseText);
+      const responseText = message.content?.[0]?.text || '';
+      const jsonStart = responseText.indexOf('{');
+      const jsonEnd = responseText.lastIndexOf('}');
+      if (jsonStart !== -1 && jsonEnd > jsonStart) {
+        parsedData = JSON.parse(responseText.slice(jsonStart, jsonEnd + 1));
+      } else {
+        parsedData = JSON.parse(responseText);
+      }
     } catch (e) {
       parseError = e.message || 'Failed to parse voice recording';
     }
@@ -126,7 +131,7 @@ export async function POST(request) {
   }
 
   // Store in inbound_emails
-  await supabase
+  const { error: insertError } = await supabase
     .from('inbound_emails')
     .insert({
       trip_id: trip?.id || null,
@@ -144,6 +149,10 @@ export async function POST(request) {
       channel: 'voice',
       reply_to: from,
     });
+
+  if (insertError) {
+    console.error('Failed to insert voice recording:', insertError);
+  }
 
   // Return empty TwiML (call is already recorded)
   return new NextResponse('<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="alice">Thanks! We got your message.</Say></Response>', {

@@ -184,9 +184,14 @@ export async function POST(request) {
         messages: [{ role: 'user', content }],
       });
 
-      const responseText = message.content[0].text;
-      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-      parsedData = JSON.parse(jsonMatch ? jsonMatch[0] : responseText);
+      const responseText = message.content?.[0]?.text || '';
+      const jsonStart = responseText.indexOf('{');
+      const jsonEnd = responseText.lastIndexOf('}');
+      if (jsonStart !== -1 && jsonEnd > jsonStart) {
+        parsedData = JSON.parse(responseText.slice(jsonStart, jsonEnd + 1));
+      } else {
+        parsedData = JSON.parse(responseText);
+      }
     } catch (e) {
       parseError = e.message || 'Failed to parse message content';
     }

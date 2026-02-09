@@ -61,6 +61,19 @@ export async function POST(request) {
     process.env.SUPABASE_SERVICE_ROLE_KEY
   );
 
+  // Dedup by message_id (before expensive operations)
+  if (messageId) {
+    const { data: existing } = await supabase
+      .from('inbound_emails')
+      .select('id')
+      .eq('message_id', messageId)
+      .single();
+
+    if (existing) {
+      return NextResponse.json({ status: 'duplicate' });
+    }
+  }
+
   // Detect trip: concierge address uses sender-based detection, trip-*@ uses legacy lookup
   const isConcierge = allAddresses.some((a) => a === CONCIERGE_ADDRESS);
   const legacyAddress = allAddresses.find((a) => /^trip-[a-z0-9]+@/i.test(a));
@@ -82,19 +95,6 @@ export async function POST(request) {
   const trip = detection.trip;
   if (!trip) {
     return NextResponse.json({ status: 'no_matching_trip' });
-  }
-
-  // Dedup by message_id
-  if (messageId) {
-    const { data: existing } = await supabase
-      .from('inbound_emails')
-      .select('id')
-      .eq('message_id', messageId)
-      .single();
-
-    if (existing) {
-      return NextResponse.json({ status: 'duplicate' });
-    }
   }
 
   // Get trip members for context
@@ -178,9 +178,14 @@ export async function POST(request) {
         messages: [{ role: 'user', content }],
       });
 
-      const responseText = message.content[0].text;
-      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-      parsedData = JSON.parse(jsonMatch ? jsonMatch[0] : responseText);
+      const responseText = message.content?.[0]?.text || '';
+      const jsonStart = responseText.indexOf('{');
+      const jsonEnd = responseText.lastIndexOf('}');
+      if (jsonStart !== -1 && jsonEnd > jsonStart) {
+        parsedData = JSON.parse(responseText.slice(jsonStart, jsonEnd + 1));
+      } else {
+        parsedData = JSON.parse(responseText);
+      }
     } catch (e) {
       parseError = e.message || 'Failed to parse email content';
     }
@@ -211,7 +216,7 @@ export async function POST(request) {
 
   if (insertError) {
     console.error('Failed to insert inbound email:', insertError);
-    return NextResponse.json({ status: 'insert_error', error: insertError.message });
+    return NextResponse.json({ status: 'insert_error', error: insertError.message }, { status: 500 });
   }
 
   return NextResponse.json({ status: 'ok' });
