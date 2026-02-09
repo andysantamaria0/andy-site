@@ -414,19 +414,37 @@
   border-bottom: 1px solid var(--v-ivory-faint);
 }
 
-.v-trip-header-cover {
-  padding: 48px 24px 24px;
-  border-bottom: none;
-  position: relative;
+/* Trip Cover Photo Banner */
+.v-trip-cover {
+  height: 220px;
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
 }
 
-.v-trip-header-cover .v-trip-name {
-  font-size: 2.25rem;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+.v-trip-cover-content {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.v-trip-header-cover .v-trip-destination {
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+.v-trip-cover-destination {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.8rem;
+  color: var(--v-hide);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  margin-bottom: 4px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.v-trip-cover-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--v-ivory);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .v-trip-header-top {
