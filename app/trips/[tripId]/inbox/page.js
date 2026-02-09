@@ -1,7 +1,7 @@
 import { createClient } from '../../../../lib/supabase/server';
 import { redirect } from 'next/navigation';
 import InboxItem from '../../../../components/trips/InboxItem';
-import ForwardingAddress from '../../../../components/trips/ForwardingAddress';
+import ConciergeContact from '../../../../components/trips/ConciergeContact';
 
 export default async function InboxPage({ params }) {
   const { tripId } = await params;
@@ -21,10 +21,10 @@ export default async function InboxPage({ params }) {
 
   const isOwner = membership.role === 'owner';
 
-  // Get trip for forwarding address
+  // Get trip for concierge info
   const { data: trip } = await supabase
     .from('trips')
-    .select('inbound_email')
+    .select('inbound_email, trip_code')
     .eq('id', tripId)
     .single();
 
@@ -40,8 +40,8 @@ export default async function InboxPage({ params }) {
 
   return (
     <div className="v-page">
-      {isOwner && trip?.inbound_email && (
-        <ForwardingAddress email={trip.inbound_email} />
+      {isOwner && (
+        <ConciergeContact tripCode={trip?.trip_code} />
       )}
 
       <h2 className="v-section-title" style={{ marginTop: isOwner ? 24 : 0 }}>
@@ -50,7 +50,7 @@ export default async function InboxPage({ params }) {
 
       {pending.length === 0 ? (
         <p style={{ color: 'var(--v-ivory-dim)', fontSize: '0.9375rem' }}>
-          No pending emails. Forward booking confirmations, flight details, or reservation emails to the address above.
+          No pending messages. Email or text the concierge with booking confirmations, flight details, or travel plans.
         </p>
       ) : (
         <div className="v-inbox-list">

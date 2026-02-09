@@ -28,6 +28,7 @@ export default {
       TextBody: parsed.text || '',
       HtmlBody: parsed.html || '',
       MessageID: parsed.messageId || '',
+      CcAddresses: (parsed.cc || []).map((addr) => addr.address || addr),
       Attachments: (parsed.attachments || []).map((att) => ({
         Name: att.filename || 'attachment',
         Content: arrayBufferToBase64(att.content),

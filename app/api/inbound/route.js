@@ -1,5 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { buildParsePrompt } from '../../../lib/utils/parsePrompt';
+import { detectTrip, buildDisambiguationMessage } from '../../../lib/utils/tripDetection';
+import { sendDisambiguationReply } from '../../../lib/utils/sendReply';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 
@@ -20,6 +22,8 @@ function stripHtml(html) {
     .trim();
 }
 
+const CONCIERGE_ADDRESS = 'concierge@andysantamaria.com';
+
 export async function POST(request) {
   // Authenticate via query param
   const { searchParams } = new URL(request.url);
@@ -31,11 +35,12 @@ export async function POST(request) {
 
   const payload = await request.json();
 
-  // Extract fields from Postmark inbound webhook
+  // Extract fields from webhook payload
   const {
     From: fromEmail,
     FromName: fromName,
     To: toAddress,
+    CcAddresses: ccAddresses,
     Subject: subject,
     TextBody: textBody,
     HtmlBody: htmlBody,
@@ -43,10 +48,12 @@ export async function POST(request) {
     Attachments: attachments,
   } = payload;
 
-  // Determine the recipient address (first To address)
+  // Collect all recipient addresses
   const recipient = typeof toAddress === 'string'
     ? toAddress.toLowerCase().trim()
     : (toAddress || '').toString().toLowerCase().trim();
+
+  const allAddresses = [recipient, ...(ccAddresses || []).map((a) => a.toLowerCase().trim())];
 
   // Use service role client (no user session in webhooks)
   const supabase = createClient(
@@ -54,15 +61,26 @@ export async function POST(request) {
     process.env.SUPABASE_SERVICE_ROLE_KEY
   );
 
-  // Look up trip by inbound_email
-  const { data: trip } = await supabase
-    .from('trips')
-    .select('*')
-    .eq('inbound_email', recipient)
-    .single();
+  // Detect trip: concierge address uses sender-based detection, trip-*@ uses legacy lookup
+  const isConcierge = allAddresses.some((a) => a === CONCIERGE_ADDRESS);
+  const legacyAddress = allAddresses.find((a) => /^trip-[a-z0-9]+@/i.test(a));
 
+  const parseText = (textBody || '').trim() || stripHtml(htmlBody || '');
+
+  const detection = await detectTrip(supabase, {
+    senderEmail: fromEmail,
+    messageText: isConcierge ? parseText : null,
+    toAddress: !isConcierge ? (legacyAddress || recipient) : null,
+  });
+
+  if (detection.ambiguous) {
+    // Send disambiguation reply via email
+    await sendDisambiguationReply('email', fromEmail, detection.candidates);
+    return NextResponse.json({ status: 'disambiguation_sent' });
+  }
+
+  const trip = detection.trip;
   if (!trip) {
-    // No matching trip — return 200 so Postmark doesn't retry
     return NextResponse.json({ status: 'no_matching_trip' });
   }
 
@@ -79,7 +97,7 @@ export async function POST(request) {
     }
   }
 
-  // Get trip members to identify sender and build context
+  // Get trip members for context
   const { data: members } = await supabase
     .from('trip_members')
     .select(`
@@ -92,17 +110,13 @@ export async function POST(request) {
     `)
     .eq('trip_id', trip.id);
 
-  // Try to match sender email to a trip member
-  const senderEmail = (fromEmail || '').toLowerCase().trim();
-  const senderMember = senderEmail
+  // Use detected member or find by email
+  const senderMember = detection.member || (fromEmail
     ? (members || []).find((m) => {
         const email = (m.profiles?.email || m.email || '').toLowerCase();
-        return email === senderEmail;
+        return email === fromEmail.toLowerCase().trim();
       })
-    : null;
-
-  // Build text for parsing (prefer text body, fall back to stripped HTML)
-  const parseText = (textBody || '').trim() || stripHtml(htmlBody || '');
+    : null);
 
   // Build attachment content blocks for Claude (images + PDFs)
   const IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
@@ -111,7 +125,7 @@ export async function POST(request) {
   if (attachments && attachments.length > 0) {
     for (const att of attachments) {
       const contentType = (att.ContentType || '').toLowerCase();
-      const data = att.Content; // base64-encoded by Postmark
+      const data = att.Content; // base64-encoded
       if (!data) continue;
 
       if (IMAGE_TYPES.has(contentType)) {
@@ -191,11 +205,12 @@ export async function POST(request) {
       parsed_data: parsedData,
       parse_error: parseError,
       status: 'pending',
+      channel: 'email',
+      reply_to: fromEmail || null,
     });
 
   if (insertError) {
     console.error('Failed to insert inbound email:', insertError);
-    // Still return 200 to prevent Postmark retries
     return NextResponse.json({ status: 'insert_error', error: insertError.message });
   }
 

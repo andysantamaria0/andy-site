@@ -1,4 +1,6 @@
 import { createClient } from '../../../../../lib/supabase/server';
+import { createClient as createServiceClient } from '@supabase/supabase-js';
+import { sendAcceptReply } from '../../../../../lib/utils/sendReply';
 import { NextResponse } from 'next/server';
 
 export async function PATCH(request, { params }) {
@@ -39,6 +41,26 @@ export async function PATCH(request, { params }) {
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  // Fire reply on accept (non-blocking)
+  if (status === 'applied') {
+    const serviceSupabase = createServiceClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    );
+
+    // Fetch the email and trip name in parallel
+    Promise.all([
+      serviceSupabase.from('inbound_emails').select('*').eq('id', emailId).single(),
+      serviceSupabase.from('trips').select('name').eq('id', tripId).single(),
+    ]).then(([{ data: emailRecord }, { data: trip }]) => {
+      if (emailRecord && trip) {
+        sendAcceptReply(emailRecord, trip.name).catch((e) =>
+          console.error('Reply send failed:', e)
+        );
+      }
+    }).catch((e) => console.error('Failed to fetch for reply:', e));
   }
 
   return NextResponse.json({ ok: true });

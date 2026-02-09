@@ -148,12 +148,25 @@ export default function InboxItem({ email, tripId, isOwner }) {
     <div className={`v-inbox-item ${email.status !== 'pending' ? 'v-inbox-item-processed' : ''}`}>
       <div className="v-inbox-item-header" onClick={() => setExpanded(!expanded)}>
         <div className="v-inbox-item-header-left">
-          <span className="v-inbox-item-subject">{email.subject || '(no subject)'}</span>
+          <span className="v-inbox-item-subject">
+            {email.channel && email.channel !== 'email' && (
+              <span className="v-badge-channel">{email.channel.toUpperCase()}</span>
+            )}
+            {email.channel === 'voice'
+              ? 'Voice Note'
+              : email.channel === 'sms' || email.channel === 'mms'
+                ? (email.text_body ? email.text_body.slice(0, 60) : (email.channel === 'mms' ? 'MMS Message' : '(no text)'))
+                : (email.subject || '(no subject)')
+            }
+          </span>
           <span className="v-inbox-item-meta">
             {email.from_name || email.from_email} &middot; {dateStr}
           </span>
         </div>
         <div className="v-inbox-item-header-right">
+          {email.reply_sent && (
+            <span className="v-badge v-badge-member" style={{ fontSize: '0.625rem' }}>replied</span>
+          )}
           {email.status !== 'pending' && (
             <span className={`v-badge ${email.status === 'applied' ? 'v-badge-owner' : 'v-badge-member'}`}>
               {email.status}

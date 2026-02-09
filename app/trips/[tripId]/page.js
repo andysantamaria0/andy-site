@@ -5,6 +5,7 @@ import MemberAvatar from '../../../components/trips/MemberAvatar';
 import StayTimeline from '../../../components/trips/StayTimeline';
 import TripDatesEditor from '../../../components/trips/TripDatesEditor';
 import FeaturedToggle from '../../../components/trips/FeaturedToggle';
+import TripCodeEditor from '../../../components/trips/TripCodeEditor';
 
 export default async function TripOverviewPage({ params }) {
   const { tripId } = await params;
@@ -75,6 +76,22 @@ export default async function TripOverviewPage({ params }) {
           <div className="v-overview-card-value" style={{ fontSize: '1.125rem' }}>
             {trip.destination}
           </div>
+        </div>
+
+        <div className="v-overview-card">
+          <div className="v-overview-card-label">Trip Code</div>
+          {isOwner ? (
+            <TripCodeEditor
+              tripId={trip.id}
+              initialCode={trip.trip_code || ''}
+              initialKeywords={trip.trip_keywords || []}
+            />
+          ) : (
+            <>
+              <div className="v-trip-code">{trip.trip_code || '—'}</div>
+              <div className="v-overview-card-sub">Use this code when messaging the concierge</div>
+            </>
+          )}
         </div>
       </div>
 
