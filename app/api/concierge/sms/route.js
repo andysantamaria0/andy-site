@@ -33,10 +33,10 @@ export async function POST(request) {
 
   // Validate Twilio signature
   const signature = request.headers.get('x-twilio-signature') || '';
-  const url = process.env.TWILIO_SMS_WEBHOOK_URL || new URL(request.url).toString().split('?')[0];
+  const url = (process.env.TWILIO_SMS_WEBHOOK_URL || new URL(request.url).toString().split('?')[0]).trim();
 
   if (process.env.TWILIO_AUTH_TOKEN && !validateTwilioSignature(
-    process.env.TWILIO_AUTH_TOKEN, signature, url, params
+    process.env.TWILIO_AUTH_TOKEN.trim(), signature, url, params
   )) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 403 });
   }

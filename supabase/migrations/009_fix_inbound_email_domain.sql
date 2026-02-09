@@ -1,6 +1,8 @@
 -- Change inbound email addresses from @inbound.andysantamaria.com to @andysantamaria.com
 -- Cloudflare Email Routing works on the root domain, not subdomains
 
+SET search_path TO public;
+
 -- Update the trigger function
 CREATE OR REPLACE FUNCTION generate_inbound_email()
 RETURNS trigger AS $$
@@ -13,6 +15,6 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Update existing trips
-UPDATE public.trips
+UPDATE trips
 SET inbound_email = REPLACE(inbound_email, '@inbound.andysantamaria.com', '@andysantamaria.com')
 WHERE inbound_email LIKE '%@inbound.andysantamaria.com';
