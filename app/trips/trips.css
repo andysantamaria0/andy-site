@@ -1770,6 +1770,19 @@
     flex-direction: column;
     gap: 2px;
   }
+
+  .v-trip-cover {
+    height: 180px;
+    padding: 20px 16px;
+  }
+
+  .v-trip-cover-name {
+    font-size: 1.5rem;
+  }
+
+  .v-trip-cover-destination {
+    font-size: 0.7rem;
+  }
 }
 
 /* ============================================
