@@ -415,10 +415,18 @@
 }
 
 .v-trip-header-cover {
-  padding: 40px 24px 24px;
+  padding: 48px 24px 24px;
   border-bottom: none;
-  border-radius: 0;
   position: relative;
+}
+
+.v-trip-header-cover .v-trip-name {
+  font-size: 2.25rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.v-trip-header-cover .v-trip-destination {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 .v-trip-header-top {

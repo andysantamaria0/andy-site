@@ -42,7 +42,7 @@ export default async function TripLayout({ children, params }) {
   const isOwner = membership?.role === 'owner';
 
   const headerStyle = trip.cover_image_url ? {
-    backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.65) 100%), url(${trip.cover_image_url})`,
+    backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.55) 100%), url(${trip.cover_image_url})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   } : undefined;
