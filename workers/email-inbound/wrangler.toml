@@ -1,0 +1,8 @@
+name = "email-inbound"
+main = "src/index.js"
+compatibility_date = "2024-09-01"
+workers_dev = false
+
+[vars]
+WEBHOOK_URL = "https://andysantamaria.com/api/inbound"
+# WEBHOOK_TOKEN is set as a secret via: npx wrangler secret put WEBHOOK_TOKEN
