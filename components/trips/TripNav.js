@@ -7,7 +7,6 @@ const tabs = [
   { label: 'Overview', path: '' },
   { label: 'Calendar', path: '/calendar' },
   { label: 'Expenses', path: '/expenses' },
-  { label: 'Logistics', path: '/logistics' },
   { label: 'Members', path: '/members' },
   { label: 'Inbox', path: '/inbox' },
 ];

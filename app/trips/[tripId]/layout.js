@@ -2,6 +2,9 @@ import { createClient } from '../../../lib/supabase/server';
 import { notFound } from 'next/navigation';
 import TripNav from '../../../components/trips/TripNav';
 import TripHeaderEditor from '../../../components/trips/TripHeaderEditor';
+import HappeningNowProvider from '../../../components/trips/HappeningNowProvider';
+import HappeningNowPill from '../../../components/trips/HappeningNowPill';
+import { computeHappeningNow } from '../../../lib/utils/happeningNow';
 
 export async function generateMetadata({ params }) {
   const { tripId } = await params;
@@ -48,6 +51,34 @@ export default async function TripLayout({ children, params }) {
     .eq('trip_id', tripId)
     .eq('status', 'pending');
 
+  // Happening Now: fetch today's events, logistics, and members
+  const today = new Date().toISOString().split('T')[0];
+  const [{ data: hnEvents }, { data: hnLogistics }, { data: hnMembers }] = await Promise.all([
+    supabase
+      .from('events')
+      .select('id, title, category, event_date, start_time, end_time, location, event_attendees(member_id)')
+      .eq('trip_id', tripId)
+      .eq('event_date', today),
+    supabase
+      .from('logistics')
+      .select('id, type, title, details, start_time, end_time, profiles:user_id(display_name, avatar_url)')
+      .eq('trip_id', tripId)
+      .gte('end_time', `${today}T00:00:00`)
+      .lte('start_time', `${today}T23:59:59`),
+    supabase
+      .from('trip_members')
+      .select('id, stay_start, stay_end, color, display_name, email, profiles:user_id(display_name, avatar_url)')
+      .eq('trip_id', tripId),
+  ]);
+
+  const happeningNowItems = computeHappeningNow({
+    events: hnEvents || [],
+    logistics: hnLogistics || [],
+    members: hnMembers || [],
+    trip,
+    now: new Date(),
+  });
+
   return (
     <>
       {trip.cover_image_url && (
@@ -79,7 +110,10 @@ export default async function TripLayout({ children, params }) {
         )}
         <TripNav tripId={tripId} inboxCount={inboxCount || 0} />
       </div>
-      {children}
+      <HappeningNowProvider items={happeningNowItems} tripId={tripId}>
+        {children}
+        <HappeningNowPill />
+      </HappeningNowProvider>
     </>
   );
 }

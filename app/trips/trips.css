@@ -2442,3 +2442,328 @@
     padding: 0 14px 14px;
   }
 }
+
+/* ============================================
+   Happening Now — Pill + Inline Widget
+   ============================================ */
+
+/* ---- Inline section (overview page) ---- */
+
+.v-happening-inline {
+  margin-bottom: 32px;
+}
+
+.v-happening-inline-enter {
+  animation: v-happening-fade-in 0.4s ease both;
+}
+
+/* ---- Shared content ---- */
+
+.v-happening-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.v-happening-section-label {
+  font-family: 'Karla', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--v-ivory-dim);
+  padding: 8px 0 4px;
+}
+
+.v-happening-section-label:first-child {
+  padding-top: 0;
+}
+
+/* ---- Single item ---- */
+
+.v-happening-item {
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
+}
+
+.v-happening-item:hover {
+  background-color: var(--v-ivory-faint);
+}
+
+.v-happening-item-enter {
+  animation: v-happening-slide-up 0.35s ease both;
+}
+
+.v-happening-item-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.v-happening-item-emoji {
+  font-size: 1.125rem;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.v-happening-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.v-happening-item-title {
+  font-weight: 600;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v-happening-item-sub {
+  font-size: 0.75rem;
+  color: var(--v-ivory-dim);
+  margin-top: 1px;
+}
+
+/* ---- Member avatars (inline row) ---- */
+
+.v-happening-avatars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.v-happening-avatars .v-member-avatar,
+.v-happening-avatars .v-member-avatar-placeholder {
+  border: 2px solid var(--v-charcoal);
+}
+
+.v-happening-avatars .v-member-avatar:not(:first-child),
+.v-happening-avatars .v-member-avatar-placeholder:not(:first-child) {
+  margin-left: -6px;
+}
+
+.v-happening-avatar-more {
+  font-size: 0.625rem;
+  color: var(--v-ivory-dim);
+  margin-left: 4px;
+}
+
+/* ---- Flight progress bar ---- */
+
+.v-happening-flight {
+  margin-top: 4px;
+}
+
+.v-happening-flight-cities {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--v-ivory-dim);
+  margin-bottom: 3px;
+}
+
+.v-happening-flight-track {
+  position: relative;
+  height: 4px;
+  background-color: var(--v-ivory-faint);
+  border-radius: 2px;
+  overflow: visible;
+}
+
+.v-happening-flight-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: var(--v-royal);
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+
+.v-happening-flight-delayed {
+  background-color: var(--v-coral);
+}
+
+.v-happening-flight-plane {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.75rem;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  transition: left 1s ease;
+}
+
+.v-happening-flight-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.625rem;
+  color: var(--v-ivory-dim);
+  margin-top: 3px;
+}
+
+.v-happening-flight-delay {
+  color: var(--v-coral);
+  font-weight: 600;
+}
+
+/* ---- Floating pill ---- */
+
+.v-happening-pill {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 900;
+  background-color: var(--v-charcoal-light);
+  border: 1px solid var(--v-ivory-faint);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  min-width: 180px;
+  max-width: 360px;
+  overflow: hidden;
+  transition:
+    border-radius 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s ease;
+}
+
+.v-happening-pill-expanded {
+  border-radius: 16px;
+  max-width: 360px;
+}
+
+/* Pulse glow when items are in_progress */
+.v-happening-pill-pulse {
+  animation: v-happening-pulse 3s ease-in-out infinite;
+}
+
+.v-happening-pill-expanded.v-happening-pill-pulse {
+  animation: none;
+}
+
+/* ---- Pill toggle button ---- */
+
+.v-happening-pill-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  color: var(--v-ivory);
+  font-family: 'Karla', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+}
+
+.v-happening-pill-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--v-royal);
+  flex-shrink: 0;
+}
+
+.v-happening-pill-label {
+  flex: 1;
+}
+
+.v-happening-pill-chevron {
+  font-size: 1.25rem;
+  line-height: 1;
+  transform: rotate(-90deg);
+  transition: transform 0.25s ease;
+  color: var(--v-ivory-dim);
+}
+
+.v-happening-pill-chevron-up {
+  transform: rotate(90deg);
+}
+
+/* ---- Pill body (expand/collapse) ---- */
+
+.v-happening-pill-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.v-happening-pill-expanded .v-happening-pill-body {
+  max-height: 500px;
+}
+
+.v-happening-pill-body .v-happening-content {
+  padding: 0 16px 12px;
+  border-top: 1px solid var(--v-ivory-faint);
+}
+
+/* ---- Animations ---- */
+
+@keyframes v-happening-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes v-happening-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes v-happening-pulse {
+  0%, 100% {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 4px rgba(74, 53, 215, 0.15);
+  }
+}
+
+/* ---- Responsive: pill → bottom sheet on mobile ---- */
+
+@media (max-width: 600px) {
+  .v-happening-pill {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    max-width: 100%;
+    min-width: 100%;
+    border-radius: 16px 16px 0 0;
+    border-bottom: none;
+  }
+
+  .v-happening-pill-expanded {
+    border-radius: 16px 16px 0 0;
+  }
+
+  .v-happening-pill-expanded .v-happening-pill-body {
+    max-height: 60vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .v-happening-item-title {
+    font-size: 0.8125rem;
+  }
+
+  .v-happening-item-sub {
+    font-size: 0.6875rem;
+  }
+}

@@ -6,6 +6,7 @@ import StayTimeline from '../../../components/trips/StayTimeline';
 import TripDatesEditor from '../../../components/trips/TripDatesEditor';
 import FeaturedToggle from '../../../components/trips/FeaturedToggle';
 import TripCodeEditor from '../../../components/trips/TripCodeEditor';
+import HappeningNowInline from '../../../components/trips/HappeningNowInline';
 
 export default async function TripOverviewPage({ params }) {
   const { tripId } = await params;
@@ -102,6 +103,9 @@ export default async function TripOverviewPage({ params }) {
           <p style={{ color: 'var(--v-ivory-dim)', lineHeight: 1.6 }}>{trip.description}</p>
         </div>
       )}
+
+      {/* Happening Now */}
+      <HappeningNowInline />
 
       {/* Stay Timeline */}
       <StayTimeline trip={trip} members={members} />
