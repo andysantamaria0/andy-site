@@ -7,6 +7,7 @@ import TripDatesEditor from '../../../components/trips/TripDatesEditor';
 import FeaturedToggle from '../../../components/trips/FeaturedToggle';
 import TripCodeEditor from '../../../components/trips/TripCodeEditor';
 import HappeningNowInline from '../../../components/trips/HappeningNowInline';
+import { loadFeatures, isFeatureEnabled } from '../../../lib/features';
 
 export default async function TripOverviewPage({ params }) {
   const { tripId } = await params;
@@ -36,13 +37,21 @@ export default async function TripOverviewPage({ params }) {
   const myMembership = (members || []).find((m) => m.user_id === user?.id);
   const isOwner = myMembership?.role === 'owner';
 
+  const [featureMap, { data: profile }] = await Promise.all([
+    loadFeatures(),
+    supabase.from('profiles').select('role').eq('email', user?.email).single(),
+  ]);
+  const userRole = profile?.role || 'user';
+  const showFeatured = isFeatureEnabled(featureMap, 'featured_trip', userRole);
+  const showHappeningNow = isFeatureEnabled(featureMap, 'happening_now', userRole);
+
   const duration = trip.start_date && trip.end_date
     ? tripDuration(trip.start_date, trip.end_date)
     : null;
 
   return (
     <div className="v-page">
-      {isOwner && (
+      {isOwner && showFeatured && (
         <div style={{ marginBottom: 24 }}>
           <FeaturedToggle tripId={trip.id} featured={!!trip.featured} />
         </div>
@@ -105,7 +114,7 @@ export default async function TripOverviewPage({ params }) {
       )}
 
       {/* Happening Now */}
-      <HappeningNowInline />
+      {showHappeningNow && <HappeningNowInline />}
 
       {/* Stay Timeline */}
       <StayTimeline trip={trip} members={members} />

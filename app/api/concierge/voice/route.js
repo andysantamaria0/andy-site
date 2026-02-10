@@ -1,7 +1,13 @@
 import { validateTwilioSignature } from '../../../../lib/utils/twilioAuth';
+import { checkFeature } from '../../../../lib/features';
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
+  if (!(await checkFeature('concierge_voice'))) {
+    const twiml = `<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="alice">This feature is currently disabled.</Say></Response>`;
+    return new NextResponse(twiml, { status: 200, headers: { 'Content-Type': 'text/xml' } });
+  }
+
   const body = await request.text();
   const params = Object.fromEntries(new URLSearchParams(body));
 

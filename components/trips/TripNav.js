@@ -3,17 +3,21 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const tabs = [
-  { label: 'Overview', path: '' },
-  { label: 'Calendar', path: '/calendar' },
-  { label: 'Expenses', path: '/expenses' },
-  { label: 'Members', path: '/members' },
-  { label: 'Inbox', path: '/inbox' },
+const allTabs = [
+  { label: 'Overview', path: '', feature: null },
+  { label: 'Calendar', path: '/calendar', feature: 'calendar' },
+  { label: 'Expenses', path: '/expenses', feature: 'expenses' },
+  { label: 'Members', path: '/members', feature: 'members' },
+  { label: 'Inbox', path: '/inbox', feature: 'inbox' },
 ];
 
-export default function TripNav({ tripId, inboxCount = 0 }) {
+export default function TripNav({ tripId, inboxCount = 0, enabledTabs }) {
   const pathname = usePathname();
   const base = `/trips/${tripId}`;
+
+  const tabs = enabledTabs
+    ? allTabs.filter((tab) => !tab.feature || enabledTabs.includes(tab.feature))
+    : allTabs;
 
   return (
     <nav className="v-trip-nav">

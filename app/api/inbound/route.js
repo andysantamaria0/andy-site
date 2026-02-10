@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import { buildParsePrompt } from '../../../lib/utils/parsePrompt';
 import { detectTrip, buildDisambiguationMessage } from '../../../lib/utils/tripDetection';
 import { sendDisambiguationReply } from '../../../lib/utils/sendReply';
+import { checkFeature } from '../../../lib/features';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 
@@ -25,6 +26,10 @@ function stripHtml(html) {
 const CONCIERGE_ADDRESS = 'concierge@andysantamaria.com';
 
 export async function POST(request) {
+  if (!(await checkFeature('concierge_email'))) {
+    return NextResponse.json({ error: 'Feature disabled' }, { status: 403 });
+  }
+
   // Authenticate via query param
   const { searchParams } = new URL(request.url);
   const token = searchParams.get('token');

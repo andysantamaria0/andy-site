@@ -1,5 +1,6 @@
 import { createClient } from '../../../../lib/supabase/server';
 import { buildParsePrompt } from '../../../../lib/utils/parsePrompt';
+import { checkFeature } from '../../../../lib/features';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 
@@ -12,6 +13,10 @@ export async function POST(request, { params }) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  if (!(await checkFeature('smart_paste'))) {
+    return NextResponse.json({ error: 'Feature disabled' }, { status: 403 });
   }
 
   // Verify user is a trip owner

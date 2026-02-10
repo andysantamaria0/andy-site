@@ -5,6 +5,7 @@ import TripHeaderEditor from '../../../components/trips/TripHeaderEditor';
 import HappeningNowProvider from '../../../components/trips/HappeningNowProvider';
 import HappeningNowPill from '../../../components/trips/HappeningNowPill';
 import { computeHappeningNow } from '../../../lib/utils/happeningNow';
+import { loadFeatures, isFeatureEnabled } from '../../../lib/features';
 
 export async function generateMetadata({ params }) {
   const { tripId } = await params;
@@ -36,13 +37,30 @@ export default async function TripLayout({ children, params }) {
   }
 
   const { data: { user } } = await supabase.auth.getUser();
-  const { data: membership } = await supabase
-    .from('trip_members')
-    .select('role')
-    .eq('trip_id', tripId)
-    .eq('user_id', user?.id)
-    .single();
+
+  const [{ data: membership }, { data: profile }, featureMap] = await Promise.all([
+    supabase
+      .from('trip_members')
+      .select('role')
+      .eq('trip_id', tripId)
+      .eq('user_id', user?.id)
+      .single(),
+    supabase
+      .from('profiles')
+      .select('role')
+      .eq('email', user?.email)
+      .single(),
+    loadFeatures(),
+  ]);
+
   const isOwner = membership?.role === 'owner';
+  const userRole = profile?.role || 'user';
+
+  // Determine which tab features are enabled for this user's role
+  const tabFeatures = ['calendar', 'expenses', 'members', 'inbox'];
+  const enabledTabs = tabFeatures.filter((f) => isFeatureEnabled(featureMap, f, userRole));
+
+  const showHappeningNow = isFeatureEnabled(featureMap, 'happening_now', userRole);
 
   // Get pending inbox count
   const { count: inboxCount } = await supabase
@@ -108,11 +126,11 @@ export default async function TripLayout({ children, params }) {
             <div className="v-trip-destination">{trip.destination}</div>
           </>
         )}
-        <TripNav tripId={tripId} inboxCount={inboxCount || 0} />
+        <TripNav tripId={tripId} inboxCount={inboxCount || 0} enabledTabs={enabledTabs} />
       </div>
       <HappeningNowProvider items={happeningNowItems} tripId={tripId}>
         {children}
-        <HappeningNowPill />
+        {showHappeningNow && <HappeningNowPill />}
       </HappeningNowProvider>
     </>
   );

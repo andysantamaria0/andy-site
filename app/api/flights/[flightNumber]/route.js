@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 import { fetchFlightStatus, normalizeFlightResponse } from '../../../../lib/flightaware';
+import { checkFeature } from '../../../../lib/features';
 
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
@@ -12,6 +13,10 @@ function getSupabase() {
 }
 
 export async function GET(request, { params }) {
+  if (!(await checkFeature('flight_tracking'))) {
+    return NextResponse.json({ error: 'Feature disabled' }, { status: 403 });
+  }
+
   const { flightNumber } = await params;
   const { searchParams } = new URL(request.url);
   const date = searchParams.get('date');

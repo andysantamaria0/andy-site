@@ -99,6 +99,22 @@
   color: var(--v-ivory-dim);
 }
 
+.v-admin-header-link {
+  font-size: 0.75rem;
+  color: var(--v-ivory-dim);
+  text-decoration: none;
+  border: 1px solid var(--v-ivory-faint);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: 'Karla', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.v-admin-header-link:hover {
+  border-color: var(--v-royal);
+  color: var(--v-royal);
+}
+
 .v-signout-btn {
   background: none;
   border: 1px solid var(--v-ivory-faint);

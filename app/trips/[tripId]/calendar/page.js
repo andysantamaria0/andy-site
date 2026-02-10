@@ -1,12 +1,24 @@
 import { createClient } from '../../../../lib/supabase/server';
+import { redirect } from 'next/navigation';
 import StayTimeline from '../../../../components/trips/StayTimeline';
 import CalendarViewToggle from '../../../../components/trips/CalendarViewToggle';
+import { loadFeatures, isFeatureEnabled } from '../../../../lib/features';
 
 export default async function CalendarPage({ params }) {
   const { tripId } = await params;
   const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
+
+  const [featureMap, { data: userProfile }] = await Promise.all([
+    loadFeatures(),
+    supabase.from('profiles').select('role').eq('email', user?.email).single(),
+  ]);
+  const userRole = userProfile?.role || 'user';
+
+  if (!isFeatureEnabled(featureMap, 'calendar', userRole)) {
+    redirect(`/trips/${tripId}`);
+  }
 
   const { data: trip } = await supabase
     .from('trips')

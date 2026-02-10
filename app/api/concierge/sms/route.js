@@ -3,6 +3,7 @@ import { buildParsePrompt } from '../../../../lib/utils/parsePrompt';
 import { detectTripForSms, buildDisambiguationMessage } from '../../../../lib/utils/tripDetection';
 import { sendDisambiguationReply } from '../../../../lib/utils/sendReply';
 import { validateTwilioSignature } from '../../../../lib/utils/twilioAuth';
+import { checkFeature } from '../../../../lib/features';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 
@@ -28,6 +29,13 @@ function escapeXml(str) {
 }
 
 export async function POST(request) {
+  if (!(await checkFeature('concierge_sms'))) {
+    return new NextResponse('<?xml version="1.0" encoding="UTF-8"?><Response><Message>This feature is currently disabled.</Message></Response>', {
+      status: 200,
+      headers: { 'Content-Type': 'text/xml' },
+    });
+  }
+
   const body = await request.text();
   const params = Object.fromEntries(new URLSearchParams(body));
 

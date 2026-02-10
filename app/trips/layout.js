@@ -17,11 +17,11 @@ export default async function TripsLayout({ children }) {
     return <>{children}</>;
   }
 
-  // Fetch profile for display name/avatar
+  // Fetch profile for display name/avatar/role
   const { data: profile } = await supabase
     .from('profiles')
-    .select('display_name, avatar_url')
-    .eq('id', user.id)
+    .select('display_name, avatar_url, role')
+    .eq('email', user.email)
     .single();
 
   return (
@@ -34,6 +34,9 @@ export default async function TripsLayout({ children }) {
         <div className="v-header-user">
           {profile?.avatar_url && (
             <img src={profile.avatar_url} alt="" className="v-header-avatar" />
+          )}
+          {profile?.role === 'super_admin' && (
+            <Link href="/admin" className="v-admin-header-link">Admin</Link>
           )}
           <span className="v-header-name">{profile?.display_name || user.email}</span>
           <SignOutButton />

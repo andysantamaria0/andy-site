@@ -2,6 +2,7 @@ import { createClient } from '../../../../lib/supabase/server';
 import { redirect } from 'next/navigation';
 import InboxItem from '../../../../components/trips/InboxItem';
 import ConciergeContact from '../../../../components/trips/ConciergeContact';
+import { loadFeatures, isFeatureEnabled } from '../../../../lib/features';
 
 export default async function InboxPage({ params }) {
   const { tripId } = await params;
@@ -9,6 +10,16 @@ export default async function InboxPage({ params }) {
 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
+
+  const [featureMap, { data: userProfile }] = await Promise.all([
+    loadFeatures(),
+    supabase.from('profiles').select('role').eq('email', user.email).single(),
+  ]);
+  const userRole = userProfile?.role || 'user';
+
+  if (!isFeatureEnabled(featureMap, 'inbox', userRole)) {
+    redirect(`/trips/${tripId}`);
+  }
 
   const { data: membership } = await supabase
     .from('trip_members')
