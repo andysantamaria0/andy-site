@@ -1667,6 +1667,132 @@
   border-radius: 20px;
 }
 
+/* ---- Week Grid ---- */
+
+.v-week-wrapper {
+  /* wrapper */
+}
+
+.v-week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.v-week-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background-color: var(--v-charcoal-light);
+  border: 1px solid var(--v-ivory-faint);
+  border-radius: 6px;
+  padding: 8px;
+  min-height: 200px;
+}
+
+.v-week-col-outside {
+  opacity: 0.35;
+}
+
+.v-week-col-today {
+  border-color: var(--v-hide);
+}
+
+.v-week-col-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--v-ivory-faint);
+  margin-bottom: 2px;
+}
+
+.v-week-col-weekday {
+  font-size: 0.6875rem;
+  color: var(--v-ivory-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+.v-week-col-day {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.v-week-col-month {
+  font-size: 0.625rem;
+  color: var(--v-ivory-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.v-week-col-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.v-week-col-avatars {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.v-week-col-avatars .v-month-cell-avatar .v-member-avatar,
+.v-week-col-avatars .v-month-cell-avatar .v-member-avatar-placeholder {
+  border: 1.5px solid var(--v-charcoal-light);
+}
+
+.v-week-col-logistics {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.v-week-col-events {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Scoped overrides for cards in narrow week columns */
+.v-week-col .v-event-card {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 8px;
+}
+
+.v-week-col .v-event-card-attendees {
+  display: none;
+}
+
+.v-week-col .v-event-card-meta {
+  flex-direction: column;
+  gap: 2px;
+}
+
+.v-week-col .v-logistics-card {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 8px;
+}
+
+.v-week-col .v-logistics-card-meta {
+  flex-direction: column;
+  gap: 2px;
+}
+
+.v-week-col .v-calendar-add-btn {
+  font-size: 0.75rem;
+  margin-top: auto;
+  padding: 4px 0;
+}
+
 /* ---- Responsive ---- */
 
 @media (max-width: 600px) {
@@ -1785,6 +1911,48 @@
   .v-logistics-card-meta {
     flex-direction: column;
     gap: 2px;
+  }
+
+  .v-week-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .v-week-col {
+    min-height: auto;
+  }
+
+  .v-week-col-header {
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+    padding-bottom: 8px;
+  }
+
+  .v-week-col .v-event-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .v-week-col .v-event-card-attendees {
+    display: flex;
+  }
+
+  .v-week-col .v-event-card-meta {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .v-week-col .v-logistics-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .v-week-col .v-logistics-card-meta {
+    flex-direction: row;
+    gap: 12px;
   }
 
   .v-trip-cover {

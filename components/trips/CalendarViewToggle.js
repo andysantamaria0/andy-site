@@ -1,11 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { parseISO, differenceInCalendarDays } from 'date-fns';
 import CalendarDayList from './CalendarDayList';
+import CalendarWeekView from './CalendarWeekView';
 import CalendarMonthGrid from './CalendarMonthGrid';
 
 export default function CalendarViewToggle({ trip, members, events, logistics, isOwner }) {
-  const [view, setView] = useState('month');
+  const defaultView = useMemo(() => {
+    if (trip.start_date && trip.end_date) {
+      const days = differenceInCalendarDays(parseISO(trip.end_date), parseISO(trip.start_date)) + 1;
+      return days <= 7 ? 'week' : 'month';
+    }
+    return 'month';
+  }, [trip.start_date, trip.end_date]);
+
+  const [view, setView] = useState(defaultView);
 
   return (
     <div>
@@ -17,6 +27,12 @@ export default function CalendarViewToggle({ trip, members, events, logistics, i
           List
         </button>
         <button
+          className={`v-view-toggle-btn ${view === 'week' ? 'v-view-toggle-btn-active' : ''}`}
+          onClick={() => setView('week')}
+        >
+          Week
+        </button>
+        <button
           className={`v-view-toggle-btn ${view === 'month' ? 'v-view-toggle-btn-active' : ''}`}
           onClick={() => setView('month')}
         >
@@ -26,6 +42,14 @@ export default function CalendarViewToggle({ trip, members, events, logistics, i
 
       {view === 'list' ? (
         <CalendarDayList
+          trip={trip}
+          members={members}
+          events={events}
+          logistics={logistics}
+          isOwner={isOwner}
+        />
+      ) : view === 'week' ? (
+        <CalendarWeekView
           trip={trip}
           members={members}
           events={events}
