@@ -12,12 +12,24 @@ export async function generateMetadata({ params }) {
   const supabase = await createClient();
   const { data: trip } = await supabase
     .from('trips')
-    .select('name')
+    .select('name, destination')
     .eq('id', tripId)
     .single();
 
+  const title = trip ? `${trip.name} — Vialoure` : 'Trip — Vialoure';
+  const description = trip?.destination
+    ? `${trip.name} · ${trip.destination} — planned with Vialoure`
+    : 'A trip planned with Vialoure';
+
   return {
-    title: trip ? `${trip.name} — Vialoure` : 'Trip — Vialoure',
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      siteName: 'Vialoure',
+      type: 'website',
+    },
   };
 }
 

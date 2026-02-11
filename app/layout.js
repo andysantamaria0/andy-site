@@ -1,9 +1,15 @@
 import './globals.css';
 import './trips/trips.css';
 
+export const viewport = {
+  themeColor: '#0A1628',
+};
+
 export const metadata = {
   title: 'Andy Santamaria',
   description: 'Startup Co-Founder, Reading, Writing, Some Backgammon. Based in NYC.',
+  appleWebApp: { capable: true, title: 'Vialoure', statusBarStyle: 'black-translucent' },
+  manifest: '/manifest.webmanifest',
   openGraph: {
     title: 'Andy Santamaria',
     description: 'Startup Co-Founder, Reading, Writing, Some Backgammon. Based in NYC.',

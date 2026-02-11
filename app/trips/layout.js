@@ -2,6 +2,7 @@ import './trips.css';
 import Link from 'next/link';
 import { createClient } from '../../lib/supabase/server';
 import SignOutButton from './SignOutButton';
+import { Toaster } from 'react-hot-toast';
 
 export const metadata = {
   title: 'Vialoure — Trip Planning',
@@ -43,6 +44,18 @@ export default async function TripsLayout({ children }) {
         </div>
       </header>
       {children}
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          style: {
+            background: 'var(--v-surface)',
+            color: 'var(--v-pearl)',
+            border: '1px solid var(--v-croisette)',
+            borderRadius: '2px',
+            fontFamily: "'DM Sans', sans-serif",
+          },
+        }}
+      />
     </div>
   );
 }

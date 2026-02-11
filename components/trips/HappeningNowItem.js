@@ -54,8 +54,8 @@ function FlightProgressBar({ flightStatus }) {
   return (
     <div className="v-happening-flight">
       <div className="v-happening-flight-cities">
-        <span>{departureCity}</span>
-        <span>{arrivalCity}</span>
+        <span style={{ fontFamily: "'Special Elite', cursive" }}>{departureCity}</span>
+        <span style={{ fontFamily: "'Special Elite', cursive" }}>{arrivalCity}</span>
       </div>
       <div className="v-happening-flight-track">
         <div
@@ -72,7 +72,7 @@ function FlightProgressBar({ flightStatus }) {
       <div className="v-happening-flight-meta">
         <span>{progress}%</span>
         {status === 'en_route' && flightStatus.estimatedArrival && (
-          <span>ETA {formatTime(flightStatus.estimatedArrival)}</span>
+          <span className="v-typewriter-cursor">ETA {formatTime(flightStatus.estimatedArrival)}</span>
         )}
         {isDelayed && <span className="v-happening-flight-delay">+{delay}min</span>}
       </div>
@@ -151,7 +151,7 @@ export default function HappeningNowItem({ item, index = 0 }) {
         <div className="v-happening-item-row">
           <span className="v-happening-item-emoji">{item.emoji}</span>
           <div className="v-happening-item-body">
-            <div className="v-happening-item-title">{item.title}</div>
+            <div className="v-happening-item-title" style={{ fontFamily: "'Special Elite', cursive" }}>{item.title}</div>
             <FlightProgressBar flightStatus={activeFlightStatus} />
           </div>
           <MemberAvatars members={item.members} />
