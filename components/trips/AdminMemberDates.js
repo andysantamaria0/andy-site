@@ -11,6 +11,7 @@ export default function AdminMemberDates({ member, tripStart, tripEnd }) {
   const info = getMemberDisplayInfo(member);
   const [stayStart, setStayStart] = useState(member.stay_start || '');
   const [stayEnd, setStayEnd] = useState(member.stay_end || '');
+  const [stayingAt, setStayingAt] = useState(member.staying_at || '');
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState(null);
 
@@ -23,6 +24,7 @@ export default function AdminMemberDates({ member, tripStart, tripEnd }) {
       .update({
         stay_start: stayStart || null,
         stay_end: stayEnd || null,
+        staying_at: stayingAt || null,
       })
       .eq('id', member.id);
 
@@ -37,7 +39,7 @@ export default function AdminMemberDates({ member, tripStart, tripEnd }) {
     }
   }
 
-  const changed = stayStart !== (member.stay_start || '') || stayEnd !== (member.stay_end || '');
+  const changed = stayStart !== (member.stay_start || '') || stayEnd !== (member.stay_end || '') || stayingAt !== (member.staying_at || '');
 
   return (
     <div className="v-admin-member-row">
@@ -68,6 +70,13 @@ export default function AdminMemberDates({ member, tripStart, tripEnd }) {
           value={stayEnd}
           min={stayStart || undefined}
           onChange={(e) => setStayEnd(e.target.value)}
+        />
+        <input
+          className="v-form-input v-admin-staying-at"
+          type="text"
+          placeholder="e.g. Hotel Splendido"
+          value={stayingAt}
+          onChange={(e) => setStayingAt(e.target.value)}
         />
         {changed && (
           <button

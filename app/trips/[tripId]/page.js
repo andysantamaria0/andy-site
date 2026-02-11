@@ -125,38 +125,90 @@ export default async function TripOverviewPage({ params }) {
       {/* Members */}
       <h2 className="v-section-title">Who&apos;s Going</h2>
       <div className="v-members-list">
-        {(members || []).map((member) => {
-          const info = getMemberDisplayInfo(member);
-          return (
-            <div key={member.id} className="v-member-row">
-              <MemberAvatar
-                member={{
-                  display_name: info.name,
-                  avatar_url: info.avatarUrl,
-                  email: info.email,
-                  color: info.color,
-                }}
-              />
-              <div className="v-member-info">
-                <div className="v-member-name">
-                  {info.name}
+        {(() => {
+          const allMembers = members || [];
+          const hasAccommodations = allMembers.some((m) => m.staying_at);
+          if (!hasAccommodations) {
+            return allMembers.map((member) => {
+              const info = getMemberDisplayInfo(member);
+              return (
+                <div key={member.id} className="v-member-row">
+                  <MemberAvatar
+                    member={{
+                      display_name: info.name,
+                      avatar_url: info.avatarUrl,
+                      email: info.email,
+                      color: info.color,
+                    }}
+                  />
+                  <div className="v-member-info">
+                    <div className="v-member-name">{info.name}</div>
+                    <span className={`v-badge ${member.role === 'owner' ? 'v-badge-owner' : 'v-badge-member'}`}>
+                      {member.role}
+                    </span>
+                  </div>
+                  {member.stay_start && member.stay_end ? (
+                    <div className="v-member-dates">
+                      {formatDateRange(member.stay_start, member.stay_end)}
+                    </div>
+                  ) : (
+                    <div className="v-member-dates" style={{ fontStyle: 'italic', opacity: 0.5 }}>
+                      Dates not set
+                    </div>
+                  )}
                 </div>
-                <span className={`v-badge ${member.role === 'owner' ? 'v-badge-owner' : 'v-badge-member'}`}>
-                  {member.role}
-                </span>
+              );
+            });
+          }
+          const grouped = {};
+          for (const member of allMembers) {
+            const key = member.staying_at || '';
+            if (!grouped[key]) grouped[key] = [];
+            grouped[key].push(member);
+          }
+          const keys = Object.keys(grouped).sort((a, b) => {
+            if (!a) return 1;
+            if (!b) return -1;
+            return a.localeCompare(b);
+          });
+          return keys.map((key) => (
+            <div key={key || '_none'} className="v-accommodation-group">
+              <div className="v-accommodation-group-label">
+                {key || 'Not specified'}
               </div>
-              {member.stay_start && member.stay_end ? (
-                <div className="v-member-dates">
-                  {formatDateRange(member.stay_start, member.stay_end)}
-                </div>
-              ) : (
-                <div className="v-member-dates" style={{ fontStyle: 'italic', opacity: 0.5 }}>
-                  Dates not set
-                </div>
-              )}
+              {grouped[key].map((member) => {
+                const info = getMemberDisplayInfo(member);
+                return (
+                  <div key={member.id} className="v-member-row">
+                    <MemberAvatar
+                      member={{
+                        display_name: info.name,
+                        avatar_url: info.avatarUrl,
+                        email: info.email,
+                        color: info.color,
+                      }}
+                    />
+                    <div className="v-member-info">
+                      <div className="v-member-name">{info.name}</div>
+                      <span className={`v-badge ${member.role === 'owner' ? 'v-badge-owner' : 'v-badge-member'}`}>
+                        {member.role}
+                      </span>
+                    </div>
+                    {member.stay_start && member.stay_end ? (
+                      <div className="v-member-dates">
+                        {formatDateRange(member.stay_start, member.stay_end)}
+                      </div>
+                    ) : (
+                      <div className="v-member-dates" style={{ fontStyle: 'italic', opacity: 0.5 }}>
+                        Dates not set
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
+          ));
+        })()}
       </div>
     </div>
   );

@@ -69,6 +69,9 @@ export default function StayTimeline({ trip, members }) {
               <div key={member.id} className="v-timeline-row">
                 <div className="v-timeline-row-label">
                   {info.name}
+                  {member.staying_at && (
+                    <span className="v-staying-at-label">{member.staying_at}</span>
+                  )}
                 </div>
                 <div className="v-timeline-row-track">
                   <div

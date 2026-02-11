@@ -34,6 +34,7 @@ export async function POST(request, { params }) {
       const updateData = {};
       if (update.stay_start) updateData.stay_start = update.stay_start;
       if (update.stay_end) updateData.stay_end = update.stay_end;
+      if (update.staying_at) updateData.staying_at = update.staying_at;
 
       if (Object.keys(updateData).length > 0) {
         const { error } = await supabase
@@ -75,6 +76,7 @@ export async function POST(request, { params }) {
           phone: traveler.phone || null,
           stay_start: traveler.stay_start || null,
           stay_end: traveler.stay_end || null,
+          staying_at: traveler.staying_at || null,
           color,
         });
 
