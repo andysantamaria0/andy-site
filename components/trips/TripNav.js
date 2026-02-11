@@ -9,6 +9,7 @@ const allTabs = [
   { label: 'Expenses', path: '/expenses', feature: 'expenses' },
   { label: 'Members', path: '/members', feature: 'members' },
   { label: 'Inbox', path: '/inbox', feature: 'inbox' },
+  { label: 'Journal', path: '/journal', feature: 'travel_log' },
 ];
 
 export default function TripNav({ tripId, inboxCount = 0, enabledTabs }) {

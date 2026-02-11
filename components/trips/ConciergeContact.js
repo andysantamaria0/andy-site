@@ -4,10 +4,12 @@ import { useState } from 'react';
 
 const CONCIERGE_EMAIL = 'concierge@andysantamaria.com';
 const CONCIERGE_PHONE = process.env.NEXT_PUBLIC_TWILIO_PHONE_NUMBER || '+1XXXXXXXXXX';
+const CONCIERGE_WHATSAPP = process.env.NEXT_PUBLIC_TWILIO_WHATSAPP_NUMBER || null;
 
 export default function ConciergeContact({ tripCode }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
+  const [copiedWhatsApp, setCopiedWhatsApp] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
 
   async function copyToClipboard(text, setter) {
@@ -78,6 +80,18 @@ export default function ConciergeContact({ tripCode }) {
           {copiedPhone ? 'Copied!' : 'Copy'}
         </button>
       </div>
+
+      {CONCIERGE_WHATSAPP && (
+        <div className="v-concierge-contact-row">
+          <code className="v-forwarding-address-email">{CONCIERGE_WHATSAPP} (WhatsApp)</code>
+          <button
+            className="v-btn v-btn-secondary v-forwarding-address-copy"
+            onClick={() => copyToClipboard(CONCIERGE_WHATSAPP, setCopiedWhatsApp)}
+          >
+            {copiedWhatsApp ? 'Copied!' : 'Copy'}
+          </button>
+        </div>
+      )}
 
       <div className="v-concierge-contact-row" style={{ marginTop: 4 }}>
         <span style={{ color: 'var(--v-pearl-dim)', fontSize: '0.8125rem', flex: 1 }}>

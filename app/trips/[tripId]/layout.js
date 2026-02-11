@@ -69,7 +69,7 @@ export default async function TripLayout({ children, params }) {
   const userRole = profile?.role || 'user';
 
   // Determine which tab features are enabled for this user's role
-  const tabFeatures = ['calendar', 'expenses', 'members', 'inbox'];
+  const tabFeatures = ['calendar', 'expenses', 'members', 'inbox', 'travel_log'];
   const enabledTabs = tabFeatures.filter((f) => isFeatureEnabled(featureMap, f, userRole));
 
   const showHappeningNow = isFeatureEnabled(featureMap, 'happening_now', userRole);

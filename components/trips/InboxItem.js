@@ -156,11 +156,13 @@ export default function InboxItem({ email, tripId, isOwner }) {
               ? 'Voice Note'
               : email.channel === 'sms' || email.channel === 'mms'
                 ? (email.text_body ? email.text_body.slice(0, 60) : (email.channel === 'mms' ? 'MMS Message' : '(no text)'))
-                : (email.subject || '(no subject)')
+                : email.channel === 'whatsapp'
+                  ? (email.text_body ? email.text_body.slice(0, 60) : 'WhatsApp Media')
+                  : (email.subject || '(no subject)')
             }
           </span>
           <span className="v-inbox-item-meta">
-            {email.from_name || email.from_email} &middot; {dateStr}
+            {email.whatsapp_sender_name || email.from_name || email.from_email} &middot; {dateStr}
           </span>
         </div>
         <div className="v-inbox-item-header-right">

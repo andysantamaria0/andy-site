@@ -31,9 +31,34 @@ export async function POST(request, { params }) {
     return NextResponse.json({ error: 'Only trip owners can use Smart Paste' }, { status: 403 });
   }
 
-  const { text } = await request.json();
-  if (!text || !text.trim()) {
-    return NextResponse.json({ error: 'No text provided' }, { status: 400 });
+  // Accept both JSON (text only) and FormData (text + images)
+  const contentType = request.headers.get('content-type') || '';
+  let text = '';
+  const imageBlocks = [];
+
+  if (contentType.includes('multipart/form-data')) {
+    const formData = await request.formData();
+    text = formData.get('text') || '';
+    const imageFiles = formData.getAll('images');
+
+    for (const file of imageFiles) {
+      if (file && file.size > 0) {
+        const buffer = await file.arrayBuffer();
+        const base64 = Buffer.from(buffer).toString('base64');
+        const mediaType = file.type || 'image/png';
+        imageBlocks.push({
+          type: 'image',
+          source: { type: 'base64', media_type: mediaType, data: base64 },
+        });
+      }
+    }
+  } else {
+    const body = await request.json();
+    text = body.text || '';
+  }
+
+  if (!text.trim() && imageBlocks.length === 0) {
+    return NextResponse.json({ error: 'No content provided' }, { status: 400 });
   }
 
   // Get trip details and current members
@@ -65,15 +90,22 @@ export async function POST(request, { params }) {
     current_stay_end: m.stay_end,
   }));
 
+  const promptText = buildParsePrompt({
+    trip,
+    memberContext,
+    text: text.trim() || '(see attached screenshot)',
+  });
+
+  // Build content blocks: images first, then text prompt
+  const content = [
+    ...imageBlocks,
+    { type: 'text', text: promptText },
+  ];
+
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-20250514',
     max_tokens: 2048,
-    messages: [
-      {
-        role: 'user',
-        content: buildParsePrompt({ trip, memberContext, text }),
-      }
-    ],
+    messages: [{ role: 'user', content }],
   });
 
   const responseText = message.content[0].text;

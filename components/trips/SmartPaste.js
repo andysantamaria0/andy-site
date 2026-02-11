@@ -1,16 +1,65 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+
+const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
 export default function SmartPaste({ tripId }) {
   const router = useRouter();
   const [text, setText] = useState('');
+  const [images, setImages] = useState([]); // { file, preview }
   const [loading, setLoading] = useState(false);
   const [parsed, setParsed] = useState(null);
   const [applying, setApplying] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [dragOver, setDragOver] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const addImages = useCallback((files) => {
+    const newImages = [];
+    for (const file of files) {
+      if (IMAGE_TYPES.includes(file.type)) {
+        newImages.push({ file, preview: URL.createObjectURL(file) });
+      }
+    }
+    if (newImages.length > 0) {
+      setImages((prev) => [...prev, ...newImages]);
+    }
+  }, []);
+
+  function removeImage(index) {
+    setImages((prev) => {
+      URL.revokeObjectURL(prev[index].preview);
+      return prev.filter((_, i) => i !== index);
+    });
+  }
+
+  function handlePaste(e) {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+
+    const imageFiles = [];
+    for (const item of items) {
+      if (item.kind === 'file' && IMAGE_TYPES.includes(item.type)) {
+        const file = item.getAsFile();
+        if (file) imageFiles.push(file);
+      }
+    }
+    if (imageFiles.length > 0) {
+      e.preventDefault();
+      addImages(imageFiles);
+    }
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    setDragOver(false);
+    if (e.dataTransfer?.files) {
+      addImages(Array.from(e.dataTransfer.files));
+    }
+  }
 
   async function handleParse() {
     setLoading(true);
@@ -19,10 +68,15 @@ export default function SmartPaste({ tripId }) {
     setResult(null);
 
     try {
+      const formData = new FormData();
+      formData.append('text', text);
+      for (const img of images) {
+        formData.append('images', img.file);
+      }
+
       const res = await fetch(`/trips/${tripId}/parse`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text }),
+        body: formData,
       });
 
       const data = await res.json();
@@ -61,37 +115,88 @@ export default function SmartPaste({ tripId }) {
 
   function handleReset() {
     setText('');
+    for (const img of images) URL.revokeObjectURL(img.preview);
+    setImages([]);
     setParsed(null);
     setResult(null);
     setError(null);
   }
+
+  const hasContent = text.trim() || images.length > 0;
 
   return (
     <div className="v-smart-paste">
       <div className="v-smart-paste-header">
         <h3 className="v-section-title" style={{ marginBottom: 0 }}>Smart Paste</h3>
         <span className="v-smart-paste-hint">
-          Paste texts, emails, or confirmations — the concierge will read them for you
+          Paste text, screenshots, or confirmations — the concierge will read them for you
         </span>
       </div>
 
       {!parsed && !result && (
         <>
-          <textarea
-            className="v-form-textarea"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder={"The flight confirmation said AF 1082, departing CDG at 10:15...\n\nPaste any confirmation email, text, or travel details here."}
-            rows={5}
-            style={{ marginBottom: 12 }}
-          />
-          <button
-            className="v-btn v-btn-primary"
-            onClick={handleParse}
-            disabled={loading || !text.trim()}
+          <div
+            className={`v-smart-paste-drop${dragOver ? ' v-smart-paste-drop-active' : ''}`}
+            onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+            onDragLeave={() => setDragOver(false)}
+            onDrop={handleDrop}
           >
-            {loading ? 'Parsing...' : 'Parse'}
-          </button>
+            <textarea
+              className="v-form-textarea"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              onPaste={handlePaste}
+              placeholder={"Paste a screenshot, confirmation email, or type travel details...\n\nYou can also drag & drop images here."}
+              rows={5}
+            />
+
+            {images.length > 0 && (
+              <div className="v-smart-paste-images">
+                {images.map((img, i) => (
+                  <div key={i} className="v-smart-paste-image-thumb">
+                    <img src={img.preview} alt="" />
+                    <button
+                      className="v-smart-paste-image-remove"
+                      onClick={() => removeImage(i)}
+                      title="Remove"
+                    >&times;</button>
+                  </div>
+                ))}
+                <button
+                  className="v-smart-paste-image-add"
+                  onClick={() => fileInputRef.current?.click()}
+                  title="Add image"
+                >+</button>
+              </div>
+            )}
+          </div>
+
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/gif,image/webp"
+            multiple
+            style={{ display: 'none' }}
+            onChange={(e) => { addImages(Array.from(e.target.files)); e.target.value = ''; }}
+          />
+
+          <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+            <button
+              className="v-btn v-btn-primary"
+              onClick={handleParse}
+              disabled={loading || !hasContent}
+            >
+              {loading ? 'Parsing...' : 'Parse'}
+            </button>
+            {images.length === 0 && (
+              <button
+                className="v-btn v-btn-secondary"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                Add Screenshot
+              </button>
+            )}
+          </div>
         </>
       )}
 

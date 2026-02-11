@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { buildParsePrompt } from '../../../../lib/utils/parsePrompt';
-import { detectTripForSms, buildDisambiguationMessage } from '../../../../lib/utils/tripDetection';
+import { detectTripForWhatsApp, buildDisambiguationMessage } from '../../../../lib/utils/tripDetection';
 import { sendDisambiguationReply } from '../../../../lib/utils/sendReply';
 import { validateTwilioSignature } from '../../../../lib/utils/twilioAuth';
 import { saveMediaToStorage } from '../../../../lib/utils/mediaStorage';
@@ -30,7 +30,7 @@ function escapeXml(str) {
 }
 
 export async function POST(request) {
-  if (!(await checkFeature('concierge_sms'))) {
+  if (!(await checkFeature('concierge_whatsapp'))) {
     return new NextResponse('<?xml version="1.0" encoding="UTF-8"?><Response><Message>This feature is currently disabled.</Message></Response>', {
       status: 200,
       headers: { 'Content-Type': 'text/xml' },
@@ -42,7 +42,7 @@ export async function POST(request) {
 
   // Validate Twilio signature
   const signature = request.headers.get('x-twilio-signature') || '';
-  const url = (process.env.TWILIO_SMS_WEBHOOK_URL || new URL(request.url).toString().split('?')[0]).trim();
+  const url = (process.env.TWILIO_WHATSAPP_WEBHOOK_URL || new URL(request.url).toString().split('?')[0]).trim();
 
   if (process.env.TWILIO_AUTH_TOKEN && !validateTwilioSignature(
     process.env.TWILIO_AUTH_TOKEN.trim(), signature, url, params
@@ -50,8 +50,17 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 403 });
   }
 
-  const { From: from, Body: messageBody, NumMedia, MessageSid } = params;
+  const { From: rawFrom, Body: messageBody, NumMedia, MessageSid, ProfileName } = params;
   const numMedia = parseInt(NumMedia || '0', 10);
+
+  // Strip whatsapp: prefix from phone number
+  const from = (rawFrom || '').replace(/^whatsapp:/, '');
+
+  // Extract group info if present
+  const groupId = params.WaId || null;
+  const isGroup = params.AuthorDisplayName != null;
+  const groupName = isGroup ? (params.GroupName || null) : null;
+  const senderName = isGroup ? params.AuthorDisplayName : (ProfileName || null);
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -72,9 +81,10 @@ export async function POST(request) {
   }
 
   // Detect trip
-  const detection = await detectTripForSms(supabase, {
+  const detection = await detectTripForWhatsApp(supabase, {
     senderPhone: from,
     messageText: messageBody || '',
+    groupId: isGroup ? groupId : null,
   });
 
   // Handle "switch to" command
@@ -83,7 +93,7 @@ export async function POST(request) {
   }
 
   if (detection.ambiguous) {
-    await sendDisambiguationReply('sms', from, detection.candidates);
+    await sendDisambiguationReply('whatsapp', rawFrom, detection.candidates);
     return emptyTwiml();
   }
 
@@ -108,10 +118,9 @@ export async function POST(request) {
 
   // Build content blocks for Claude
   const contentBlocks = [];
-  const mediaBuffers = [];
-  const channel = numMedia > 0 ? 'mms' : 'sms';
+  const mediaBuffers = []; // for storage persistence
 
-  // Fetch media attachments (MMS)
+  // Fetch media attachments
   if (numMedia > 0) {
     const sid = process.env.TWILIO_ACCOUNT_SID;
     const token = process.env.TWILIO_AUTH_TOKEN;
@@ -129,15 +138,15 @@ export async function POST(request) {
         if (!res.ok) continue;
 
         const arrayBuffer = await res.arrayBuffer();
-        const bufferNode = Buffer.from(arrayBuffer);
-        const data = bufferNode.toString('base64');
+        const buffer = Buffer.from(arrayBuffer);
+        const data = buffer.toString('base64');
 
         if (mediaType.startsWith('image/')) {
           contentBlocks.push({
             type: 'image',
             source: { type: 'base64', media_type: mediaType, data },
           });
-          mediaBuffers.push({ buffer: bufferNode, mimeType: mediaType });
+          mediaBuffers.push({ buffer, mimeType: mediaType });
         } else if (mediaType === 'application/pdf') {
           contentBlocks.push({
             type: 'document',
@@ -212,13 +221,14 @@ export async function POST(request) {
   }
 
   // Store in inbound_emails
+  const channel = numMedia > 0 ? 'whatsapp' : 'whatsapp';
   const { data: inserted, error: insertError } = await supabase
     .from('inbound_emails')
     .insert({
       trip_id: trip.id,
       from_email: from,
-      from_name: null,
-      subject: text ? text.slice(0, 60) : (channel === 'mms' ? 'MMS Message' : null),
+      from_name: senderName || null,
+      subject: text ? text.slice(0, 60) : (numMedia > 0 ? 'WhatsApp Media' : null),
       text_body: text || null,
       message_id: MessageSid || null,
       raw_payload: params,
@@ -228,25 +238,28 @@ export async function POST(request) {
       parse_error: parseError,
       status: 'pending',
       channel,
-      reply_to: from,
+      reply_to: rawFrom,
       twilio_message_sid: MessageSid || null,
+      whatsapp_group_id: isGroup ? groupId : null,
+      whatsapp_group_name: groupName,
+      whatsapp_sender_name: senderName,
     })
     .select('id')
     .single();
 
   if (insertError) {
-    console.error('Failed to insert SMS inbound:', insertError);
+    console.error('Failed to insert WhatsApp inbound:', insertError);
     return twiml("Something went wrong. Please try again.");
   }
 
-  // Persist MMS photos to storage
+  // Persist photos to storage
   if (mediaBuffers.length > 0 && inserted) {
     for (const media of mediaBuffers) {
       await saveMediaToStorage(supabase, {
         tripId: trip.id,
         buffer: media.buffer,
         mimeType: media.mimeType,
-        channel: 'mms',
+        channel: 'whatsapp',
         sourceMessageId: inserted.id,
         memberId: detection.member?.id || null,
       });
