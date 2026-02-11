@@ -2366,40 +2366,422 @@ select.v-form-input {
   padding: 12px 28px;
 }
 
-/* Features — Editorial Layout */
-.v-landing-features-editorial {
-  max-width: 640px;
+/* Features — Visual Showcase */
+.v-landing-showcase {
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 80px 32px 100px;
+  padding: 60px 32px 100px;
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 80px;
 }
 
-.v-landing-feature-block {
-  border-left: 2px solid var(--v-champagne);
-  padding-left: 28px;
-  animation: v-fade-up var(--v-standard) var(--v-ease) both;
+.v-landing-showcase-row {
+  display: flex;
+  align-items: center;
+  gap: 64px;
 }
 
-.v-landing-feature-block:nth-child(1) { animation-delay: 0ms; }
-.v-landing-feature-block:nth-child(2) { animation-delay: 100ms; }
-.v-landing-feature-block:nth-child(3) { animation-delay: 200ms; }
+.v-landing-showcase-row-reverse {
+  flex-direction: row-reverse;
+}
 
-.v-landing-feature-heading {
+.v-landing-showcase-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.v-landing-showcase-heading {
   font-family: 'Fraunces', serif;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  margin: 0 0 12px 0;
+  margin: 0 0 16px 0;
   color: var(--v-pearl);
 }
 
-.v-landing-feature-body {
+.v-landing-showcase-body {
   font-family: 'Crimson Pro', serif;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1.65;
   color: var(--v-pearl-dim);
   margin: 0;
+}
+
+.v-landing-showcase-visual {
+  flex: 1.2;
+  min-width: 0;
+}
+
+/* ---- Shared Mockup Chrome ---- */
+
+.v-mock {
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.v-mock-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--v-pearl-faint);
+  background-color: var(--v-nuit);
+}
+
+.v-mock-bar-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--v-pearl);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.v-mock-bar-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  color: var(--v-pearl-dim);
+}
+
+.v-mock-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--v-cinnabar);
+  animation: v-happening-pulse 3s ease-in-out infinite;
+}
+
+/* ---- Calendar Mockup ---- */
+
+.v-mock-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background-color: var(--v-pearl-faint);
+}
+
+.v-mock-cal-day {
+  background-color: var(--v-surface);
+  padding: 8px;
+  min-height: 100px;
+}
+
+.v-mock-cal-day-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--v-pearl-dim);
+  margin-bottom: 2px;
+}
+
+.v-mock-cal-day-num {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--v-pearl);
+  margin-bottom: 6px;
+}
+
+.v-mock-cal-events {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.v-mock-cal-event {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 4px 5px;
+  border-radius: 2px;
+  border-left: 2px solid transparent;
+}
+
+.v-mock-cal-event-royal {
+  background-color: rgba(74, 53, 215, 0.15);
+  border-left-color: var(--v-royal);
+}
+
+.v-mock-cal-event-champagne {
+  background-color: rgba(196, 167, 125, 0.12);
+  border-left-color: var(--v-champagne);
+}
+
+.v-mock-cal-event-cinnabar {
+  background-color: rgba(194, 59, 34, 0.12);
+  border-left-color: var(--v-cinnabar);
+}
+
+.v-mock-cal-event-icon {
+  font-size: 0.625rem;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.v-mock-cal-event-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  color: var(--v-pearl);
+  line-height: 1.3;
+}
+
+.v-mock-cal-event-time {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5rem;
+  color: var(--v-pearl-dim);
+}
+
+/* ---- Concierge Chat Mockup ---- */
+
+.v-mock-chat-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.v-mock-chat-msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+}
+
+.v-mock-chat-user {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.v-mock-chat-ai {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.v-mock-chat-user .v-mock-chat-bubble {
+  background-color: var(--v-royal);
+  color: white;
+  border-radius: 2px 2px 0 2px;
+}
+
+.v-mock-chat-ai .v-mock-chat-bubble {
+  background-color: var(--v-nuit);
+  color: var(--v-pearl);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px 2px 2px 0;
+}
+
+.v-mock-chat-bubble {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  padding: 8px 12px;
+}
+
+.v-mock-chat-time {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5rem;
+  color: var(--v-pearl-dim);
+  margin-top: 3px;
+  padding: 0 4px;
+}
+
+.v-mock-chat-input {
+  padding: 10px 16px;
+  border-top: 1px solid var(--v-pearl-faint);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  color: var(--v-mistral);
+}
+
+/* ---- Flights Mockup ---- */
+
+.v-mock-flights-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.v-mock-flight-card {
+  background-color: var(--v-nuit);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
+  padding: 12px;
+}
+
+.v-mock-flight-card-upcoming {
+  opacity: 0.6;
+}
+
+.v-mock-flight-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.v-mock-flight-icon {
+  font-size: 0.75rem;
+}
+
+.v-mock-flight-route {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.6875rem;
+  color: var(--v-pearl);
+  flex: 1;
+}
+
+.v-mock-flight-badge {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.v-mock-flight-badge-air {
+  background-color: var(--v-royal);
+  color: white;
+}
+
+.v-mock-flight-badge-landed {
+  background-color: rgba(45, 134, 89, 0.25);
+  color: #5ec490;
+}
+
+.v-mock-flight-badge-sched {
+  background-color: var(--v-pearl-faint);
+  color: var(--v-pearl-dim);
+}
+
+.v-mock-flight-track {
+  /* container */
+}
+
+.v-mock-flight-cities {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  color: var(--v-pearl-dim);
+  margin-bottom: 4px;
+}
+
+.v-mock-flight-bar {
+  position: relative;
+  height: 3px;
+  background-color: var(--v-pearl-faint);
+  border-radius: 2px;
+}
+
+.v-mock-flight-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: var(--v-royal);
+  border-radius: 2px;
+}
+
+.v-mock-flight-plane {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.5rem;
+  line-height: 1;
+}
+
+.v-mock-flight-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5625rem;
+  color: var(--v-pearl-dim);
+  margin-top: 4px;
+}
+
+/* ---- Inbox Mockup ---- */
+
+.v-mock-inbox-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.v-mock-inbox-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--v-pearl-faint);
+  gap: 12px;
+}
+
+.v-mock-inbox-item:last-child {
+  border-bottom: none;
+}
+
+.v-mock-inbox-item-new {
+  background-color: rgba(74, 53, 215, 0.06);
+}
+
+.v-mock-inbox-item-left {
+  min-width: 0;
+  flex: 1;
+}
+
+.v-mock-inbox-item-channel {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--v-pearl-dim);
+  margin-bottom: 2px;
+}
+
+.v-mock-inbox-item-subject {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--v-pearl);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v-mock-inbox-item-snippet {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5625rem;
+  color: var(--v-pearl-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
+
+.v-mock-inbox-item-badge {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: 2px;
+  background-color: rgba(45, 134, 89, 0.2);
+  color: #5ec490;
+  flex-shrink: 0;
+}
+
+.v-mock-inbox-item-badge-action {
+  background-color: rgba(196, 167, 125, 0.2);
+  color: var(--v-champagne);
 }
 
 /* Footer */
@@ -2495,21 +2877,40 @@ select.v-form-input {
     margin: 0 auto;
   }
 
-  .v-landing-features-editorial {
-    padding: 40px 24px 64px;
-    gap: 36px;
+  .v-landing-showcase {
+    padding: 40px 20px 64px;
+    gap: 48px;
   }
 
-  .v-landing-feature-heading {
-    font-size: 1.25rem;
+  .v-landing-showcase-row,
+  .v-landing-showcase-row-reverse {
+    flex-direction: column;
+    gap: 24px;
   }
 
-  .v-landing-feature-body {
+  .v-landing-showcase-heading {
+    font-size: 1.35rem;
+  }
+
+  .v-landing-showcase-body {
     font-size: 1rem;
   }
 
-  .v-landing-feature-block {
-    padding-left: 20px;
+  .v-mock-cal-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .v-mock-cal-day {
+    padding: 4px;
+    min-height: 70px;
+  }
+
+  .v-mock-cal-event-name {
+    font-size: 0.5rem;
+  }
+
+  .v-mock-cal-event-icon {
+    display: none;
   }
 }
 
@@ -2521,6 +2922,15 @@ select.v-form-input {
 
   .v-phone {
     width: 220px;
+  }
+
+  .v-mock-cal-day {
+    padding: 3px;
+    min-height: 60px;
+  }
+
+  .v-mock-cal-event-time {
+    display: none;
   }
 }
 

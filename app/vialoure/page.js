@@ -67,6 +67,190 @@ function PhoneMockup() {
   );
 }
 
+function CalendarMockup() {
+  const days = [
+    { day: 'Mon', date: '15', events: [{ label: 'Arrive Nice', color: 'royal', time: '2:32 PM', icon: '✈' }] },
+    { day: 'Tue', date: '16', events: [{ label: 'Beach & Old Town', color: 'champagne', time: 'All day', icon: '☀' }] },
+    { day: 'Wed', date: '17', events: [
+      { label: 'Matisse Museum', color: 'champagne', time: '10 AM', icon: '🎨' },
+      { label: 'Le Plongeoir', color: 'cinnabar', time: '8:30 PM', icon: '🍷' },
+    ] },
+    { day: 'Thu', date: '18', events: [{ label: 'Monaco day trip', color: 'royal', time: '9 AM', icon: '🚗' }] },
+    { day: 'Fri', date: '19', events: [{ label: 'Boat to Île Sainte', color: 'champagne', time: '11 AM', icon: '⛵' }] },
+  ];
+
+  return (
+    <div className="v-mock v-mock-calendar">
+      <div className="v-mock-bar">
+        <span className="v-mock-bar-title">June 2026</span>
+        <span className="v-mock-bar-sub">Summer in Nice</span>
+      </div>
+      <div className="v-mock-cal-grid">
+        {days.map(d => (
+          <div key={d.day} className="v-mock-cal-day">
+            <div className="v-mock-cal-day-label">{d.day}</div>
+            <div className="v-mock-cal-day-num">{d.date}</div>
+            <div className="v-mock-cal-events">
+              {d.events.map((e, i) => (
+                <div key={i} className={`v-mock-cal-event v-mock-cal-event-${e.color}`}>
+                  <span className="v-mock-cal-event-icon">{e.icon}</span>
+                  <div>
+                    <div className="v-mock-cal-event-name">{e.label}</div>
+                    <div className="v-mock-cal-event-time">{e.time}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ConciergeMockup() {
+  return (
+    <div className="v-mock v-mock-chat">
+      <div className="v-mock-bar">
+        <span className="v-mock-bar-title">Concierge</span>
+        <span className="v-mock-bar-sub">Summer in Nice</span>
+      </div>
+      <div className="v-mock-chat-body">
+        <div className="v-mock-chat-msg v-mock-chat-user">
+          <div className="v-mock-chat-bubble">What time does Sarah land?</div>
+          <div className="v-mock-chat-time">6:42 PM</div>
+        </div>
+        <div className="v-mock-chat-msg v-mock-chat-ai">
+          <div className="v-mock-chat-bubble">BA 341 from London Heathrow lands at Nice at <strong>2:32 PM</strong> tomorrow. She&apos;s seat 14A.</div>
+          <div className="v-mock-chat-time">6:42 PM</div>
+        </div>
+        <div className="v-mock-chat-msg v-mock-chat-user">
+          <div className="v-mock-chat-bubble">Book dinner for 6 tonight</div>
+          <div className="v-mock-chat-time">6:43 PM</div>
+        </div>
+        <div className="v-mock-chat-msg v-mock-chat-ai">
+          <div className="v-mock-chat-bubble">Done — Le Plongeoir, 8:30 PM, party of 6. Added to the group calendar.</div>
+          <div className="v-mock-chat-time">6:43 PM</div>
+        </div>
+      </div>
+      <div className="v-mock-chat-input">
+        <span>Ask anything about your trip…</span>
+      </div>
+    </div>
+  );
+}
+
+function FlightsMockup() {
+  return (
+    <div className="v-mock v-mock-flights">
+      <div className="v-mock-bar">
+        <span className="v-mock-bar-title">Happening Now</span>
+        <span className="v-mock-live-dot" />
+      </div>
+      <div className="v-mock-flights-body">
+        <div className="v-mock-flight-card">
+          <div className="v-mock-flight-header">
+            <span className="v-mock-flight-icon">✈</span>
+            <span className="v-mock-flight-route">BA 341 · LHR → NCE</span>
+            <span className="v-mock-flight-badge v-mock-flight-badge-air">In Air</span>
+          </div>
+          <div className="v-mock-flight-track">
+            <div className="v-mock-flight-cities">
+              <span>London</span>
+              <span>Nice</span>
+            </div>
+            <div className="v-mock-flight-bar">
+              <div className="v-mock-flight-fill" style={{ width: '67%' }} />
+              <div className="v-mock-flight-plane" style={{ left: '67%' }}>✈</div>
+            </div>
+            <div className="v-mock-flight-meta">
+              <span>Sarah, James</span>
+              <span>ETA 2:32 PM</span>
+            </div>
+          </div>
+        </div>
+        <div className="v-mock-flight-card">
+          <div className="v-mock-flight-header">
+            <span className="v-mock-flight-icon">✈</span>
+            <span className="v-mock-flight-route">AF 7702 · CDG → NCE</span>
+            <span className="v-mock-flight-badge v-mock-flight-badge-landed">Landed</span>
+          </div>
+          <div className="v-mock-flight-track">
+            <div className="v-mock-flight-cities">
+              <span>Paris</span>
+              <span>Nice</span>
+            </div>
+            <div className="v-mock-flight-bar">
+              <div className="v-mock-flight-fill" style={{ width: '100%' }} />
+            </div>
+            <div className="v-mock-flight-meta">
+              <span>Alex, Mia</span>
+              <span>Arrived 12:15 PM</span>
+            </div>
+          </div>
+        </div>
+        <div className="v-mock-flight-card v-mock-flight-card-upcoming">
+          <div className="v-mock-flight-header">
+            <span className="v-mock-flight-icon">✈</span>
+            <span className="v-mock-flight-route">IB 3042 · MAD → NCE</span>
+            <span className="v-mock-flight-badge v-mock-flight-badge-sched">Tomorrow</span>
+          </div>
+          <div className="v-mock-flight-track">
+            <div className="v-mock-flight-cities">
+              <span>Madrid</span>
+              <span>Nice</span>
+            </div>
+            <div className="v-mock-flight-bar">
+              <div className="v-mock-flight-fill" style={{ width: '0%' }} />
+            </div>
+            <div className="v-mock-flight-meta">
+              <span>Dan</span>
+              <span>Departs 10:05 AM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function InboxMockup() {
+  return (
+    <div className="v-mock v-mock-inbox">
+      <div className="v-mock-bar">
+        <span className="v-mock-bar-title">Inbox</span>
+        <span className="v-mock-bar-sub">3 new</span>
+      </div>
+      <div className="v-mock-inbox-body">
+        <div className="v-mock-inbox-item v-mock-inbox-item-new">
+          <div className="v-mock-inbox-item-left">
+            <div className="v-mock-inbox-item-channel">✈ EMAIL</div>
+            <div className="v-mock-inbox-item-subject">Fwd: Booking Confirmation — BA 341</div>
+            <div className="v-mock-inbox-item-snippet">1 flight extracted · Sarah Williams · Jun 15 LHR→NCE</div>
+          </div>
+          <div className="v-mock-inbox-item-badge">Parsed</div>
+        </div>
+        <div className="v-mock-inbox-item v-mock-inbox-item-new">
+          <div className="v-mock-inbox-item-left">
+            <div className="v-mock-inbox-item-channel">🏠 EMAIL</div>
+            <div className="v-mock-inbox-item-subject">Airbnb Reservation Confirmed</div>
+            <div className="v-mock-inbox-item-snippet">Villa les Oliviers · Jun 15–22 · 4 bedrooms</div>
+          </div>
+          <div className="v-mock-inbox-item-badge">Parsed</div>
+        </div>
+        <div className="v-mock-inbox-item">
+          <div className="v-mock-inbox-item-left">
+            <div className="v-mock-inbox-item-channel">📞 VOICE</div>
+            <div className="v-mock-inbox-item-subject">Voice note from James</div>
+            <div className="v-mock-inbox-item-snippet">&ldquo;Can we move dinner to 9? Running late from Monaco&rdquo;</div>
+          </div>
+          <div className="v-mock-inbox-item-badge v-mock-inbox-item-badge-action">Action</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default async function LandingPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -157,32 +341,53 @@ export default async function LandingPage() {
         </section>
       )}
 
-      {/* Features — Editorial Layout */}
-      <section className="v-landing-features-editorial">
-        <div className="v-landing-feature-block">
-          <div className="v-landing-feature-text">
-            <h3 className="v-landing-feature-heading">Your concierge, always listening</h3>
-            <p className="v-landing-feature-body">
-              Text, call, or email. The concierge knows your flights, your plans, who&apos;s arriving when. Ask anything.
+      {/* Features — Visual Showcase */}
+      <section className="v-landing-showcase">
+        <div className="v-landing-showcase-row">
+          <div className="v-landing-showcase-text">
+            <h3 className="v-landing-showcase-heading">The whole trip, at a glance</h3>
+            <p className="v-landing-showcase-body">
+              Who&apos;s flying in, what&apos;s happening tonight, where everyone&apos;s staying. One calendar with every detail from every person in one place.
             </p>
+          </div>
+          <div className="v-landing-showcase-visual">
+            <CalendarMockup />
           </div>
         </div>
 
-        <div className="v-landing-feature-block v-landing-feature-block-alt">
-          <div className="v-landing-feature-text">
-            <h3 className="v-landing-feature-heading">The whole trip, happening now</h3>
-            <p className="v-landing-feature-body">
-              Live flights in the air, dinner reservations tonight, who just landed. One glance, everything you need.
+        <div className="v-landing-showcase-row v-landing-showcase-row-reverse">
+          <div className="v-landing-showcase-text">
+            <h3 className="v-landing-showcase-heading">Your concierge, always listening</h3>
+            <p className="v-landing-showcase-body">
+              Text, call, or email. The concierge knows your flights, your plans, who&apos;s arriving when. Ask anything — it answers instantly.
             </p>
+          </div>
+          <div className="v-landing-showcase-visual">
+            <ConciergeMockup />
           </div>
         </div>
 
-        <div className="v-landing-feature-block">
-          <div className="v-landing-feature-text">
-            <h3 className="v-landing-feature-heading">Paste anything, we&apos;ll read it</h3>
-            <p className="v-landing-feature-body">
-              Forward a flight confirmation, drop in an Airbnb link. AI extracts every detail and adds it to your trip.
+        <div className="v-landing-showcase-row">
+          <div className="v-landing-showcase-text">
+            <h3 className="v-landing-showcase-heading">Live flights, happening now</h3>
+            <p className="v-landing-showcase-body">
+              See every flight in the air in real time. Who just landed, who&apos;s still en route, who departs tomorrow. One glance, no group chat needed.
             </p>
+          </div>
+          <div className="v-landing-showcase-visual">
+            <FlightsMockup />
+          </div>
+        </div>
+
+        <div className="v-landing-showcase-row v-landing-showcase-row-reverse">
+          <div className="v-landing-showcase-text">
+            <h3 className="v-landing-showcase-heading">Paste anything, we&apos;ll read it</h3>
+            <p className="v-landing-showcase-body">
+              Forward a flight confirmation, drop in an Airbnb link, leave a voice note. AI extracts every detail and adds it to your trip.
+            </p>
+          </div>
+          <div className="v-landing-showcase-visual">
+            <InboxMockup />
           </div>
         </div>
       </section>
