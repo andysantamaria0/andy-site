@@ -253,5 +253,8 @@ export async function POST(request) {
     }
   }
 
-  return twiml("Got it! I'll pass this to the trip organizer.");
+  const ackMsg = parsedData?.summary
+    ? `Got it for ${trip.name}: ${parsedData.summary}`
+    : `Got your message for ${trip.name}. It's in the inbox for the trip organizer.`;
+  return twiml(ackMsg);
 }

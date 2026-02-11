@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { buildParsePrompt } from '../../../lib/utils/parsePrompt';
 import { detectTrip, buildDisambiguationMessage } from '../../../lib/utils/tripDetection';
-import { sendDisambiguationReply } from '../../../lib/utils/sendReply';
+import { sendDisambiguationReply, sendAckReply } from '../../../lib/utils/sendReply';
 import { checkFeature } from '../../../lib/features';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
@@ -223,6 +223,15 @@ export async function POST(request) {
     console.error('Failed to insert inbound email:', insertError);
     return NextResponse.json({ status: 'insert_error', error: insertError.message }, { status: 500 });
   }
+
+  // Send acknowledgment reply
+  sendAckReply({
+    channel: 'email',
+    replyTo: fromEmail,
+    tripName: trip.name,
+    summary: parsedData?.summary || null,
+    subject,
+  });
 
   return NextResponse.json({ status: 'ok' });
 }
