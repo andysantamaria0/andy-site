@@ -214,6 +214,83 @@ function FlightsMockup() {
   );
 }
 
+function WhatsAppMockup() {
+  return (
+    <div className="v-mock v-mock-wa">
+      <div className="v-mock-wa-bar">
+        <div className="v-mock-wa-bar-avatar">🏖</div>
+        <div>
+          <div className="v-mock-wa-bar-name">Nice Summer 2026</div>
+          <div className="v-mock-wa-bar-members">Sarah, James, Alex, Mia, Dan, Vialoure</div>
+        </div>
+      </div>
+      <div className="v-mock-wa-body">
+        <div className="v-mock-wa-msg v-mock-wa-msg-other">
+          <span className="v-mock-wa-sender">Sarah</span>
+          <div className="v-mock-wa-text">Just arrived at the villa!! The view is insane 😍</div>
+          <div className="v-mock-wa-time">3:42 PM</div>
+        </div>
+        <div className="v-mock-wa-msg v-mock-wa-msg-photo">
+          <span className="v-mock-wa-sender">Sarah</span>
+          <div className="v-mock-wa-photo-placeholder">
+            <div className="v-mock-wa-photo-gradient" />
+            <span className="v-mock-wa-photo-icon">📷</span>
+            <span className="v-mock-wa-photo-label">Sunset from the terrace</span>
+          </div>
+          <div className="v-mock-wa-time">3:43 PM</div>
+        </div>
+        <div className="v-mock-wa-msg v-mock-wa-msg-other">
+          <span className="v-mock-wa-sender">James</span>
+          <div className="v-mock-wa-text">We found the best pizza place near the port. Booking for everyone tomorrow?</div>
+          <div className="v-mock-wa-time">6:18 PM</div>
+        </div>
+        <div className="v-mock-wa-msg v-mock-wa-msg-other">
+          <span className="v-mock-wa-sender">Mia</span>
+          <div className="v-mock-wa-text">Yes! Also Dan&apos;s flight got moved to 10:05 AM tomorrow fyi</div>
+          <div className="v-mock-wa-time">6:22 PM</div>
+        </div>
+        <div className="v-mock-wa-msg v-mock-wa-msg-concierge">
+          <span className="v-mock-wa-sender">Vialoure</span>
+          <div className="v-mock-wa-text">Got it — updated Dan&apos;s flight to IB 3042 departing 10:05 AM. I&apos;ve saved Sarah&apos;s terrace photo to the trip album. 📸</div>
+          <div className="v-mock-wa-time">6:22 PM</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TravelLogMockup() {
+  return (
+    <div className="v-mock v-mock-log">
+      <div className="v-mock-bar">
+        <span className="v-mock-bar-title">Travel Log</span>
+        <span className="v-mock-bar-sub">Summer in Nice</span>
+      </div>
+      <div className="v-mock-log-body">
+        <div className="v-mock-log-entry">
+          <div className="v-mock-log-date">Day 5 · Friday, June 19</div>
+          <div className="v-mock-log-text">
+            It started with champagne at the Negresco — &ldquo;just one,&rdquo; James said, which became four. Sarah wore the white dress. Alex bet he could get us into La Réserve without a reservation and somehow did, armed with nothing but charm and appalling French. Oysters and a Chablis that cost more than the flight.
+          </div>
+          <div className="v-mock-log-photos">
+            <div className="v-mock-log-photo v-mock-log-photo-1" />
+            <div className="v-mock-log-photo v-mock-log-photo-2" />
+            <div className="v-mock-log-photo v-mock-log-photo-3" />
+          </div>
+          <div className="v-mock-log-text">
+            Somehow we ended up at a piano bar in Villefranche that Mia swears she&apos;s never been to before, though the bartender knew her name. Dan played Cole Porter until they made him stop. The walk back along the Corniche at 4 AM — the sea black and still, the lights of Cap Ferrat across the water, Sarah&apos;s heels in one hand. We watched the sun come up from the terrace with the last of the rosé. Nobody said anything. We didn&apos;t need to.
+          </div>
+          <div className="v-mock-log-footer">
+            <span>📍 Nice · Villefranche</span>
+            <span>🌅 5:47 AM</span>
+            <span>📸 23 photos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function InboxMockup() {
   return (
     <div className="v-mock v-mock-inbox">
@@ -355,19 +432,20 @@ export default async function LandingPage() {
           </div>
         </div>
 
-        <div className="v-landing-showcase-row v-landing-showcase-row-reverse">
-          <div className="v-landing-showcase-text">
-            <h3 className="v-landing-showcase-heading">Your concierge, always listening</h3>
+        <div className="v-landing-showcase-wide">
+          <div className="v-landing-showcase-wide-text">
+            <h3 className="v-landing-showcase-heading">Your concierge, every channel</h3>
             <p className="v-landing-showcase-body">
-              Text, call, or email. The concierge knows your flights, your plans, who&apos;s arriving when. Ask anything — it answers instantly.
+              Text a question, forward a flight confirmation, drop in an Airbnb link, leave a voice note. The concierge reads everything, extracts every detail, and answers instantly.
             </p>
           </div>
-          <div className="v-landing-showcase-visual">
+          <div className="v-landing-showcase-pair">
             <ConciergeMockup />
+            <InboxMockup />
           </div>
         </div>
 
-        <div className="v-landing-showcase-row">
+        <div className="v-landing-showcase-row v-landing-showcase-row-reverse">
           <div className="v-landing-showcase-text">
             <h3 className="v-landing-showcase-heading">Live flights, happening now</h3>
             <p className="v-landing-showcase-body">
@@ -379,15 +457,27 @@ export default async function LandingPage() {
           </div>
         </div>
 
-        <div className="v-landing-showcase-row v-landing-showcase-row-reverse">
+        <div className="v-landing-showcase-row">
           <div className="v-landing-showcase-text">
-            <h3 className="v-landing-showcase-heading">Paste anything, we&apos;ll read it</h3>
+            <h3 className="v-landing-showcase-heading">Add it to the group chat</h3>
             <p className="v-landing-showcase-body">
-              Forward a flight confirmation, drop in an Airbnb link, leave a voice note. AI extracts every detail and adds it to your trip.
+              Drop Vialoure into your WhatsApp group. It reads the chatter, pulls photos everyone shares, catches flight changes mentioned in passing. No extra app to open — your group chat becomes the interface.
             </p>
           </div>
           <div className="v-landing-showcase-visual">
-            <InboxMockup />
+            <WhatsAppMockup />
+          </div>
+        </div>
+
+        <div className="v-landing-showcase-row v-landing-showcase-row-reverse">
+          <div className="v-landing-showcase-text">
+            <h3 className="v-landing-showcase-heading">Every morning, a travel log</h3>
+            <p className="v-landing-showcase-body">
+              At 7 AM, the concierge writes up yesterday — where you went, what you ate, the best photos from the group. A proper travel journal, written for you, every single day.
+            </p>
+          </div>
+          <div className="v-landing-showcase-visual">
+            <TravelLogMockup />
           </div>
         </div>
       </section>

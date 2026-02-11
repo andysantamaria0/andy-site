@@ -2412,6 +2412,27 @@ select.v-form-input {
   min-width: 0;
 }
 
+.v-landing-showcase-wide {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.v-landing-showcase-wide-text {
+  max-width: 640px;
+}
+
+.v-landing-showcase-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.v-landing-showcase-pair > .v-mock {
+  min-height: 0;
+}
+
 /* ---- Shared Mockup Chrome ---- */
 
 .v-mock {
@@ -2784,6 +2805,214 @@ select.v-form-input {
   color: var(--v-champagne);
 }
 
+/* ---- WhatsApp Group Mockup ---- */
+
+.v-mock-wa {
+  background-color: #0B141A;
+}
+
+.v-mock-wa-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background-color: #1F2C34;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.v-mock-wa-bar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #2A3942;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.v-mock-wa-bar-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #E9EDEF;
+}
+
+.v-mock-wa-bar-members {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5625rem;
+  color: #8696A0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v-mock-wa-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 19px,
+      rgba(255, 255, 255, 0.015) 19px,
+      rgba(255, 255, 255, 0.015) 20px
+    );
+}
+
+.v-mock-wa-msg {
+  max-width: 82%;
+  padding: 6px 8px 4px;
+  border-radius: 2px;
+}
+
+.v-mock-wa-msg-other {
+  background-color: #1F2C34;
+  align-self: flex-start;
+}
+
+.v-mock-wa-msg-concierge {
+  background-color: #1C3A2E;
+  align-self: flex-start;
+  border-left: 2px solid var(--v-champagne);
+}
+
+.v-mock-wa-msg-photo {
+  background-color: #1F2C34;
+  align-self: flex-start;
+  padding: 4px;
+}
+
+.v-mock-wa-sender {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.v-mock-wa-msg-other .v-mock-wa-sender {
+  color: #53BDEB;
+}
+
+.v-mock-wa-msg-concierge .v-mock-wa-sender {
+  color: var(--v-champagne);
+}
+
+.v-mock-wa-msg-photo .v-mock-wa-sender {
+  color: #53BDEB;
+  padding: 0 4px;
+}
+
+.v-mock-wa-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  line-height: 1.45;
+  color: #E9EDEF;
+}
+
+.v-mock-wa-time {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.4375rem;
+  color: #8696A0;
+  text-align: right;
+  margin-top: 2px;
+}
+
+.v-mock-wa-photo-placeholder {
+  width: 100%;
+  height: 100px;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #1a3a4a 0%, #0d2633 50%, #1a2a3a 100%);
+}
+
+.v-mock-wa-photo-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+.v-mock-wa-photo-icon {
+  font-size: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.v-mock-wa-photo-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5625rem;
+  color: rgba(255, 255, 255, 0.7);
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Travel Log Mockup ---- */
+
+.v-mock-log-body {
+  padding: 20px;
+}
+
+.v-mock-log-date {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--v-champagne);
+  margin-bottom: 12px;
+}
+
+.v-mock-log-text {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  color: var(--v-pearl);
+  margin-bottom: 16px;
+}
+
+.v-mock-log-photos {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.v-mock-log-photo {
+  flex: 1;
+  height: 64px;
+  border-radius: 2px;
+}
+
+.v-mock-log-photo-1 {
+  background: linear-gradient(135deg, #2a4a6a 0%, #1a3050 50%, #C4A77D33 100%);
+}
+
+.v-mock-log-photo-2 {
+  background: linear-gradient(135deg, #3a2a1a 0%, #5a4030 50%, #C4A77D44 100%);
+}
+
+.v-mock-log-photo-3 {
+  background: linear-gradient(135deg, #1a3a4a 0%, #0d2633 50%, #4A35D722 100%);
+}
+
+.v-mock-log-footer {
+  display: flex;
+  gap: 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5625rem;
+  color: var(--v-pearl-dim);
+  padding-top: 12px;
+  border-top: 1px solid var(--v-pearl-faint);
+}
+
 /* Footer */
 .v-landing-footer {
   display: flex;
@@ -2907,6 +3136,10 @@ select.v-form-input {
 
   .v-mock-cal-event-name {
     font-size: 0.5rem;
+  }
+
+  .v-landing-showcase-pair {
+    grid-template-columns: 1fr;
   }
 
   .v-mock-cal-event-icon {
