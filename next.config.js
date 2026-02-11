@@ -6,6 +6,10 @@ const nextConfig = {
         source: '/vialoure-design-options',
         destination: '/vialoure-design-options.html',
       },
+      {
+        source: '/vialoure-grand-tour-v2',
+        destination: '/vialoure-grand-tour-v2.html',
+      },
     ];
   },
 };
