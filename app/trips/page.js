@@ -49,7 +49,7 @@ export default async function TripsPage() {
         <div className="v-empty">
           <div className="v-empty-icon">&#9992;</div>
           <div className="v-empty-title">No trips yet</div>
-          <div className="v-empty-text">Create your first trip to start planning with friends.</div>
+          <div className="v-empty-text">The journey begins with a single destination.</div>
           <Link href="/trips/new" className="v-btn v-btn-primary">
             + Create Trip
           </Link>

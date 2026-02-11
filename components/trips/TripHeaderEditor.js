@@ -74,7 +74,7 @@ export default function TripHeaderEditor({ trip }) {
             placeholder="Description (optional)"
             rows={2}
           />
-          {error && <div style={{ color: 'var(--v-coral)', fontSize: '0.75rem' }}>{error}</div>}
+          {error && <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.75rem' }}>{error}</div>}
           <div style={{ display: 'flex', gap: 8 }}>
             <button className="v-btn v-btn-primary" onClick={handleSave} disabled={saving || !name.trim() || !destination.trim()} style={{ fontSize: '0.8rem', padding: '6px 14px' }}>
               {saving ? '...' : 'Save'}

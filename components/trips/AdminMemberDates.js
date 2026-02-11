@@ -49,7 +49,7 @@ export default function AdminMemberDates({ member, tripStart, tripEnd }) {
           {member.role}
         </span>
         {!member.user_id && (
-          <div style={{ fontSize: '0.75rem', color: 'var(--v-ivory-dim)', marginTop: 2 }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--v-pearl-dim)', marginTop: 2 }}>
             {[info.email, member.phone].filter(Boolean).join(' \u00B7 ')}
           </div>
         )}
@@ -61,7 +61,7 @@ export default function AdminMemberDates({ member, tripStart, tripEnd }) {
           value={stayStart}
           onChange={(e) => setStayStart(e.target.value)}
         />
-        <span style={{ color: 'var(--v-ivory-dim)', fontSize: '0.75rem' }}>to</span>
+        <span style={{ color: 'var(--v-pearl-dim)', fontSize: '0.75rem' }}>to</span>
         <input
           className="v-form-input"
           type="date"
@@ -79,7 +79,7 @@ export default function AdminMemberDates({ member, tripStart, tripEnd }) {
           </button>
         )}
         {status === 'error' && (
-          <span style={{ color: 'var(--v-coral)', fontSize: '0.75rem' }}>Error</span>
+          <span style={{ color: 'var(--v-cinnabar)', fontSize: '0.75rem' }}>Error</span>
         )}
       </div>
     </div>

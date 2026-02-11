@@ -101,7 +101,7 @@ export default async function MembersPage({ params }) {
                 <div className="v-member-info">
                   <div className="v-member-name">
                     {info.name}
-                    {isMe && <span style={{ color: 'var(--v-ivory-dim)', fontWeight: 400 }}> (you)</span>}
+                    {isMe && <span style={{ color: 'var(--v-pearl-dim)', fontWeight: 400 }}> (you)</span>}
                   </div>
                   <span className={`v-badge ${member.role === 'owner' ? 'v-badge-owner' : 'v-badge-member'}`}>
                     {member.role}

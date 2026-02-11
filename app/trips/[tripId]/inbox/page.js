@@ -60,8 +60,8 @@ export default async function InboxPage({ params }) {
       </h2>
 
       {pending.length === 0 ? (
-        <p style={{ color: 'var(--v-ivory-dim)', fontSize: '0.9375rem' }}>
-          No pending messages. Email or text the concierge with booking confirmations, flight details, or travel plans.
+        <p style={{ color: 'var(--v-pearl-dim)', fontSize: '0.9375rem' }}>
+          The inbox awaits its first correspondence. Send the concierge your booking confirmations, flight details, or travel plans.
         </p>
       ) : (
         <div className="v-inbox-list">

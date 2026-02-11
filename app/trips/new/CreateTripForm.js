@@ -66,7 +66,7 @@ export default function CreateTripForm() {
   return (
     <form className="v-form" onSubmit={handleSubmit}>
       {error && (
-        <div style={{ color: 'var(--v-coral)', marginBottom: 16, fontSize: '0.875rem' }}>
+        <div style={{ color: 'var(--v-cinnabar)', marginBottom: 16, fontSize: '0.875rem' }}>
           {error}
         </div>
       )}

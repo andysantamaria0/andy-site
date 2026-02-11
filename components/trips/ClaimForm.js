@@ -55,7 +55,7 @@ export default function ClaimForm({ membershipId, tripId }) {
   if (claimed) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span style={{ color: 'var(--v-hide)', fontWeight: 600 }}>Claimed!</span>
+        <span style={{ color: 'var(--v-champagne)', fontWeight: 600 }}>Claimed!</span>
         <a href={`/trips/${tripId}`} className="v-btn v-btn-secondary" style={{ fontSize: '0.8rem', padding: '6px 14px' }}>
           View Trip
         </a>
@@ -65,7 +65,7 @@ export default function ClaimForm({ membershipId, tripId }) {
 
   return (
     <div>
-      {error && <div style={{ color: 'var(--v-coral)', fontSize: '0.75rem', marginBottom: 8 }}>{error}</div>}
+      {error && <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.75rem', marginBottom: 8 }}>{error}</div>}
       <button
         className="v-btn v-btn-primary"
         onClick={handleClaim}

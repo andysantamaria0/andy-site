@@ -40,7 +40,7 @@ export default function LogisticsCard({ entry, member }) {
         <div className="v-logistics-card-title">{entry.title}</div>
         <div className="v-logistics-card-meta">
           {time && <span>{time}</span>}
-          {details.flight_number && <span>Flight {details.flight_number}</span>}
+          {details.flight_number && <span style={{ fontFamily: "'Special Elite', cursive", letterSpacing: '0.05em' }}>Flight {details.flight_number}</span>}
           {details.carrier && <span>{details.carrier}</span>}
           {details.driver && <span>Driver: {details.driver}</span>}
           {details.vehicle && <span>{details.vehicle}</span>}

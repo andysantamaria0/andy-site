@@ -80,7 +80,7 @@ export default function ConciergeContact({ tripCode }) {
       </div>
 
       <div className="v-concierge-contact-row" style={{ marginTop: 4 }}>
-        <span style={{ color: 'var(--v-ivory-dim)', fontSize: '0.8125rem', flex: 1 }}>
+        <span style={{ color: 'var(--v-pearl-dim)', fontSize: '0.8125rem', flex: 1 }}>
           Mention &ldquo;{tripCode || 'trip code'}&rdquo; in your message so I know which trip
         </span>
         <button

@@ -34,7 +34,7 @@ export default function FeaturedToggle({ tripId, featured }) {
       disabled={saving}
     >
       {saving ? '...' : featured ? 'Unfeature' : 'Feature on Landing'}
-      {error && <span style={{ color: 'var(--v-coral)', fontSize: '0.75rem', marginLeft: 8 }}>{error}</span>}
+      {error && <span style={{ color: 'var(--v-cinnabar)', fontSize: '0.75rem', marginLeft: 8 }}>{error}</span>}
     </button>
   );
 }

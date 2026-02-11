@@ -131,7 +131,7 @@ export default function AddMemberForm({ tripId, tripStart, tripEnd, existingMemb
         </div>
 
         {error && (
-          <div style={{ color: 'var(--v-coral)', fontSize: '0.875rem', marginBottom: 12 }}>{error}</div>
+          <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.875rem', marginBottom: 12 }}>{error}</div>
         )}
 
         <div style={{ display: 'flex', gap: 12 }}>

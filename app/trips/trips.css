@@ -4,37 +4,47 @@
    ============================================ */
 
 :root {
-  --v-charcoal: #2F2F2F;
-  --v-ivory: #F4F4ED;
-  --v-hide: #DFB288;
+  --v-nuit: #0A1628;
+  --v-pearl: #F0EDE6;
+  --v-champagne: #C4A77D;
   --v-royal: #4A35D7;
-  --v-coral: #FF7D73;
-  --v-charcoal-light: #3A3A3A;
-  --v-charcoal-lighter: #454545;
-  --v-ivory-dim: rgba(244, 244, 237, 0.6);
-  --v-ivory-faint: rgba(244, 244, 237, 0.1);
+  --v-cinnabar: #C23B22;
+  --v-surface: #0F1D30;
+  --v-croisette: #1E3248;
+  --v-pearl-dim: rgba(240, 237, 230, 0.6);
+  --v-pearl-faint: rgba(240, 237, 230, 0.1);
+  --v-mistral: #7B8FA8;
+  --v-riviera: #3E6B8A;
+  --v-silver: #D4D0C8;
+  --v-ease: cubic-bezier(.2, 0, 0, 1);
+  --v-micro: 150ms;
+  --v-standard: 300ms;
+  --v-dramatic: 500ms;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --v-charcoal: #F4F4ED;
-    --v-ivory: #2F2F2F;
-    --v-hide: #9A6B3A;
+    --v-nuit: #F0EDE6;
+    --v-pearl: #0A1628;
+    --v-champagne: #8A6930;
     --v-royal: #4A35D7;
-    --v-coral: #D9534F;
-    --v-charcoal-light: #E8E8E0;
-    --v-charcoal-lighter: #DDDDD5;
-    --v-ivory-dim: rgba(47, 47, 47, 0.6);
-    --v-ivory-faint: rgba(47, 47, 47, 0.1);
+    --v-cinnabar: #A83020;
+    --v-surface: #E8E4DC;
+    --v-croisette: #DDD9D0;
+    --v-pearl-dim: rgba(10, 22, 40, 0.6);
+    --v-pearl-faint: rgba(10, 22, 40, 0.1);
+    --v-mistral: #5A6B7E;
+    --v-riviera: #2E5570;
+    --v-silver: #A8A49C;
   }
 
   .v-btn-google {
-    background-color: #2F2F2F;
-    color: #F4F4ED;
+    background-color: #0A1628;
+    color: #F0EDE6;
   }
 
   .v-btn-google:hover {
-    background-color: #3A3A3A;
+    background-color: #0F1D30;
   }
 }
 
@@ -42,8 +52,8 @@
 
 .v-layout {
   min-height: 100vh;
-  background-color: var(--v-charcoal);
-  color: var(--v-ivory);
+  background-color: var(--v-nuit);
+  color: var(--v-pearl);
 }
 
 .v-header {
@@ -51,7 +61,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 24px;
-  border-bottom: 1px solid var(--v-ivory-faint);
+  border-bottom: 1px solid var(--v-pearl-faint);
 }
 
 .v-header-brand {
@@ -61,21 +71,21 @@
 }
 
 .v-header-logo {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--v-ivory);
+  color: var(--v-pearl);
   text-decoration: none;
 }
 
 .v-header-logo:hover {
-  color: var(--v-hide);
+  color: var(--v-champagne);
 }
 
 .v-header-tagline {
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.75rem;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-weight: 500;
@@ -96,18 +106,18 @@
 
 .v-header-name {
   font-size: 0.875rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
 }
 
 .v-admin-header-link {
   font-size: 0.75rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-decoration: none;
-  border: 1px solid var(--v-ivory-faint);
+  border: 1px solid var(--v-pearl-faint);
   padding: 6px 12px;
-  border-radius: 6px;
-  font-family: 'Karla', sans-serif;
-  transition: all 0.2s ease;
+  border-radius: 2px;
+  font-family: 'DM Sans', sans-serif;
+  transition: all var(--v-standard) var(--v-ease);
 }
 
 .v-admin-header-link:hover {
@@ -117,19 +127,19 @@
 
 .v-signout-btn {
   background: none;
-  border: 1px solid var(--v-ivory-faint);
-  color: var(--v-ivory-dim);
+  border: 1px solid var(--v-pearl-faint);
+  color: var(--v-pearl-dim);
   padding: 6px 12px;
-  border-radius: 6px;
+  border-radius: 2px;
   font-size: 0.75rem;
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--v-standard) var(--v-ease);
 }
 
 .v-signout-btn:hover {
-  border-color: var(--v-coral);
-  color: var(--v-coral);
+  border-color: var(--v-cinnabar);
+  color: var(--v-cinnabar);
 }
 
 /* ---- Page Container ---- */
@@ -148,7 +158,7 @@
 }
 
 .v-page-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 2rem;
   font-weight: 700;
 }
@@ -160,12 +170,12 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  border-radius: 8px;
-  font-family: 'Karla', sans-serif;
+  border-radius: 2px;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--v-standard) var(--v-ease);
   text-decoration: none;
   border: none;
 }
@@ -181,13 +191,13 @@
 
 .v-btn-secondary {
   background-color: transparent;
-  color: var(--v-ivory);
-  border: 1px solid var(--v-ivory-faint);
+  color: var(--v-pearl);
+  border: 1px solid var(--v-pearl-faint);
 }
 
 .v-btn-secondary:hover {
-  border-color: var(--v-hide);
-  color: var(--v-hide);
+  border-color: var(--v-champagne);
+  color: var(--v-champagne);
 }
 
 .v-btn-google {
@@ -195,7 +205,7 @@
   color: #333;
   padding: 12px 24px;
   font-size: 1rem;
-  border-radius: 8px;
+  border-radius: 2px;
   font-weight: 600;
 }
 
@@ -205,12 +215,12 @@
 
 .v-btn-danger {
   background-color: transparent;
-  color: var(--v-coral);
-  border: 1px solid var(--v-coral);
+  color: var(--v-cinnabar);
+  border: 1px solid var(--v-cinnabar);
 }
 
 .v-btn-danger:hover {
-  background-color: var(--v-coral);
+  background-color: var(--v-cinnabar);
   color: white;
 }
 
@@ -222,7 +232,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: var(--v-charcoal);
+  background-color: var(--v-nuit);
   padding: 24px;
 }
 
@@ -232,26 +242,26 @@
 }
 
 .v-login-logo {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 3rem;
   font-weight: 700;
-  color: var(--v-ivory);
+  color: var(--v-pearl);
   margin-bottom: 8px;
 }
 
 .v-login-tagline {
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1rem;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-weight: 500;
 }
 
 .v-login-card {
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 12px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   padding: 40px;
   text-align: center;
   max-width: 400px;
@@ -259,7 +269,7 @@
 }
 
 .v-login-card p {
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   font-size: 0.9375rem;
   margin-bottom: 24px;
   line-height: 1.5;
@@ -274,25 +284,25 @@
 }
 
 .v-trip-card {
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 12px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   padding: 24px;
   text-decoration: none;
-  color: var(--v-ivory);
-  transition: all 0.2s ease;
+  color: var(--v-pearl);
+  transition: all var(--v-standard) var(--v-ease);
   display: block;
 }
 
 .v-trip-card:hover {
-  border-color: var(--v-hide);
+  border-color: var(--v-champagne);
   transform: translateY(-2px);
 }
 
 .v-trip-card-destination {
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.75rem;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 500;
@@ -300,7 +310,7 @@
 }
 
 .v-trip-card-name {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.375rem;
   font-weight: 700;
   margin-bottom: 8px;
@@ -308,7 +318,7 @@
 
 .v-trip-card-dates {
   font-size: 0.875rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-bottom: 16px;
 }
 
@@ -322,7 +332,7 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  border: 2px solid var(--v-charcoal-light);
+  border: 2px solid var(--v-surface);
   object-fit: cover;
 }
 
@@ -332,7 +342,7 @@
 
 .v-trip-card-count {
   font-size: 0.75rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-left: 8px;
 }
 
@@ -350,13 +360,13 @@
 }
 
 .v-empty-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.5rem;
   margin-bottom: 8px;
 }
 
 .v-empty-text {
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   font-size: 0.9375rem;
   margin-bottom: 24px;
 }
@@ -373,9 +383,9 @@
 
 .v-form-label {
   display: block;
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.75rem;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 500;
@@ -386,13 +396,13 @@
 .v-form-textarea {
   width: 100%;
   padding: 12px 16px;
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 8px;
-  color: var(--v-ivory);
-  font-family: 'Karla', sans-serif;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
+  color: var(--v-pearl);
+  font-family: 'DM Sans', sans-serif;
   font-size: 1rem;
-  transition: border-color 0.2s ease;
+  transition: border-color var(--v-standard) var(--v-ease);
 }
 
 .v-form-input:focus,
@@ -403,7 +413,7 @@
 
 .v-form-input::placeholder,
 .v-form-textarea::placeholder {
-  color: rgba(244, 244, 237, 0.3);
+  color: rgba(240, 237, 230, 0.3);
 }
 
 .v-form-textarea {
@@ -427,7 +437,7 @@
 
 .v-trip-header {
   padding: 24px;
-  border-bottom: 1px solid var(--v-ivory-faint);
+  border-bottom: 1px solid var(--v-pearl-faint);
 }
 
 /* Trip Cover Photo Banner */
@@ -445,9 +455,9 @@
 }
 
 .v-trip-cover-destination {
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.8rem;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-weight: 600;
@@ -456,10 +466,10 @@
 }
 
 .v-trip-cover-name {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 2rem;
   font-weight: 700;
-  color: var(--v-ivory);
+  color: var(--v-pearl);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -471,15 +481,15 @@
 }
 
 .v-trip-name {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.75rem;
   font-weight: 700;
 }
 
 .v-trip-destination {
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.875rem;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   margin-bottom: 16px;
 }
 
@@ -492,25 +502,25 @@
 
 .v-trip-nav-link {
   padding: 10px 16px;
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-decoration: none;
   border-bottom: 2px solid transparent;
   white-space: nowrap;
-  transition: all 0.2s ease;
+  transition: all var(--v-standard) var(--v-ease);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .v-trip-nav-link:hover {
-  color: var(--v-ivory);
+  color: var(--v-pearl);
 }
 
 .v-trip-nav-link.active {
-  color: var(--v-hide);
-  border-bottom-color: var(--v-hide);
+  color: var(--v-champagne);
+  border-bottom-color: var(--v-champagne);
 }
 
 /* ---- Trip Overview ---- */
@@ -523,29 +533,29 @@
 }
 
 .v-overview-card {
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 10px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   padding: 20px;
 }
 
 .v-overview-card-label {
   font-size: 0.75rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-bottom: 4px;
 }
 
 .v-overview-card-value {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.5rem;
   font-weight: 700;
 }
 
 .v-overview-card-sub {
   font-size: 0.8125rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-top: 4px;
 }
 
@@ -562,9 +572,9 @@
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 10px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
 }
 
 .v-member-avatar {
@@ -597,20 +607,20 @@
 
 .v-member-role {
   font-size: 0.75rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .v-member-dates {
   font-size: 0.8125rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
 }
 
 /* ---- Section Titles ---- */
 
 .v-section-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 16px;
@@ -622,15 +632,15 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-decoration: none;
   font-size: 0.875rem;
   margin-bottom: 24px;
-  transition: color 0.2s ease;
+  transition: color var(--v-standard) var(--v-ease);
 }
 
 .v-back:hover {
-  color: var(--v-hide);
+  color: var(--v-champagne);
 }
 
 /* ---- Loading ---- */
@@ -640,7 +650,7 @@
   align-items: center;
   justify-content: center;
   padding: 80px 24px;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
 }
 
 /* ---- Badge ---- */
@@ -648,7 +658,7 @@
 .v-badge {
   display: inline-block;
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: 2px;
   font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -661,16 +671,16 @@
 }
 
 .v-badge-member {
-  background-color: rgba(223, 178, 136, 0.15);
-  color: var(--v-hide);
+  background-color: rgba(196, 167, 125, 0.15);
+  color: var(--v-champagne);
 }
 
 /* ---- Stay Timeline ---- */
 
 .v-timeline {
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 10px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   padding: 20px;
 }
 
@@ -678,7 +688,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.75rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-bottom: 16px;
   font-weight: 500;
   text-transform: uppercase;
@@ -701,7 +711,7 @@
   width: 100px;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--v-ivory);
+  color: var(--v-pearl);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -711,8 +721,8 @@
 .v-timeline-row-track {
   flex: 1;
   height: 24px;
-  background-color: var(--v-ivory-faint);
-  border-radius: 4px;
+  background-color: var(--v-pearl-faint);
+  border-radius: 2px;
   position: relative;
 }
 
@@ -720,10 +730,10 @@
   position: absolute;
   top: 2px;
   bottom: 2px;
-  border-radius: 3px;
+  border-radius: 2px;
   min-width: 4px;
   opacity: 0.85;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--v-standard) var(--v-ease);
 }
 
 .v-timeline-bar:hover {
@@ -733,17 +743,17 @@
 /* ---- Stay Dates Editor ---- */
 
 .v-stay-editor {
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 10px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   padding: 20px;
   margin-bottom: 24px;
 }
 
 .v-stay-editor-label {
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.75rem;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 500;
@@ -763,16 +773,16 @@
 .v-stay-editor-sublabel {
   display: block;
   font-size: 0.75rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-bottom: 6px;
 }
 
 /* ---- Smart Paste ---- */
 
 .v-smart-paste {
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 10px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   padding: 24px;
   margin-bottom: 24px;
 }
@@ -784,7 +794,7 @@
 .v-smart-paste-hint {
   display: block;
   font-size: 0.8125rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-top: 4px;
 }
 
@@ -805,7 +815,7 @@
 
 .v-parsed-section-title {
   font-size: 0.75rem;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 500;
@@ -817,8 +827,8 @@
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  background-color: var(--v-charcoal);
-  border-radius: 6px;
+  background-color: var(--v-nuit);
+  border-radius: 2px;
   margin-bottom: 6px;
   flex-wrap: wrap;
 }
@@ -830,7 +840,7 @@
 
 .v-parsed-item-detail {
   font-size: 0.8125rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
 }
 
 /* ---- Admin Member Editor ---- */
@@ -840,9 +850,9 @@
   align-items: center;
   gap: 12px;
   padding: 16px;
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 10px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
 }
 
 .v-admin-dates {
@@ -870,7 +880,7 @@
 }
 
 .v-admin-save-btn:hover {
-  color: var(--v-hide);
+  color: var(--v-champagne);
 }
 
 /* ---- Placeholder pages ---- */
@@ -878,13 +888,13 @@
 .v-placeholder {
   text-align: center;
   padding: 60px 24px;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
 }
 
 .v-placeholder-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.5rem;
-  color: var(--v-ivory);
+  color: var(--v-pearl);
   margin-bottom: 8px;
 }
 
@@ -898,13 +908,13 @@
 
 .v-calendar-day {
   padding: 16px 20px;
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 10px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
 }
 
 .v-calendar-day-today {
-  border-color: var(--v-hide);
+  border-color: var(--v-champagne);
 }
 
 .v-calendar-day-header {
@@ -927,7 +937,7 @@
 
 .v-calendar-day-num {
   font-size: 0.75rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -954,18 +964,18 @@
 .v-calendar-add-btn {
   background: none;
   border: none;
-  color: var(--v-ivory-dim);
-  font-family: 'Karla', sans-serif;
+  color: var(--v-pearl-dim);
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.8125rem;
   cursor: pointer;
   padding: 6px 0;
   margin-top: 4px;
-  transition: color 0.2s ease;
+  transition: color var(--v-standard) var(--v-ease);
   text-align: left;
 }
 
 .v-calendar-add-btn:hover {
-  color: var(--v-hide);
+  color: var(--v-champagne);
 }
 
 /* ---- Event Card ---- */
@@ -975,14 +985,14 @@
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  background-color: var(--v-charcoal);
-  border-radius: 8px;
+  background-color: var(--v-nuit);
+  border-radius: 2px;
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: background-color var(--v-micro) var(--v-ease);
 }
 
 .v-event-card:hover {
-  background-color: var(--v-charcoal-lighter);
+  background-color: var(--v-croisette);
 }
 
 .v-event-card-emoji {
@@ -1007,7 +1017,7 @@
   display: flex;
   gap: 12px;
   font-size: 0.75rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-top: 2px;
 }
 
@@ -1020,7 +1030,7 @@
 
 .v-event-card-attendees .v-member-avatar,
 .v-event-card-attendees .v-member-avatar-placeholder {
-  border: 2px solid var(--v-charcoal);
+  border: 2px solid var(--v-nuit);
 }
 
 .v-event-card-attendees .v-member-avatar:not(:first-child),
@@ -1030,7 +1040,7 @@
 
 .v-event-card-everyone {
   font-size: 0.6875rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-weight: 500;
@@ -1038,7 +1048,7 @@
 
 .v-event-card-more {
   font-size: 0.6875rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-left: 4px;
 }
 
@@ -1056,9 +1066,9 @@
 }
 
 .v-modal {
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 12px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   padding: 28px;
   width: 100%;
   max-width: 500px;
@@ -1076,7 +1086,7 @@
 .v-modal-close {
   background: none;
   border: none;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0;
@@ -1084,7 +1094,7 @@
 }
 
 .v-modal-close:hover {
-  color: var(--v-ivory);
+  color: var(--v-pearl);
 }
 
 /* ---- Checkbox Row ---- */
@@ -1113,7 +1123,7 @@
 
 .v-timeline-row-dates {
   font-size: 0.75rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   white-space: nowrap;
   flex-shrink: 0;
   width: 110px;
@@ -1134,14 +1144,14 @@
   align-items: center;
   gap: 6px;
   padding: 4px 10px 4px 4px;
-  border-radius: 20px;
-  border: 1px solid var(--v-ivory-faint);
+  border-radius: 2px;
+  border: 1px solid var(--v-pearl-faint);
   background: transparent;
-  color: var(--v-ivory-dim);
-  font-family: 'Karla', sans-serif;
+  color: var(--v-pearl-dim);
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.8125rem;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all var(--v-micro) var(--v-ease);
   opacity: 0.45;
 }
 
@@ -1152,7 +1162,7 @@
 .v-attendee-chip-active {
   border-color: var(--v-royal);
   opacity: 1;
-  color: var(--v-ivory);
+  color: var(--v-pearl);
 }
 
 .v-attendee-chip-name {
@@ -1167,8 +1177,8 @@
 .v-cost-section {
   margin-top: 4px;
   padding: 12px;
-  background-color: var(--v-charcoal);
-  border-radius: 8px;
+  background-color: var(--v-nuit);
+  border-radius: 2px;
 }
 
 .v-split-pills {
@@ -1179,19 +1189,19 @@
 
 .v-split-pill {
   padding: 6px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--v-ivory-faint);
+  border-radius: 2px;
+  border: 1px solid var(--v-pearl-faint);
   background: transparent;
-  color: var(--v-ivory-dim);
-  font-family: 'Karla', sans-serif;
+  color: var(--v-pearl-dim);
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all var(--v-micro) var(--v-ease);
 }
 
 .v-split-pill:hover {
-  border-color: var(--v-ivory-dim);
+  border-color: var(--v-pearl-dim);
 }
 
 .v-split-pill-active {
@@ -1228,14 +1238,14 @@
 
 .v-custom-split-total {
   font-size: 0.8125rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-align: right;
   padding-top: 4px;
-  border-top: 1px solid var(--v-ivory-faint);
+  border-top: 1px solid var(--v-pearl-faint);
 }
 
 .v-split-warn {
-  color: var(--v-coral);
+  color: var(--v-cinnabar);
 }
 
 /* ---- Event Card Cost Badge ---- */
@@ -1247,17 +1257,17 @@
   flex-shrink: 0;
   font-size: 0.6875rem;
   font-weight: 600;
-  color: var(--v-hide);
-  background-color: rgba(223, 178, 136, 0.12);
+  color: var(--v-champagne);
+  background-color: rgba(196, 167, 125, 0.12);
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .v-event-card-fc {
   background-color: rgba(74, 53, 215, 0.2);
   color: #7B6BF0;
   padding: 1px 4px;
-  border-radius: 3px;
+  border-radius: 2px;
   font-size: 0.625rem;
   font-weight: 700;
 }
@@ -1276,8 +1286,8 @@
   align-items: center;
   gap: 10px;
   padding: 6px 10px;
-  background-color: var(--v-charcoal);
-  border-radius: 6px;
+  background-color: var(--v-nuit);
+  border-radius: 2px;
   font-size: 0.875rem;
 }
 
@@ -1286,7 +1296,7 @@
 }
 
 .v-invite-contact {
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   font-size: 0.8125rem;
   flex: 1;
 }
@@ -1294,7 +1304,7 @@
 .v-invite-remove {
   background: none;
   border: none;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   font-size: 1.125rem;
   cursor: pointer;
   padding: 0 4px;
@@ -1302,7 +1312,7 @@
 }
 
 .v-invite-remove:hover {
-  color: var(--v-coral);
+  color: var(--v-cinnabar);
 }
 
 .v-invite-add-row {
@@ -1325,9 +1335,9 @@
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  background-color: var(--v-charcoal);
-  border-radius: 8px;
-  border-left: 3px solid var(--v-hide);
+  background-color: var(--v-nuit);
+  border-radius: 2px;
+  border-left: 3px solid var(--v-champagne);
 }
 
 .v-logistics-card-emoji {
@@ -1352,7 +1362,7 @@
   display: flex;
   gap: 12px;
   font-size: 0.75rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-top: 2px;
   flex-wrap: wrap;
 }
@@ -1367,9 +1377,9 @@
   display: flex;
   gap: 4px;
   margin-bottom: 20px;
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 8px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   padding: 4px;
   width: fit-content;
 }
@@ -1377,18 +1387,18 @@
 .v-view-toggle-btn {
   padding: 6px 16px;
   border: none;
-  border-radius: 6px;
+  border-radius: 2px;
   background: transparent;
-  color: var(--v-ivory-dim);
-  font-family: 'Karla', sans-serif;
+  color: var(--v-pearl-dim);
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all var(--v-micro) var(--v-ease);
 }
 
 .v-view-toggle-btn:hover {
-  color: var(--v-ivory);
+  color: var(--v-pearl);
 }
 
 .v-view-toggle-btn-active {
@@ -1412,22 +1422,22 @@
 
 .v-month-nav-btn {
   background: none;
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 6px;
-  color: var(--v-ivory-dim);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
+  color: var(--v-pearl-dim);
   padding: 4px 10px;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all var(--v-micro) var(--v-ease);
 }
 
 .v-month-nav-btn:hover {
-  border-color: var(--v-hide);
-  color: var(--v-hide);
+  border-color: var(--v-champagne);
+  color: var(--v-champagne);
 }
 
 .v-month-nav-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.25rem;
   font-weight: 700;
   min-width: 180px;
@@ -1444,7 +1454,7 @@
 .v-month-grid-weekday {
   text-align: center;
   font-size: 0.6875rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 500;
@@ -1464,17 +1474,17 @@
 }
 
 .v-month-cell {
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 6px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   padding: 6px 8px;
   min-height: 80px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all var(--v-micro) var(--v-ease);
 }
 
 .v-month-cell:hover {
-  border-color: var(--v-ivory-dim);
+  border-color: var(--v-pearl-dim);
 }
 
 .v-month-cell-outside {
@@ -1486,7 +1496,7 @@
 }
 
 .v-month-cell-expanded {
-  border-color: var(--v-hide);
+  border-color: var(--v-champagne);
 }
 
 .v-month-cell-day {
@@ -1520,12 +1530,12 @@
 
 .v-month-cell-avatar .v-member-avatar,
 .v-month-cell-avatar .v-member-avatar-placeholder {
-  border: 1.5px solid var(--v-charcoal-light);
+  border: 1.5px solid var(--v-surface);
 }
 
 .v-month-cell-avatar-more {
   font-size: 0.55rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-left: 1px;
 }
 
@@ -1542,18 +1552,18 @@
   gap: 2px;
   font-size: 0.6rem;
   padding: 1px 4px;
-  border-radius: 3px;
+  border-radius: 2px;
   line-height: 1.2;
 }
 
 .v-month-badge-arrive {
-  background-color: rgba(52, 168, 83, 0.15);
-  color: #34A853;
+  background-color: rgba(45, 134, 89, 0.15);
+  color: #2D8659;
 }
 
 .v-month-badge-depart {
-  background-color: rgba(255, 125, 115, 0.15);
-  color: var(--v-coral);
+  background-color: rgba(194, 59, 34, 0.15);
+  color: var(--v-cinnabar);
 }
 
 .v-month-badge-arrow {
@@ -1575,27 +1585,27 @@
 
 .v-month-cell-event-line {
   font-size: 0.6875rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 1px 4px;
   background-color: rgba(74, 53, 215, 0.1);
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 .v-month-cell-event-more {
   font-size: 0.625rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   padding: 1px 4px;
 }
 
 /* ---- Month Expanded Panel ---- */
 
 .v-month-expanded {
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-hide);
-  border-radius: 10px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-champagne);
+  border-radius: 2px;
   padding: 16px 20px;
   margin: 4px 0;
 }
@@ -1608,7 +1618,7 @@
 }
 
 .v-month-expanded-date {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.125rem;
   font-weight: 700;
 }
@@ -1626,17 +1636,17 @@
   gap: 6px;
   font-size: 0.8rem;
   padding: 4px 10px;
-  border-radius: 6px;
+  border-radius: 2px;
 }
 
 .v-movement-arrive {
-  background-color: rgba(52, 168, 83, 0.1);
-  color: #34A853;
+  background-color: rgba(45, 134, 89, 0.1);
+  color: #2D8659;
 }
 
 .v-movement-depart {
-  background-color: rgba(255, 125, 115, 0.1);
-  color: var(--v-coral);
+  background-color: rgba(194, 59, 34, 0.1);
+  color: var(--v-cinnabar);
 }
 
 .v-month-expanded-members {
@@ -1645,7 +1655,7 @@
 
 .v-month-expanded-members-label {
   font-size: 0.7rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 6px;
@@ -1662,9 +1672,9 @@
   align-items: center;
   gap: 6px;
   font-size: 0.8rem;
-  background-color: var(--v-ivory-faint);
+  background-color: var(--v-pearl-faint);
   padding: 4px 10px 4px 4px;
-  border-radius: 20px;
+  border-radius: 2px;
 }
 
 /* ---- Week Grid ---- */
@@ -1683,9 +1693,9 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 6px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   padding: 8px;
   min-height: 200px;
 }
@@ -1695,7 +1705,7 @@
 }
 
 .v-week-col-today {
-  border-color: var(--v-hide);
+  border-color: var(--v-champagne);
 }
 
 .v-week-col-header {
@@ -1704,13 +1714,13 @@
   align-items: center;
   gap: 2px;
   padding-bottom: 6px;
-  border-bottom: 1px solid var(--v-ivory-faint);
+  border-bottom: 1px solid var(--v-pearl-faint);
   margin-bottom: 2px;
 }
 
 .v-week-col-weekday {
   font-size: 0.6875rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 500;
@@ -1723,7 +1733,7 @@
 
 .v-week-col-month {
   font-size: 0.625rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -1743,7 +1753,7 @@
 
 .v-week-col-avatars .v-month-cell-avatar .v-member-avatar,
 .v-week-col-avatars .v-month-cell-avatar .v-member-avatar-placeholder {
-  border: 1.5px solid var(--v-charcoal-light);
+  border: 1.5px solid var(--v-surface);
 }
 
 .v-week-col-logistics {
@@ -1978,16 +1988,14 @@
   background:
     linear-gradient(
       to top,
-      rgba(235, 155, 90, 0.25) 0%,
-      rgba(220, 100, 80, 0.20) 12%,
-      rgba(200, 70, 95, 0.18) 25%,
-      rgba(160, 50, 120, 0.15) 40%,
-      rgba(100, 45, 160, 0.10) 55%,
-      rgba(74, 53, 215, 0.06) 70%,
-      var(--v-charcoal) 88%
+      rgba(194, 59, 34, 0.18) 0%,
+      rgba(194, 59, 34, 0.12) 15%,
+      rgba(74, 53, 215, 0.10) 35%,
+      rgba(74, 53, 215, 0.06) 55%,
+      var(--v-nuit) 80%
     );
-  background-color: var(--v-charcoal);
-  color: var(--v-ivory);
+  background-color: var(--v-nuit);
+  color: var(--v-pearl);
   overflow-x: hidden;
 }
 
@@ -2007,16 +2015,16 @@
   display: flex;
   align-items: baseline;
   gap: 10px;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--v-ivory);
+  color: var(--v-pearl);
 }
 
 .v-landing-nav-tagline {
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.7rem;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-weight: 400;
@@ -2041,13 +2049,13 @@
 }
 
 .v-landing-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 5rem;
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.02em;
   margin: 0 0 24px 0;
-  background: linear-gradient(135deg, var(--v-ivory) 0%, var(--v-hide) 100%);
+  background: linear-gradient(135deg, var(--v-pearl) 0%, var(--v-champagne) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -2056,7 +2064,7 @@
 .v-landing-subtitle {
   font-size: 1.2rem;
   line-height: 1.6;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin: 0 0 40px 0;
 }
 
@@ -2065,7 +2073,7 @@
   align-items: center;
   font-size: 1rem;
   padding: 14px 32px;
-  border-radius: 8px;
+  border-radius: 2px;
 }
 
 /* Card stack visual */
@@ -2086,11 +2094,11 @@
   position: absolute;
   width: 260px;
   padding: 28px 24px;
-  background: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 16px;
+  background: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease;
+  transition: transform var(--v-standard) var(--v-ease);
 }
 
 .v-landing-card:hover {
@@ -2131,7 +2139,7 @@
 
 .v-landing-card-detail {
   font-size: 0.85rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
 }
 
 /* Featured Trip */
@@ -2143,18 +2151,18 @@
 }
 
 .v-landing-trip-inner {
-  background-color: var(--v-charcoal-light);
-  border: 1px solid rgba(223, 178, 136, 0.25);
-  border-radius: 16px;
+  background-color: var(--v-surface);
+  border: 1px solid rgba(196, 167, 125, 0.25);
+  border-radius: 2px;
   padding: 36px 40px;
   overflow: hidden;
   position: relative;
 }
 
 .v-landing-trip-destination {
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.8rem;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-weight: 600;
@@ -2162,16 +2170,16 @@
 }
 
 .v-landing-trip-name {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.75rem;
   font-weight: 700;
   margin: 0 0 8px 0;
-  color: var(--v-ivory);
+  color: var(--v-pearl);
 }
 
 .v-landing-trip-dates {
   font-size: 0.9375rem;
-  color: rgba(244, 244, 237, 0.8);
+  color: rgba(240, 237, 230, 0.8);
   margin: 0 0 20px 0;
 }
 
@@ -2201,16 +2209,16 @@
 }
 
 .v-landing-feature-number {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   opacity: 0.4;
   margin-bottom: 12px;
 }
 
 .v-landing-feature h3 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.25rem;
   font-weight: 700;
   margin: 0 0 8px 0;
@@ -2219,7 +2227,7 @@
 .v-landing-feature p {
   font-size: 0.9rem;
   line-height: 1.5;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin: 0;
 }
 
@@ -2230,18 +2238,18 @@
   justify-content: center;
   gap: 12px;
   padding: 32px;
-  border-top: 1px solid var(--v-ivory-faint);
+  border-top: 1px solid var(--v-pearl-faint);
 }
 
 .v-landing-footer-brand {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.1rem;
   font-weight: 700;
 }
 
 .v-landing-footer-tagline {
   font-size: 0.75rem;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -2268,7 +2276,7 @@
 
   .v-landing-trip-inner {
     padding: 24px 20px;
-    border-radius: 12px;
+    border-radius: 2px;
   }
 
   .v-landing-trip-destination {
@@ -2398,9 +2406,9 @@
 
 .v-forwarding-address,
 .v-concierge-contact {
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 10px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   padding: 20px;
 }
 
@@ -2416,11 +2424,11 @@
 }
 
 .v-trip-code {
-  font-family: 'Karla', sans-serif;
+  font-family: 'Special Elite', cursive;
   font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--v-hide);
-  letter-spacing: 0.02em;
+  font-weight: 400;
+  color: var(--v-champagne);
+  letter-spacing: 0.05em;
 }
 
 .v-badge-channel {
@@ -2430,9 +2438,9 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 2px 6px;
-  border-radius: 4px;
-  background-color: var(--v-ivory-faint);
-  color: var(--v-ivory-dim);
+  border-radius: 2px;
+  background-color: var(--v-pearl-faint);
+  color: var(--v-pearl-dim);
   margin-right: 6px;
   vertical-align: middle;
 }
@@ -2440,7 +2448,7 @@
 .v-btn-link {
   background: none;
   border: none;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   cursor: pointer;
   padding: 0;
   font-family: inherit;
@@ -2449,13 +2457,13 @@
 }
 
 .v-btn-link:hover {
-  color: var(--v-ivory);
+  color: var(--v-pearl);
 }
 
 .v-forwarding-address-label {
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.75rem;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 500;
@@ -2471,10 +2479,10 @@
 .v-forwarding-address-email {
   flex: 1;
   font-size: 0.9375rem;
-  color: var(--v-ivory);
-  background-color: var(--v-charcoal);
+  color: var(--v-pearl);
+  background-color: var(--v-nuit);
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: 2px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -2495,9 +2503,9 @@
 }
 
 .v-inbox-item {
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 10px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   overflow: hidden;
 }
 
@@ -2511,11 +2519,11 @@
   justify-content: space-between;
   padding: 16px 20px;
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: background-color var(--v-micro) var(--v-ease);
 }
 
 .v-inbox-item-header:hover {
-  background-color: var(--v-charcoal-lighter);
+  background-color: var(--v-croisette);
 }
 
 .v-inbox-item-header-left {
@@ -2536,7 +2544,7 @@
 
 .v-inbox-item-meta {
   font-size: 0.8125rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
 }
 
 .v-inbox-item-header-right {
@@ -2548,7 +2556,7 @@
 }
 
 .v-inbox-item-chevron {
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   font-size: 0.875rem;
 }
 
@@ -2563,8 +2571,8 @@
   min-width: 18px;
   height: 18px;
   padding: 0 5px;
-  border-radius: 9px;
-  background-color: var(--v-coral);
+  border-radius: 2px;
+  background-color: var(--v-cinnabar);
   color: white;
   font-size: 0.6875rem;
   font-weight: 700;
@@ -2595,7 +2603,7 @@
 .v-inbox-edit-remove {
   background: none;
   border: none;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   font-size: 1.25rem;
   cursor: pointer;
   padding: 0 4px;
@@ -2604,7 +2612,7 @@
 }
 
 .v-inbox-edit-remove:hover {
-  color: var(--v-coral);
+  color: var(--v-cinnabar);
 }
 
 @media (max-width: 600px) {
@@ -2650,12 +2658,12 @@
 }
 
 .v-happening-section-label {
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   padding: 8px 0 4px;
 }
 
@@ -2667,12 +2675,12 @@
 
 .v-happening-item {
   padding: 8px 10px;
-  border-radius: 8px;
-  transition: background-color 0.15s ease;
+  border-radius: 2px;
+  transition: background-color var(--v-micro) var(--v-ease);
 }
 
 .v-happening-item:hover {
-  background-color: var(--v-ivory-faint);
+  background-color: var(--v-pearl-faint);
 }
 
 .v-happening-item-enter {
@@ -2706,7 +2714,7 @@
 
 .v-happening-item-sub {
   font-size: 0.75rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-top: 1px;
 }
 
@@ -2721,7 +2729,7 @@
 
 .v-happening-avatars .v-member-avatar,
 .v-happening-avatars .v-member-avatar-placeholder {
-  border: 2px solid var(--v-charcoal);
+  border: 2px solid var(--v-nuit);
 }
 
 .v-happening-avatars .v-member-avatar:not(:first-child),
@@ -2731,7 +2739,7 @@
 
 .v-happening-avatar-more {
   font-size: 0.625rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-left: 4px;
 }
 
@@ -2746,14 +2754,14 @@
   justify-content: space-between;
   font-size: 0.6875rem;
   font-weight: 600;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-bottom: 3px;
 }
 
 .v-happening-flight-track {
   position: relative;
   height: 4px;
-  background-color: var(--v-ivory-faint);
+  background-color: var(--v-pearl-faint);
   border-radius: 2px;
   overflow: visible;
 }
@@ -2765,11 +2773,11 @@
   height: 100%;
   background-color: var(--v-royal);
   border-radius: 2px;
-  transition: width 1s ease;
+  transition: width 1s var(--v-ease);
 }
 
 .v-happening-flight-delayed {
-  background-color: var(--v-coral);
+  background-color: var(--v-cinnabar);
 }
 
 .v-happening-flight-plane {
@@ -2779,7 +2787,7 @@
   font-size: 0.75rem;
   line-height: 1;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
-  transition: left 1s ease;
+  transition: left 1s var(--v-ease);
 }
 
 .v-happening-flight-meta {
@@ -2787,12 +2795,12 @@
   justify-content: space-between;
   align-items: center;
   font-size: 0.625rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-top: 3px;
 }
 
 .v-happening-flight-delay {
-  color: var(--v-coral);
+  color: var(--v-cinnabar);
   font-weight: 600;
 }
 
@@ -2803,9 +2811,9 @@
   bottom: 24px;
   right: 24px;
   z-index: 900;
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 24px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   min-width: 180px;
   max-width: 360px;
@@ -2817,7 +2825,7 @@
 }
 
 .v-happening-pill-expanded {
-  border-radius: 16px;
+  border-radius: 2px;
   max-width: 360px;
 }
 
@@ -2840,8 +2848,8 @@
   padding: 10px 16px;
   background: none;
   border: none;
-  color: var(--v-ivory);
-  font-family: 'Karla', sans-serif;
+  color: var(--v-pearl);
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
@@ -2865,7 +2873,7 @@
   line-height: 1;
   transform: rotate(-90deg);
   transition: transform 0.25s ease;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
 }
 
 .v-happening-pill-chevron-up {
@@ -2886,7 +2894,7 @@
 
 .v-happening-pill-body .v-happening-content {
   padding: 0 16px 12px;
-  border-top: 1px solid var(--v-ivory-faint);
+  border-top: 1px solid var(--v-pearl-faint);
 }
 
 /* ---- Animations ---- */
@@ -2916,9 +2924,48 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
   50% {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 4px rgba(74, 53, 215, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 4px rgba(194, 59, 34, 0.15);
   }
 }
+
+@keyframes v-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- Staggered entry & cinematic transitions ---- */
+
+.v-page {
+  animation: v-fade-up var(--v-dramatic) var(--v-ease) both;
+}
+
+.v-members-list > *,
+.v-calendar-events > *,
+.v-inbox-list > * {
+  animation: v-fade-up var(--v-standard) var(--v-ease) both;
+}
+
+.v-members-list > *:nth-child(2),
+.v-calendar-events > *:nth-child(2),
+.v-inbox-list > *:nth-child(2) { animation-delay: 50ms; }
+
+.v-members-list > *:nth-child(3),
+.v-calendar-events > *:nth-child(3),
+.v-inbox-list > *:nth-child(3) { animation-delay: 100ms; }
+
+.v-members-list > *:nth-child(4),
+.v-calendar-events > *:nth-child(4),
+.v-inbox-list > *:nth-child(4) { animation-delay: 150ms; }
+
+.v-members-list > *:nth-child(5),
+.v-calendar-events > *:nth-child(5),
+.v-inbox-list > *:nth-child(5) { animation-delay: 200ms; }
 
 /* ---- Responsive: pill → bottom sheet on mobile ---- */
 
@@ -2929,12 +2976,12 @@
     left: 0;
     max-width: 100%;
     min-width: 100%;
-    border-radius: 16px 16px 0 0;
+    border-radius: 2px 2px 0 0;
     border-bottom: none;
   }
 
   .v-happening-pill-expanded {
-    border-radius: 16px 16px 0 0;
+    border-radius: 2px 2px 0 0;
   }
 
   .v-happening-pill-expanded .v-happening-pill-body {

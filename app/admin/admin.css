@@ -13,14 +13,14 @@
 }
 
 .v-admin-page-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', serif;
   font-size: 2rem;
   font-weight: 700;
   margin: 0 0 8px 0;
 }
 
 .v-admin-page-subtitle {
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   font-size: 0.9375rem;
   margin: 0;
   line-height: 1.5;
@@ -28,13 +28,13 @@
 
 .v-admin-back-link {
   font-size: 0.8125rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .v-admin-back-link:hover {
-  color: var(--v-hide);
+  color: var(--v-champagne);
 }
 
 /* ---- Categories ---- */
@@ -46,9 +46,9 @@
 }
 
 .v-admin-category-title {
-  font-family: 'Karla', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.75rem;
-  color: var(--v-hide);
+  color: var(--v-champagne);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
@@ -69,9 +69,9 @@
   justify-content: space-between;
   gap: 16px;
   padding: 16px 20px;
-  background-color: var(--v-charcoal-light);
-  border: 1px solid var(--v-ivory-faint);
-  border-radius: 10px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
   transition: opacity 0.2s ease;
 }
 
@@ -91,7 +91,7 @@
 
 .v-admin-feature-desc {
   font-size: 0.8125rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   margin-top: 2px;
 }
 
@@ -113,7 +113,7 @@
 
 .v-admin-toggle-label {
   font-size: 0.625rem;
-  color: var(--v-ivory-dim);
+  color: var(--v-pearl-dim);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 500;
@@ -125,9 +125,9 @@
   position: relative;
   width: 36px;
   height: 20px;
-  border-radius: 10px;
+  border-radius: 2px;
   border: none;
-  background-color: var(--v-charcoal-lighter);
+  background-color: var(--v-croisette);
   cursor: pointer;
   padding: 0;
   transition: background-color 0.2s ease;

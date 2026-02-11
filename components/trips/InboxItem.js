@@ -179,7 +179,7 @@ export default function InboxItem({ email, tripId, isOwner }) {
       {expanded && (
         <div className="v-inbox-item-body">
           {email.parse_error && (
-            <div style={{ color: 'var(--v-coral)', fontSize: '0.875rem', marginBottom: 12 }}>
+            <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.875rem', marginBottom: 12 }}>
               Parse error: {email.parse_error}
             </div>
           )}
@@ -259,7 +259,7 @@ export default function InboxItem({ email, tripId, isOwner }) {
               {parsed.notes && (
                 <div className="v-parsed-section">
                   <div className="v-parsed-section-title">Notes</div>
-                  <p style={{ color: 'var(--v-ivory-dim)', fontSize: '0.875rem' }}>{parsed.notes}</p>
+                  <p style={{ color: 'var(--v-pearl-dim)', fontSize: '0.875rem' }}>{parsed.notes}</p>
                 </div>
               )}
             </div>
@@ -331,7 +331,7 @@ export default function InboxItem({ email, tripId, isOwner }) {
 
           {result && (
             <div className="v-parsed-results">
-              <div className="v-parsed-summary" style={{ color: 'var(--v-hide)' }}>
+              <div className="v-parsed-summary" style={{ color: 'var(--v-champagne)' }}>
                 Applied! Updated {result.updated} member{result.updated !== 1 ? 's' : ''}
                 {result.members_added > 0 && `, added ${result.members_added} new member${result.members_added !== 1 ? 's' : ''}`}
                 {result.logistics_added > 0 && `, added ${result.logistics_added} logistics entr${result.logistics_added !== 1 ? 'ies' : 'y'}`}
@@ -341,7 +341,7 @@ export default function InboxItem({ email, tripId, isOwner }) {
           )}
 
           {error && (
-            <div style={{ color: 'var(--v-coral)', fontSize: '0.875rem', marginTop: 8 }}>{error}</div>
+            <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.875rem', marginTop: 8 }}>{error}</div>
           )}
 
           {email.status === 'pending' && isOwner && parsed && !result && (

@@ -1,7 +1,7 @@
 import { differenceInDays, parseISO, format } from 'date-fns';
 import { getMemberDisplayInfo } from '../../lib/utils/members';
 
-const MEMBER_COLORS = ['#4A35D7', '#FF7D73', '#DFB288', '#34A853', '#4285F4', '#E040FB', '#FF6D00', '#00BFA5'];
+const MEMBER_COLORS = ['#4A35D7', '#FF7D73', '#DFB288', '#2D8659', '#4285F4', '#E040FB', '#FF6D00', '#00BFA5'];
 
 export default function StayTimeline({ trip, members }) {
   if (!trip.start_date || !trip.end_date) return null;
@@ -35,7 +35,7 @@ export default function StayTimeline({ trip, members }) {
     return (
       <div style={{ marginBottom: 32 }}>
         <h2 className="v-section-title">Who&apos;s There When</h2>
-        <p style={{ color: 'var(--v-ivory-dim)', fontSize: '0.875rem' }}>
+        <p style={{ color: 'var(--v-pearl-dim)', fontSize: '0.875rem' }}>
           No one has set their stay dates yet. Go to Members to add yours.
         </p>
       </div>

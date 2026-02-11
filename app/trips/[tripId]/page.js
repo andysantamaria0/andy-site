@@ -109,7 +109,7 @@ export default async function TripOverviewPage({ params }) {
       {trip.description && (
         <div style={{ marginBottom: 32 }}>
           <h2 className="v-section-title">About</h2>
-          <p style={{ color: 'var(--v-ivory-dim)', lineHeight: 1.6 }}>{trip.description}</p>
+          <p style={{ color: 'var(--v-pearl-dim)', lineHeight: 1.6, fontFamily: "'Crimson Pro', serif", fontSize: '1rem' }}>{trip.description}</p>
         </div>
       )}
 

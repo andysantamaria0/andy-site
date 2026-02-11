@@ -13,7 +13,7 @@ export default function CalendarDayList({ trip, members, events, logistics, isOw
 
   if (!trip.start_date || !trip.end_date) {
     return (
-      <p style={{ color: 'var(--v-ivory-dim)', fontSize: '0.875rem' }}>
+      <p style={{ color: 'var(--v-pearl-dim)', fontSize: '0.875rem' }}>
         Set trip dates to see the calendar.
       </p>
     );

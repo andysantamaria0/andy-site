@@ -71,7 +71,7 @@ export default function SmartPaste({ tripId }) {
       <div className="v-smart-paste-header">
         <h3 className="v-section-title" style={{ marginBottom: 0 }}>Smart Paste</h3>
         <span className="v-smart-paste-hint">
-          Paste texts, emails, or any info about the trip and it will be parsed automatically
+          Paste texts, emails, or confirmations — the concierge will read them for you
         </span>
       </div>
 
@@ -81,7 +81,7 @@ export default function SmartPaste({ tripId }) {
             className="v-form-textarea"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder={"Paste anything here...\n\ne.g. \"Hey Andy, I'm flying in May 17th on Delta DL1234, landing at 2:30pm. Leaving the 21st on AA567.\""}
+            placeholder={"The flight confirmation said AF 1082, departing CDG at 10:15...\n\nPaste any confirmation email, text, or travel details here."}
             rows={5}
             style={{ marginBottom: 12 }}
           />
@@ -96,7 +96,7 @@ export default function SmartPaste({ tripId }) {
       )}
 
       {error && (
-        <div style={{ color: 'var(--v-coral)', fontSize: '0.875rem', marginTop: 12 }}>{error}</div>
+        <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.875rem', marginTop: 12 }}>{error}</div>
       )}
 
       {parsed && !result && (
@@ -174,7 +174,7 @@ export default function SmartPaste({ tripId }) {
           {parsed.notes && (
             <div className="v-parsed-section">
               <div className="v-parsed-section-title">Notes</div>
-              <p style={{ color: 'var(--v-ivory-dim)', fontSize: '0.875rem' }}>{parsed.notes}</p>
+              <p style={{ color: 'var(--v-pearl-dim)', fontSize: '0.875rem' }}>{parsed.notes}</p>
             </div>
           )}
 
@@ -195,7 +195,7 @@ export default function SmartPaste({ tripId }) {
 
       {result && (
         <div className="v-parsed-results">
-          <div className="v-parsed-summary" style={{ color: 'var(--v-hide)' }}>
+          <div className="v-parsed-summary" style={{ color: 'var(--v-champagne)' }}>
             Done! Updated {result.updated} member{result.updated !== 1 ? 's' : ''}
             {result.members_added > 0 && `, added ${result.members_added} new member${result.members_added !== 1 ? 's' : ''}`}
             {result.logistics_added > 0 && `, added ${result.logistics_added} logistics entr${result.logistics_added !== 1 ? 'ies' : 'y'}`}
@@ -203,7 +203,7 @@ export default function SmartPaste({ tripId }) {
             {result.errors?.length > 0 && ` (${result.errors.length} error${result.errors.length !== 1 ? 's' : ''})`}
           </div>
           {result.errors?.length > 0 && (
-            <div style={{ color: 'var(--v-coral)', fontSize: '0.8125rem', marginTop: 8 }}>
+            <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.8125rem', marginTop: 8 }}>
               {result.errors.map((e, i) => <div key={i}>{e}</div>)}
             </div>
           )}

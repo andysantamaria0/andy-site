@@ -22,7 +22,7 @@ export default async function ExpensesPage({ params }) {
     <div className="v-page">
       <div className="v-placeholder">
         <div className="v-placeholder-title">Expenses</div>
-        <p>Coming soon — track shared expenses and see who owes whom.</p>
+        <p>The ledger is being prepared — expense tracking arrives soon.</p>
       </div>
     </div>
   );
