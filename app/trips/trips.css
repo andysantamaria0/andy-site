@@ -76,6 +76,16 @@
   font-weight: 700;
   color: var(--v-pearl);
   text-decoration: none;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.v-header-mark {
+  width: 20px;
+  height: 9px;
+  color: var(--v-champagne);
+  flex-shrink: 0;
 }
 
 .v-header-logo:hover {
@@ -246,6 +256,13 @@
 .v-login-brand {
   text-align: center;
   margin-bottom: 48px;
+}
+
+.v-login-mark {
+  width: 48px;
+  height: 20px;
+  color: var(--v-champagne);
+  margin: 0 auto 16px;
 }
 
 .v-login-logo {
@@ -2023,6 +2040,13 @@
   color: var(--v-champagne);
 }
 
+.v-landing-nav-wordmark {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--v-pearl);
+}
+
 .v-landing-nav-tagline {
   font-family: 'DM Sans', sans-serif;
   font-size: 0.7rem;
@@ -2352,6 +2376,14 @@
 
 .v-landing-footer-mark {
   color: var(--v-champagne);
+}
+
+.v-landing-footer-wordmark {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--v-pearl);
+  letter-spacing: 0.02em;
 }
 
 .v-landing-footer-tagline-italic {

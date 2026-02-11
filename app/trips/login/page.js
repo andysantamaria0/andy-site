@@ -8,6 +8,9 @@ export default function LoginPage() {
   return (
     <div className="v-login">
       <div className="v-login-brand">
+        <svg viewBox="0 0 120 48" className="v-login-mark" aria-hidden="true">
+          <path d="M0 48 L60 0 L120 48 Z" fill="currentColor" />
+        </svg>
         <div className="v-login-logo">Vialoure</div>
         <div className="v-login-tagline">For Friends</div>
       </div>

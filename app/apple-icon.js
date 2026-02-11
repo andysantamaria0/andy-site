@@ -19,15 +19,13 @@ export default function AppleIcon() {
       >
         <div
           style={{
-            fontFamily: 'serif',
-            fontWeight: 700,
-            fontSize: 96,
-            color: '#F0EDE6',
-            lineHeight: 1,
+            width: 0,
+            height: 0,
+            borderLeft: '40px solid transparent',
+            borderRight: '40px solid transparent',
+            borderBottom: '32px solid #C4A77D',
           }}
-        >
-          V
-        </div>
+        />
       </div>
     ),
     { ...size }

@@ -92,9 +92,10 @@ export default async function LandingPage() {
       {/* Nav */}
       <nav className="v-landing-nav">
         <div className="v-landing-nav-brand">
-          <svg viewBox="0 0 120 48" width="28" height="12" className="v-landing-nav-logo">
+          <svg viewBox="0 0 120 48" width="28" height="12" className="v-landing-nav-logo" aria-hidden="true">
             <path d="M0 48 L60 0 L120 48 Z" fill="currentColor" />
           </svg>
+          <span className="v-landing-nav-wordmark">Vialoure</span>
           <span className="v-landing-nav-tagline">For Friends</span>
         </div>
         <Link href={user ? '/trips' : '/trips/login'} className="v-btn v-btn-primary v-landing-nav-cta">
@@ -188,9 +189,10 @@ export default async function LandingPage() {
 
       {/* Footer */}
       <footer className="v-landing-footer">
-        <svg viewBox="0 0 120 48" width="24" height="10" className="v-landing-footer-mark">
+        <svg viewBox="0 0 120 48" width="24" height="10" className="v-landing-footer-mark" aria-hidden="true">
           <path d="M0 48 L60 0 L120 48 Z" fill="currentColor" />
         </svg>
+        <span className="v-landing-footer-wordmark">Vialoure</span>
         <span className="v-landing-footer-tagline-italic">for friends</span>
       </footer>
     </div>

@@ -29,7 +29,12 @@ export default async function TripsLayout({ children }) {
     <div className="v-layout">
       <header className="v-header">
         <div className="v-header-brand">
-          <Link href="/trips" className="v-header-logo">Vialoure</Link>
+          <Link href="/trips" className="v-header-logo">
+            <svg viewBox="0 0 120 48" className="v-header-mark" aria-hidden="true">
+              <path d="M0 48 L60 0 L120 48 Z" fill="currentColor" />
+            </svg>
+            Vialoure
+          </Link>
           <span className="v-header-tagline">For Friends</span>
         </div>
         <div className="v-header-user">

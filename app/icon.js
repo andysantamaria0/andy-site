@@ -19,15 +19,13 @@ export default function Icon() {
       >
         <div
           style={{
-            fontFamily: 'serif',
-            fontWeight: 700,
-            fontSize: 20,
-            color: '#F0EDE6',
-            lineHeight: 1,
+            width: 0,
+            height: 0,
+            borderLeft: '10px solid transparent',
+            borderRight: '10px solid transparent',
+            borderBottom: '8px solid #C4A77D',
           }}
-        >
-          V
-        </div>
+        />
       </div>
     ),
     { ...size }
