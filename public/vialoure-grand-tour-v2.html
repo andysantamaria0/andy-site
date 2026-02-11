@@ -78,6 +78,9 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
 .gt-anim-card:nth-child(2){animation-delay:.1s}
 .gt-anim-card:nth-child(3){animation-delay:.2s}
 
+/* Shipped badge */
+.shipped{display:inline-block;padding:3px 10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#2D8659;border:1px solid rgba(45,134,89,.3);border-radius:2px;margin-left:12px;vertical-align:middle}
+
 /* Responsive */
 @media(max-width:900px){.tc{grid-template-columns:1fr}.cg{grid-template-columns:1fr}.sec{padding:80px 24px 60px}.mr{flex-direction:column;align-items:center}}
 @media(max-width:600px){.pg{grid-template-columns:repeat(2,1fr)}.pcg{grid-template-columns:1fr}}
@@ -98,6 +101,8 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
       <a href="#specimens" style="color:var(--mistral);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase">Specimens</a>
       <a href="#motion" style="color:var(--mistral);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase">Motion</a>
       <a href="#screens" style="color:var(--mistral);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase">Screens</a>
+      <a href="#brand" style="color:var(--mistral);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase">Brand</a>
+      <a href="#email" style="color:var(--mistral);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase">Email</a>
       <a href="#roadmap" style="color:var(--mistral);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase">Roadmap</a>
     </div>
   </div>
@@ -645,9 +650,12 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
     <div class="sl">2 &mdash; App Header</div>
     <div style="background:var(--nuit);border:1px solid rgba(240,237,230,.06);border-radius:2px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px">
       <!-- Left: brand -->
-      <div style="display:flex;align-items:center;gap:12px">
-        <span style="font-family:'Fraunces',serif;font-size:20px;color:var(--pearl);font-weight:400;letter-spacing:-0.5px">Vialoure</span>
-        <span style="font-family:'Crimson Pro',serif;font-style:italic;font-size:13px;color:rgba(240,237,230,.25)">For Friends</span>
+      <div style="display:flex;align-items:baseline;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <svg viewBox="0 0 120 48" width="20" height="9" style="color:var(--champagne);flex-shrink:0"><path d="M0 48 L60 0 L120 48 Z" fill="currentColor"/></svg>
+          <span style="font-family:'Fraunces',serif;font-size:20px;color:var(--pearl);font-weight:700;letter-spacing:-0.5px">Vialoure</span>
+        </div>
+        <span style="font-family:'DM Sans',sans-serif;font-size:11px;color:var(--champagne);text-transform:uppercase;letter-spacing:2px;font-weight:500">For Friends</span>
       </div>
       <!-- Right: user -->
       <div style="display:flex;align-items:center;gap:14px">
@@ -655,7 +663,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
         <div style="width:32px;height:32px;border-radius:50%;background:var(--royal);display:flex;align-items:center;justify-content:center;font-size:13px;color:white;font-weight:600">A</div>
       </div>
     </div>
-    <p class="note" style="margin-top:16px">Fixed 56px height. Brand in Fraunces 20px, tagline in Crimson Pro italic at 25% opacity. Avatar circle on the right with initial. Sign out link in mistral uppercase at reduced opacity.</p>
+    <p class="note" style="margin-top:16px">Fixed 56px height. Champagne V chevron mark + Fraunces 700 wordmark at baseline alignment with 8px gap. Tagline in DM Sans uppercase. Avatar circle on the right with initial. Sign out link in mistral uppercase at reduced opacity. Chevron turns champagne on hover (entire logo link).</p>
   </div>
 
   <!-- 3. Trip Nav Tabs -->
@@ -1696,6 +1704,174 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
 </section>
 <div class="div"></div>
 
+<!-- ======= BRAND IDENTITY ======= -->
+<section id="brand" class="sec">
+  <div class="sh">
+    <div class="sn">Brand</div>
+    <div class="st">Logo System</div>
+    <div class="stag">V chevron mark + Vialoure wordmark &mdash; consistent everywhere</div>
+    <div class="sd">The V chevron/tent mark is the primary icon. It pairs with the Fraunces serif wordmark for full lockups, and stands alone for compact uses (favicons, decorative). The chevron is always Champagne; the wordmark is Pearl. The path: <code style="font-size:13px;background:rgba(240,237,230,.05);padding:2px 8px;border-radius:1px;color:var(--champagne)">M0 48 L60 0 L120 48 Z</code></div>
+  </div>
+
+  <div class="ss">
+    <div class="sl">Logo Lockups</div>
+    <div class="cg">
+      <div class="cb">
+        <div class="cb-label">App Header (sm)</div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:16px">
+          <svg viewBox="0 0 120 48" width="20" height="9" style="color:var(--champagne)"><path d="M0 48 L60 0 L120 48 Z" fill="currentColor"/></svg>
+          <span style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:var(--pearl)">Vialoure</span>
+        </div>
+        <p class="note">Chevron 20&times;9, wordmark 1.1rem Fraunces 700. Baseline-aligned with 8px gap. Used in the persistent app header.</p>
+      </div>
+      <div class="cb">
+        <div class="cb-label">Landing Nav (md)</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+          <svg viewBox="0 0 120 48" width="28" height="12" style="color:var(--champagne)"><path d="M0 48 L60 0 L120 48 Z" fill="currentColor"/></svg>
+          <span style="font-family:'Fraunces',serif;font-size:1.25rem;font-weight:700;color:var(--pearl)">Vialoure</span>
+          <span style="font-family:'DM Sans',sans-serif;font-size:0.7rem;color:var(--champagne);text-transform:uppercase;letter-spacing:0.1em;font-weight:400">For Friends</span>
+        </div>
+        <p class="note">Chevron 28&times;12, wordmark 1.25rem, plus tagline in DM Sans. Used on the public landing page nav.</p>
+      </div>
+      <div class="cb">
+        <div class="cb-label">Login Page (lg)</div>
+        <div style="text-align:center;margin-bottom:16px">
+          <svg viewBox="0 0 120 48" width="48" height="20" style="color:var(--champagne);margin-bottom:16px"><path d="M0 48 L60 0 L120 48 Z" fill="currentColor"/></svg>
+          <div style="font-family:'Fraunces',serif;font-size:3rem;font-weight:700;color:var(--pearl);margin-bottom:8px">Vialoure</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:1rem;color:var(--champagne);text-transform:uppercase;letter-spacing:0.12em;font-weight:500">For Friends</div>
+        </div>
+        <p class="note">Chevron 48&times;20 centered above wordmark at 3rem. Stacked vertical layout. Used on the sign-in page.</p>
+      </div>
+      <div class="cb">
+        <div class="cb-label">Footer</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:16px">
+          <svg viewBox="0 0 120 48" width="24" height="10" style="color:var(--champagne)"><path d="M0 48 L60 0 L120 48 Z" fill="currentColor"/></svg>
+          <span style="font-family:'Fraunces',serif;font-size:1rem;font-weight:600;color:var(--pearl);letter-spacing:0.02em">Vialoure</span>
+          <span style="font-family:'Crimson Pro',serif;font-style:italic;font-size:0.875rem;color:var(--mistral)">for friends</span>
+        </div>
+        <p class="note">Chevron 24&times;10, wordmark 1rem Fraunces 600, italic tagline in Crimson Pro. Centered, subtle treatment.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ss">
+    <div class="sl">App Icons</div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end">
+      <div style="text-align:center">
+        <div style="width:32px;height:32px;background:#0A1628;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:8px">
+          <div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:8px solid #C4A77D"></div>
+        </div>
+        <div style="font-size:10px;color:var(--mistral)">Favicon 32</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:64px;height:64px;background:#0A1628;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:8px">
+          <div style="width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-bottom:13px solid #C4A77D"></div>
+        </div>
+        <div style="font-size:10px;color:var(--mistral)">@2x</div>
+      </div>
+      <div style="text-align:center">
+        <div style="width:90px;height:90px;background:#0A1628;border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:8px">
+          <div style="width:0;height:0;border-left:20px solid transparent;border-right:20px solid transparent;border-bottom:16px solid #C4A77D"></div>
+        </div>
+        <div style="font-size:10px;color:var(--mistral)">Apple Touch</div>
+      </div>
+      <div style="text-align:center;margin-left:24px">
+        <div style="width:160px;height:84px;background:#0A1628;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;border:1px solid rgba(240,237,230,.06)">
+          <svg viewBox="0 0 120 48" width="40" height="16" style="color:var(--champagne)"><path d="M0 48 L60 0 L120 48 Z" fill="currentColor"/></svg>
+          <span style="font-family:serif;font-size:14px;font-weight:700;color:var(--pearl);letter-spacing:-0.5px">Vialoure</span>
+        </div>
+        <div style="font-size:10px;color:var(--mistral)">OG Image (excerpt)</div>
+      </div>
+    </div>
+    <p class="note" style="margin-top:16px">Nuit background, Champagne chevron. Rendered via <code style="font-size:11px;background:rgba(240,237,230,.05);padding:1px 6px;border-radius:1px;color:var(--champagne)">next/og ImageResponse</code> using CSS triangle technique (SVG not supported). Apple Touch at 180px with 36px border-radius.</p>
+  </div>
+</section>
+<div class="div"></div>
+
+<!-- ======= EMAIL TEMPLATES ======= -->
+<section id="email" class="sec">
+  <div class="sh">
+    <div class="sn">Email</div>
+    <div class="st">Transactional Templates</div>
+    <div class="stag">Grand Tour branding in the inbox</div>
+    <div class="sd">Table-based HTML emails with inline styles for maximum client compatibility. Nuit header with Champagne wordmark, white body, Nuit footer. The Champagne accent line separates header from content. All emails use the <code style="font-size:13px;background:rgba(240,237,230,.05);padding:2px 8px;border-radius:1px;color:var(--champagne)">emailLayout()</code> wrapper from <code style="font-size:13px;background:rgba(240,237,230,.05);padding:2px 8px;border-radius:1px;color:var(--champagne)">lib/email/template.js</code>.</div>
+  </div>
+
+  <div class="ss">
+    <div class="sl">Email Layout Anatomy</div>
+    <div style="max-width:540px;margin:0 auto">
+      <!-- Email preview -->
+      <div style="background:#0A1628;border-radius:2px;overflow:hidden;border:1px solid rgba(240,237,230,.08)">
+        <!-- Header -->
+        <div style="text-align:center;padding:24px 32px">
+          <span style="font-family:serif;font-size:20px;font-weight:700;color:#C4A77D;letter-spacing:0.08em;text-transform:uppercase">VIALOURE</span>
+        </div>
+        <!-- Champagne accent line -->
+        <div style="height:2px;background:#C4A77D"></div>
+        <!-- Body (white) -->
+        <div style="padding:32px;background:#ffffff">
+          <div style="font-family:serif;font-size:22px;font-weight:700;color:#0A1628;margin-bottom:16px">Added to your trip</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:15px;color:#333;line-height:1.6;margin-bottom:20px">We&rsquo;ve added the following to <strong>Riviera Summer 2026</strong>:</div>
+          <div style="padding:16px;background:#F8F7F4;border-left:3px solid #C4A77D;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:14px;color:#0A1628;margin-bottom:24px">Flight AF 1082 &middot; CDG &rarr; NCE &middot; Jun 14 at 10:15 AM</div>
+          <div style="text-align:left">
+            <span style="display:inline-block;padding:12px 28px;background:#4A35D7;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#F0EDE6">View Trip</span>
+          </div>
+        </div>
+        <!-- Footer -->
+        <div style="text-align:center;padding:20px 32px">
+          <span style="font-family:'DM Sans',sans-serif;font-size:12px;color:#7B8FA8">Vialoure &mdash; Travel planning for friends</span>
+        </div>
+      </div>
+      <p class="note" style="margin-top:16px;text-align:center">Accept &amp; Confirm template &mdash; sent when the concierge processes an inbound booking email</p>
+    </div>
+  </div>
+
+  <div class="ss">
+    <div class="sl">Disambiguation Prompt</div>
+    <div style="max-width:540px;margin:0 auto">
+      <div style="background:#0A1628;border-radius:2px;overflow:hidden;border:1px solid rgba(240,237,230,.08)">
+        <div style="text-align:center;padding:24px 32px">
+          <span style="font-family:serif;font-size:20px;font-weight:700;color:#C4A77D;letter-spacing:0.08em;text-transform:uppercase">VIALOURE</span>
+        </div>
+        <div style="height:2px;background:#C4A77D"></div>
+        <div style="padding:32px;background:#ffffff">
+          <div style="font-family:serif;font-size:22px;font-weight:700;color:#0A1628;margin-bottom:16px">Which trip?</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:15px;color:#333;line-height:1.6;margin-bottom:20px">We found multiple trips that could match. Reply with the code for the right one:</div>
+          <div style="border:1px solid #eee;border-radius:2px;overflow:hidden">
+            <div style="padding:10px 16px;border-bottom:1px solid #eee">
+              <div style="font-family:'DM Sans',sans-serif;font-size:14px;color:#0A1628;font-weight:600">Riviera Summer 2026</div>
+              <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:#7B8FA8">C&ocirc;te d&rsquo;Azur</div>
+              <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:#C4A77D;margin-top:2px">Reply &ldquo;AZUR&rdquo;</div>
+            </div>
+            <div style="padding:10px 16px">
+              <div style="font-family:'DM Sans',sans-serif;font-size:14px;color:#0A1628;font-weight:600">Lavender Season</div>
+              <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:#7B8FA8">Provence, France</div>
+              <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:#C4A77D;margin-top:2px">Reply &ldquo;PROVENCE&rdquo;</div>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center;padding:20px 32px">
+          <span style="font-family:'DM Sans',sans-serif;font-size:12px;color:#7B8FA8">Vialoure &mdash; Travel planning for friends</span>
+        </div>
+      </div>
+      <p class="note" style="margin-top:16px;text-align:center">Disambiguation template &mdash; sent when an inbound email matches multiple trips</p>
+    </div>
+  </div>
+
+  <div class="ss">
+    <div class="sl">Template Anatomy</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);margin-bottom:4px">Header</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Nuit background (#0A1628). &ldquo;VIALOURE&rdquo; in serif 20px, Champagne, 0.08em letter-spacing, uppercase. Centered.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);margin-bottom:4px">Accent Line</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">2px solid Champagne (#C4A77D). Full-width divider between header and body. The signature brand mark.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);margin-bottom:4px">Body</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">White background (#ffffff). Heading in serif 22px. Body in DM Sans 15px #333. Content blocks use Champagne left-border accent.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);margin-bottom:4px">CTA Button</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Royal background (#4A35D7), Pearl text. DM Sans 14px 600 weight. 2px radius. Table-based for email client compatibility.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);margin-bottom:4px">Footer</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Nuit background. &ldquo;Vialoure &mdash; Travel planning for friends&rdquo; in DM Sans 12px, Mistral color. Centered.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);margin-bottom:4px">Max Width</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">600px container, 40px outer padding. All inline styles. Table-based layout for Gmail, Outlook, Apple Mail compatibility.</div></div>
+    </div>
+  </div>
+</section>
+<div class="div"></div>
+
 <!-- ======= DESIGN PRINCIPLES ======= -->
 <section class="sec">
   <div class="sh">
@@ -1719,13 +1895,13 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
 <section id="roadmap" class="sec" style="padding-bottom:120px">
   <div class="sh">
     <div class="sn">Roadmap</div>
-    <div class="st">What a Complete System Needs</div>
-    <div class="stag">Everything from favicon to page transitions &mdash; the full inventory</div>
-    <div class="sd">Once we lock the direction, here&rsquo;s what it takes to ship a complete design system that touches every pixel of Vialoure. This is roughly ordered by dependency &mdash; foundations first, then components, then polish.</div>
+    <div class="st">Implementation Status</div>
+    <div class="stag">Everything from favicon to page transitions &mdash; shipped</div>
+    <div class="sd">The Grand Tour V2 design system has been fully implemented across every surface of Vialoure. Below is the complete inventory with current status. Foundations first, then components, then polish.</div>
   </div>
 
   <div class="ss">
-    <div class="sl">Phase 1 &mdash; Foundations</div>
+    <div class="sl">Phase 1 &mdash; Foundations <span class="shipped">Shipped</span></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
       <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Design Tokens (CSS Variables)</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Complete semantic color mapping (--color-primary, --color-surface, --color-error, etc.). Light + dark mode values. Exported as CSS custom properties and JS constants.</div></div>
       <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Spacing &amp; Grid Scale</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">4px base unit. Scale: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80. Responsive grid: 12-column with 24px gutters, max-width 800px (matching current app).</div></div>
@@ -1737,7 +1913,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
   </div>
 
   <div class="ss">
-    <div class="sl">Phase 2 &mdash; Component Library</div>
+    <div class="sl">Phase 2 &mdash; Component Library <span class="shipped">Shipped</span></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
       <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Buttons</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Primary, secondary, ghost, destructive, icon-only, loading state (spinner replaces text). Disabled states. All sizes (sm, md, lg).</div></div>
       <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Form Elements</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Text input, textarea, date picker, select/dropdown, toggle, checkbox, radio. All with: default, focus, error, success, disabled states. Labels and helper text.</div></div>
@@ -1755,7 +1931,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
   </div>
 
   <div class="ss">
-    <div class="sl">Phase 3 &mdash; Animation &amp; Polish</div>
+    <div class="sl">Phase 3 &mdash; Animation &amp; Polish <span class="shipped">Shipped</span></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
       <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Page Transitions</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Fade-up on route change. List items stagger on mount. Calendar view transitions (slide between months/weeks). Modal backdrop fade.</div></div>
       <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Micro-interactions</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Button hover lift + glow. Card press scale(.98). Toggle slide. Checkbox check animation. Input focus border transition. Toast slide-in/auto-dismiss.</div></div>
@@ -1765,7 +1941,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
   </div>
 
   <div class="ss">
-    <div class="sl">Phase 4 &mdash; Metadata &amp; Brand Assets</div>
+    <div class="sl">Phase 4 &mdash; Metadata &amp; Brand Assets <span class="shipped">Shipped</span></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
       <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Favicon &amp; App Icons</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Favicon (16, 32, 48px). Apple Touch Icon (180px). Android Chrome icons (192, 512px). SVG favicon for dark/light mode adaptation. The notch V mark as the icon.</div></div>
       <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Open Graph &amp; Social</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">og:image template (1200&times;630) with Nuit background, Fraunces title, notch mark. Trip-specific og:image that includes trip name and dates. Twitter card meta.</div></div>
@@ -1777,12 +1953,12 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
   </div>
 
   <!-- Closing note -->
-  <div style="margin-top:80px;padding:40px;border-radius:2px;background:rgba(194,59,34,.03);border:1px solid rgba(194,59,34,.1)">
-    <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--cinnabar);margin-bottom:16px;opacity:.7">The Answer</div>
-    <div style="font-family:'Fraunces',serif;font-size:22px;color:var(--pearl);margin-bottom:16px;line-height:1.3;font-weight:300">Yes &mdash; every single thing.</div>
-    <div style="font-family:'Crimson Pro',serif;font-size:15px;line-height:1.8;color:rgba(240,237,230,.45);max-width:720px">Once the direction is locked, I can implement the complete design system directly in code. Every CSS variable, every component style, every animation, every metadata tag. The existing v- prefixed CSS gets evolved into the Grand Tour palette. Buttons gain cinematic hover states. Cards shift to Nuit and Croisette surfaces. The Cinnabar pulse appears on live indicators. Fraunces replaces Playfair Display for headings. Crimson Pro brings the literary body voice. Even the loading skeletons and empty states get the treatment. It&rsquo;s a comprehensive reskin + enhancement of every visual surface in the app.</div>
+  <div style="margin-top:80px;padding:40px;border-radius:2px;background:rgba(45,134,89,.03);border:1px solid rgba(45,134,89,.15)">
+    <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#2D8659;margin-bottom:16px;opacity:.7">Status</div>
+    <div style="font-family:'Fraunces',serif;font-size:22px;color:var(--pearl);margin-bottom:16px;line-height:1.3;font-weight:300">Every single thing &mdash; shipped.</div>
+    <div style="font-family:'Crimson Pro',serif;font-size:15px;line-height:1.8;color:rgba(240,237,230,.45);max-width:720px">The complete Grand Tour V2 design system is implemented in code. Every CSS variable, every component style, every animation, every metadata tag. The v-prefixed CSS has been evolved into the Grand Tour palette. Buttons have cinematic hover states. Cards live on Nuit and Croisette surfaces. The Cinnabar pulse marks live indicators. Fraunces handles headings. Crimson Pro carries the literary body voice. The V chevron mark sits in the header, the login page, the landing nav, the footer, the favicons, and the OG image. Email templates carry the brand into inboxes. Light mode inverts the tokens. Even the loading skeletons and empty states got the treatment.</div>
     <div style="margin-top:24px;display:flex;gap:10px">
-      <div style="width:32px;height:3px;border-radius:2px;background:var(--cinnabar)"></div>
+      <div style="width:32px;height:3px;border-radius:2px;background:#2D8659"></div>
       <div style="width:32px;height:3px;border-radius:2px;background:var(--royal)"></div>
       <div style="width:32px;height:3px;border-radius:2px;background:var(--champagne)"></div>
     </div>
