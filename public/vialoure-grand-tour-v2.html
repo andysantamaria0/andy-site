@@ -28,7 +28,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
 
 /* Palette grid */
 .pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-.cc{border-radius:10px;overflow:hidden;background:rgba(240,237,230,.02);border:1px solid rgba(240,237,230,.06)}
+.cc{border-radius:2px;overflow:hidden;background:rgba(240,237,230,.02);border:1px solid rgba(240,237,230,.06)}
 .cs{height:80px}.ci{padding:12px 14px}
 .cn{font-size:12px;font-weight:500;color:var(--pearl);margin-bottom:3px}
 .ch{font-size:11px;color:rgba(240,237,230,.35);font-family:monospace;letter-spacing:.5px}
@@ -36,31 +36,31 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
 
 /* Type specimen */
 .tc{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.ts{padding:36px;border-radius:14px;margin-bottom:12px;border:1px solid rgba(240,237,230,.05);overflow:hidden}
+.ts{padding:36px;border-radius:2px;margin-bottom:12px;border:1px solid rgba(240,237,230,.05);overflow:hidden}
 .tl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(240,237,230,.25);margin-bottom:14px}
 .tm{font-size:11px;color:rgba(240,237,230,.2);margin-top:14px;font-family:"Crimson Pro",serif;font-style:italic}
 
 /* Components grid */
 .cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
-.cb{padding:32px;border-radius:14px;background:var(--surface);border:1px solid rgba(240,237,230,.05)}
+.cb{padding:32px;border-radius:2px;background:var(--surface);border:1px solid rgba(240,237,230,.05)}
 .cb-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mistral);margin-bottom:20px}
 
 /* Buttons */
 .br{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.btn{padding:12px 28px;border-radius:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:"DM Sans",sans-serif;font-weight:500;cursor:pointer;border:none;transition:all .3s cubic-bezier(.2,0,0,1)}
+.btn{padding:12px 28px;border-radius:2px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:"DM Sans",sans-serif;font-weight:500;cursor:pointer;border:none;transition:all .3s cubic-bezier(.2,0,0,1)}
 .btn:hover{transform:translateY(-1px)}
 
 /* Cards */
 .pcg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.pc{padding:28px;border-radius:14px;background:rgba(240,237,230,.015);border:1px solid rgba(240,237,230,.05);transition:border-color .3s ease}
+.pc{padding:28px;border-radius:2px;background:rgba(240,237,230,.015);border:1px solid rgba(240,237,230,.05);transition:border-color .3s ease}
 .pc:hover{border-color:rgba(194,59,34,.2)}
 .pc h4{font-family:"Fraunces",serif;font-size:17px;font-weight:400;color:var(--pearl);margin-bottom:10px}
 .pc p{font-family:"Crimson Pro",serif;font-size:14px;line-height:1.7;color:rgba(240,237,230,.4)}
 
 /* Phone mockup */
 .mr{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;align-items:flex-start}
-.pm{width:280px;margin:0 auto;border-radius:36px;overflow:hidden;border:6px solid rgba(240,237,230,.08);position:relative;aspect-ratio:9/19.5;flex-shrink:0}
-.pm::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:100px;height:24px;background:rgba(10,22,40,.95);border-radius:0 0 14px 14px;z-index:10}
+.pm{width:280px;margin:0 auto;border-radius:32px;overflow:hidden;border:6px solid rgba(240,237,230,.08);position:relative;aspect-ratio:9/19.5;flex-shrink:0}
+.pm::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:100px;height:24px;background:rgba(10,22,40,.95);border-radius:0 0 6px 6px;z-index:10}
 .ps{width:100%;height:100%;overflow:hidden;position:relative}
 
 /* Animations */
@@ -172,7 +172,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
     </div>
   </div>
 
-  <div style="margin-top:48px;padding:32px;border-radius:14px;background:var(--surface);border:1px solid rgba(240,237,230,.05)">
+  <div style="margin-top:48px;padding:32px;border-radius:2px;background:var(--surface);border:1px solid rgba(240,237,230,.05)">
     <div class="sl" style="margin-bottom:20px">The Red &mdash; Rules of Engagement</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px">
       <div><div style="font-size:13px;color:var(--pearl);margin-bottom:4px">Notification dots</div><div style="font-size:12px;color:rgba(240,237,230,.35)">Inbox count, unread badges</div></div>
@@ -280,7 +280,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
         </div>
       </div>
     </div>
-    <p class="note" style="margin-top:16px">Radius: 8px. Hover: translateY(-1px) + subtle shadow. Active: scale(.98). Transition: 300ms cubic-bezier(.2,0,0,1).</p>
+    <p class="note" style="margin-top:16px">Radius: 2px (sharp). Hover: translateY(-1px) + subtle shadow. Active: scale(.98). Transition: 300ms cubic-bezier(.2,0,0,1). Edges cut like film frames.</p>
   </div>
 
   <!-- Form Inputs -->
@@ -291,11 +291,11 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
         <div class="cb-label">Text Input</div>
         <div style="margin-bottom:16px">
           <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--champagne);margin-bottom:8px">Trip Name</div>
-          <div style="padding:12px 16px;background:rgba(240,237,230,.04);border:1px solid rgba(240,237,230,.08);border-radius:8px;color:var(--pearl);font-size:15px">Riviera Summer 2026</div>
+          <div style="padding:12px 16px;background:rgba(240,237,230,.04);border:1px solid rgba(240,237,230,.08);border-radius:2px;color:var(--pearl);font-size:15px">Riviera Summer 2026</div>
         </div>
         <div>
           <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--champagne);margin-bottom:8px">Destination</div>
-          <div style="padding:12px 16px;background:rgba(240,237,230,.04);border:1px solid rgba(74,53,215,.5);border-radius:8px;color:var(--pearl);font-size:15px;box-shadow:0 0 0 3px rgba(74,53,215,.1)">C&ocirc;te d&rsquo;Azur<span style="animation:gt-pulse 1.2s ease infinite;display:inline-block;width:2px;height:16px;background:var(--royal);margin-left:2px;vertical-align:text-bottom"></span></div>
+          <div style="padding:12px 16px;background:rgba(240,237,230,.04);border:1px solid rgba(74,53,215,.5);border-radius:2px;color:var(--pearl);font-size:15px;box-shadow:0 0 0 3px rgba(74,53,215,.1)">C&ocirc;te d&rsquo;Azur<span style="animation:gt-pulse 1.2s ease infinite;display:inline-block;width:2px;height:16px;background:var(--royal);margin-left:2px;vertical-align:text-bottom"></span></div>
           <div style="font-size:11px;color:var(--mistral);margin-top:6px">Focus state shown</div>
         </div>
       </div>
@@ -303,12 +303,12 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
         <div class="cb-label">Validation States</div>
         <div style="margin-bottom:16px">
           <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--champagne);margin-bottom:8px">Email</div>
-          <div style="padding:12px 16px;background:rgba(240,237,230,.04);border:1px solid var(--cinnabar);border-radius:8px;color:var(--pearl);font-size:15px;opacity:.7">not-an-email</div>
+          <div style="padding:12px 16px;background:rgba(240,237,230,.04);border:1px solid var(--cinnabar);border-radius:2px;color:var(--pearl);font-size:15px;opacity:.7">not-an-email</div>
           <div style="font-size:11px;color:var(--cinnabar);margin-top:6px">Please enter a valid email address</div>
         </div>
         <div>
           <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--champagne);margin-bottom:8px">Confirmation Code</div>
-          <div style="padding:12px 16px;background:rgba(240,237,230,.04);border:1px solid #2D8659;border-radius:8px;color:var(--pearl);font-size:15px">VIA-2026-AZUR</div>
+          <div style="padding:12px 16px;background:rgba(240,237,230,.04);border:1px solid #2D8659;border-radius:2px;color:var(--pearl);font-size:15px">VIA-2026-AZUR</div>
           <div style="font-size:11px;color:#2D8659;margin-top:6px">Code verified</div>
         </div>
       </div>
@@ -316,30 +316,30 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
         <div class="cb-label">Date &amp; Select</div>
         <div style="margin-bottom:16px">
           <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--champagne);margin-bottom:8px">Start Date</div>
-          <div style="padding:12px 16px;background:rgba(240,237,230,.04);border:1px solid rgba(240,237,230,.08);border-radius:8px;display:flex;justify-content:space-between;align-items:center"><span style="color:var(--pearl);font-size:15px">Jun 14, 2026</span><span style="color:var(--mistral);font-size:14px">&#9662;</span></div>
+          <div style="padding:12px 16px;background:rgba(240,237,230,.04);border:1px solid rgba(240,237,230,.08);border-radius:2px;display:flex;justify-content:space-between;align-items:center"><span style="color:var(--pearl);font-size:15px">Jun 14, 2026</span><span style="color:var(--mistral);font-size:14px">&#9662;</span></div>
         </div>
         <div>
           <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--champagne);margin-bottom:8px">Currency</div>
-          <div style="padding:12px 16px;background:rgba(240,237,230,.04);border:1px solid rgba(240,237,230,.08);border-radius:8px;display:flex;justify-content:space-between;align-items:center"><span style="color:var(--pearl);font-size:15px">EUR (&euro;)</span><span style="color:var(--mistral);font-size:14px">&#9662;</span></div>
+          <div style="padding:12px 16px;background:rgba(240,237,230,.04);border:1px solid rgba(240,237,230,.08);border-radius:2px;display:flex;justify-content:space-between;align-items:center"><span style="color:var(--pearl);font-size:15px">EUR (&euro;)</span><span style="color:var(--mistral);font-size:14px">&#9662;</span></div>
         </div>
       </div>
       <div class="cb">
         <div class="cb-label">Toggle &amp; Checkbox</div>
         <div style="display:flex;flex-direction:column;gap:20px">
           <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:24px;background:var(--royal);border-radius:12px;position:relative"><div style="position:absolute;top:2px;right:2px;width:20px;height:20px;background:white;border-radius:50%"></div></div>
+            <div style="width:44px;height:24px;background:var(--royal);border-radius:2px;position:relative"><div style="position:absolute;top:2px;right:2px;width:20px;height:20px;background:white;border-radius:50%"></div></div>
             <span style="font-size:14px;color:var(--pearl)">Notify on new events</span>
           </div>
           <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:44px;height:24px;background:rgba(240,237,230,.1);border-radius:12px;position:relative"><div style="position:absolute;top:2px;left:2px;width:20px;height:20px;background:rgba(240,237,230,.4);border-radius:50%"></div></div>
+            <div style="width:44px;height:24px;background:rgba(240,237,230,.1);border-radius:2px;position:relative"><div style="position:absolute;top:2px;left:2px;width:20px;height:20px;background:rgba(240,237,230,.4);border-radius:50%"></div></div>
             <span style="font-size:14px;color:var(--mistral)">Auto-split expenses</span>
           </div>
           <div style="display:flex;align-items:center;gap:10px">
-            <div style="width:18px;height:18px;background:var(--royal);border-radius:4px;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div style="width:18px;height:18px;background:var(--royal);border-radius:1px;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
             <span style="font-size:14px;color:var(--pearl)">Everyone invited</span>
           </div>
           <div style="display:flex;align-items:center;gap:10px">
-            <div style="width:18px;height:18px;border:1.5px solid rgba(240,237,230,.2);border-radius:4px"></div>
+            <div style="width:18px;height:18px;border:1.5px solid rgba(240,237,230,.2);border-radius:1px"></div>
             <span style="font-size:14px;color:var(--mistral)">Just me</span>
           </div>
         </div>
@@ -353,7 +353,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
     <div class="cg">
       <div class="cb">
         <div class="cb-label">Trip Card</div>
-        <div style="background:var(--croisette);border-radius:12px;padding:20px;cursor:pointer;transition:all .3s cubic-bezier(.2,0,0,1);border:1px solid rgba(240,237,230,.05)">
+        <div style="background:var(--croisette);border-radius:2px;padding:20px;cursor:pointer;transition:all .3s cubic-bezier(.2,0,0,1);border:1px solid rgba(240,237,230,.05)">
           <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--champagne);margin-bottom:4px">C&ocirc;te d&rsquo;Azur, France</div>
           <div style="font-family:'Fraunces',serif;font-size:20px;color:var(--pearl);margin-bottom:6px">Riviera Summer</div>
           <div style="font-size:13px;color:var(--mistral);margin-bottom:14px">Jun 14 &ndash; 21, 2026</div>
@@ -368,12 +368,12 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
 
       <div class="cb">
         <div class="cb-label">Event Card</div>
-        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--nuit);border-radius:8px;cursor:pointer;margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--nuit);border-radius:2px;cursor:pointer;margin-bottom:10px">
           <span style="font-size:1.2rem;flex-shrink:0">&#127860;</span>
           <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:14px;color:var(--pearl)">Dinner at La Colombe d&rsquo;Or</div><div style="font-size:12px;color:var(--mistral);margin-top:2px">7:30 PM &middot; Saint-Paul-de-Vence</div></div>
-          <div style="font-size:11px;font-weight:600;color:var(--champagne);background:rgba(196,167,125,.1);padding:2px 8px;border-radius:4px">&euro;85</div>
+          <div style="font-size:11px;font-weight:600;color:var(--champagne);background:rgba(196,167,125,.1);padding:2px 8px;border-radius:1px">&euro;85</div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--nuit);border-radius:8px;cursor:pointer">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--nuit);border-radius:2px;cursor:pointer">
           <span style="font-size:1.2rem;flex-shrink:0">&#9973;</span>
           <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:14px;color:var(--pearl)">Sunset Sail</div><div style="font-size:12px;color:var(--mistral);margin-top:2px">5:00 PM &middot; Antibes Marina</div></div>
           <div style="display:flex;gap:2px">
@@ -385,11 +385,11 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
 
       <div class="cb">
         <div class="cb-label">Logistics Card</div>
-        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--nuit);border-radius:8px;border-left:3px solid var(--champagne);margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--nuit);border-radius:2px;border-left:3px solid var(--champagne);margin-bottom:10px">
           <span style="font-size:1.2rem;flex-shrink:0">&#9992;&#65039;</span>
           <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:14px;color:var(--pearl)">AF 1082 &middot; CDG &rarr; NCE</div><div style="font-size:12px;color:var(--mistral);margin-top:2px">Departs 10:15 &middot; Andy</div></div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--nuit);border-radius:8px;border-left:3px solid var(--riviera)">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--nuit);border-radius:2px;border-left:3px solid var(--riviera)">
           <span style="font-size:1.2rem;flex-shrink:0">&#128663;</span>
           <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:14px;color:var(--pearl)">Hertz Pickup &middot; Nice Airport</div><div style="font-size:12px;color:var(--mistral);margin-top:2px">Confirmation: HZ-9482</div></div>
         </div>
@@ -397,15 +397,15 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
 
       <div class="cb">
         <div class="cb-label">Member Card</div>
-        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--nuit);border-radius:10px;border:1px solid rgba(240,237,230,.05);margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--nuit);border-radius:2px;border:1px solid rgba(240,237,230,.05);margin-bottom:10px">
           <div style="width:40px;height:40px;border-radius:50%;background:var(--royal);display:flex;align-items:center;justify-content:center;font-size:16px;color:white;font-weight:600;flex-shrink:0">A</div>
           <div style="flex:1"><div style="font-weight:600;font-size:14px;color:var(--pearl)">Andy</div><div style="font-size:12px;color:var(--mistral)">Jun 14 &ndash; 21</div></div>
-          <span style="font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(74,53,215,.15);color:#7B6BF0;padding:2px 8px;border-radius:4px;font-weight:600">Owner</span>
+          <span style="font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(74,53,215,.15);color:#7B6BF0;padding:2px 8px;border-radius:1px;font-weight:600">Owner</span>
         </div>
-        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--nuit);border-radius:10px;border:1px solid rgba(240,237,230,.05)">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--nuit);border-radius:2px;border:1px solid rgba(240,237,230,.05)">
           <div style="width:40px;height:40px;border-radius:50%;background:var(--cinnabar);display:flex;align-items:center;justify-content:center;font-size:16px;color:white;font-weight:600;flex-shrink:0">M</div>
           <div style="flex:1"><div style="font-weight:600;font-size:14px;color:var(--pearl)">Maria</div><div style="font-size:12px;color:var(--mistral)">Jun 15 &ndash; 20</div></div>
-          <span style="font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(196,167,125,.12);color:var(--champagne);padding:2px 8px;border-radius:4px;font-weight:600">Member</span>
+          <span style="font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(196,167,125,.12);color:var(--champagne);padding:2px 8px;border-radius:1px;font-weight:600">Member</span>
         </div>
       </div>
     </div>
@@ -418,10 +418,10 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
       <div class="cb">
         <div class="cb-label">Badges</div>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px">
-          <span style="font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(74,53,215,.15);color:#7B6BF0;padding:3px 10px;border-radius:4px;font-weight:600">Owner</span>
-          <span style="font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(196,167,125,.12);color:var(--champagne);padding:3px 10px;border-radius:4px;font-weight:600">Member</span>
-          <span style="font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(45,134,89,.12);color:#2D8659;padding:3px 10px;border-radius:4px;font-weight:600">&#8595; Arrives</span>
-          <span style="font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(194,59,34,.12);color:var(--cinnabar);padding:3px 10px;border-radius:4px;font-weight:600">&#8593; Departs</span>
+          <span style="font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(74,53,215,.15);color:#7B6BF0;padding:3px 10px;border-radius:1px;font-weight:600">Owner</span>
+          <span style="font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(196,167,125,.12);color:var(--champagne);padding:3px 10px;border-radius:1px;font-weight:600">Member</span>
+          <span style="font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(45,134,89,.12);color:#2D8659;padding:3px 10px;border-radius:1px;font-weight:600">&#8595; Arrives</span>
+          <span style="font-size:10px;letter-spacing:1px;text-transform:uppercase;background:rgba(194,59,34,.12);color:var(--cinnabar);padding:3px 10px;border-radius:1px;font-weight:600">&#8593; Departs</span>
         </div>
         <div class="cb-label" style="margin-top:8px">Notification Dot</div>
         <div style="display:flex;gap:20px;align-items:center">
@@ -449,15 +449,15 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
       </div>
       <div class="cb">
         <div class="cb-label">View Toggle</div>
-        <div style="display:inline-flex;gap:4px;padding:4px;background:var(--nuit);border:1px solid rgba(240,237,230,.06);border-radius:8px;margin-bottom:20px">
-          <div style="padding:6px 16px;border-radius:6px;font-size:12px;color:var(--mistral)">List</div>
-          <div style="padding:6px 16px;border-radius:6px;font-size:12px;background:var(--royal);color:white">Week</div>
-          <div style="padding:6px 16px;border-radius:6px;font-size:12px;color:var(--mistral)">Month</div>
+        <div style="display:inline-flex;gap:4px;padding:4px;background:var(--nuit);border:1px solid rgba(240,237,230,.06);border-radius:2px;margin-bottom:20px">
+          <div style="padding:6px 16px;border-radius:1px;font-size:12px;color:var(--mistral)">List</div>
+          <div style="padding:6px 16px;border-radius:1px;font-size:12px;background:var(--royal);color:white">Week</div>
+          <div style="padding:6px 16px;border-radius:1px;font-size:12px;color:var(--mistral)">Month</div>
         </div>
         <div class="cb-label">Attendee Chips</div>
         <div style="display:flex;flex-wrap:wrap;gap:6px">
-          <div style="display:flex;align-items:center;gap:6px;padding:3px 10px 3px 3px;border-radius:20px;border:1px solid var(--royal);font-size:12px;color:var(--pearl)"><div style="width:20px;height:20px;border-radius:50%;background:var(--royal);display:flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:600">A</div>Andy</div>
-          <div style="display:flex;align-items:center;gap:6px;padding:3px 10px 3px 3px;border-radius:20px;border:1px solid rgba(240,237,230,.1);font-size:12px;color:var(--mistral);opacity:.5"><div style="width:20px;height:20px;border-radius:50%;background:rgba(240,237,230,.1);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--mistral);font-weight:600">M</div>Maria</div>
+          <div style="display:flex;align-items:center;gap:6px;padding:3px 10px 3px 3px;border-radius:2px;border:1px solid var(--royal);font-size:12px;color:var(--pearl)"><div style="width:20px;height:20px;border-radius:50%;background:var(--royal);display:flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:600">A</div>Andy</div>
+          <div style="display:flex;align-items:center;gap:6px;padding:3px 10px 3px 3px;border-radius:2px;border:1px solid rgba(240,237,230,.1);font-size:12px;color:var(--mistral);opacity:.5"><div style="width:20px;height:20px;border-radius:50%;background:rgba(240,237,230,.1);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--mistral);font-weight:600">M</div>Maria</div>
         </div>
       </div>
     </div>
@@ -469,12 +469,12 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
     <div class="cg">
       <div class="cb">
         <div class="cb-label">Toast / Notification</div>
-        <div style="padding:14px 18px;background:var(--croisette);border-radius:10px;border:1px solid rgba(240,237,230,.08);display:flex;align-items:center;gap:12px;margin-bottom:10px;animation:gt-slide-up .4s ease both">
+        <div style="padding:14px 18px;background:var(--croisette);border-radius:2px;border:1px solid rgba(240,237,230,.08);display:flex;align-items:center;gap:12px;margin-bottom:10px;animation:gt-slide-up .4s ease both">
           <div style="width:8px;height:8px;border-radius:50%;background:#2D8659;flex-shrink:0"></div>
           <div style="flex:1;font-size:13px;color:var(--pearl)">Event saved successfully</div>
           <span style="font-size:16px;color:var(--mistral);cursor:pointer">&times;</span>
         </div>
-        <div style="padding:14px 18px;background:var(--croisette);border-radius:10px;border:1px solid rgba(194,59,34,.2);display:flex;align-items:center;gap:12px">
+        <div style="padding:14px 18px;background:var(--croisette);border-radius:2px;border:1px solid rgba(194,59,34,.2);display:flex;align-items:center;gap:12px">
           <div style="width:8px;height:8px;border-radius:50%;background:var(--cinnabar);flex-shrink:0"></div>
           <div style="flex:1;font-size:13px;color:var(--pearl)">Could not delete event</div>
           <span style="font-size:11px;color:var(--cinnabar);font-weight:500;cursor:pointer;text-decoration:underline;text-underline-offset:2px">Retry</span>
@@ -483,9 +483,9 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
       <div class="cb">
         <div class="cb-label">Loading Skeleton</div>
         <div style="margin-bottom:16px">
-          <div style="height:14px;width:60%;border-radius:4px;background:linear-gradient(90deg,rgba(240,237,230,.04) 0%,rgba(240,237,230,.08) 50%,rgba(240,237,230,.04) 100%);background-size:200px 100%;animation:gt-skeleton 1.5s ease infinite;margin-bottom:8px"></div>
-          <div style="height:12px;width:80%;border-radius:4px;background:linear-gradient(90deg,rgba(240,237,230,.04) 0%,rgba(240,237,230,.08) 50%,rgba(240,237,230,.04) 100%);background-size:200px 100%;animation:gt-skeleton 1.5s ease infinite;animation-delay:.1s;margin-bottom:8px"></div>
-          <div style="height:12px;width:40%;border-radius:4px;background:linear-gradient(90deg,rgba(240,237,230,.04) 0%,rgba(240,237,230,.08) 50%,rgba(240,237,230,.04) 100%);background-size:200px 100%;animation:gt-skeleton 1.5s ease infinite;animation-delay:.2s"></div>
+          <div style="height:14px;width:60%;border-radius:1px;background:linear-gradient(90deg,rgba(240,237,230,.04) 0%,rgba(240,237,230,.08) 50%,rgba(240,237,230,.04) 100%);background-size:200px 100%;animation:gt-skeleton 1.5s ease infinite;margin-bottom:8px"></div>
+          <div style="height:12px;width:80%;border-radius:1px;background:linear-gradient(90deg,rgba(240,237,230,.04) 0%,rgba(240,237,230,.08) 50%,rgba(240,237,230,.04) 100%);background-size:200px 100%;animation:gt-skeleton 1.5s ease infinite;animation-delay:.1s;margin-bottom:8px"></div>
+          <div style="height:12px;width:40%;border-radius:1px;background:linear-gradient(90deg,rgba(240,237,230,.04) 0%,rgba(240,237,230,.08) 50%,rgba(240,237,230,.04) 100%);background-size:200px 100%;animation:gt-skeleton 1.5s ease infinite;animation-delay:.2s"></div>
         </div>
         <div class="cb-label" style="margin-top:16px">Spinner</div>
         <div style="display:flex;align-items:center;gap:12px">
@@ -505,13 +505,13 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
       </div>
       <div class="cb">
         <div class="cb-label">Modal Preview</div>
-        <div style="background:var(--croisette);border:1px solid rgba(240,237,230,.08);border-radius:12px;padding:20px;position:relative">
+        <div style="background:var(--croisette);border:1px solid rgba(240,237,230,.08);border-radius:2px;padding:20px;position:relative">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
             <span style="font-family:'Fraunces',serif;font-size:17px;color:var(--pearl)">Add Event</span>
             <span style="font-size:18px;color:var(--mistral);cursor:pointer">&times;</span>
           </div>
           <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--champagne);margin-bottom:6px">Title</div>
-          <div style="padding:10px 14px;background:rgba(240,237,230,.04);border:1px solid rgba(240,237,230,.06);border-radius:8px;color:var(--mistral);font-size:14px;margin-bottom:12px">What are we doing?</div>
+          <div style="padding:10px 14px;background:rgba(240,237,230,.04);border:1px solid rgba(240,237,230,.06);border-radius:2px;color:var(--mistral);font-size:14px;margin-bottom:12px">What are we doing?</div>
           <div style="display:flex;gap:8px;justify-content:flex-end">
             <button class="btn" style="background:transparent;color:var(--mistral);border:1px solid rgba(240,237,230,.08);font-size:10px;padding:8px 16px">Cancel</button>
             <button class="btn" style="background:var(--royal);color:var(--pearl);font-size:10px;padding:8px 16px">Save</button>
@@ -529,16 +529,16 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
     <div class="sn">Motion</div>
     <div class="st">Cinematic Timing</div>
     <div class="stag">Slow dissolves, not bouncy springs &mdash; every transition should feel like a film cut</div>
-    <div class="sd">The motion language draws from cinema: slow, deliberate reveals rather than playful bounces. Elements enter from below with a gentle fade &mdash; like a title card appearing on screen. The primary easing curve is <code style="font-size:13px;background:rgba(240,237,230,.05);padding:2px 8px;border-radius:4px;color:var(--champagne)">cubic-bezier(.2, 0, 0, 1)</code> &mdash; fast entry, slow settle. Durations live between 200&ndash;600ms.</div>
+    <div class="sd">The motion language draws from cinema: slow, deliberate reveals rather than playful bounces. Elements enter from below with a gentle fade &mdash; like a title card appearing on screen. The primary easing curve is <code style="font-size:13px;background:rgba(240,237,230,.05);padding:2px 8px;border-radius:1px;color:var(--champagne)">cubic-bezier(.2, 0, 0, 1)</code> &mdash; fast entry, slow settle. Durations live between 200&ndash;600ms.</div>
   </div>
 
   <div class="ss">
     <div class="sl">Timing Tokens</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:12px;color:var(--pearl);margin-bottom:4px">Micro</div><div style="font-size:11px;color:var(--mistral);margin-bottom:8px">150ms &mdash; hover, press, toggle</div><div style="height:4px;background:rgba(240,237,230,.06);border-radius:2px;overflow:hidden;position:relative"><div style="position:absolute;height:100%;width:15%;background:var(--royal);border-radius:2px"></div></div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:12px;color:var(--pearl);margin-bottom:4px">Standard</div><div style="font-size:11px;color:var(--mistral);margin-bottom:8px">300ms &mdash; cards, buttons, reveal</div><div style="height:4px;background:rgba(240,237,230,.06);border-radius:2px;overflow:hidden;position:relative"><div style="position:absolute;height:100%;width:30%;background:var(--royal);border-radius:2px"></div></div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:12px;color:var(--pearl);margin-bottom:4px">Dramatic</div><div style="font-size:11px;color:var(--mistral);margin-bottom:8px">500ms &mdash; modals, page transitions</div><div style="height:4px;background:rgba(240,237,230,.06);border-radius:2px;overflow:hidden;position:relative"><div style="position:absolute;height:100%;width:50%;background:var(--royal);border-radius:2px"></div></div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:12px;color:var(--pearl);margin-bottom:4px">Ambient</div><div style="font-size:11px;color:var(--mistral);margin-bottom:8px">2000ms+ &mdash; pulse, breathe, glow</div><div style="height:4px;background:rgba(240,237,230,.06);border-radius:2px;overflow:hidden;position:relative"><div style="position:absolute;height:100%;width:100%;background:var(--royal);border-radius:2px;animation:gt-pulse 2s ease infinite"></div></div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:12px;color:var(--pearl);margin-bottom:4px">Micro</div><div style="font-size:11px;color:var(--mistral);margin-bottom:8px">150ms &mdash; hover, press, toggle</div><div style="height:4px;background:rgba(240,237,230,.06);border-radius:2px;overflow:hidden;position:relative"><div style="position:absolute;height:100%;width:15%;background:var(--royal);border-radius:2px"></div></div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:12px;color:var(--pearl);margin-bottom:4px">Standard</div><div style="font-size:11px;color:var(--mistral);margin-bottom:8px">300ms &mdash; cards, buttons, reveal</div><div style="height:4px;background:rgba(240,237,230,.06);border-radius:2px;overflow:hidden;position:relative"><div style="position:absolute;height:100%;width:30%;background:var(--royal);border-radius:2px"></div></div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:12px;color:var(--pearl);margin-bottom:4px">Dramatic</div><div style="font-size:11px;color:var(--mistral);margin-bottom:8px">500ms &mdash; modals, page transitions</div><div style="height:4px;background:rgba(240,237,230,.06);border-radius:2px;overflow:hidden;position:relative"><div style="position:absolute;height:100%;width:50%;background:var(--royal);border-radius:2px"></div></div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:12px;color:var(--pearl);margin-bottom:4px">Ambient</div><div style="font-size:11px;color:var(--mistral);margin-bottom:8px">2000ms+ &mdash; pulse, breathe, glow</div><div style="height:4px;background:rgba(240,237,230,.06);border-radius:2px;overflow:hidden;position:relative"><div style="position:absolute;height:100%;width:100%;background:var(--royal);border-radius:2px;animation:gt-pulse 2s ease infinite"></div></div></div>
     </div>
   </div>
 
@@ -548,9 +548,9 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
       <div class="cb">
         <div class="cb-label">Staggered Card Entry</div>
         <div style="display:flex;flex-direction:column;gap:8px">
-          <div class="gt-anim-card" style="padding:12px;background:var(--nuit);border-radius:8px;display:flex;align-items:center;gap:10px"><span style="font-size:1rem">&#127860;</span><span style="font-size:13px;color:var(--pearl)">Dinner at La Colombe</span></div>
-          <div class="gt-anim-card" style="padding:12px;background:var(--nuit);border-radius:8px;display:flex;align-items:center;gap:10px"><span style="font-size:1rem">&#9973;</span><span style="font-size:13px;color:var(--pearl)">Sunset Sail</span></div>
-          <div class="gt-anim-card" style="padding:12px;background:var(--nuit);border-radius:8px;display:flex;align-items:center;gap:10px"><span style="font-size:1rem">&#127796;</span><span style="font-size:13px;color:var(--pearl)">Night Market</span></div>
+          <div class="gt-anim-card" style="padding:12px;background:var(--nuit);border-radius:2px;display:flex;align-items:center;gap:10px"><span style="font-size:1rem">&#127860;</span><span style="font-size:13px;color:var(--pearl)">Dinner at La Colombe</span></div>
+          <div class="gt-anim-card" style="padding:12px;background:var(--nuit);border-radius:2px;display:flex;align-items:center;gap:10px"><span style="font-size:1rem">&#9973;</span><span style="font-size:13px;color:var(--pearl)">Sunset Sail</span></div>
+          <div class="gt-anim-card" style="padding:12px;background:var(--nuit);border-radius:2px;display:flex;align-items:center;gap:10px"><span style="font-size:1rem">&#127796;</span><span style="font-size:13px;color:var(--pearl)">Night Market</span></div>
         </div>
         <p class="note" style="margin-top:12px">Each card enters 100ms after the previous. translateY(12px) &rarr; 0 + fade.</p>
       </div>
@@ -570,12 +570,12 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
       </div>
       <div class="cb">
         <div class="cb-label">Skeleton Loading</div>
-        <div style="padding:16px;background:var(--nuit);border-radius:10px">
+        <div style="padding:16px;background:var(--nuit);border-radius:2px">
           <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
             <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(90deg,rgba(240,237,230,.04) 0%,rgba(240,237,230,.08) 50%,rgba(240,237,230,.04) 100%);background-size:200px 100%;animation:gt-skeleton 1.5s ease infinite;flex-shrink:0"></div>
-            <div style="flex:1"><div style="height:12px;width:70%;border-radius:4px;background:linear-gradient(90deg,rgba(240,237,230,.04) 0%,rgba(240,237,230,.08) 50%,rgba(240,237,230,.04) 100%);background-size:200px 100%;animation:gt-skeleton 1.5s ease infinite;margin-bottom:6px"></div><div style="height:10px;width:40%;border-radius:4px;background:linear-gradient(90deg,rgba(240,237,230,.04) 0%,rgba(240,237,230,.08) 50%,rgba(240,237,230,.04) 100%);background-size:200px 100%;animation:gt-skeleton 1.5s ease infinite;animation-delay:.15s"></div></div>
+            <div style="flex:1"><div style="height:12px;width:70%;border-radius:1px;background:linear-gradient(90deg,rgba(240,237,230,.04) 0%,rgba(240,237,230,.08) 50%,rgba(240,237,230,.04) 100%);background-size:200px 100%;animation:gt-skeleton 1.5s ease infinite;margin-bottom:6px"></div><div style="height:10px;width:40%;border-radius:1px;background:linear-gradient(90deg,rgba(240,237,230,.04) 0%,rgba(240,237,230,.08) 50%,rgba(240,237,230,.04) 100%);background-size:200px 100%;animation:gt-skeleton 1.5s ease infinite;animation-delay:.15s"></div></div>
           </div>
-          <div style="height:60px;border-radius:8px;background:linear-gradient(90deg,rgba(240,237,230,.04) 0%,rgba(240,237,230,.08) 50%,rgba(240,237,230,.04) 100%);background-size:200px 100%;animation:gt-skeleton 1.5s ease infinite;animation-delay:.3s"></div>
+          <div style="height:60px;border-radius:2px;background:linear-gradient(90deg,rgba(240,237,230,.04) 0%,rgba(240,237,230,.08) 50%,rgba(240,237,230,.04) 100%);background-size:200px 100%;animation:gt-skeleton 1.5s ease infinite;animation-delay:.3s"></div>
         </div>
         <p class="note" style="margin-top:12px">Gentle shimmer, never jarring. The skeleton should feel like a curtain about to rise.</p>
       </div>
@@ -611,9 +611,9 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
             <div><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--champagne);opacity:.6">Welcome back</div><div style="font-family:'Fraunces',serif;font-size:20px;color:var(--pearl);font-weight:300">Bonsoir, Andy</div></div>
             <div style="width:34px;height:34px;border-radius:50%;background:var(--royal);display:flex;align-items:center;justify-content:center;font-size:13px;color:white;font-weight:600">A</div>
           </div>
-          <div style="border-radius:12px;overflow:hidden;background:var(--croisette);margin-bottom:14px;border:1px solid rgba(240,237,230,.05)">
+          <div style="border-radius:2px;overflow:hidden;background:var(--croisette);margin-bottom:14px;border:1px solid rgba(240,237,230,.05)">
             <div style="height:110px;background:linear-gradient(135deg,var(--croisette) 0%,var(--riviera) 100%);display:flex;align-items:flex-end;padding:14px;position:relative">
-              <div style="position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:4px;background:rgba(194,59,34,.9);padding:3px 8px;border-radius:10px"><div style="width:5px;height:5px;border-radius:50%;background:white;animation:gt-pulse 1.5s ease infinite"></div><span style="font-size:8px;color:white;font-weight:600;letter-spacing:1px;text-transform:uppercase">Live</span></div>
+              <div style="position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:4px;background:rgba(194,59,34,.9);padding:3px 8px;border-radius:2px"><div style="width:5px;height:5px;border-radius:50%;background:white;animation:gt-pulse 1.5s ease infinite"></div><span style="font-size:8px;color:white;font-weight:600;letter-spacing:1px;text-transform:uppercase">Live</span></div>
               <div><div style="font-family:'Fraunces',serif;font-size:18px;color:var(--pearl);font-weight:300">Riviera Summer</div><div style="font-size:10px;color:rgba(240,237,230,.6);margin-top:2px">Jun 14 &ndash; 21 &middot; 5 travelers</div></div>
             </div>
             <div style="padding:12px 14px">
@@ -621,7 +621,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
               <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--pearl)"><span>&#9992;&#65039;</span><span>Maria &middot; AF 1082 en route</span></div>
             </div>
           </div>
-          <div style="border-radius:12px;background:var(--surface);padding:16px;border:1px solid rgba(240,237,230,.04)">
+          <div style="border-radius:2px;background:var(--surface);padding:16px;border:1px solid rgba(240,237,230,.04)">
             <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--champagne);opacity:.5;margin-bottom:4px">Provence, France</div>
             <div style="font-family:'Fraunces',serif;font-size:16px;color:var(--pearl);font-weight:400;margin-bottom:4px">Lavender Season</div>
             <div style="font-size:11px;color:var(--mistral)">Jul 2 &ndash; 8 &middot; 3 travelers</div>
@@ -635,9 +635,9 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
           <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:12px">
             <span style="font-family:'Fraunces',serif;font-size:14px;color:var(--pearl);font-weight:300">Jun 15 &ndash; 21</span>
           </div>
-          <div style="display:inline-flex;gap:2px;padding:3px;background:var(--surface);border-radius:6px;margin-bottom:12px;width:100%;justify-content:center">
+          <div style="display:inline-flex;gap:2px;padding:3px;background:var(--surface);border-radius:1px;margin-bottom:12px;width:100%;justify-content:center">
             <span style="padding:4px 10px;font-size:9px;color:var(--mistral);letter-spacing:1px">LIST</span>
-            <span style="padding:4px 10px;font-size:9px;color:white;background:var(--royal);border-radius:4px;letter-spacing:1px">WEEK</span>
+            <span style="padding:4px 10px;font-size:9px;color:white;background:var(--royal);border-radius:1px;letter-spacing:1px">WEEK</span>
             <span style="padding:4px 10px;font-size:9px;color:var(--mistral);letter-spacing:1px">MONTH</span>
           </div>
           <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px">
@@ -650,13 +650,13 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
             <div style="text-align:center;padding:4px 2px;font-size:7px;color:var(--mistral);letter-spacing:.5px">SAT</div>
           </div>
           <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-top:2px">
-            <div style="background:var(--surface);border-radius:4px;padding:4px;min-height:90px;opacity:.35"><div style="font-size:9px;font-weight:600;text-align:center;color:var(--pearl)">15</div></div>
-            <div style="background:var(--surface);border-radius:4px;padding:4px;min-height:90px"><div style="font-size:9px;font-weight:600;text-align:center;color:var(--pearl)">16</div><div style="font-size:6px;color:#2D8659;text-align:center;margin-top:3px">&#8595; Maria</div><div style="margin-top:4px;padding:3px;background:rgba(74,53,215,.1);border-radius:2px;font-size:6px;color:rgba(240,237,230,.5)">Dinner</div></div>
-            <div style="background:var(--surface);border-radius:4px;padding:4px;min-height:90px;border:1px solid var(--champagne)"><div style="display:flex;justify-content:center"><div style="font-size:9px;font-weight:600;text-align:center;color:white;background:var(--royal);width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center">17</div></div><div style="margin-top:4px;padding:3px;background:rgba(74,53,215,.1);border-radius:2px;font-size:6px;color:rgba(240,237,230,.5)">Boat Tour</div><div style="margin-top:2px;padding:3px;background:rgba(74,53,215,.1);border-radius:2px;font-size:6px;color:rgba(240,237,230,.5)">Market</div></div>
-            <div style="background:var(--surface);border-radius:4px;padding:4px;min-height:90px"><div style="font-size:9px;font-weight:600;text-align:center;color:var(--pearl)">18</div></div>
-            <div style="background:var(--surface);border-radius:4px;padding:4px;min-height:90px"><div style="font-size:9px;font-weight:600;text-align:center;color:var(--pearl)">19</div><div style="margin-top:4px;padding:3px;background:rgba(74,53,215,.1);border-radius:2px;font-size:6px;color:rgba(240,237,230,.5)">Sunset Sail</div></div>
-            <div style="background:var(--surface);border-radius:4px;padding:4px;min-height:90px"><div style="font-size:9px;font-weight:600;text-align:center;color:var(--pearl)">20</div><div style="font-size:6px;color:var(--cinnabar);text-align:center;margin-top:3px">&#8593; Maria</div></div>
-            <div style="background:var(--surface);border-radius:4px;padding:4px;min-height:90px"><div style="font-size:9px;font-weight:600;text-align:center;color:var(--pearl)">21</div><div style="font-size:6px;color:var(--cinnabar);text-align:center;margin-top:3px">&#8593; Andy</div></div>
+            <div style="background:var(--surface);border-radius:1px;padding:4px;min-height:90px;opacity:.35"><div style="font-size:9px;font-weight:600;text-align:center;color:var(--pearl)">15</div></div>
+            <div style="background:var(--surface);border-radius:1px;padding:4px;min-height:90px"><div style="font-size:9px;font-weight:600;text-align:center;color:var(--pearl)">16</div><div style="font-size:6px;color:#2D8659;text-align:center;margin-top:3px">&#8595; Maria</div><div style="margin-top:4px;padding:3px;background:rgba(74,53,215,.1);border-radius:2px;font-size:6px;color:rgba(240,237,230,.5)">Dinner</div></div>
+            <div style="background:var(--surface);border-radius:1px;padding:4px;min-height:90px;border:1px solid var(--champagne)"><div style="display:flex;justify-content:center"><div style="font-size:9px;font-weight:600;text-align:center;color:white;background:var(--royal);width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center">17</div></div><div style="margin-top:4px;padding:3px;background:rgba(74,53,215,.1);border-radius:2px;font-size:6px;color:rgba(240,237,230,.5)">Boat Tour</div><div style="margin-top:2px;padding:3px;background:rgba(74,53,215,.1);border-radius:2px;font-size:6px;color:rgba(240,237,230,.5)">Market</div></div>
+            <div style="background:var(--surface);border-radius:1px;padding:4px;min-height:90px"><div style="font-size:9px;font-weight:600;text-align:center;color:var(--pearl)">18</div></div>
+            <div style="background:var(--surface);border-radius:1px;padding:4px;min-height:90px"><div style="font-size:9px;font-weight:600;text-align:center;color:var(--pearl)">19</div><div style="margin-top:4px;padding:3px;background:rgba(74,53,215,.1);border-radius:2px;font-size:6px;color:rgba(240,237,230,.5)">Sunset Sail</div></div>
+            <div style="background:var(--surface);border-radius:1px;padding:4px;min-height:90px"><div style="font-size:9px;font-weight:600;text-align:center;color:var(--pearl)">20</div><div style="font-size:6px;color:var(--cinnabar);text-align:center;margin-top:3px">&#8593; Maria</div></div>
+            <div style="background:var(--surface);border-radius:1px;padding:4px;min-height:90px"><div style="font-size:9px;font-weight:600;text-align:center;color:var(--pearl)">21</div><div style="font-size:6px;color:var(--cinnabar);text-align:center;margin-top:3px">&#8593; Andy</div></div>
           </div>
         </div>
       </div></div>
@@ -665,7 +665,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
       <div class="pm"><div class="ps" style="background:var(--nuit)">
         <div style="padding:56px 18px 18px">
           <div style="font-family:'Fraunces',serif;font-size:20px;color:var(--pearl);font-weight:300;margin-bottom:20px">Riviera Summer</div>
-          <div style="background:var(--surface);border-radius:12px;padding:16px;border:1px solid rgba(240,237,230,.05);margin-bottom:16px">
+          <div style="background:var(--surface);border-radius:2px;padding:16px;border:1px solid rgba(240,237,230,.05);margin-bottom:16px">
             <div style="display:flex;align-items:center;gap:6px;margin-bottom:12px"><div style="width:6px;height:6px;border-radius:50%;background:var(--cinnabar);animation:gt-pulse 1.5s ease infinite"></div><span style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--cinnabar);font-weight:500">Happening Now</span></div>
             <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px">
               <span style="font-size:1rem;line-height:1.4">&#9992;&#65039;</span>
@@ -683,8 +683,8 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
           </div>
           <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mistral);margin-bottom:10px">Today &mdash; Jun 17</div>
           <div style="display:flex;flex-direction:column;gap:6px">
-            <div style="display:flex;align-items:center;gap:8px;padding:10px;background:var(--surface);border-radius:8px"><span style="font-size:1rem">&#9973;</span><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--pearl)">Boat to &Icirc;les de L&eacute;rins</div><div style="font-size:11px;color:var(--mistral)">9:00 AM &middot; All day</div></div></div>
-            <div style="display:flex;align-items:center;gap:8px;padding:10px;background:var(--surface);border-radius:8px"><span style="font-size:1rem">&#127796;</span><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--pearl)">Antibes Night Market</div><div style="font-size:11px;color:var(--mistral)">8:00 PM</div></div></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:10px;background:var(--surface);border-radius:2px"><span style="font-size:1rem">&#9973;</span><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--pearl)">Boat to &Icirc;les de L&eacute;rins</div><div style="font-size:11px;color:var(--mistral)">9:00 AM &middot; All day</div></div></div>
+            <div style="display:flex;align-items:center;gap:8px;padding:10px;background:var(--surface);border-radius:2px"><span style="font-size:1rem">&#127796;</span><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--pearl)">Antibes Night Market</div><div style="font-size:11px;color:var(--mistral)">8:00 PM</div></div></div>
           </div>
         </div>
       </div></div>
@@ -723,57 +723,57 @@ body{font-family:"DM Sans",sans-serif;background:var(--nuit);color:var(--pearl);
   <div class="ss">
     <div class="sl">Phase 1 &mdash; Foundations</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Design Tokens (CSS Variables)</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Complete semantic color mapping (--color-primary, --color-surface, --color-error, etc.). Light + dark mode values. Exported as CSS custom properties and JS constants.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Spacing &amp; Grid Scale</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">4px base unit. Scale: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80. Responsive grid: 12-column with 24px gutters, max-width 800px (matching current app).</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Elevation &amp; Shadow System</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">3 levels: subtle (cards), medium (dropdowns, popovers), dramatic (modals). All shadows use cool blue tint on dark, warm on light. No pure black shadows.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Typography System</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Complete scale with line-heights, letter-spacing, font-weight for each size. Responsive adjustments at breakpoints. Font-loading strategy (display=swap).</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Border Radius Scale</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">4px (badges), 6px (small elements), 8px (buttons, inputs), 10px (cards), 12px (large cards), 14px (sections), 50% (avatars, pills).</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Motion Tokens</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Named duration/easing pairs. --motion-micro, --motion-standard, --motion-dramatic, --motion-ambient. Single easing curve for consistency.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Design Tokens (CSS Variables)</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Complete semantic color mapping (--color-primary, --color-surface, --color-error, etc.). Light + dark mode values. Exported as CSS custom properties and JS constants.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Spacing &amp; Grid Scale</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">4px base unit. Scale: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80. Responsive grid: 12-column with 24px gutters, max-width 800px (matching current app).</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Elevation &amp; Shadow System</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">3 levels: subtle (cards), medium (dropdowns, popovers), dramatic (modals). All shadows use cool blue tint on dark, warm on light. No pure black shadows.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Typography System</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Complete scale with line-heights, letter-spacing, font-weight for each size. Responsive adjustments at breakpoints. Font-loading strategy (display=swap).</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Border Radius Scale</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">1px (badges, small elements), 2px (buttons, inputs, cards, sections). 50% for avatars only. Sharp, architectural edges &mdash; like cut stone and film frames.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Motion Tokens</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Named duration/easing pairs. --motion-micro, --motion-standard, --motion-dramatic, --motion-ambient. Single easing curve for consistency.</div></div>
     </div>
   </div>
 
   <div class="ss">
     <div class="sl">Phase 2 &mdash; Component Library</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Buttons</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Primary, secondary, ghost, destructive, icon-only, loading state (spinner replaces text). Disabled states. All sizes (sm, md, lg).</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Form Elements</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Text input, textarea, date picker, select/dropdown, toggle, checkbox, radio. All with: default, focus, error, success, disabled states. Labels and helper text.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Cards</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Trip card, event card, logistics card, member card, overview stat card, inbox email card. Hover/press states. Expanded variants for month grid and week view.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Navigation</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">App header (logo, user avatar, sign out). Trip sub-navigation tabs (Calendar, Members, Expenses, Inbox). View toggle (List/Week/Month). Back link. Breadcrumbs.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Modal &amp; Dialog</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Overlay + modal card. Event form modal, confirmation dialogs, destructive action confirmation (with Cinnabar accents). Enter/exit animations. Backdrop blur.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Badges &amp; Pills</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Owner/member role badges. Arrival/departure badges. Notification dots (with pulse animation). Count badges. Attendee chips (active/inactive). Cost pills.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Avatar System</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Image avatars (4 sizes), color placeholder with initial, stacked avatar group with overlap, overflow counter (+N). Presence dot overlay.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Feedback &amp; Status</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Toast notifications (success, error, info). Loading skeletons for every card type. Spinner. Empty states (with literary micro-copy). Error pages.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Calendar Components</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Month grid cells (trip/non-trip, today, expanded). Week columns. Day list rows. Navigation (month/week arrows, title). &ldquo;Add event&rdquo; button.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Happening Now Widget</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Floating pill (collapsed/expanded). Inline section variant. Flight progress bar with plane icon. Live pulse dot. Stagger animation for items.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Expense &amp; Split UI</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Cost badge on event cards. Split method pills (equal, custom, proportional). Custom split inputs with running total. Currency display formatting.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Timeline &amp; Progress</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Stay timeline (bar chart with member rows). Flight progress bar. Member stay date visualization. Today marker line.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Buttons</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Primary, secondary, ghost, destructive, icon-only, loading state (spinner replaces text). Disabled states. All sizes (sm, md, lg).</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Form Elements</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Text input, textarea, date picker, select/dropdown, toggle, checkbox, radio. All with: default, focus, error, success, disabled states. Labels and helper text.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Cards</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Trip card, event card, logistics card, member card, overview stat card, inbox email card. Hover/press states. Expanded variants for month grid and week view.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Navigation</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">App header (logo, user avatar, sign out). Trip sub-navigation tabs (Calendar, Members, Expenses, Inbox). View toggle (List/Week/Month). Back link. Breadcrumbs.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Modal &amp; Dialog</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Overlay + modal card. Event form modal, confirmation dialogs, destructive action confirmation (with Cinnabar accents). Enter/exit animations. Backdrop blur.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Badges &amp; Pills</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Owner/member role badges. Arrival/departure badges. Notification dots (with pulse animation). Count badges. Attendee chips (active/inactive). Cost pills.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Avatar System</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Image avatars (4 sizes), color placeholder with initial, stacked avatar group with overlap, overflow counter (+N). Presence dot overlay.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Feedback &amp; Status</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Toast notifications (success, error, info). Loading skeletons for every card type. Spinner. Empty states (with literary micro-copy). Error pages.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Calendar Components</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Month grid cells (trip/non-trip, today, expanded). Week columns. Day list rows. Navigation (month/week arrows, title). &ldquo;Add event&rdquo; button.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Happening Now Widget</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Floating pill (collapsed/expanded). Inline section variant. Flight progress bar with plane icon. Live pulse dot. Stagger animation for items.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Expense &amp; Split UI</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Cost badge on event cards. Split method pills (equal, custom, proportional). Custom split inputs with running total. Currency display formatting.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Timeline &amp; Progress</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Stay timeline (bar chart with member rows). Flight progress bar. Member stay date visualization. Today marker line.</div></div>
     </div>
   </div>
 
   <div class="ss">
     <div class="sl">Phase 3 &mdash; Animation &amp; Polish</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Page Transitions</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Fade-up on route change. List items stagger on mount. Calendar view transitions (slide between months/weeks). Modal backdrop fade.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Micro-interactions</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Button hover lift + glow. Card press scale(.98). Toggle slide. Checkbox check animation. Input focus border transition. Toast slide-in/auto-dismiss.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Ambient Animations</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Cinnabar pulse for live indicators. Happening Now pill glow. Skeleton loading shimmer. The notch section-divider draw animation on scroll.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Scroll-Triggered Reveals</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Sections fade-up as you scroll into them. The notch divider draws itself. Staggered entry for list items entering viewport. Parallax on trip cover photo.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Page Transitions</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Fade-up on route change. List items stagger on mount. Calendar view transitions (slide between months/weeks). Modal backdrop fade.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Micro-interactions</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Button hover lift + glow. Card press scale(.98). Toggle slide. Checkbox check animation. Input focus border transition. Toast slide-in/auto-dismiss.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Ambient Animations</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Cinnabar pulse for live indicators. Happening Now pill glow. Skeleton loading shimmer. The notch section-divider draw animation on scroll.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Scroll-Triggered Reveals</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Sections fade-up as you scroll into them. The notch divider draws itself. Staggered entry for list items entering viewport. Parallax on trip cover photo.</div></div>
     </div>
   </div>
 
   <div class="ss">
     <div class="sl">Phase 4 &mdash; Metadata &amp; Brand Assets</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Favicon &amp; App Icons</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Favicon (16, 32, 48px). Apple Touch Icon (180px). Android Chrome icons (192, 512px). SVG favicon for dark/light mode adaptation. The notch V mark as the icon.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Open Graph &amp; Social</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">og:image template (1200&times;630) with Nuit background, Fraunces title, notch mark. Trip-specific og:image that includes trip name and dates. Twitter card meta.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">PWA Manifest</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">manifest.json with theme_color (#0A1628), background_color, icons, display: standalone. iOS splash screens. Status bar styling (dark-content).</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">HTML Meta Tags</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">theme-color (#0A1628). apple-mobile-web-app-status-bar-style. Description with literary voice. Viewport with viewport-fit=cover for notched devices.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Email Templates</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Trip invitation email. Event notification. Expense split notification. All styled in the Grand Tour palette with Fraunces headings and the notch mark.</div></div>
-      <div style="padding:20px;background:var(--surface);border-radius:10px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Light Mode</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Complete token inversion: Pearl becomes the canvas, Nuit becomes text. Surfaces shift to white with subtle warm tint. Royal and Cinnabar adjust for contrast on light backgrounds.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Favicon &amp; App Icons</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Favicon (16, 32, 48px). Apple Touch Icon (180px). Android Chrome icons (192, 512px). SVG favicon for dark/light mode adaptation. The notch V mark as the icon.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Open Graph &amp; Social</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">og:image template (1200&times;630) with Nuit background, Fraunces title, notch mark. Trip-specific og:image that includes trip name and dates. Twitter card meta.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">PWA Manifest</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">manifest.json with theme_color (#0A1628), background_color, icons, display: standalone. iOS splash screens. Status bar styling (dark-content).</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">HTML Meta Tags</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">theme-color (#0A1628). apple-mobile-web-app-status-bar-style. Description with literary voice. Viewport with viewport-fit=cover for notched devices.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Email Templates</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Trip invitation email. Event notification. Expense split notification. All styled in the Grand Tour palette with Fraunces headings and the notch mark.</div></div>
+      <div style="padding:20px;background:var(--surface);border-radius:2px;border:1px solid rgba(240,237,230,.05)"><div style="font-size:13px;color:var(--pearl);font-weight:500;margin-bottom:6px">Light Mode</div><div style="font-size:12px;color:var(--mistral);line-height:1.6">Complete token inversion: Pearl becomes the canvas, Nuit becomes text. Surfaces shift to white with subtle warm tint. Royal and Cinnabar adjust for contrast on light backgrounds.</div></div>
     </div>
   </div>
 
   <!-- Closing note -->
-  <div style="margin-top:80px;padding:40px;border-radius:16px;background:rgba(194,59,34,.03);border:1px solid rgba(194,59,34,.1)">
+  <div style="margin-top:80px;padding:40px;border-radius:2px;background:rgba(194,59,34,.03);border:1px solid rgba(194,59,34,.1)">
     <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--cinnabar);margin-bottom:16px;opacity:.7">The Answer</div>
     <div style="font-family:'Fraunces',serif;font-size:22px;color:var(--pearl);margin-bottom:16px;line-height:1.3;font-weight:300">Yes &mdash; every single thing.</div>
     <div style="font-family:'Crimson Pro',serif;font-size:15px;line-height:1.8;color:rgba(240,237,230,.45);max-width:720px">Once the direction is locked, I can implement the complete design system directly in code. Every CSS variable, every component style, every animation, every metadata tag. The existing v- prefixed CSS gets evolved into the Grand Tour palette. Buttons gain cinematic hover states. Cards shift to Nuit and Croisette surfaces. The Cinnabar pulse appears on live indicators. Fraunces replaces Playfair Display for headings. Crimson Pro brings the literary body voice. Even the loading skeletons and empty states get the treatment. It&rsquo;s a comprehensive reskin + enhancement of every visual surface in the app.</div>
