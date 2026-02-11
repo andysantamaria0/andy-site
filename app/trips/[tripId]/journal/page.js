@@ -1,6 +1,7 @@
 import { createClient } from '../../../../lib/supabase/server';
 import { redirect } from 'next/navigation';
 import TravelLogEntry from '../../../../components/trips/TravelLogEntry';
+import NotchReveal from '../../../../components/NotchReveal';
 import { loadFeatures, isFeatureEnabled } from '../../../../lib/features';
 
 export default async function JournalPage({ params }) {
@@ -69,14 +70,16 @@ export default async function JournalPage({ params }) {
         </p>
       ) : (
         <div className="v-journal-list">
-          {logs.map((log) => (
-            <TravelLogEntry
-              key={log.id}
-              log={log}
-              photos={(log.photo_ids || []).map((id) => photosMap[id]).filter(Boolean)}
-              tripId={tripId}
-              isOwner={isOwner}
-            />
+          {logs.map((log, i) => (
+            <div key={log.id}>
+              {i > 0 && <NotchReveal compact />}
+              <TravelLogEntry
+                log={log}
+                photos={(log.photo_ids || []).map((id) => photosMap[id]).filter(Boolean)}
+                tripId={tripId}
+                isOwner={isOwner}
+              />
+            </div>
           ))}
         </div>
       )}

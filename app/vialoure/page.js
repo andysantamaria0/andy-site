@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { createClient } from '../../lib/supabase/server';
 import { formatDateRange, tripDuration } from '../../lib/utils/dates';
+import NotchReveal from '../../components/NotchReveal';
 
 export const metadata = {
   title: 'Vialoure — Holiday With Friends',
@@ -432,6 +433,8 @@ export default async function LandingPage() {
           </div>
         </div>
 
+        <NotchReveal />
+
         <div className="v-landing-showcase-wide">
           <div className="v-landing-showcase-wide-text">
             <h3 className="v-landing-showcase-heading">Your concierge, every channel</h3>
@@ -445,6 +448,8 @@ export default async function LandingPage() {
           </div>
         </div>
 
+        <NotchReveal />
+
         <div className="v-landing-showcase-row v-landing-showcase-row-reverse">
           <div className="v-landing-showcase-text">
             <h3 className="v-landing-showcase-heading">Live flights, happening now</h3>
@@ -457,6 +462,8 @@ export default async function LandingPage() {
           </div>
         </div>
 
+        <NotchReveal />
+
         <div className="v-landing-showcase-row">
           <div className="v-landing-showcase-text">
             <h3 className="v-landing-showcase-heading">Add it to the group chat</h3>
@@ -468,6 +475,8 @@ export default async function LandingPage() {
             <WhatsAppMockup />
           </div>
         </div>
+
+        <NotchReveal />
 
         <div className="v-landing-showcase-row v-landing-showcase-row-reverse">
           <div className="v-landing-showcase-text">

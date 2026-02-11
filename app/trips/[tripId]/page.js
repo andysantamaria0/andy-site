@@ -8,6 +8,7 @@ import FeaturedToggle from '../../../components/trips/FeaturedToggle';
 import TripCodeEditor from '../../../components/trips/TripCodeEditor';
 import HappeningNowInline from '../../../components/trips/HappeningNowInline';
 import { loadFeatures, isFeatureEnabled } from '../../../lib/features';
+import NotchReveal from '../../../components/NotchReveal';
 
 export default async function TripOverviewPage({ params }) {
   const { tripId } = await params;
@@ -104,6 +105,8 @@ export default async function TripOverviewPage({ params }) {
           )}
         </div>
       </div>
+
+      <NotchReveal compact />
 
       {/* Description */}
       {trip.description && (

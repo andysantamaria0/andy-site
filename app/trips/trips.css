@@ -3820,6 +3820,54 @@ select.v-form-input {
   margin-left: 2px;
 }
 
+/* ============================================
+   The Notch Reveal — scroll-triggered divider
+   ============================================ */
+
+.v-notch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px 0;
+}
+
+.v-notch-compact {
+  gap: 8px;
+  padding: 20px 0;
+}
+
+.v-notch-line {
+  width: 0;
+  height: 2px;
+  background: var(--v-champagne);
+  border-radius: 1px;
+  transition: width 1.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.v-notch-chevron {
+  color: rgba(196, 167, 125, 0.3);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Visible state — triggered by IntersectionObserver */
+.v-notch-visible .v-notch-line {
+  width: var(--v-notch-width, 40px);
+}
+
+.v-notch-visible .v-notch-chevron {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+
+/* Second line staggers behind the first */
+.v-notch-visible .v-notch-line:last-child {
+  transition-delay: 0.15s;
+}
+
 /* ---- Staggered entry & cinematic transitions ---- */
 
 .v-page {
