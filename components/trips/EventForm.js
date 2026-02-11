@@ -66,6 +66,7 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
 
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -229,7 +230,10 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
   }
 
   async function handleDelete() {
-    if (!confirm('Delete this event?')) return;
+    if (!confirmingDelete) {
+      setConfirmingDelete(true);
+      return;
+    }
     setDeleting(true);
     const { error: deleteError } = await supabase
       .from('events')
@@ -547,9 +551,10 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
                 className="v-btn v-btn-danger"
                 type="button"
                 onClick={handleDelete}
+                onBlur={() => setConfirmingDelete(false)}
                 disabled={deleting}
               >
-                {deleting ? 'Deleting...' : 'Delete'}
+                {deleting ? 'Deleting...' : confirmingDelete ? 'Confirm delete?' : 'Delete'}
               </button>
             )}
             <button className="v-btn v-btn-secondary" type="button" onClick={onClose}>

@@ -20,6 +20,12 @@
   --v-micro: 150ms;
   --v-standard: 300ms;
   --v-dramatic: 500ms;
+  color-scheme: dark;
+}
+
+::selection {
+  background: rgba(74, 53, 215, 0.35);
+  color: var(--v-pearl);
 }
 
 @media (prefers-color-scheme: light) {
@@ -36,6 +42,12 @@
     --v-mistral: #5A6B7E;
     --v-riviera: #2E5570;
     --v-silver: #A8A49C;
+    color-scheme: light;
+  }
+
+  ::selection {
+    background: rgba(74, 53, 215, 0.25);
+    color: #0A1628;
   }
 
   .v-btn-google {
@@ -45,6 +57,11 @@
 
   .v-btn-google:hover {
     background-color: #0F1D30;
+  }
+
+  .v-form-input[type="date"]::-webkit-calendar-picker-indicator,
+  .v-form-input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.4);
   }
 }
 
@@ -447,6 +464,27 @@
 .v-form-textarea {
   resize: vertical;
   min-height: 80px;
+}
+
+.v-form-input[type="date"],
+.v-form-input[type="time"] {
+  cursor: pointer;
+}
+
+.v-form-input[type="date"]::-webkit-calendar-picker-indicator,
+.v-form-input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+  cursor: pointer;
+}
+
+select.v-form-input {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237B8FA8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
 }
 
 .v-form-row {
