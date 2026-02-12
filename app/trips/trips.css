@@ -391,6 +391,26 @@
   margin-left: 8px;
 }
 
+.v-trip-card--cover {
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-color: transparent;
+}
+
+.v-trip-card--cover .v-trip-card-destination,
+.v-trip-card--cover .v-trip-card-name,
+.v-trip-card--cover .v-trip-card-dates,
+.v-trip-card--cover .v-trip-card-count {
+  color: var(--v-pearl);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.v-trip-card--cover:hover {
+  border-color: transparent;
+}
+
 /* ---- Empty State ---- */
 
 .v-empty {

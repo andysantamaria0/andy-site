@@ -1,12 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '../../lib/supabase/client';
+
+const ACCEPT_TYPES = 'image/jpeg,image/png,image/webp';
+
+function extFromType(mime) {
+  return { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }[mime] || 'jpg';
+}
 
 export default function TripHeaderEditor({ trip }) {
   const supabase = createClient();
   const router = useRouter();
+  const fileInputRef = useRef(null);
 
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(trip.name || '');
@@ -15,26 +22,75 @@ export default function TripHeaderEditor({ trip }) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
 
+  const [coverFile, setCoverFile] = useState(null);
+  const [coverPreview, setCoverPreview] = useState(null);
+  const [removeCover, setRemoveCover] = useState(false);
+
+  // Generate / revoke preview URL
+  useEffect(() => {
+    if (!coverFile) { setCoverPreview(null); return; }
+    const url = URL.createObjectURL(coverFile);
+    setCoverPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [coverFile]);
+
+  function handleFileSelect(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setCoverFile(file);
+    setRemoveCover(false);
+  }
+
   async function handleSave() {
     if (!name.trim() || !destination.trim()) return;
     setSaving(true);
     setError(null);
 
-    const { error: updateError } = await supabase
-      .from('trips')
-      .update({
-        name: name.trim(),
-        destination: destination.trim(),
-        description: description.trim() || null,
-      })
-      .eq('id', trip.id);
+    const updates = {
+      name: name.trim(),
+      destination: destination.trim(),
+      description: description.trim() || null,
+    };
 
-    setSaving(false);
-    if (updateError) {
-      setError(updateError.message);
-    } else {
+    try {
+      // Handle cover image upload
+      if (coverFile) {
+        const ext = extFromType(coverFile.type);
+        const storagePath = `${trip.id}/cover.${ext}`;
+        const { error: uploadErr } = await supabase.storage
+          .from('trip-photos')
+          .upload(storagePath, coverFile, { contentType: coverFile.type, upsert: true });
+        if (uploadErr) throw uploadErr;
+        const { data: urlData } = supabase.storage
+          .from('trip-photos')
+          .getPublicUrl(storagePath);
+        updates.cover_image_url = urlData.publicUrl;
+      } else if (removeCover) {
+        updates.cover_image_url = null;
+        // Best-effort delete old file from storage
+        if (trip.cover_image_url) {
+          const oldPath = trip.cover_image_url.split('/trip-photos/')[1];
+          if (oldPath) {
+            await supabase.storage.from('trip-photos').remove([decodeURIComponent(oldPath)]);
+          }
+        }
+      }
+
+      const { error: updateError } = await supabase
+        .from('trips')
+        .update(updates)
+        .eq('id', trip.id);
+
+      if (updateError) throw updateError;
+
+      setCoverFile(null);
+      setRemoveCover(false);
+      setSaving(false);
       setEditing(false);
       router.refresh();
+    } catch (err) {
+      setSaving(false);
+      setError(err.message);
     }
   }
 
@@ -74,6 +130,41 @@ export default function TripHeaderEditor({ trip }) {
             placeholder="Description (optional)"
             rows={2}
           />
+          {/* Cover image controls */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            {(coverPreview || (trip.cover_image_url && !removeCover)) && (
+              <img
+                src={coverPreview || trip.cover_image_url}
+                alt="Cover preview"
+                style={{ width: 80, height: 48, objectFit: 'cover', borderRadius: 3 }}
+              />
+            )}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept={ACCEPT_TYPES}
+              onChange={handleFileSelect}
+              style={{ display: 'none' }}
+            />
+            <button
+              type="button"
+              className="v-btn v-btn-secondary"
+              onClick={() => fileInputRef.current?.click()}
+              style={{ fontSize: '0.75rem', padding: '4px 10px' }}
+            >
+              {trip.cover_image_url || coverFile ? 'Change Cover' : 'Add Cover'}
+            </button>
+            {(coverFile || (trip.cover_image_url && !removeCover)) && (
+              <button
+                type="button"
+                className="v-btn v-btn-secondary"
+                onClick={() => { setCoverFile(null); setRemoveCover(true); }}
+                style={{ fontSize: '0.75rem', padding: '4px 10px', color: 'var(--v-cinnabar)' }}
+              >
+                Remove
+              </button>
+            )}
+          </div>
           {error && <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.75rem' }}>{error}</div>}
           <div style={{ display: 'flex', gap: 8 }}>
             <button className="v-btn v-btn-primary" onClick={handleSave} disabled={saving || !name.trim() || !destination.trim()} style={{ fontSize: '0.8rem', padding: '6px 14px' }}>
