@@ -1,22 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '../lib/supabase/client';
 
-const LINES = [
+const PARAGRAPHS = [
   'Dear friend,',
-  '',
   'I built something for us.',
-  '',
-  'It\u2019s called Vialoure \u2014 a private trip planner for',
-  'when we travel together. Shared calendars, flights',
-  'tracked in real-time, a concierge that reads your',
-  'forwarded confirmations and handles the details.',
-  '',
-  'No signup forms, no strangers. Just our crew.',
-  '',
-  'I\u2019d love for you to join.',
+  'It\u2019s called Vialoure \u2014 a private trip concierge for when we travel together. Shared calendars, flights tracked in real-time, a concierge to collect, organize and manage the details.',
+  'Come fly with me.',
 ];
 
 export default function InviteLetter({ defaultEmail }) {
@@ -82,11 +74,20 @@ export default function InviteLetter({ defaultEmail }) {
     router.refresh();
   }
 
-  // Stagger delays: dateline at 0.3s, then lines starting at 0.6s, 0.15s apart
+  // Stagger delays: dateline at 0.3s, then paragraphs starting at 0.6s, 0.3s apart
   const lineBaseDelay = 0.6;
-  const lineStep = 0.15;
-  const lastLineDelay = lineBaseDelay + LINES.length * lineStep;
+  const lineStep = 0.3;
+  const lastLineDelay = lineBaseDelay + PARAGRAPHS.length * lineStep;
   const sigDelay = lastLineDelay + 0.3;
+
+  // Blinking cursor tracks which paragraph is "current", stays on last line
+  const [activeLine, setActiveLine] = useState(-1);
+  useEffect(() => {
+    const timers = PARAGRAPHS.map((_, i) =>
+      setTimeout(() => setActiveLine(i), (lineBaseDelay + i * lineStep) * 1000)
+    );
+    return () => timers.forEach(clearTimeout);
+  }, []);
   const dividerDelay = sigDelay + 0.4;
   const authDelay = dividerDelay + 0.4;
   const footerDelay = authDelay + 0.3;
@@ -97,14 +98,14 @@ export default function InviteLetter({ defaultEmail }) {
         <div className="inv-dateline">February 2026 / The Mediterranean</div>
 
         <div className="inv-body">
-          {LINES.map((line, i) => (
-            <div
+          {PARAGRAPHS.map((para, i) => (
+            <p
               key={i}
               className="inv-line"
               style={{ animationDelay: `${lineBaseDelay + i * lineStep}s` }}
             >
-              {line || '\u00A0'}
-            </div>
+              {para}{i === activeLine && <span className="inv-cursor" />}
+            </p>
           ))}
         </div>
 

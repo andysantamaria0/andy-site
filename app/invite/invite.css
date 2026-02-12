@@ -14,12 +14,29 @@
   background-color: var(--v-surface);
   border: 1px solid var(--v-pearl-faint);
   border-radius: 2px;
-  padding: 56px 48px 48px;
+  padding: 56px 48px 48px 56px;
   max-width: 520px;
   width: 100%;
+  position: relative;
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.2),
     0 8px 24px rgba(0, 0, 0, 0.15);
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 29px,
+    rgba(240, 237, 230, 0.04) 29px,
+    rgba(240, 237, 230, 0.04) 30px
+  );
+}
+
+.inv-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 40px;
+  width: 1px;
+  background-color: rgba(196, 167, 125, 0.12);
 }
 
 /* Dateline */
@@ -47,6 +64,27 @@
 .inv-line {
   opacity: 0;
   animation: v-fade-up var(--v-dramatic) var(--v-ease) forwards;
+  margin-bottom: 1.25em;
+}
+
+.inv-line:last-child {
+  margin-bottom: 0;
+}
+
+.inv-cursor::after {
+  content: '';
+  display: inline-block;
+  width: 0.55em;
+  height: 0.7em;
+  background-color: var(--v-cinnabar, #a33);
+  margin-left: 2px;
+  vertical-align: baseline;
+  animation: inv-blink 0.8s step-end infinite;
+}
+
+@keyframes inv-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 /* Signature */
@@ -128,6 +166,10 @@
 
 @media (max-width: 560px) {
   .inv-card {
-    padding: 40px 28px 36px;
+    padding: 40px 28px 36px 44px;
+  }
+
+  .inv-card::before {
+    left: 28px;
   }
 }
