@@ -74,8 +74,8 @@
 .inv-cursor::after {
   content: '';
   display: inline-block;
-  width: 0.55em;
-  height: 0.7em;
+  width: 0.4em;
+  height: 0.9em;
   background-color: var(--v-cinnabar, #a33);
   margin-left: 2px;
   vertical-align: baseline;
