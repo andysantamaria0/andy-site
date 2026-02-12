@@ -225,7 +225,7 @@ export async function POST(request) {
   }
 
   // Send acknowledgment reply
-  sendAckReply({
+  await sendAckReply({
     channel: 'email',
     replyTo: fromEmail,
     tripName: trip.name,
