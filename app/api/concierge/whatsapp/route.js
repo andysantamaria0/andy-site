@@ -1,7 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import { buildParsePrompt } from '../../../../lib/utils/parsePrompt';
 import { detectTripForWhatsApp, buildDisambiguationMessage } from '../../../../lib/utils/tripDetection';
-import { sendDisambiguationReply } from '../../../../lib/utils/sendReply';
+import { sendDisambiguationReply, sendOwnerAutoAcceptNotification } from '../../../../lib/utils/sendReply';
+import { tryAutoAccept } from '../../../../lib/utils/autoAccept';
 import { validateTwilioSignature } from '../../../../lib/utils/twilioAuth';
 import { saveMediaToStorage } from '../../../../lib/utils/mediaStorage';
 import { checkFeature } from '../../../../lib/features';
@@ -266,8 +267,43 @@ export async function POST(request) {
     }
   }
 
-  const ackMsg = parsedData?.summary
-    ? `Got it for ${trip.name}: ${parsedData.summary}`
-    : `Got your message for ${trip.name}. It's in the inbox for the trip organizer.`;
+  // Try auto-accept for low-risk items
+  let ackMsg;
+  if (parsedData && detection.member?.id && inserted) {
+    const autoResult = await tryAutoAccept(supabase, {
+      inboundEmailId: inserted.id,
+      tripId: trip.id,
+      parsedData,
+      senderMemberId: detection.member.id,
+      members,
+    });
+
+    if (autoResult.autoApplied) {
+      const owner = (members || []).find((m) => m.role === 'owner');
+      const ownerEmail = owner?.profiles?.email || owner?.email;
+      const memberName = detection.member.profiles?.display_name || detection.member.display_name || senderName || from;
+      await sendOwnerAutoAcceptNotification({
+        ownerEmail,
+        tripName: trip.name,
+        senderName: memberName,
+        summary: autoResult.summary,
+      });
+    }
+
+    if (autoResult.fullyApplied) {
+      ackMsg = `Updated for ${trip.name}: ${autoResult.summary}`;
+    } else if (autoResult.autoApplied) {
+      ackMsg = `Updated for ${trip.name}: ${autoResult.summary}. The rest is in the inbox.`;
+    } else {
+      ackMsg = parsedData?.summary
+        ? `Got it for ${trip.name}: ${parsedData.summary}`
+        : `Got your message for ${trip.name}. It's in the inbox for the trip organizer.`;
+    }
+  } else {
+    ackMsg = parsedData?.summary
+      ? `Got it for ${trip.name}: ${parsedData.summary}`
+      : `Got your message for ${trip.name}. It's in the inbox for the trip organizer.`;
+  }
+
   return twiml(ackMsg);
 }

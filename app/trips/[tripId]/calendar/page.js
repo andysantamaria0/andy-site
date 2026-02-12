@@ -89,6 +89,7 @@ export default async function CalendarPage({ params }) {
         events={events || []}
         logistics={logistics || []}
         isOwner={isOwner}
+        tripId={tripId}
       />
     </div>
   );

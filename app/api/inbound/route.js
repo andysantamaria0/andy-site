@@ -1,7 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import { buildParsePrompt } from '../../../lib/utils/parsePrompt';
 import { detectTrip, buildDisambiguationMessage } from '../../../lib/utils/tripDetection';
-import { sendDisambiguationReply, sendAckReply } from '../../../lib/utils/sendReply';
+import { sendDisambiguationReply, sendAckReply, sendOwnerAutoAcceptNotification } from '../../../lib/utils/sendReply';
+import { tryAutoAccept } from '../../../lib/utils/autoAccept';
 import { checkFeature } from '../../../lib/features';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
@@ -199,7 +200,7 @@ export async function POST(request) {
   }
 
   // Store in inbound_emails
-  const { error: insertError } = await supabase
+  const { data: inserted, error: insertError } = await supabase
     .from('inbound_emails')
     .insert({
       trip_id: trip.id,
@@ -217,21 +218,66 @@ export async function POST(request) {
       status: 'pending',
       channel: 'email',
       reply_to: fromEmail || null,
-    });
+    })
+    .select('id')
+    .single();
 
   if (insertError) {
     console.error('Failed to insert inbound email:', insertError);
     return NextResponse.json({ status: 'insert_error', error: insertError.message }, { status: 500 });
   }
 
-  // Send acknowledgment reply
-  await sendAckReply({
-    channel: 'email',
-    replyTo: fromEmail,
-    tripName: trip.name,
-    summary: parsedData?.summary || null,
-    subject,
-  });
+  // Try auto-accept for low-risk items
+  let autoResult = null;
+  if (parsedData && senderMember?.id && inserted) {
+    autoResult = await tryAutoAccept(supabase, {
+      inboundEmailId: inserted.id,
+      tripId: trip.id,
+      parsedData,
+      senderMemberId: senderMember.id,
+      members,
+    });
+
+    if (autoResult.autoApplied) {
+      // Notify trip owner
+      const owner = (members || []).find((m) => m.role === 'owner');
+      const ownerEmail = owner?.profiles?.email || owner?.email;
+      const senderName = senderMember.profiles?.display_name || senderMember.display_name || senderMember.profiles?.email || fromEmail;
+      await sendOwnerAutoAcceptNotification({
+        ownerEmail,
+        tripName: trip.name,
+        senderName,
+        summary: autoResult.summary,
+      });
+    }
+  }
+
+  // Send acknowledgment reply (customized based on auto-accept result)
+  if (autoResult?.fullyApplied) {
+    await sendAckReply({
+      channel: 'email',
+      replyTo: fromEmail,
+      tripName: trip.name,
+      summary: `Updated: ${autoResult.summary}`,
+      subject,
+    });
+  } else if (autoResult?.autoApplied) {
+    await sendAckReply({
+      channel: 'email',
+      replyTo: fromEmail,
+      tripName: trip.name,
+      summary: `Updated: ${autoResult.summary}. The rest is in the inbox for the trip organizer.`,
+      subject,
+    });
+  } else {
+    await sendAckReply({
+      channel: 'email',
+      replyTo: fromEmail,
+      tripName: trip.name,
+      summary: parsedData?.summary || null,
+      subject,
+    });
+  }
 
   return NextResponse.json({ status: 'ok' });
 }

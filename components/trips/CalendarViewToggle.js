@@ -6,7 +6,7 @@ import CalendarDayList from './CalendarDayList';
 import CalendarWeekView from './CalendarWeekView';
 import CalendarMonthGrid from './CalendarMonthGrid';
 
-export default function CalendarViewToggle({ trip, members, events, logistics, isOwner }) {
+export default function CalendarViewToggle({ trip, members, events, logistics, isOwner, tripId }) {
   const defaultView = useMemo(() => {
     if (trip.start_date && trip.end_date) {
       const days = differenceInCalendarDays(parseISO(trip.end_date), parseISO(trip.start_date)) + 1;
@@ -38,6 +38,17 @@ export default function CalendarViewToggle({ trip, members, events, logistics, i
         >
           Month
         </button>
+        {tripId && (
+          <a
+            href={`/api/trips/${tripId}/itinerary`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="v-view-toggle-btn"
+            style={{ textDecoration: 'none', marginLeft: 'auto' }}
+          >
+            🖨 Itinerary
+          </a>
+        )}
       </div>
 
       {view === 'list' ? (

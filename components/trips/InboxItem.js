@@ -180,6 +180,24 @@ export default function InboxItem({ email, tripId, isOwner }) {
 
       {expanded && (
         <div className="v-inbox-item-body">
+          {email.auto_applied_items && email.auto_applied_items.length > 0 && (
+            <div style={{
+              fontSize: '0.8rem',
+              color: 'var(--v-champagne)',
+              marginBottom: 12,
+              padding: '8px 12px',
+              background: 'rgba(196, 167, 125, 0.08)',
+              borderLeft: '3px solid var(--v-champagne)',
+              borderRadius: '2px',
+            }}>
+              Auto-applied: {email.auto_applied_items.map((item) =>
+                item.type === 'member_update'
+                  ? `${item.name} dates updated`
+                  : item.title || `${item.type} added`
+              ).join(', ')}
+            </div>
+          )}
+
           {email.parse_error && (
             <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.875rem', marginBottom: 12 }}>
               Parse error: {email.parse_error}
