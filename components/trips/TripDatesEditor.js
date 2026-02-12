@@ -58,7 +58,13 @@ export default function TripDatesEditor({ trip }) {
           className="v-form-input"
           type="date"
           value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
+          onChange={(e) => {
+            const val = e.target.value;
+            setStartDate(val);
+            if (val && (!endDate || endDate < val)) {
+              setEndDate(val);
+            }
+          }}
           style={{ fontSize: '0.85rem' }}
         />
         <span style={{ color: 'var(--v-pearl-dim)', fontSize: '0.75rem' }}>to</span>

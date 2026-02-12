@@ -33,7 +33,21 @@ export default function EventCard({ event, members, onClick }) {
           {event.start_time && (
             <span>{formatTime(event.start_time)}{event.end_time ? ` – ${formatTime(event.end_time)}` : ''}</span>
           )}
-          {event.location && <span>{event.location}</span>}
+          {event.location && (
+            event.place_lat && event.place_lng ? (
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${event.place_lat},${event.place_lng}${event.place_id ? `&query_place_id=${event.place_id}` : ''}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="v-event-card-location-link"
+              >
+                {event.location}
+              </a>
+            ) : (
+              <span>{event.location}</span>
+            )
+          )}
         </div>
       </div>
       {event.has_cost && event.cost_amount && (

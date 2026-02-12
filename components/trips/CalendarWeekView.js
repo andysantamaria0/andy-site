@@ -232,6 +232,7 @@ export default function CalendarWeekView({ trip, members, events, logistics, isO
           initialDate={formState.date}
           onClose={() => setFormState(null)}
           tripCurrency={trip.currency}
+          tripDestination={trip.destination}
         />
       )}
     </div>

@@ -148,6 +148,7 @@ export default function CalendarDayList({ trip, members, events, logistics, isOw
           initialDate={formState.date}
           onClose={() => setFormState(null)}
           tripCurrency={trip.currency}
+          tripDestination={trip.destination}
         />
       )}
     </>

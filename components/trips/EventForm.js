@@ -6,6 +6,7 @@ import { createClient } from '../../lib/supabase/client';
 import { CATEGORY_EMOJI } from './EventCard';
 import { getMemberDisplayInfo } from '../../lib/utils/members';
 import MemberAvatar from './MemberAvatar';
+import PlacesAutocompleteInput from './PlacesAutocompleteInput';
 
 const SPLIT_TYPES = [
   { key: 'host_covers', label: 'Host covers' },
@@ -14,7 +15,7 @@ const SPLIT_TYPES = [
   { key: 'custom_percent', label: 'Custom %' },
 ];
 
-export default function EventForm({ tripId, members, event, initialDate, onClose, tripCurrency }) {
+export default function EventForm({ tripId, members, event, initialDate, onClose, tripCurrency, tripDestination }) {
   const router = useRouter();
   const supabase = createClient();
   const overlayRef = useRef(null);
@@ -29,6 +30,10 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
   const [startTime, setStartTime] = useState(event?.start_time?.slice(0, 5) || '');
   const [endTime, setEndTime] = useState(event?.end_time?.slice(0, 5) || '');
   const [location, setLocation] = useState(event?.location || '');
+  const [placeId, setPlaceId] = useState(event?.place_id || null);
+  const [placeAddress, setPlaceAddress] = useState(event?.place_address || null);
+  const [placeLat, setPlaceLat] = useState(event?.place_lat || null);
+  const [placeLng, setPlaceLng] = useState(event?.place_lng || null);
   const [notes, setNotes] = useState(event?.notes || '');
   const [selectedMembers, setSelectedMembers] = useState(
     isEdit ? (existingAttendeeIds.length > 0 ? existingAttendeeIds : allMemberIds) : allMemberIds
@@ -135,6 +140,10 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
       start_time: startTime || null,
       end_time: endTime || null,
       location: location.trim() || null,
+      place_id: placeId || null,
+      place_address: placeAddress || null,
+      place_lat: placeLat || null,
+      place_lng: placeLng || null,
       notes: notes.trim() || null,
       has_cost: hasCost,
       cost_amount: hasCost && costAmount ? parseFloat(costAmount) : null,
@@ -319,10 +328,24 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
 
           <div className="v-form-group">
             <label className="v-form-label">Location</label>
-            <input
-              className="v-form-input"
+            <PlacesAutocompleteInput
               value={location}
-              onChange={(e) => setLocation(e.target.value)}
+              onChange={(val) => {
+                setLocation(val);
+                // Clear structured place data when user types manually
+                setPlaceId(null);
+                setPlaceAddress(null);
+                setPlaceLat(null);
+                setPlaceLng(null);
+              }}
+              onPlaceSelect={({ name, address, placeId: pid, lat, lng }) => {
+                setLocation(name);
+                setPlaceId(pid);
+                setPlaceAddress(address);
+                setPlaceLat(lat);
+                setPlaceLng(lng);
+              }}
+              tripDestination={tripDestination}
               placeholder="e.g. Ristorante Da Mario"
             />
           </div>

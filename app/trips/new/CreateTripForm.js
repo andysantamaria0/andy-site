@@ -9,6 +9,8 @@ export default function CreateTripForm() {
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -114,6 +116,14 @@ export default function CreateTripForm() {
             type="date"
             id="start_date"
             name="start_date"
+            value={startDate}
+            onChange={(e) => {
+              const val = e.target.value;
+              setStartDate(val);
+              if (val && (!endDate || endDate < val)) {
+                setEndDate(val);
+              }
+            }}
           />
         </div>
         <div className="v-form-group">
@@ -123,6 +133,9 @@ export default function CreateTripForm() {
             type="date"
             id="end_date"
             name="end_date"
+            value={endDate}
+            min={startDate || undefined}
+            onChange={(e) => setEndDate(e.target.value)}
           />
         </div>
       </div>

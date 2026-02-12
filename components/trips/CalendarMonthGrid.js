@@ -337,6 +337,7 @@ export default function CalendarMonthGrid({ trip, members, events, logistics, is
           initialDate={formState.date}
           onClose={() => setFormState(null)}
           tripCurrency={trip.currency}
+          tripDestination={trip.destination}
         />
       )}
     </div>

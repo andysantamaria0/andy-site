@@ -46,7 +46,13 @@ export default function StayDatesEditor({ membership, tripStart, tripEnd }) {
             value={stayStart}
             min={tripStart || undefined}
             max={tripEnd || undefined}
-            onChange={(e) => setStayStart(e.target.value)}
+            onChange={(e) => {
+              const val = e.target.value;
+              setStayStart(val);
+              if (val && (!stayEnd || stayEnd < val)) {
+                setStayEnd(val);
+              }
+            }}
           />
         </div>
         <div className="v-stay-editor-field">

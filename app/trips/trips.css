@@ -4069,3 +4069,67 @@ select.v-form-input {
     height: 88px;
   }
 }
+
+/* ── Places Autocomplete ── */
+
+.v-places-wrap {
+  position: relative;
+}
+
+.v-places-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--v-surface);
+  border: 1px solid var(--v-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  margin-top: 4px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.v-places-option {
+  padding: 10px 14px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: background 0.1s;
+}
+
+.v-places-option:hover,
+.v-places-option-active {
+  background: var(--v-surface-hover, rgba(255, 255, 255, 0.06));
+}
+
+.v-places-option-main {
+  font-size: 0.9rem;
+  color: var(--v-pearl);
+}
+
+.v-places-option-secondary {
+  font-size: 0.75rem;
+  color: var(--v-pearl-dim);
+}
+
+.v-places-attribution {
+  padding: 6px 14px;
+  font-size: 0.7rem;
+  color: var(--v-pearl-dim);
+  text-align: right;
+  border-top: 1px solid var(--v-border);
+}
+
+.v-event-card-location-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--v-pearl-dim);
+  text-underline-offset: 2px;
+}
+
+.v-event-card-location-link:hover {
+  text-decoration-color: var(--v-pearl);
+}
