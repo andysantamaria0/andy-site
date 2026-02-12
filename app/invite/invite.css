@@ -1,0 +1,133 @@
+.inv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--v-nuit);
+  padding: 24px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Stationery card */
+.inv-card {
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
+  padding: 56px 48px 48px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Dateline */
+.inv-dateline {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--v-champagne);
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: v-fade-up var(--v-dramatic) var(--v-ease) forwards;
+  animation-delay: 0.3s;
+}
+
+/* Letter body */
+.inv-body {
+  font-family: 'Special Elite', monospace;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--v-pearl);
+  margin-bottom: 32px;
+}
+
+.inv-line {
+  opacity: 0;
+  animation: v-fade-up var(--v-dramatic) var(--v-ease) forwards;
+}
+
+/* Signature */
+.inv-sig {
+  font-family: 'Special Elite', monospace;
+  font-size: 1.0625rem;
+  color: var(--v-champagne);
+  opacity: 0;
+  animation: v-fade-up var(--v-dramatic) var(--v-ease) forwards;
+}
+
+/* Divider */
+.inv-divider {
+  width: 48px;
+  height: 1px;
+  background-color: var(--v-champagne);
+  margin: 40px 0 36px;
+  opacity: 0;
+  animation: v-fade-up var(--v-dramatic) var(--v-ease) forwards;
+}
+
+/* Sign-in section */
+.inv-auth {
+  opacity: 0;
+  animation: v-fade-up var(--v-dramatic) var(--v-ease) forwards;
+}
+
+.inv-auth-label {
+  font-size: 0.8125rem;
+  color: var(--v-pearl-dim);
+  margin-bottom: 20px;
+}
+
+/* Footer */
+.inv-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 48px;
+  opacity: 0;
+  animation: v-fade-up var(--v-dramatic) var(--v-ease) forwards;
+}
+
+.inv-footer-mark {
+  width: 20px;
+  height: 8px;
+  color: var(--v-pearl-dim);
+}
+
+.inv-footer-name {
+  font-family: 'Fraunces', serif;
+  font-size: 0.875rem;
+  color: var(--v-pearl-dim);
+}
+
+/* Error message */
+.inv-error {
+  color: var(--v-cinnabar);
+  font-size: 0.8125rem;
+  margin-bottom: 12px;
+}
+
+/* Or divider */
+.inv-or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--v-pearl-dim);
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.inv-or-line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--v-pearl-faint);
+}
+
+@media (max-width: 560px) {
+  .inv-card {
+    padding: 40px 28px 36px;
+  }
+}

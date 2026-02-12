@@ -1,4 +1,5 @@
 import { createClient } from '../../../../lib/supabase/server';
+import { createClient as createServiceClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
 export async function GET(request) {
@@ -12,17 +13,28 @@ export async function GET(request) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      // Check if this user's email matches any unclaimed manual members
       const { data: { user } } = await supabase.auth.getUser();
       if (user?.email) {
-        const { data: claimable } = await supabase
+        // Check invite status using service role (bypasses RLS)
+        const service = createServiceClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL,
+          process.env.SUPABASE_SERVICE_ROLE_KEY
+        );
+        const { data: members } = await service
           .from('trip_members')
-          .select('id')
-          .is('user_id', null)
+          .select('id, user_id')
           .ilike('email', user.email)
           .limit(1);
 
-        if (claimable && claimable.length > 0) {
+        if (!members || members.length === 0) {
+          // Not invited — sign out and redirect
+          await supabase.auth.signOut();
+          return NextResponse.redirect(`${origin}/trips/not-invited`);
+        }
+
+        // Check if there's an unclaimed membership to claim
+        const unclaimed = members.find((m) => !m.user_id);
+        if (unclaimed) {
           return NextResponse.redirect(`${origin}/trips/claim`);
         }
       }

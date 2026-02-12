@@ -34,8 +34,19 @@ export default function AuthButton() {
     });
 
     if (signInError) {
-      // If invalid credentials, try creating the account
+      // If invalid credentials, check invite status before creating account
       if (signInError.message.includes('Invalid login credentials')) {
+        const res = await fetch('/api/check-invite', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const { invited } = await res.json();
+        if (!invited) {
+          setError('Vialoure is invite-only. Ask Andy for an invite.');
+          setLoading(false);
+          return;
+        }
         const { error: signUpError } = await supabase.auth.signUp({
           email,
           password,
