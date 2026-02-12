@@ -358,7 +358,7 @@ export default async function LandingPage() {
             <path d="M0 48 L60 0 L120 48 Z" fill="currentColor" />
           </svg>
           <span className="v-landing-nav-wordmark">Vialoure</span>
-          <span className="v-landing-nav-tagline">For Friends</span>
+          <span className="v-landing-nav-tagline">For Andy's Friends</span>
         </div>
         <Link href={user ? '/trips' : '/trips/login'} className="v-btn v-btn-primary v-landing-nav-cta">
           {user ? 'Go to Trips' : 'Sign In'}
@@ -497,7 +497,7 @@ export default async function LandingPage() {
           <path d="M0 48 L60 0 L120 48 Z" fill="currentColor" />
         </svg>
         <span className="v-landing-footer-wordmark">Vialoure</span>
-        <span className="v-landing-footer-tagline-italic">for friends</span>
+        <span className="v-landing-footer-tagline-italic">for Andy's friends</span>
       </footer>
     </div>
   );
