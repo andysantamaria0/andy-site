@@ -12,7 +12,7 @@ export default function LoginPage() {
           <path d="M0 48 L60 0 L120 48 Z" fill="currentColor" />
         </svg>
         <div className="v-login-logo">Vialoure</div>
-        <div className="v-login-tagline">For Friends</div>
+        <div className="v-login-tagline">For Andy's Friends</div>
       </div>
       <div className="v-login-card">
         <p>Sign in to plan trips with your crew — shared calendars, expenses, and logistics in one place.</p>

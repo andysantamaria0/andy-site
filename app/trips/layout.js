@@ -35,7 +35,7 @@ export default async function TripsLayout({ children }) {
             </svg>
             Vialoure
           </Link>
-          <span className="v-header-tagline">For Friends</span>
+          <span className="v-header-tagline">For Andy's Friends</span>
         </div>
         <div className="v-header-user">
           {profile?.avatar_url && (
