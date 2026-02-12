@@ -239,16 +239,18 @@ export async function POST(request) {
     });
 
     if (autoResult.autoApplied) {
-      // Notify trip owner
+      // Notify trip owner (unless the sender IS the owner)
       const owner = (members || []).find((m) => m.role === 'owner');
-      const ownerEmail = owner?.profiles?.email || owner?.email;
-      const senderName = senderMember.profiles?.display_name || senderMember.display_name || senderMember.profiles?.email || fromEmail;
-      await sendOwnerAutoAcceptNotification({
-        ownerEmail,
-        tripName: trip.name,
-        senderName,
-        summary: autoResult.summary,
-      });
+      if (owner && owner.id !== senderMember.id) {
+        const ownerEmail = owner.profiles?.email || owner.email;
+        const senderName = senderMember.profiles?.display_name || senderMember.display_name || senderMember.profiles?.email || fromEmail;
+        await sendOwnerAutoAcceptNotification({
+          ownerEmail,
+          tripName: trip.name,
+          senderName,
+          summary: autoResult.summary,
+        });
+      }
     }
   }
 
@@ -258,16 +260,16 @@ export async function POST(request) {
       channel: 'email',
       replyTo: fromEmail,
       tripName: trip.name,
-      summary: `Updated: ${autoResult.summary}`,
       subject,
+      textOverride: `Updated for ${trip.name}: ${autoResult.summary}`,
     });
   } else if (autoResult?.autoApplied) {
     await sendAckReply({
       channel: 'email',
       replyTo: fromEmail,
       tripName: trip.name,
-      summary: `Updated: ${autoResult.summary}. The rest is in the inbox for the trip organizer.`,
       subject,
+      textOverride: `Updated for ${trip.name}: ${autoResult.summary}. The rest is in the inbox for the trip organizer.`,
     });
   } else {
     await sendAckReply({

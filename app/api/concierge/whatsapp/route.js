@@ -280,14 +280,16 @@ export async function POST(request) {
 
     if (autoResult.autoApplied) {
       const owner = (members || []).find((m) => m.role === 'owner');
-      const ownerEmail = owner?.profiles?.email || owner?.email;
-      const memberName = detection.member.profiles?.display_name || detection.member.display_name || senderName || from;
-      await sendOwnerAutoAcceptNotification({
-        ownerEmail,
-        tripName: trip.name,
-        senderName: memberName,
-        summary: autoResult.summary,
-      });
+      if (owner && owner.id !== detection.member.id) {
+        const ownerEmail = owner.profiles?.email || owner.email;
+        const memberName = detection.member.profiles?.display_name || detection.member.display_name || senderName || from;
+        await sendOwnerAutoAcceptNotification({
+          ownerEmail,
+          tripName: trip.name,
+          senderName: memberName,
+          summary: autoResult.summary,
+        });
+      }
     }
 
     if (autoResult.fullyApplied) {

@@ -267,14 +267,16 @@ export async function POST(request) {
 
     if (autoResult.autoApplied) {
       const owner = (members || []).find((m) => m.role === 'owner');
-      const ownerEmail = owner?.profiles?.email || owner?.email;
-      const senderName = detection.member.profiles?.display_name || detection.member.display_name || from;
-      await sendOwnerAutoAcceptNotification({
-        ownerEmail,
-        tripName: trip.name,
-        senderName,
-        summary: autoResult.summary,
-      });
+      if (owner && owner.id !== detection.member.id) {
+        const ownerEmail = owner.profiles?.email || owner.email;
+        const senderName = detection.member.profiles?.display_name || detection.member.display_name || from;
+        await sendOwnerAutoAcceptNotification({
+          ownerEmail,
+          tripName: trip.name,
+          senderName,
+          summary: autoResult.summary,
+        });
+      }
     }
 
     if (autoResult.fullyApplied) {

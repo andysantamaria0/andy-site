@@ -191,7 +191,7 @@ export default function InboxItem({ email, tripId, isOwner }) {
               borderRadius: '2px',
             }}>
               Auto-applied: {email.auto_applied_items.map((item) =>
-                item.type === 'member_update'
+                item.item_type === 'member_update'
                   ? `${item.name} dates updated`
                   : item.title || `${item.type} added`
               ).join(', ')}
