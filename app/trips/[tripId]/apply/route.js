@@ -165,7 +165,7 @@ export async function POST(request, { params }) {
           event_date: entry.event_date,
           start_time: entry.start_time || null,
           end_time: entry.end_time || null,
-          location: entry.location || null,
+          location: placeData.place_address || entry.location || null,
           ...placeData,
           notes: entry.notes || null,
           created_by: user.id,

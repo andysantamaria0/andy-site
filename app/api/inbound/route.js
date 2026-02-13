@@ -285,6 +285,7 @@ export async function POST(request) {
     await sendAckReply({
       channel: 'email',
       replyTo: fromEmail,
+      tripId: trip.id,
       tripName: trip.name,
       subject,
       textOverride: `Updated for ${trip.name}: ${autoResult.summary}`,
@@ -293,6 +294,7 @@ export async function POST(request) {
     await sendAckReply({
       channel: 'email',
       replyTo: fromEmail,
+      tripId: trip.id,
       tripName: trip.name,
       subject,
       textOverride: `Updated for ${trip.name}: ${autoResult.summary}. The rest is in the inbox for the trip organizer.`,
@@ -301,6 +303,7 @@ export async function POST(request) {
     await sendAckReply({
       channel: 'email',
       replyTo: fromEmail,
+      tripId: trip.id,
       tripName: trip.name,
       summary: parsedData?.summary || null,
       subject,
