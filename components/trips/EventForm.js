@@ -348,6 +348,69 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
               tripDestination={tripDestination}
               placeholder="e.g. Ristorante Da Mario"
             />
+
+            {placeLat && placeLng ? (
+              <div className="v-map-preview">
+                <iframe
+                  src={`https://www.openstreetmap.org/export/embed.html?bbox=${placeLng - 0.005},${placeLat - 0.003},${placeLng + 0.005},${placeLat + 0.003}&marker=${placeLat},${placeLng}&layer=mapnik`}
+                  title="Map preview"
+                />
+                <a
+                  className="v-map-preview-link"
+                  href={`https://www.google.com/maps/search/?api=1&query=${placeLat},${placeLng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View in Google Maps &rarr;
+                </a>
+              </div>
+            ) : (
+              <input
+                className="v-form-input v-map-url-input"
+                placeholder="Paste a Google Maps link to add coordinates"
+                onPaste={async (e) => {
+                  const text = (e.clipboardData || window.clipboardData).getData('text');
+                  if (!text) return;
+                  const urlMatch = text.match(/https?:\/\/\S+/);
+                  if (!urlMatch) return;
+                  const pastedUrl = urlMatch[0];
+
+                  // Try client-side extraction for full URLs
+                  const coordMatch = pastedUrl.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+                  if (coordMatch) {
+                    const lat = parseFloat(coordMatch[1]);
+                    const lng = parseFloat(coordMatch[2]);
+                    const placeMatch = pastedUrl.match(/\/place\/([^/@]+)/);
+                    const name = placeMatch ? decodeURIComponent(placeMatch[1].replace(/\+/g, ' ')) : null;
+                    setPlaceLat(lat);
+                    setPlaceLng(lng);
+                    if (name) setPlaceAddress(name);
+                    if (!location) setLocation(name || '');
+                    e.target.value = '';
+                    return;
+                  }
+
+                  // For short URLs, call the resolve endpoint
+                  if (pastedUrl.includes('goo.gl') || pastedUrl.includes('maps.app')) {
+                    try {
+                      const res = await fetch('/api/resolve-place', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ url: pastedUrl }),
+                      });
+                      const data = await res.json();
+                      if (data.lat && data.lng) {
+                        setPlaceLat(data.lat);
+                        setPlaceLng(data.lng);
+                        if (data.name) setPlaceAddress(data.name);
+                        if (!location) setLocation(data.name || '');
+                      }
+                    } catch {}
+                    e.target.value = '';
+                  }
+                }}
+              />
+            )}
           </div>
 
           <div className="v-form-group">
