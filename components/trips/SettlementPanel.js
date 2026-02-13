@@ -149,7 +149,7 @@ export default function SettlementPanel({ tripId, members, expenses, eventCosts,
                 <div key={share.id} className="v-settlement-transaction">
                   <span className="v-settlement-from">{name}</span>
                   <span className="v-settlement-amount">
-                    ${share.amount_owed.toFixed(2)}
+                    ${Number(share.amount_owed).toFixed(2)}
                   </span>
                   {share.paid ? (
                     <span className="v-settlement-paid">Paid</span>

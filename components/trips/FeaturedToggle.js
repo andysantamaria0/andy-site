@@ -14,14 +14,19 @@ export default function FeaturedToggle({ tripId, featured }) {
     setSaving(true);
     setError(null);
 
-    const { error: rpcError } = await supabase.rpc('set_trip_featured', {
-      trip_id: tripId,
-      is_featured: !featured,
-    });
+    // If featuring this trip, unfeatured any currently featured trip first
+    if (!featured) {
+      await supabase.from('trips').update({ featured: false }).eq('featured', true);
+    }
+
+    const { error: updateError } = await supabase
+      .from('trips')
+      .update({ featured: !featured })
+      .eq('id', tripId);
 
     setSaving(false);
-    if (rpcError) {
-      setError(rpcError.message);
+    if (updateError) {
+      setError(updateError.message);
     } else {
       router.refresh();
     }

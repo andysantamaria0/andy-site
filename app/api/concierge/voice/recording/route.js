@@ -42,8 +42,11 @@ export async function POST(request) {
 
   const trip = detection.trip;
   if (!trip) {
-    // Can't route — still store with null trip_id for manual review
     console.error('Voice recording from unknown sender:', from);
+    return new NextResponse('<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="alice">Sorry, we couldn\'t find a trip for your number. Ask the trip organizer to add your phone number.</Say></Response>', {
+      status: 200,
+      headers: { 'Content-Type': 'text/xml' },
+    });
   }
 
   // Fetch the recording audio from Twilio

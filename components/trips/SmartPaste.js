@@ -102,6 +102,7 @@ export default function SmartPaste({ tripId }) {
           new_travelers: parsed.new_travelers,
           logistics: parsed.logistics,
           events: parsed.events,
+          expenses: parsed.expenses,
         }),
       });
       const data = await res.json();

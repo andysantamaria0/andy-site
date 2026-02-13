@@ -9,7 +9,7 @@ export default async function JournalPage({ params }) {
   const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect('/login');
+  if (!user) redirect('/trips/login');
 
   const [featureMap, { data: userProfile }] = await Promise.all([
     loadFeatures(),

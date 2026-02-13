@@ -39,6 +39,7 @@ export default function AddExpenseForm({ tripId, members, myMemberId, currency, 
     if (!form.description || !form.amount || !form.paid_by_member_id) return;
 
     setSaving(true);
+    const { data: { user } } = await supabase.auth.getUser();
     const { error } = await supabase.from('expenses').insert({
       trip_id: tripId,
       paid_by_member_id: form.paid_by_member_id,
@@ -49,6 +50,7 @@ export default function AddExpenseForm({ tripId, members, myMemberId, currency, 
       expense_date: form.expense_date,
       category: form.category,
       notes: form.notes || null,
+      created_by: user?.id || null,
     });
 
     setSaving(false);
