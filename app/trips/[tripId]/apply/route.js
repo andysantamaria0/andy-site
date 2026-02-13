@@ -23,8 +23,8 @@ export async function POST(request, { params }) {
     return NextResponse.json({ error: 'Only trip owners can apply changes' }, { status: 403 });
   }
 
-  const { member_updates, new_travelers, logistics, events } = await request.json();
-  const results = { updated: 0, members_added: 0, logistics_added: 0, events_added: 0, errors: [] };
+  const { member_updates, new_travelers, logistics, events, expenses } = await request.json();
+  const results = { updated: 0, members_added: 0, logistics_added: 0, events_added: 0, expenses_added: 0, errors: [] };
 
   // Apply member stay date updates
   if (member_updates && member_updates.length > 0) {
@@ -183,6 +183,57 @@ export async function POST(request, { params }) {
       }
 
       results.events_added++;
+    }
+  }
+
+  // Add expenses
+  if (expenses && expenses.length > 0) {
+    // Get members for payer name matching
+    const { data: expenseMembers } = await supabase
+      .from('trip_members')
+      .select('id, user_id, display_name, email, profiles:user_id(display_name, email)')
+      .eq('trip_id', tripId);
+
+    for (const expense of expenses) {
+      // Try to match payer to a member
+      let matchedMemberId = expense.payer_member_id || null;
+
+      if (!matchedMemberId && expense.payer_name) {
+        const payerName = expense.payer_name.toLowerCase().trim();
+        const matched = (expenseMembers || []).find((m) => {
+          const name = (m.profiles?.display_name || m.display_name || '').toLowerCase();
+          const email = (m.profiles?.email || m.email || '').toLowerCase();
+          return name.includes(payerName) || payerName.includes(name) || email.includes(payerName);
+        });
+        if (matched) matchedMemberId = matched.id;
+      }
+
+      if (!matchedMemberId) {
+        results.errors.push(`Could not match payer "${expense.payer_name}" to a trip member for expense "${expense.description}". Skipped.`);
+        continue;
+      }
+
+      const validCategories = ['food','drinks','transport','accommodation','activities','groceries','supplies','other'];
+      const category = validCategories.includes(expense.category) ? expense.category : 'other';
+
+      const { error } = await supabase.from('expenses').insert({
+        trip_id: tripId,
+        paid_by_member_id: matchedMemberId,
+        description: expense.description || expense.vendor || 'Expense',
+        vendor: expense.vendor || null,
+        amount: expense.amount,
+        currency: expense.currency || 'USD',
+        expense_date: expense.expense_date || new Date().toISOString().slice(0, 10),
+        category,
+        notes: expense.notes || null,
+        created_by: user.id,
+      });
+
+      if (error) {
+        results.errors.push(`Failed to add expense "${expense.description}": ${error.message}`);
+      } else {
+        results.expenses_added++;
+      }
     }
   }
 

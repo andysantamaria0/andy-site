@@ -4153,3 +4153,366 @@ select.v-form-input {
 .v-event-card-location-link:hover {
   text-decoration-color: var(--v-pearl);
 }
+
+/* ── Expenses ── */
+
+.v-expense-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.v-expense-summary-card {
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
+  padding: 20px;
+}
+
+.v-expense-summary-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--v-pearl-dim);
+  margin-bottom: 4px;
+}
+
+.v-expense-summary-value {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--v-pearl);
+}
+
+.v-expense-summary-value-sm {
+  font-size: 1rem;
+}
+
+.v-expense-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.v-expense-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
+  transition: background var(--v-micro) var(--v-ease);
+}
+
+.v-expense-row:hover {
+  background-color: var(--v-croisette);
+}
+
+.v-expense-emoji {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+
+.v-expense-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.v-expense-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--v-pearl);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v-expense-meta {
+  font-size: 0.75rem;
+  color: var(--v-pearl-dim);
+  margin-top: 2px;
+}
+
+.v-expense-amount {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--v-pearl);
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.v-expense-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.v-expense-empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--v-pearl-dim);
+  font-size: 0.9rem;
+}
+
+.v-expense-section-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--v-champagne);
+  margin: 24px 0 12px;
+}
+
+.v-expense-section-title:first-child {
+  margin-top: 0;
+}
+
+/* ── Add Expense Modal ── */
+
+.v-expense-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+}
+
+.v-expense-modal {
+  background: var(--v-nuit);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
+  padding: 32px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.v-expense-modal-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.v-expense-form-row {
+  margin-bottom: 16px;
+}
+
+.v-expense-form-row label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--v-pearl-dim);
+  margin-bottom: 6px;
+}
+
+.v-expense-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* ── Settlement Panel ── */
+
+.v-settlement-panel {
+  background: var(--v-nuit);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
+  padding: 32px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.v-settlement-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.v-settlement-transaction {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--v-pearl-faint);
+}
+
+.v-settlement-transaction:last-child {
+  border-bottom: none;
+}
+
+.v-settlement-arrow {
+  color: var(--v-champagne);
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.v-settlement-from,
+.v-settlement-to {
+  font-size: 0.875rem;
+  color: var(--v-pearl);
+}
+
+.v-settlement-amount {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--v-champagne);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.v-settlement-links {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.v-settlement-link {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
+  color: var(--v-pearl-dim);
+  text-decoration: none;
+  transition: all var(--v-micro) var(--v-ease);
+}
+
+.v-settlement-link:hover {
+  border-color: var(--v-champagne);
+  color: var(--v-champagne);
+}
+
+.v-settlement-paid {
+  font-size: 0.75rem;
+  color: var(--v-champagne);
+  font-weight: 600;
+}
+
+.v-settlement-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--v-pearl-faint);
+}
+
+.v-settlement-existing {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: rgba(196, 167, 125, 0.06);
+  border: 1px solid rgba(196, 167, 125, 0.15);
+  border-radius: 2px;
+}
+
+.v-settlement-existing-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--v-champagne);
+  margin-bottom: 12px;
+}
+
+/* ── Payment Handles ── */
+
+.v-payment-card {
+  background-color: var(--v-surface);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.v-payment-card-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--v-champagne);
+  margin-bottom: 16px;
+}
+
+.v-payment-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.v-payment-row:last-child {
+  margin-bottom: 0;
+}
+
+.v-payment-label {
+  font-size: 0.8125rem;
+  color: var(--v-pearl-dim);
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.v-payment-input {
+  flex: 1;
+}
+
+.v-payment-prompt {
+  font-size: 0.8125rem;
+  color: var(--v-pearl-dim);
+  font-style: italic;
+  margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .v-expense-summary {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .v-expense-summary-card {
+    padding: 14px;
+  }
+
+  .v-expense-summary-value {
+    font-size: 1.25rem;
+  }
+
+  .v-expense-row {
+    padding: 12px 14px;
+  }
+
+  .v-expense-modal {
+    padding: 24px 20px;
+  }
+
+  .v-settlement-panel {
+    padding: 24px 20px;
+  }
+
+  .v-payment-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+
+  .v-payment-label {
+    width: auto;
+  }
+}

@@ -85,6 +85,21 @@ export default function InboxItem({ email, tripId, isOwner }) {
     }));
   }
 
+  function updateExpense(index, field, value) {
+    setEditData(prev => {
+      const next = { ...prev, expenses: [...(prev.expenses || [])] };
+      next.expenses[index] = { ...next.expenses[index], [field]: value };
+      return next;
+    });
+  }
+
+  function removeExpense(index) {
+    setEditData(prev => ({
+      ...prev,
+      expenses: (prev.expenses || []).filter((_, i) => i !== index),
+    }));
+  }
+
   async function handleAccept() {
     const data = editing ? editData : parsed;
     if (!data) return;
@@ -100,6 +115,7 @@ export default function InboxItem({ email, tripId, isOwner }) {
           new_travelers: data.new_travelers,
           logistics: data.logistics,
           events: data.events,
+          expenses: data.expenses,
         }),
       });
       const applyData = await applyRes.json();
@@ -193,7 +209,9 @@ export default function InboxItem({ email, tripId, isOwner }) {
               Auto-applied: {email.auto_applied_items.map((item) =>
                 item.item_type === 'member_update'
                   ? `${item.name} dates updated`
-                  : item.title || `${item.type} added`
+                  : item.item_type === 'expense'
+                    ? `${item.vendor || item.description}${item.amount ? ` ($${item.amount})` : ''}`
+                    : item.title || `${item.type} added`
               ).join(', ')}
             </div>
           )}
@@ -276,6 +294,21 @@ export default function InboxItem({ email, tripId, isOwner }) {
                 </div>
               )}
 
+              {parsed.expenses?.length > 0 && (
+                <div className="v-parsed-section">
+                  <div className="v-parsed-section-title">Expenses</div>
+                  {parsed.expenses.map((ex, i) => (
+                    <div key={i} className="v-parsed-item">
+                      <span className="v-badge v-badge-member" style={{ marginRight: 8 }}>{ex.category || 'other'}</span>
+                      <span className="v-parsed-item-name">{ex.vendor || ex.description}</span>
+                      <span className="v-parsed-item-detail">
+                        {ex.currency || 'USD'} {ex.amount}{ex.payer_name ? ` — paid by ${ex.payer_name}` : ''}{ex.expense_date ? ` — ${ex.expense_date}` : ''}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               {parsed.notes && (
                 <div className="v-parsed-section">
                   <div className="v-parsed-section-title">Notes</div>
@@ -346,6 +379,23 @@ export default function InboxItem({ email, tripId, isOwner }) {
                   ))}
                 </div>
               )}
+
+              {editData.expenses?.length > 0 && (
+                <div className="v-parsed-section">
+                  <div className="v-parsed-section-title">Expenses</div>
+                  {editData.expenses.map((ex, i) => (
+                    <div key={i} className="v-inbox-edit-row">
+                      <input className="v-form-input v-inbox-edit-input v-inbox-edit-input-sm" value={ex.category || 'other'} onChange={e => updateExpense(i, 'category', e.target.value)} placeholder="Category" />
+                      <input className="v-form-input v-inbox-edit-input" value={ex.vendor || ''} onChange={e => updateExpense(i, 'vendor', e.target.value)} placeholder="Vendor" />
+                      <input className="v-form-input v-inbox-edit-input" value={ex.description || ''} onChange={e => updateExpense(i, 'description', e.target.value)} placeholder="Description" />
+                      <input className="v-form-input v-inbox-edit-input v-inbox-edit-input-sm" type="number" step="0.01" value={ex.amount || ''} onChange={e => updateExpense(i, 'amount', parseFloat(e.target.value) || 0)} placeholder="Amount" />
+                      <input className="v-form-input v-inbox-edit-input" value={ex.payer_name || ''} onChange={e => updateExpense(i, 'payer_name', e.target.value)} placeholder="Payer" />
+                      <input className="v-form-input v-inbox-edit-input" type="date" value={ex.expense_date || ''} onChange={e => updateExpense(i, 'expense_date', e.target.value)} />
+                      <button className="v-inbox-edit-remove" onClick={() => removeExpense(i)} title="Remove">&times;</button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
@@ -355,7 +405,8 @@ export default function InboxItem({ email, tripId, isOwner }) {
                 Applied! Updated {result.updated} member{result.updated !== 1 ? 's' : ''}
                 {result.members_added > 0 && `, added ${result.members_added} new member${result.members_added !== 1 ? 's' : ''}`}
                 {result.logistics_added > 0 && `, added ${result.logistics_added} logistics entr${result.logistics_added !== 1 ? 'ies' : 'y'}`}
-                {result.events_added > 0 && `, created ${result.events_added} event${result.events_added !== 1 ? 's' : ''}`}.
+                {result.events_added > 0 && `, created ${result.events_added} event${result.events_added !== 1 ? 's' : ''}`}
+                {result.expenses_added > 0 && `, added ${result.expenses_added} expense${result.expenses_added !== 1 ? 's' : ''}`}.
               </div>
             </div>
           )}
