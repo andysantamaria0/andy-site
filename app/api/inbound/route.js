@@ -191,10 +191,11 @@ export async function POST(request) {
         current_stay_end: m.stay_end,
       }));
 
+      const fullText = [subject, parseText].filter(Boolean).join('\n\n') || '(see attached files)';
       const promptText = buildParsePrompt({
         trip,
         memberContext,
-        text: parseText || '(see attached files)',
+        text: fullText,
       });
 
       // Build content array: attachments first, then the text prompt

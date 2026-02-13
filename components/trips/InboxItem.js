@@ -121,11 +121,16 @@ export default function InboxItem({ email, tripId, isOwner }) {
       const applyData = await applyRes.json();
       setResult(applyData);
 
-      await fetch(`/trips/${tripId}/inbox/${email.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'applied' }),
-      });
+      const totalApplied = (applyData.updated || 0) + (applyData.members_added || 0) +
+        (applyData.logistics_added || 0) + (applyData.events_added || 0) + (applyData.expenses_added || 0);
+
+      if (totalApplied > 0 || !applyData.errors?.length) {
+        await fetch(`/trips/${tripId}/inbox/${email.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'applied' }),
+        });
+      }
 
       setEditing(false);
       setEditData(null);
@@ -408,6 +413,13 @@ export default function InboxItem({ email, tripId, isOwner }) {
                 {result.events_added > 0 && `, created ${result.events_added} event${result.events_added !== 1 ? 's' : ''}`}
                 {result.expenses_added > 0 && `, added ${result.expenses_added} expense${result.expenses_added !== 1 ? 's' : ''}`}.
               </div>
+              {result.errors?.length > 0 && (
+                <div style={{ marginTop: 8 }}>
+                  {result.errors.map((err, i) => (
+                    <div key={i} style={{ color: 'var(--v-cinnabar)', fontSize: '0.8125rem', marginTop: 4 }}>{err}</div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
