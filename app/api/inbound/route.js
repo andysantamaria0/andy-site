@@ -9,6 +9,24 @@ import { NextResponse } from 'next/server';
 
 const anthropic = new Anthropic();
 
+/**
+ * Strip quoted reply content from email body text.
+ * Handles Gmail ("On ... wrote:"), Outlook ("From: ..."), and line-quoted ("> ") formats.
+ */
+function stripQuotedReply(text) {
+  if (!text) return '';
+  // Gmail-style: "On <date> <name> wrote:"
+  const gmailIdx = text.search(/\nOn .+ wrote:\s*\n/i);
+  if (gmailIdx !== -1) return text.slice(0, gmailIdx).trim();
+  // Outlook-style: "From: ..." or "-----Original Message-----"
+  const outlookIdx = text.search(/\n-{2,}.*(?:Original Message|Forwarded message)/i);
+  if (outlookIdx !== -1) return text.slice(0, outlookIdx).trim();
+  // Line-quoted: first line starting with ">"
+  const quoteIdx = text.search(/\n>/);
+  if (quoteIdx !== -1) return text.slice(0, quoteIdx).trim();
+  return text;
+}
+
 function stripHtml(html) {
   return html
     .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
@@ -86,9 +104,12 @@ export async function POST(request) {
   const legacyAddress = allAddresses.find((a) => /^trip-[a-z0-9]+@/i.test(a));
 
   const parseText = (textBody || '').trim() || stripHtml(htmlBody || '');
-  // Use stripped reply (no quoted thread) for trip detection to avoid matching
-  // trip codes from quoted disambiguation emails
-  const detectionText = (strippedReply || '').trim() || parseText;
+  // For trip detection, use only the user's own text (no quoted thread)
+  // to avoid matching trip codes from quoted disambiguation emails.
+  // Priority: Postmark's StrippedTextReply > manual quote stripping > full body
+  const stripped = (strippedReply || '').trim() || stripQuotedReply(parseText);
+  // Include subject in detection text so trip codes/keywords in subject line work
+  const detectionText = [subject, stripped].filter(Boolean).join(' ');
 
   const detection = await detectTrip(supabase, {
     senderEmail: fromEmail,
