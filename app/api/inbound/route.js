@@ -50,6 +50,7 @@ export async function POST(request) {
     Subject: subject,
     TextBody: textBody,
     HtmlBody: htmlBody,
+    StrippedTextReply: strippedReply,
     MessageID: messageId,
     Attachments: attachments,
   } = payload;
@@ -85,10 +86,13 @@ export async function POST(request) {
   const legacyAddress = allAddresses.find((a) => /^trip-[a-z0-9]+@/i.test(a));
 
   const parseText = (textBody || '').trim() || stripHtml(htmlBody || '');
+  // Use stripped reply (no quoted thread) for trip detection to avoid matching
+  // trip codes from quoted disambiguation emails
+  const detectionText = (strippedReply || '').trim() || parseText;
 
   const detection = await detectTrip(supabase, {
     senderEmail: fromEmail,
-    messageText: isConcierge ? parseText : null,
+    messageText: isConcierge ? detectionText : null,
     toAddress: !isConcierge ? (legacyAddress || recipient) : null,
   });
 
