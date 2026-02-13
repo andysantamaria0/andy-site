@@ -1,5 +1,6 @@
 import { createClient } from '../../../../lib/supabase/server';
 import { getNextColor } from '../../../../lib/utils/members';
+import { extractPlaceFromUrl } from '../../../../lib/utils/placeFromUrl';
 import { NextResponse } from 'next/server';
 
 export async function POST(request, { params }) {
@@ -142,6 +143,19 @@ export async function POST(request, { params }) {
       const validCategories = ['dinner_out', 'dinner_home', 'activity', 'outing', 'party', 'sightseeing', 'other'];
       const category = validCategories.includes(entry.category) ? entry.category : 'other';
 
+      // Extract place coordinates from Google Maps URL if provided
+      let placeData = {};
+      if (entry.place_url) {
+        const place = await extractPlaceFromUrl(entry.place_url);
+        if (place) {
+          placeData = {
+            place_lat: place.lat,
+            place_lng: place.lng,
+            place_address: place.address || null,
+          };
+        }
+      }
+
       const { data: newEvent, error: eventError } = await supabase
         .from('events')
         .insert({
@@ -152,6 +166,7 @@ export async function POST(request, { params }) {
           start_time: entry.start_time || null,
           end_time: entry.end_time || null,
           location: entry.location || null,
+          ...placeData,
           notes: entry.notes || null,
           created_by: user.id,
         })
