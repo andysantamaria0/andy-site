@@ -151,7 +151,7 @@ export async function POST(request, { params }) {
           placeData = {
             place_lat: place.lat,
             place_lng: place.lng,
-            place_address: place.address || null,
+            place_address: place.name || place.address || null,
           };
         }
       }

@@ -357,11 +357,11 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
                 />
                 <a
                   className="v-map-preview-link"
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location || placeAddress || `${placeLat},${placeLng}`)}`}
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(placeAddress || location || `${placeLat},${placeLng}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {location || placeAddress || 'View in Google Maps'} &rarr;
+                  {placeAddress || location || 'View in Google Maps'} &rarr;
                 </a>
               </div>
             ) : (
