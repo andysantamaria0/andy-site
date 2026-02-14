@@ -22,7 +22,7 @@ export default function JobDetectiveDetail() {
 
         <div className="stand-detail-section">
           <p>
-            An automated job discovery and tracking system that scans companies&apos; job boards for open software engineering positions. It fetches company data from HubSpot CRM, detects their ATS platform, scrapes matching jobs, and distributes results to Google Sheets, Discord, and the Fractal Portal.
+            I built an automated job discovery and tracking system that scans companies&apos; job boards for open software engineering positions. It fetches company data from HubSpot CRM, detects their ATS platform, scrapes matching jobs, and distributes results to Google Sheets, Discord, and the Fractal Portal.
           </p>
           <img className="stand-screenshot" src="/stand/job-detective-jr.png" alt="Job Detective Jr. Discord bot — scan results showing 1,192 companies scanned" style={{ marginTop: 16, marginBottom: 16 }} />
         </div>

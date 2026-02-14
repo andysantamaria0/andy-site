@@ -22,7 +22,7 @@ export default function HiringSpaDetail() {
 
         <div className="stand-detail-section">
           <p>
-            An AI-powered job matching portal for engineers. Engineers complete a short onboarding flow and receive personalized, transparent job matches scored across five dimensions by Claude AI.
+            I built an AI-powered job matching portal for engineers. Engineers complete a short onboarding flow and receive personalized, transparent job matches scored across five dimensions by Claude AI.
           </p>
           <img className="stand-screenshot" src="/stand/hiring-spa-matches.jpg" alt="Hiring Spa match card — 80% match with dimension scores" style={{ marginTop: 16, marginBottom: 16 }} />
         </div>
@@ -42,7 +42,7 @@ export default function HiringSpaDetail() {
           <h3>Onboarding</h3>
           <ul>
             <li>Engineer provides GitHub URL, LinkedIn URL, portfolio URL, and resume</li>
-            <li>System automatically crawls GitHub repos (languages, stars, contributions) and portfolio content in the background</li>
+            <li>I have it automatically crawl GitHub repos (languages, stars, contributions) and portfolio content in the background</li>
             <li>Claude synthesizes findings into an <strong>Engineer DNA</strong> profile — top skills, seniority signals, project highlights</li>
           </ul>
 
@@ -98,7 +98,7 @@ export default function HiringSpaDetail() {
 
           <h3>Matching Algorithm</h3>
           <p>
-            The matching pipeline is approximately 1,025 lines and runs in three stages:
+            I wrote the matching pipeline in approximately 1,025 lines. It runs in three stages:
           </p>
           <div className="stand-detail-flow">
             {`1. Rule-based pre-filter — extract keywords from engineer profile, score each job 0–100 by keyword overlap, select top 30 candidates

@@ -22,7 +22,7 @@ export default function VialoureDetail() {
 
         <div className="stand-detail-section">
           <p>
-            A private group trip concierge for planning and coordinating travel together. Everyone on the trip can see the full picture — who&apos;s arriving when, what&apos;s planned each day, who owes what, and what flights are in the air right now. Instead of juggling group chats, spreadsheets, and forwarded emails, everything lives in one place.
+            I built a private group trip concierge for planning and coordinating travel together. Everyone on the trip can see the full picture — who&apos;s arriving when, what&apos;s planned each day, who owes what, and what flights are in the air right now. Instead of juggling group chats, spreadsheets, and forwarded emails, everything lives in one place.
           </p>
           <div className="stand-screenshot-pair" style={{ marginTop: 16, marginBottom: 16 }}>
             <img className="stand-screenshot" src="/stand/vialoure-landing.png" alt="Vialoure landing page — Holiday With Friends" />
@@ -76,8 +76,8 @@ export default function VialoureDetail() {
 
           <h3>Travel Journal</h3>
           <ul>
-            <li>AI-generated journal entry written automatically each morning for the previous day</li>
-            <li>Pulls from the day&apos;s events, flights, messages, photos, and arrivals</li>
+            <li>I set it up to generate an AI journal entry each morning for the previous day</li>
+            <li>It pulls from the day&apos;s events, flights, messages, photos, and arrivals</li>
             <li>Literary tone — reads like a travel writer&apos;s notebook</li>
             <li>Photos from the trip woven in</li>
           </ul>
@@ -88,7 +88,7 @@ export default function VialoureDetail() {
         <div className="stand-detail-section">
           <h2>AI Concierge</h2>
           <p>
-            The concierge is the main way to get information into Vialoure without opening the app. Forward a confirmation email, text a screenshot, or send a WhatsApp message — the AI reads it and adds the relevant details to your trip.
+            I built the concierge as the main way to get information into Vialoure without opening the app. You can forward a confirmation email, text a screenshot, or send a WhatsApp message — the AI reads it and adds the relevant details to your trip.
           </p>
 
           <h3>Channels</h3>
@@ -150,7 +150,7 @@ export default function VialoureDetail() {
         <div className="stand-detail-section">
           <h2>Design System</h2>
           <p>
-            Every detail of the app — font choice, scaling, animations, UI components — was designed to tell a consistent story. The aesthetic is &ldquo;Grand Tour&rdquo;: mysterious elegance, Côte d&apos;Azur at twilight, Grace Kelly sophistication. Dark-first with Fraunces for display, Crimson Pro for literary body text, and champagne accents throughout.
+            I designed every detail of the app — font choice, scaling, animations, UI components — to tell a consistent story. The aesthetic is &ldquo;Grand Tour&rdquo;: mysterious elegance, Côte d&apos;Azur at twilight, Grace Kelly sophistication. Dark-first with Fraunces for display, Crimson Pro for literary body text, and champagne accents throughout.
           </p>
           <img className="stand-screenshot" src="/stand/vialoure-invite.png" alt="Vialoure personal invite — typewriter-styled letter" style={{ marginTop: 16, marginBottom: 16 }} />
         </div>

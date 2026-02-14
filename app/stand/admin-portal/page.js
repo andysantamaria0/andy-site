@@ -22,7 +22,7 @@ export default function AdminPortalDetail() {
 
         <div className="stand-detail-section">
           <p>
-            A management dashboard for Fractal Tech&apos;s accelerator operations. Full visibility and control over companies, engineers, project cycles, content, and the hiring pipeline.
+            I built a management dashboard for Fractal Tech&apos;s accelerator operations. It gives full visibility and control over companies, engineers, project cycles, content, and the hiring pipeline.
           </p>
           <img className="stand-screenshot" src="/stand/fractal-admin.png" alt="Fractal Admin — Engineer Pipeline dashboard" style={{ marginTop: 16, marginBottom: 16 }} />
         </div>
