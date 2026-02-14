@@ -1,5 +1,6 @@
 import './globals.css';
 import './trips/trips.css';
+import './stand/stand.css';
 
 export const viewport = {
   themeColor: '#0A1628',

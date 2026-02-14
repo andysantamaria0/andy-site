@@ -1,0 +1,734 @@
+/* ============================================
+   Stand — Pitch Page
+   ============================================ */
+
+.stand {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.stand-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 80px 24px 120px;
+}
+
+/* ---- Tab Navigation ---- */
+
+.stand-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.stand-nav::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 48px;
+  background: linear-gradient(to right, transparent, var(--bg));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stand-nav-inner {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0 48px 0 max(24px, calc((100vw - 720px) / 2 + 24px));
+}
+
+.stand-nav-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.stand-nav-tab {
+  flex-shrink: 0;
+  padding: 12px 10px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.stand-nav-tab:hover {
+  color: var(--text);
+}
+
+.stand-nav-tab-active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.stand-nav-tab-num {
+  font-family: 'Special Elite', cursive;
+  margin-right: 5px;
+  font-size: 0.7rem;
+}
+
+/* ---- Header / Letterhead ---- */
+
+.stand-header {
+  margin-bottom: 64px;
+}
+
+.stand-name {
+  font-family: 'Fraunces', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.stand-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+.stand-rule {
+  width: 48px;
+  height: 2px;
+  background-color: var(--accent);
+  margin-top: 24px;
+}
+
+/* ---- Collapsible Section ---- */
+
+.stand-section {
+  border-top: 1px solid var(--border);
+}
+
+.stand-section:last-of-type {
+  border-bottom: 1px solid var(--border);
+}
+
+.stand-section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  text-align: left;
+  gap: 16px;
+  transition: color 0.2s ease;
+}
+
+.stand-section-toggle:hover {
+  color: var(--accent);
+}
+
+.stand-section-toggle:hover .stand-section-chevron {
+  color: var(--accent);
+}
+
+.stand-section-label {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+  min-width: 28px;
+}
+
+.stand-section-heading {
+  font-family: 'Fraunces', serif;
+  font-size: 1.375rem;
+  font-weight: 500;
+  flex: 1;
+  transition: color 0.2s ease;
+}
+
+.stand-section-chevron {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--text-dim);
+  transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1), color 0.2s ease;
+}
+
+.stand-section-open .stand-section-chevron {
+  transform: rotate(180deg);
+}
+
+/* Collapsible body — CSS grid trick for smooth height */
+
+.stand-section-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.stand-section-open .stand-section-body {
+  grid-template-rows: 1fr;
+}
+
+.stand-section-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.stand-section-content {
+  padding: 0 0 32px;
+}
+
+/* ---- Typography within sections ---- */
+
+.stand-section-content p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.21rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.stand-section-content p:last-child {
+  margin-bottom: 0;
+}
+
+.stand-section-content h4 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 28px;
+  margin-bottom: 8px;
+  color: var(--accent);
+}
+
+.stand-section-content h4:first-child {
+  margin-top: 0;
+}
+
+.stand-section-content strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.stand-term {
+  color: var(--coral);
+  font-weight: 600;
+}
+
+.stand-section-content em {
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  color: var(--text-dim);
+}
+
+/* ---- References ---- */
+
+.stand-ref {
+  margin-bottom: 28px;
+}
+
+.stand-ref:last-child {
+  margin-bottom: 0;
+}
+
+.stand-ref-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.stand-ref-context {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.155rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+
+/* ---- Project cards ---- */
+
+.stand-project {
+  margin-bottom: 40px;
+}
+
+.stand-project:last-child {
+  margin-bottom: 0;
+}
+
+.stand-project-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1.32rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.stand-project-body p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.155rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.stand-project-body p:last-child {
+  margin-bottom: 0;
+}
+
+.stand-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 12px 16px;
+  border: 1px dashed var(--border);
+  border-radius: 2px;
+  font-family: 'Special Elite', cursive;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+}
+
+.stand-screenshot {
+  width: 100%;
+  border-radius: 2px;
+  margin-top: 16px;
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.stand-screenshot-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.stand-screenshot-pair .stand-screenshot {
+  margin-top: 0;
+}
+
+/* ---- Nested collapsible (More Things) ---- */
+
+.stand-nested-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--accent);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 12px 0;
+  margin-top: 24px;
+  transition: color 0.2s ease;
+}
+
+.stand-nested-toggle:hover {
+  color: var(--text);
+}
+
+.stand-nested-chevron {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.stand-nested-open .stand-nested-chevron {
+  transform: rotate(180deg);
+}
+
+.stand-nested-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.stand-nested-open .stand-nested-body {
+  grid-template-rows: 1fr;
+}
+
+.stand-nested-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.stand-nested-content {
+  padding-top: 8px;
+}
+
+/* ---- Mini project (inside nested) ---- */
+
+.stand-mini-project {
+  margin-bottom: 28px;
+  padding-left: 16px;
+  border-left: 2px solid var(--border);
+}
+
+.stand-mini-project:last-child {
+  margin-bottom: 0;
+}
+
+.stand-mini-project-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.stand-mini-project p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* ---- Phases ---- */
+
+.stand-phase {
+  margin-bottom: 32px;
+}
+
+.stand-phase:last-child {
+  margin-bottom: 0;
+}
+
+.stand-phase-number {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.stand-phase-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1.155rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.stand-phase p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.155rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.stand-phase p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Estimates / Tables ---- */
+
+.stand-table-wrapper {
+  margin: 12px 0 4px;
+  overflow-x: auto;
+}
+
+.stand-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+}
+
+.stand-table th {
+  text-align: left;
+  padding: 10px 16px 10px 0;
+  border-bottom: 2px solid var(--border);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.stand-table td {
+  padding: 10px 16px 10px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.stand-table th:last-child,
+.stand-table td:last-child {
+  padding-right: 0;
+  text-align: right;
+}
+
+.stand-waived {
+  text-decoration: line-through;
+  color: var(--text-dim);
+  margin-right: 6px;
+}
+
+.stand-total td {
+  font-weight: 600;
+  color: var(--text);
+  border-bottom-width: 2px;
+}
+
+/* ---- Footer ---- */
+
+.stand-footer {
+  margin-top: 80px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stand-footer-mark {
+  color: var(--accent);
+  opacity: 0.4;
+}
+
+/* ---- Links ---- */
+
+.stand a:not(.stand-link) {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-border);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.stand a:not(.stand-link):hover {
+  border-bottom-color: var(--accent);
+}
+
+.stand-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 10px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.stand-link:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.stand-link-arrow {
+  font-size: 1rem;
+  color: var(--arrow);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.stand-link:hover .stand-link-arrow {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+/* ---- Detail Pages ---- */
+
+.stand-detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  margin-bottom: 40px;
+  transition: color 0.2s ease;
+}
+
+.stand-detail-back:hover {
+  color: var(--accent);
+}
+
+.stand-detail-back:hover .stand-detail-back-arrow {
+  transform: translateX(-3px);
+}
+
+.stand-detail-back-arrow {
+  transition: transform 0.2s ease;
+}
+
+.stand-detail-section {
+  margin-bottom: 48px;
+}
+
+.stand-detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.stand-detail-section h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.stand-detail-section h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.stand-detail-section h3:first-child {
+  margin-top: 0;
+}
+
+.stand-detail-section p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.155rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.stand-detail-section p:last-child {
+  margin-bottom: 0;
+}
+
+.stand-detail-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.stand-detail-section li {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  padding-left: 16px;
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.stand-detail-section li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--coral);
+}
+
+.stand-detail-section li strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.stand-detail-code {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+
+.stand-detail-flow {
+  margin: 16px 0;
+  padding: 16px 20px;
+  border-left: 2px solid var(--border);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--text-dim);
+  white-space: pre-line;
+}
+
+.stand-detail-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 16px;
+}
+
+.stand-detail-stack-item {
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  letter-spacing: 0.03em;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 600px) {
+  .stand-container {
+    padding: 48px 20px 80px;
+  }
+
+  .stand-name {
+    font-size: 2rem;
+  }
+
+  .stand-section-heading {
+    font-size: 1.1rem;
+  }
+
+  .stand-section-content p,
+  .stand-project-body p,
+  .stand-phase p,
+  .stand-ref-context,
+  .stand-mini-project p {
+    font-size: 1rem;
+  }
+
+  .stand-table {
+    font-size: 0.8rem;
+  }
+
+  .stand-table th,
+  .stand-table td {
+    padding: 8px 10px 8px 0;
+  }
+
+  .stand-nav-inner {
+    padding: 0 20px;
+  }
+
+  .stand-nav-tab {
+    padding: 12px 10px;
+    font-size: 0.7rem;
+  }
+}
