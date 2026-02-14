@@ -584,11 +584,11 @@
 }
 
 .stand-note p {
-  font-family: 'Crimson Pro', serif;
-  font-size: 1.2rem;
-  font-style: italic;
-  line-height: 1.8;
-  color: var(--text-muted);
+  font-family: 'Special Elite', cursive;
+  font-size: 1.05rem;
+  font-style: normal;
+  line-height: 1.9;
+  color: #fff;
   margin-bottom: 16px;
 }
 
