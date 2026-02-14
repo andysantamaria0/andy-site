@@ -275,14 +275,11 @@ export default function StandContent() {
                 I spent quite a lot of time working on the design of the app. Every single detail. From the font choice, to the scaling on screens, to the animations and UI components. I wanted all of these elements to tell a consistent story so when you&apos;re using the app you &ldquo;stay in character.&rdquo; There is nothing like traveling somewhere and something doesn&apos;t fit (like in a hotel or restaurant) where you&apos;re jolted out of the dream.
               </p>
             </div>
-            <img className="stand-screenshot" src="/stand/vialoure-invite.png" alt="Vialoure personal invite — typewriter-styled letter introducing the app" />
+            <img className="stand-screenshot" src="/stand/vialoure-landing.png" alt="Vialoure landing page — Holiday With Friends" />
             <a className="stand-link" href="https://andysantamaria.com/vialoure-grand-tour-v2" target="_blank" rel="noopener noreferrer">
               Design System <span className="stand-link-arrow">→</span>
             </a>
-            <div className="stand-screenshot-pair">
-              <img className="stand-screenshot" src="/stand/vialoure-landing.png" alt="Vialoure landing page — Holiday With Friends" />
-              <img className="stand-screenshot" src="/stand/vialoure-app.png" alt="Vialoure logged-in view — trip overview for Chuck's Birthday in Verona" />
-            </div>
+            <img className="stand-screenshot stand-screenshot-small" src="/stand/vialoure-app.png" alt="Vialoure logged-in view — trip overview for Chuck's Birthday in Verona" />
             <a className="stand-link" href="/vialoure" target="_blank" rel="noopener noreferrer">
               Vialoure App <span className="stand-link-arrow">→</span>
             </a>
@@ -575,6 +572,23 @@ export default function StandContent() {
             You will have already gotten the <span className="stand-term">foundation designed and built</span>. So if things change months down the road (and they will), you&apos;ll be in a place to <span className="stand-term">swap out services and/or talent</span>. It&apos;s an ideal setup for an early-stage startup. You can use a product engineer to move fast and efficiently, and if there are complex pull requests you have the option to bring in the engineering leader to bring it the last mile.
           </p>
         </Section>
+
+        {/* Personal Note */}
+        <div className="stand-note">
+          <div className="stand-note-label">A final note for Lauren</div>
+          <p>
+            If you made it this far, I commend you. I hope I have managed to convey my obsession with my customers and my craft.
+          </p>
+          <p>
+            For me, one of my favorite experiences is that early bit when you&apos;re building and talking with customers. You may appreciate this: a founder (and parent) once told me it was similar to the beginning of parenthood. Almost every day there is an exciting new development; enjoy it because that period is over before you know it.
+          </p>
+          <p>
+            Ahead of Tuesday, if you have any questions or topics you&apos;d like to cover please let me know.
+          </p>
+          <div className="stand-note-signature">
+            &mdash;Andy<span className="stand-note-cursor" />
+          </div>
+        </div>
 
         {/* Footer */}
         <footer className="stand-footer">

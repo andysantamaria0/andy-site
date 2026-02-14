@@ -328,6 +328,10 @@
   margin-top: 0;
 }
 
+.stand-screenshot-small {
+  max-width: 400px;
+}
+
 /* ---- Nested collapsible (More Things) ---- */
 
 .stand-nested-toggle {
@@ -554,6 +558,71 @@
 .stand-link:hover .stand-link-arrow {
   color: var(--accent);
   transform: translateX(3px);
+}
+
+/* ---- Personal Note ---- */
+
+.stand-note {
+  margin-top: 64px;
+  padding: 40px 36px;
+  border: 1px solid var(--accent-border);
+  border-radius: 2px;
+  position: relative;
+}
+
+.stand-note-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.stand-note p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.stand-note p:last-of-type {
+  margin-bottom: 0;
+}
+
+.stand-note-signature {
+  margin-top: 28px;
+  font-family: 'Special Elite', cursive;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+
+.stand-note-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background-color: var(--coral);
+  margin-left: 3px;
+  vertical-align: text-bottom;
+  animation: stand-cursor-blink 1s step-end infinite;
+}
+
+@keyframes stand-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@media (max-width: 600px) {
+  .stand-note {
+    padding: 28px 24px;
+  }
+
+  .stand-note p {
+    font-size: 1.1rem;
+  }
 }
 
 /* ---- Detail Pages ---- */
