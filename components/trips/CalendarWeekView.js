@@ -25,7 +25,7 @@ export default function CalendarWeekView({ trip, members, events, logistics, isO
   const tripStart = trip.start_date ? parseISO(trip.start_date) : new Date();
   const tripEnd = trip.end_date ? parseISO(trip.end_date) : tripStart;
   const tripDuration = differenceInCalendarDays(tripEnd, tripStart) + 1;
-  const showNav = tripDuration > 7;
+  const showNav = true;
 
   const [weekStart, setWeekStart] = useState(startOfWeek(tripStart));
   const [formState, setFormState] = useState(null);
