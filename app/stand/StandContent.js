@@ -165,7 +165,15 @@ export default function StandContent() {
 
         {/* Section 2: David Shimel */}
         <Section id="david" number="II" title="David Shimel, Engineering Leader" open={openSections.david} onToggle={() => toggleSection('david')}>
-          <p><em>Bio coming soon.</em></p>
+          <p>
+            <a href="https://www.linkedin.com/in/david-shimel/" target="_blank" rel="noopener noreferrer">David Shimel</a> is a lifelong computer technologist with over 15 years of experience as a software engineer working at companies and on projects of all scales and stages. The bulk of his expertise comes from 8 years at Google where he contributed to products such as Docs/Sheets/Slides, AR ads for YouTube, and Lens on Image Search. He then took his skills to the startup world, leading the engineering team at Atmosfy, a TikTok-meets-Yelp consumer app, for two years through their $13 million raise with Redpoint Ventures. Before joining Fractal Tech in September 2025, he spent a year at Stripe as a backend engineer on their Capital product, operating the systems for loaning money to merchants while developing the Lending Network, an interface to scale those systems 100x.
+          </p>
+          <p>
+            Spotting a once-in-a-lifetime opportunity, David signed on with Fractal Tech as an engineering coach and AI researcher to extend his leverage as a technical mentor and grow the industry&apos;s talent pool while deeply engaging with the most consequential shift in computing since mobile: generative AI. Through teaching LLM-accelerated engineering techniques and closely observing the startup ecosystem, he has honed his perspective on the best ways to quickly deliver value without compromising on code quality or long-term maintainability.
+          </p>
+          <p>
+            As an entrepreneur himself, running a music education company with $20k+ in revenue, 100+ satisfied students, and a fully-monetized YouTube channel, David is relentlessly user-oriented and acutely sensitive to the needs of every business with whom he consults.
+          </p>
         </Section>
 
         <NotchReveal compact />
