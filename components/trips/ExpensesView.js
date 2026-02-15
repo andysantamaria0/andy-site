@@ -28,6 +28,7 @@ export default function ExpensesView({ tripId, trip, members, expenses, eventCos
   const supabase = createClient();
   const [showAdd, setShowAdd] = useState(false);
   const [showSettle, setShowSettle] = useState(false);
+  const [editingExpense, setEditingExpense] = useState(null);
   const [paymentHandles, setPaymentHandles] = useState(() => {
     const me = members.find(m => m.id === myMemberId);
     return {
@@ -48,6 +49,7 @@ export default function ExpensesView({ tripId, trip, members, expenses, eventCos
     payer: getMemberName(members, exp.paid_by_member_id),
     amount: Number(exp.amount),
     currency: exp.currency || 'USD',
+    raw: exp,
   }));
 
   const eventItems = (eventCosts || []).map(ev => ({
@@ -159,7 +161,12 @@ export default function ExpensesView({ tripId, trip, members, expenses, eventCos
       ) : (
         <div className="v-expense-list">
           {allItems.map(item => (
-            <div key={`${item.type}-${item.id}`} className="v-expense-row">
+            <div
+              key={`${item.type}-${item.id}`}
+              className="v-expense-row"
+              style={isOwner && item.type === 'expense' ? { cursor: 'pointer' } : undefined}
+              onClick={isOwner && item.type === 'expense' ? () => setEditingExpense(item.raw) : undefined}
+            >
               <span className="v-expense-emoji">{CATEGORY_EMOJI[item.category] || CATEGORY_EMOJI.other}</span>
               <div className="v-expense-info">
                 <div className="v-expense-title">
@@ -196,6 +203,16 @@ export default function ExpensesView({ tripId, trip, members, expenses, eventCos
           eventCosts={eventCosts}
           existingSettlement={latestSettlement}
           onClose={() => setShowSettle(false)}
+        />
+      )}
+      {editingExpense && (
+        <AddExpenseForm
+          tripId={tripId}
+          members={members}
+          myMemberId={myMemberId}
+          currency={trip.currency}
+          expense={editingExpense}
+          onClose={() => setEditingExpense(null)}
         />
       )}
     </div>

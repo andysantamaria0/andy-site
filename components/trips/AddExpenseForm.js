@@ -15,19 +15,21 @@ const CATEGORIES = [
   { value: 'other', label: 'Other' },
 ];
 
-export default function AddExpenseForm({ tripId, members, myMemberId, currency, onClose }) {
+export default function AddExpenseForm({ tripId, members, myMemberId, currency, onClose, expense }) {
+  const isEditing = !!expense;
   const router = useRouter();
   const supabase = createClient();
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [form, setForm] = useState({
-    description: '',
-    vendor: '',
-    amount: '',
-    currency: currency || 'USD',
-    expense_date: new Date().toISOString().slice(0, 10),
-    category: 'other',
-    paid_by_member_id: myMemberId || '',
-    notes: '',
+    description: expense?.description || '',
+    vendor: expense?.vendor || '',
+    amount: expense?.amount ? String(expense.amount) : '',
+    currency: expense?.currency || currency || 'USD',
+    expense_date: expense?.expense_date || new Date().toISOString().slice(0, 10),
+    category: expense?.category || 'other',
+    paid_by_member_id: expense?.paid_by_member_id || myMemberId || '',
+    notes: expense?.notes || '',
   });
 
   function update(field, value) {
@@ -39,21 +41,52 @@ export default function AddExpenseForm({ tripId, members, myMemberId, currency, 
     if (!form.description || !form.amount || !form.paid_by_member_id) return;
 
     setSaving(true);
-    const { data: { user } } = await supabase.auth.getUser();
-    const { error } = await supabase.from('expenses').insert({
-      trip_id: tripId,
-      paid_by_member_id: form.paid_by_member_id,
-      description: form.description,
-      vendor: form.vendor || null,
-      amount: parseFloat(form.amount),
-      currency: form.currency,
-      expense_date: form.expense_date,
-      category: form.category,
-      notes: form.notes || null,
-      created_by: user?.id || null,
-    });
 
-    setSaving(false);
+    if (isEditing) {
+      const { error } = await supabase.from('expenses').update({
+        paid_by_member_id: form.paid_by_member_id,
+        description: form.description,
+        vendor: form.vendor || null,
+        amount: parseFloat(form.amount),
+        currency: form.currency,
+        expense_date: form.expense_date,
+        category: form.category,
+        notes: form.notes || null,
+      }).eq('id', expense.id);
+
+      setSaving(false);
+      if (!error) {
+        router.refresh();
+        onClose();
+      }
+    } else {
+      const { data: { user } } = await supabase.auth.getUser();
+      const { error } = await supabase.from('expenses').insert({
+        trip_id: tripId,
+        paid_by_member_id: form.paid_by_member_id,
+        description: form.description,
+        vendor: form.vendor || null,
+        amount: parseFloat(form.amount),
+        currency: form.currency,
+        expense_date: form.expense_date,
+        category: form.category,
+        notes: form.notes || null,
+        created_by: user?.id || null,
+      });
+
+      setSaving(false);
+      if (!error) {
+        router.refresh();
+        onClose();
+      }
+    }
+  }
+
+  async function handleDelete() {
+    if (!confirm('Delete this expense?')) return;
+    setDeleting(true);
+    const { error } = await supabase.from('expenses').delete().eq('id', expense.id);
+    setDeleting(false);
     if (!error) {
       router.refresh();
       onClose();
@@ -63,7 +96,7 @@ export default function AddExpenseForm({ tripId, members, myMemberId, currency, 
   return (
     <div className="v-expense-modal-overlay" onClick={onClose}>
       <div className="v-expense-modal" onClick={e => e.stopPropagation()}>
-        <div className="v-expense-modal-title">Add Expense</div>
+        <div className="v-expense-modal-title">{isEditing ? 'Edit Expense' : 'Add Expense'}</div>
         <form onSubmit={handleSubmit}>
           <div className="v-expense-form-row">
             <label>Description *</label>
@@ -164,9 +197,14 @@ export default function AddExpenseForm({ tripId, members, myMemberId, currency, 
             />
           </div>
           <div className="v-expense-form-actions">
-            <button type="submit" className="v-btn v-btn-primary" disabled={saving}>
-              {saving ? 'Saving...' : 'Add Expense'}
+            <button type="submit" className="v-btn v-btn-primary" disabled={saving || deleting}>
+              {saving ? 'Saving...' : isEditing ? 'Save Changes' : 'Add Expense'}
             </button>
+            {isEditing && (
+              <button type="button" className="v-btn v-btn-danger" onClick={handleDelete} disabled={saving || deleting}>
+                {deleting ? 'Deleting...' : 'Delete'}
+              </button>
+            )}
             <button type="button" className="v-btn v-btn-secondary" onClick={onClose}>
               Cancel
             </button>
