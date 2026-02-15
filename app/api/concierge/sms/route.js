@@ -1,9 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
 import { buildParsePrompt } from '../../../../lib/utils/parsePrompt';
 import { detectTripForSms, buildDisambiguationMessage } from '../../../../lib/utils/tripDetection';
-import { sendDisambiguationReply, sendOwnerAutoAcceptNotification } from '../../../../lib/utils/sendReply';
+import { sendAckReply, sendDisambiguationReply, sendOwnerAutoAcceptNotification } from '../../../../lib/utils/sendReply';
 import { tryAutoAccept } from '../../../../lib/utils/autoAccept';
-import { validateTwilioSignature } from '../../../../lib/utils/twilioAuth';
+import { validateTelnyxSignature } from '../../../../lib/utils/telnyxAuth';
 import { saveMediaToStorage } from '../../../../lib/utils/mediaStorage';
 import { checkFeature } from '../../../../lib/features';
 import Anthropic from '@anthropic-ai/sdk';
@@ -11,85 +11,81 @@ import { NextResponse } from 'next/server';
 
 const anthropic = new Anthropic();
 
-function twiml(message) {
-  const xml = `<?xml version="1.0" encoding="UTF-8"?><Response><Message>${escapeXml(message)}</Message></Response>`;
-  return new NextResponse(xml, {
-    status: 200,
-    headers: { 'Content-Type': 'text/xml' },
-  });
-}
-
-function emptyTwiml() {
-  return new NextResponse('<?xml version="1.0" encoding="UTF-8"?><Response></Response>', {
-    status: 200,
-    headers: { 'Content-Type': 'text/xml' },
-  });
-}
-
-function escapeXml(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function ok() {
+  return new NextResponse(null, { status: 200 });
 }
 
 export async function POST(request) {
   if (!(await checkFeature('concierge_sms'))) {
-    return new NextResponse('<?xml version="1.0" encoding="UTF-8"?><Response><Message>This feature is currently disabled.</Message></Response>', {
-      status: 200,
-      headers: { 'Content-Type': 'text/xml' },
-    });
+    return ok();
   }
 
-  const body = await request.text();
-  const params = Object.fromEntries(new URLSearchParams(body));
+  const rawBody = await request.text();
+  let webhookData;
+  try {
+    webhookData = JSON.parse(rawBody);
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
+  }
 
-  // Validate Twilio signature
-  const signature = request.headers.get('x-twilio-signature') || '';
-  const url = (process.env.TWILIO_SMS_WEBHOOK_URL || new URL(request.url).toString().split('?')[0]).trim();
+  // Validate Telnyx signature
+  const signature = request.headers.get('telnyx-signature-ed25519') || '';
+  const timestamp = request.headers.get('telnyx-timestamp') || '';
 
-  if (process.env.TWILIO_AUTH_TOKEN && !validateTwilioSignature(
-    process.env.TWILIO_AUTH_TOKEN.trim(), signature, url, params
+  if (process.env.TELNYX_PUBLIC_KEY && !validateTelnyxSignature(
+    process.env.TELNYX_PUBLIC_KEY.trim(), signature, timestamp, rawBody
   )) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 403 });
   }
 
-  const { From: from, Body: messageBody, NumMedia, MessageSid } = params;
-  const numMedia = parseInt(NumMedia || '0', 10);
+  const payload = webhookData?.data?.payload;
+  if (!payload) return ok();
+
+  const from = payload.from?.phone_number;
+  const messageBody = payload.text || '';
+  const messageId = payload.id;
+  const media = payload.media || [];
+
+  if (!from) return ok();
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY
   );
 
-  // Dedup by MessageSid
-  if (MessageSid) {
+  // Dedup by message ID
+  if (messageId) {
     const { data: existing } = await supabase
       .from('inbound_emails')
       .select('id')
-      .eq('twilio_message_sid', MessageSid)
+      .eq('twilio_message_sid', messageId)
       .single();
 
     if (existing) {
-      return emptyTwiml();
+      return ok();
     }
   }
 
   // Detect trip
   const detection = await detectTripForSms(supabase, {
     senderPhone: from,
-    messageText: messageBody || '',
+    messageText: messageBody,
   });
 
   // Handle "switch to" command
   if (detection.switched) {
-    return twiml(`Switched to ${detection.trip.name}. Send your message now!`);
+    sendAckReply({ channel: 'sms', replyTo: from, tripName: detection.trip.name, textOverride: `Switched to ${detection.trip.name}. Send your message now!` }).catch(console.error);
+    return ok();
   }
 
   if (detection.ambiguous) {
-    await sendDisambiguationReply('sms', from, detection.candidates);
-    return emptyTwiml();
+    sendDisambiguationReply('sms', from, detection.candidates).catch(console.error);
+    return ok();
   }
 
   if (!detection.trip) {
-    return twiml("I couldn't find a trip for your number. Ask the trip organizer to add your phone number.");
+    sendAckReply({ channel: 'sms', replyTo: from, textOverride: "I couldn't find a trip for your number. Ask the trip organizer to add your phone number." }).catch(console.error);
+    return ok();
   }
 
   const trip = detection.trip;
@@ -110,54 +106,46 @@ export async function POST(request) {
   // Build content blocks for Claude
   const contentBlocks = [];
   const mediaBuffers = [];
-  const channel = numMedia > 0 ? 'mms' : 'sms';
+  const channel = media.length > 0 ? 'mms' : 'sms';
 
-  // Fetch media attachments (MMS)
-  if (numMedia > 0) {
-    const sid = process.env.TWILIO_ACCOUNT_SID;
-    const token = process.env.TWILIO_AUTH_TOKEN;
-    const auth = 'Basic ' + Buffer.from(`${sid}:${token}`).toString('base64');
+  // Fetch media attachments (MMS) — Telnyx media URLs are public
+  for (const item of media) {
+    const mediaUrl = item.url;
+    const mediaType = (item.content_type || '').toLowerCase();
+    if (!mediaUrl) continue;
 
-    for (let i = 0; i < numMedia; i++) {
-      const mediaUrl = params[`MediaUrl${i}`];
-      const mediaType = (params[`MediaContentType${i}`] || '').toLowerCase();
-      if (!mediaUrl) continue;
+    try {
+      const res = await fetch(mediaUrl);
+      if (!res.ok) continue;
 
-      try {
-        const res = await fetch(mediaUrl, {
-          headers: { 'Authorization': auth },
+      const arrayBuffer = await res.arrayBuffer();
+      const bufferNode = Buffer.from(arrayBuffer);
+      const data = bufferNode.toString('base64');
+
+      if (mediaType.startsWith('image/')) {
+        contentBlocks.push({
+          type: 'image',
+          source: { type: 'base64', media_type: mediaType, data },
         });
-        if (!res.ok) continue;
-
-        const arrayBuffer = await res.arrayBuffer();
-        const bufferNode = Buffer.from(arrayBuffer);
-        const data = bufferNode.toString('base64');
-
-        if (mediaType.startsWith('image/')) {
-          contentBlocks.push({
-            type: 'image',
-            source: { type: 'base64', media_type: mediaType, data },
-          });
-          mediaBuffers.push({ buffer: bufferNode, mimeType: mediaType });
-        } else if (mediaType === 'application/pdf') {
-          contentBlocks.push({
-            type: 'document',
-            source: { type: 'base64', media_type: 'application/pdf', data },
-          });
-        } else if (mediaType.startsWith('audio/')) {
-          contentBlocks.push({
-            type: 'document',
-            source: { type: 'base64', media_type: mediaType, data },
-          });
-        }
-      } catch (e) {
-        console.error(`Failed to fetch media ${i}:`, e);
+        mediaBuffers.push({ buffer: bufferNode, mimeType: mediaType });
+      } else if (mediaType === 'application/pdf') {
+        contentBlocks.push({
+          type: 'document',
+          source: { type: 'base64', media_type: 'application/pdf', data },
+        });
+      } else if (mediaType.startsWith('audio/')) {
+        contentBlocks.push({
+          type: 'document',
+          source: { type: 'base64', media_type: mediaType, data },
+        });
       }
+    } catch (e) {
+      console.error('Failed to fetch media:', e);
     }
   }
 
   // Add text body
-  const text = (messageBody || '').trim();
+  const text = messageBody.trim();
   if (text) {
     contentBlocks.push({ type: 'text', text });
   }
@@ -221,8 +209,8 @@ export async function POST(request) {
       from_name: null,
       subject: text ? text.slice(0, 60) : (channel === 'mms' ? 'MMS Message' : null),
       text_body: text || null,
-      message_id: MessageSid || null,
-      raw_payload: params,
+      message_id: messageId || null,
+      raw_payload: webhookData,
       sender_member_id: detection.member?.id || null,
       sender_profile_id: detection.member?.user_id || null,
       parsed_data: parsedData,
@@ -230,23 +218,23 @@ export async function POST(request) {
       status: 'pending',
       channel,
       reply_to: from,
-      twilio_message_sid: MessageSid || null,
+      twilio_message_sid: messageId || null,
     })
     .select('id')
     .single();
 
   if (insertError) {
     console.error('Failed to insert SMS inbound:', insertError);
-    return twiml("Something went wrong. Please try again.");
+    return ok();
   }
 
   // Persist MMS photos to storage
   if (mediaBuffers.length > 0 && inserted) {
-    for (const media of mediaBuffers) {
+    for (const m of mediaBuffers) {
       await saveMediaToStorage(supabase, {
         tripId: trip.id,
-        buffer: media.buffer,
-        mimeType: media.mimeType,
+        buffer: m.buffer,
+        mimeType: m.mimeType,
         channel: 'mms',
         sourceMessageId: inserted.id,
         memberId: detection.member?.id || null,
@@ -294,5 +282,8 @@ export async function POST(request) {
       : `Got your message for ${trip.name}. It's in the inbox for the trip organizer.`;
   }
 
-  return twiml(ackMsg);
+  // Send ack via separate API call (fire-and-forget)
+  sendAckReply({ channel: 'sms', replyTo: from, tripId: trip.id, tripName: trip.name, summary: parsedData?.summary, textOverride: ackMsg }).catch(console.error);
+
+  return ok();
 }

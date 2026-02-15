@@ -3,8 +3,8 @@
 import { useState } from 'react';
 
 const CONCIERGE_EMAIL = 'concierge@andysantamaria.com';
-const CONCIERGE_PHONE = process.env.NEXT_PUBLIC_TWILIO_PHONE_NUMBER || '+1XXXXXXXXXX';
-const CONCIERGE_WHATSAPP = process.env.NEXT_PUBLIC_TWILIO_WHATSAPP_NUMBER || null;
+const CONCIERGE_PHONE = process.env.NEXT_PUBLIC_TELNYX_PHONE_NUMBER || '+1XXXXXXXXXX';
+const CONCIERGE_WHATSAPP = process.env.NEXT_PUBLIC_TELNYX_WHATSAPP_NUMBER || null;
 
 export default function ConciergeContact({ tripCode }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
