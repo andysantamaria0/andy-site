@@ -6,11 +6,11 @@ import NotchReveal from '../../components/NotchReveal';
 const SECTIONS = [
   { id: 'background', number: 'I', label: 'Background' },
   { id: 'david', number: 'II', label: 'David Shimel' },
-  { id: 'references', number: 'III', label: 'References' },
-  { id: 'built', number: 'IV', label: 'Portfolio' },
-  { id: 'approach', number: 'V', label: 'Approach' },
-  { id: 'phases', number: 'VI', label: 'Phases' },
-  { id: 'estimates', number: 'VII', label: 'Estimates' },
+  { id: 'built', number: 'III', label: 'Portfolio' },
+  { id: 'approach', number: 'IV', label: 'Approach' },
+  { id: 'phases', number: 'V', label: 'Phases' },
+  { id: 'estimates', number: 'VI', label: 'Estimates' },
+  { id: 'references', number: 'VII', label: 'References' },
 ];
 
 function ChevronIcon({ className }) {
@@ -157,7 +157,7 @@ export default function StandContent() {
             I&apos;m currently consulting with Fractal Tech NYC. It&apos;s an AI engineering accelerator. For building software, it&apos;s truly on the frontier. I quickly saw an opportunity — a short window — where I could stay on the frontier or fall behind. I had to forget everything I knew about making software.
           </p>
           <p>
-            At Fractal I act as Founder in Residence, working to bridge the frontier of AI engineering application to startups looking to grow by building faster and smarter. The engineers and founders are my customers. I have built partnerships with <a href="https://www.antler.co/" target="_blank" rel="noopener noreferrer">Antler</a>, <a href="https://collabfund.com/" target="_blank" rel="noopener noreferrer">Collab Fund</a>, two pre-seed firms, and am in initial talks with <a href="https://www.forumvc.com/" target="_blank" rel="noopener noreferrer">Forum Ventures</a>. These partnerships offer a direct line to early-stage startup founders where I advise on product and engineering. Many of these founders are in a similar stage as you. For the engineers at Fractal, I work with them on the product side to help them &ldquo;fill in the gaps&rdquo; on PRDs and tickets. Teaching them to think like product owners makes an engineer at an early stage a lot more productive. There are internal meetings and more time spent talking to customers.
+            At Fractal I act as Founder in Residence, working to bridge the frontier of AI engineering application to startups looking to grow by building faster and smarter. The engineers and founders are my customers. I have built partnerships with <a href="https://www.antler.co/" target="_blank" rel="noopener noreferrer">Antler</a>, <a href="https://collabfund.com/" target="_blank" rel="noopener noreferrer">Collab Fund</a>, two pre-seed firms, and am in initial talks with <a href="https://www.forumvc.com/" target="_blank" rel="noopener noreferrer">Forum Ventures</a>. These partnerships offer a direct line to early-stage startup founders where I advise on product and engineering. Many of these founders are in a similar stage as you. For the engineers at Fractal, I work with them on the product side to help them &ldquo;fill in the gaps&rdquo; on PRDs and tickets. Teaching them to think like product owners makes an engineer at an early stage a lot more productive. The goal is less internal meetings and more time spent talking to customers.
           </p>
         </Section>
 
@@ -178,32 +178,8 @@ export default function StandContent() {
 
         <NotchReveal compact />
 
-        {/* Section 3: References */}
-        <Section id="references" number="III" title="References" open={openSections.references} onToggle={() => toggleSection('references')}>
-          <div className="stand-ref">
-            <div className="stand-ref-name">Noelle, Founder of <a href="https://hellolegado.com/" target="_blank" rel="noopener noreferrer">Legado</a></div>
-            <p className="stand-ref-context">
-              I have worked with Noelle at two different periods. Initially I worked with her at the very beginning when she was duct-taping a prototype together and trying to figure out how to go to market and with whom. I worked with her and her team to plan a roadmap that was flexible yet still true to the north star. I later worked with her more closely as a product manager with engineers who we hired through our studio.
-            </p>
-          </div>
-          <div className="stand-ref">
-            <div className="stand-ref-name">Woody</div>
-            <p className="stand-ref-context">
-              Mostly character reference. I worked with Woody at Square. The direct overlap was when I was preparing his team to handle the support operations for the taxi pilot as we were preparing to scale the project.
-            </p>
-          </div>
-          <div className="stand-ref">
-            <div className="stand-ref-name"><a href="https://www.linkedin.com/in/chuck-kimble-3812562/" target="_blank" rel="noopener noreferrer">Chuck</a></div>
-            <p className="stand-ref-context">
-              I worked with him as the head of product at Ponto. Chuck led partnerships, building relationships with large telecom companies to incorporate our infrastructure. I supported him on the customer front, taking complex, boring technology and turning it into products with applications they could tell a story about to their board members as well as consumers.
-            </p>
-          </div>
-        </Section>
-
-        <NotchReveal compact />
-
-        {/* Section 4: Things I've Built */}
-        <Section id="built" number="IV" title="Things I've Built — End to End" open={openSections.built} onToggle={() => toggleSection('built')}>
+        {/* Section 3: Things I've Built */}
+        <Section id="built" number="III" title="Things I've Built — End to End" open={openSections.built} onToggle={() => toggleSection('built')}>
           <div className="stand-project">
             <h3 className="stand-project-name">Job Detective Jr.</h3>
             <div className="stand-project-body">
@@ -344,7 +320,7 @@ export default function StandContent() {
         <NotchReveal compact />
 
         {/* Section 5: The Approach */}
-        <Section id="approach" number="V" title="The Approach" open={openSections.approach} onToggle={() => toggleSection('approach')}>
+        <Section id="approach" number="IV" title="The Approach" open={openSections.approach} onToggle={() => toggleSection('approach')}>
           <p>
             Here is the <span className="stand-term">operating rhythm</span> (I stole that) I&apos;m envisioning.
           </p>
@@ -389,7 +365,7 @@ export default function StandContent() {
         <NotchReveal compact />
 
         {/* Section 6: The Phases */}
-        <Section id="phases" number="VI" title="The Phases" open={openSections.phases} onToggle={() => toggleSection('phases')}>
+        <Section id="phases" number="V" title="The Phases" open={openSections.phases} onToggle={() => toggleSection('phases')}>
           <p>
             I&apos;ll describe the phases. They can take as much time as they take, but it&apos;s hopefully clear when one phase is done and you can move to the next one (or back to repeat one).
           </p>
@@ -467,7 +443,7 @@ export default function StandContent() {
         <NotchReveal compact />
 
         {/* Section 7: Estimates */}
-        <Section id="estimates" number="VII" title="Estimates" open={openSections.estimates} onToggle={() => toggleSection('estimates')}>
+        <Section id="estimates" number="VI" title="Estimates" open={openSections.estimates} onToggle={() => toggleSection('estimates')}>
           <h4>Rates</h4>
           <div className="stand-table-wrapper">
             <table className="stand-table">
@@ -577,8 +553,32 @@ export default function StandContent() {
 
           <h4>Why This Works</h4>
           <p>
-            You will have already gotten the <span className="stand-term">foundation designed and built</span>. So if things change months down the road (and they will), you&apos;ll be in a place to <span className="stand-term">swap out services and/or talent</span>. It&apos;s an ideal setup for an early-stage startup. You can use a product engineer to move fast and efficiently, and if there are complex pull requests you have the option to bring in the engineering leader to bring it the last mile.
+            You will have already gotten the <span className="stand-term">foundation designed and built</span>. So if things change months down the road (and they will), you&apos;ll be in a place to <span className="stand-term">swap out services and/or talent</span>. It&apos;s an ideal setup for an early-stage startup. You can use a product engineer to move fast and efficiently, and for complex pull requests, bring in the engineering leader to take it the last mile.
           </p>
+        </Section>
+
+        <NotchReveal compact />
+
+        {/* Section 7: References */}
+        <Section id="references" number="VII" title="References" open={openSections.references} onToggle={() => toggleSection('references')}>
+          <div className="stand-ref">
+            <div className="stand-ref-name">Noelle, Founder of <a href="https://hellolegado.com/" target="_blank" rel="noopener noreferrer">Legado</a></div>
+            <p className="stand-ref-context">
+              I have worked with Noelle at two different periods. Initially I worked with her at the very beginning when she was duct-taping a prototype together and trying to figure out how to go to market and with whom. I worked with her and her team to plan a roadmap that was flexible yet still true to the north star. I later worked with her more closely as a product manager with engineers who we hired through our studio.
+            </p>
+          </div>
+          <div className="stand-ref">
+            <div className="stand-ref-name">Woody</div>
+            <p className="stand-ref-context">
+              Mostly character reference. I worked with Woody at Square. The direct overlap was when I was preparing his team to handle the support operations for the taxi pilot as we were preparing to scale the project.
+            </p>
+          </div>
+          <div className="stand-ref">
+            <div className="stand-ref-name"><a href="https://www.linkedin.com/in/chuck-kimble-3812562/" target="_blank" rel="noopener noreferrer">Chuck</a></div>
+            <p className="stand-ref-context">
+              I worked with him as the head of product at Ponto. Chuck led partnerships, building relationships with large telecom companies to incorporate our infrastructure. I supported him on the customer front, taking complex, boring technology and turning it into products with applications they could tell a story about to their board members as well as consumers.
+            </p>
+          </div>
         </Section>
 
         {/* Personal Note */}
