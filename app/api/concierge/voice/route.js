@@ -21,11 +21,12 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 403 });
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://andysantamaria.com';
   const twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Say voice="alice">Hi! This is the Vialoure concierge. Leave a message with your trip details and we'll pass it along.</Say>
+  <Play>${baseUrl}/audio/concierge-greeting.mp3</Play>
   <Record maxLength="120" timeout="10" action="${(process.env.TWILIO_VOICE_RECORDING_WEBHOOK_URL || '/api/concierge/voice/recording')}" />
-  <Say voice="alice">I didn't catch anything. Try texting this number instead.</Say>
+  <Play>${baseUrl}/audio/concierge-fallback.mp3</Play>
 </Response>`;
 
   return new NextResponse(twiml, {

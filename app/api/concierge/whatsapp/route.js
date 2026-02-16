@@ -5,14 +5,17 @@ import { sendDisambiguationReply, sendOwnerAutoAcceptNotification } from '../../
 import { tryAutoAccept } from '../../../../lib/utils/autoAccept';
 import { validateTwilioSignature } from '../../../../lib/utils/twilioAuth';
 import { saveMediaToStorage } from '../../../../lib/utils/mediaStorage';
+import { generateSpeech, uploadAudioAndGetUrl } from '../../../../lib/utils/elevenlabs';
 import { checkFeature } from '../../../../lib/features';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 
 const anthropic = new Anthropic();
 
-function twiml(message) {
-  const xml = `<?xml version="1.0" encoding="UTF-8"?><Response><Message>${escapeXml(message)}</Message></Response>`;
+function twiml(message, mediaUrl) {
+  let inner = `<Body>${escapeXml(message)}</Body>`;
+  if (mediaUrl) inner += `<Media>${escapeXml(mediaUrl)}</Media>`;
+  const xml = `<?xml version="1.0" encoding="UTF-8"?><Response><Message>${inner}</Message></Response>`;
   return new NextResponse(xml, {
     status: 200,
     headers: { 'Content-Type': 'text/xml' },
@@ -307,5 +310,17 @@ export async function POST(request) {
       : `Got your message for ${trip.name}. It's in the inbox for the trip organizer.`;
   }
 
-  return twiml(ackMsg);
+  // Generate voice note of the acknowledgment
+  let audioUrl = null;
+  try {
+    if (process.env.ELEVENLABS_API_KEY) {
+      const audioBuffer = await generateSpeech(ackMsg, { model: 'eleven_flash_v2_5' });
+      audioUrl = await uploadAudioAndGetUrl(supabase, audioBuffer, `ack-${inserted.id}-${Date.now()}.mp3`);
+    }
+  } catch (e) {
+    console.error('Failed to generate voice note for WhatsApp:', e);
+    // Fall back to text-only reply
+  }
+
+  return twiml(ackMsg, audioUrl);
 }

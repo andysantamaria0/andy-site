@@ -157,8 +157,9 @@ export async function POST(request) {
     console.error('Failed to insert voice recording:', insertError);
   }
 
-  // Return empty TwiML (call is already recorded)
-  return new NextResponse('<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="alice">Thanks! We got your message.</Say></Response>', {
+  // Return TwiML with pre-generated thanks audio
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://andysantamaria.com';
+  return new NextResponse(`<?xml version="1.0" encoding="UTF-8"?><Response><Play>${baseUrl}/audio/concierge-thanks.mp3</Play></Response>`, {
     status: 200,
     headers: { 'Content-Type': 'text/xml' },
   });
