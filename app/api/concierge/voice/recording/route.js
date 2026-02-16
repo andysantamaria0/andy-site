@@ -1,22 +1,22 @@
 import { createClient } from '@supabase/supabase-js';
 import { buildParsePrompt } from '../../../../../lib/utils/parsePrompt';
 import { detectTripForSms } from '../../../../../lib/utils/tripDetection';
-import { validateTelnyxSignature } from '../../../../../lib/utils/telnyxAuth';
+import { validateTwilioSignature } from '../../../../../lib/utils/twilioAuth';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 
 const anthropic = new Anthropic();
 
 export async function POST(request) {
-  const rawBody = await request.text();
-  const params = Object.fromEntries(new URLSearchParams(rawBody));
+  const body = await request.text();
+  const params = Object.fromEntries(new URLSearchParams(body));
 
-  // Validate Telnyx signature
-  const signature = request.headers.get('telnyx-signature-ed25519') || '';
-  const timestamp = request.headers.get('telnyx-timestamp') || '';
+  // Validate Twilio signature
+  const signature = request.headers.get('x-twilio-signature') || '';
+  const url = (process.env.TWILIO_VOICE_RECORDING_WEBHOOK_URL || new URL(request.url).toString().split('?')[0]).trim();
 
-  if (process.env.TELNYX_PUBLIC_KEY && !validateTelnyxSignature(
-    process.env.TELNYX_PUBLIC_KEY.trim(), signature, timestamp, rawBody
+  if (process.env.TWILIO_AUTH_TOKEN && !validateTwilioSignature(
+    process.env.TWILIO_AUTH_TOKEN.trim(), signature, url, params
   )) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 403 });
   }
@@ -49,12 +49,16 @@ export async function POST(request) {
     });
   }
 
-  // Fetch the recording audio from Telnyx
-  const apiKey = process.env.TELNYX_API_KEY;
+  // Fetch the recording audio from Twilio
+  const sid = process.env.TWILIO_ACCOUNT_SID;
+  const token = process.env.TWILIO_AUTH_TOKEN;
+  const auth = 'Basic ' + Buffer.from(`${sid}:${token}`).toString('base64');
+
   let audioBase64 = null;
   try {
-    const res = await fetch(RecordingUrl, {
-      headers: { 'Authorization': `Bearer ${apiKey}` },
+    // Twilio recordings are available as .wav
+    const res = await fetch(`${RecordingUrl}.wav`, {
+      headers: { 'Authorization': auth },
     });
     if (res.ok) {
       const buffer = await res.arrayBuffer();
@@ -153,7 +157,7 @@ export async function POST(request) {
     console.error('Failed to insert voice recording:', insertError);
   }
 
-  // Return empty TeXML (call is already recorded)
+  // Return empty TwiML (call is already recorded)
   return new NextResponse('<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="alice">Thanks! We got your message.</Say></Response>', {
     status: 200,
     headers: { 'Content-Type': 'text/xml' },

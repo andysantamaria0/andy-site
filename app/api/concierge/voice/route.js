@@ -1,4 +1,4 @@
-import { validateTelnyxSignature } from '../../../../lib/utils/telnyxAuth';
+import { validateTwilioSignature } from '../../../../lib/utils/twilioAuth';
 import { checkFeature } from '../../../../lib/features';
 import { NextResponse } from 'next/server';
 
@@ -8,15 +8,15 @@ export async function POST(request) {
     return new NextResponse(twiml, { status: 200, headers: { 'Content-Type': 'text/xml' } });
   }
 
-  const rawBody = await request.text();
-  const params = Object.fromEntries(new URLSearchParams(rawBody));
+  const body = await request.text();
+  const params = Object.fromEntries(new URLSearchParams(body));
 
-  // Validate Telnyx signature
-  const signature = request.headers.get('telnyx-signature-ed25519') || '';
-  const timestamp = request.headers.get('telnyx-timestamp') || '';
+  // Validate Twilio signature
+  const signature = request.headers.get('x-twilio-signature') || '';
+  const url = (process.env.TWILIO_VOICE_WEBHOOK_URL || new URL(request.url).toString().split('?')[0]).trim();
 
-  if (process.env.TELNYX_PUBLIC_KEY && !validateTelnyxSignature(
-    process.env.TELNYX_PUBLIC_KEY.trim(), signature, timestamp, rawBody
+  if (process.env.TWILIO_AUTH_TOKEN && !validateTwilioSignature(
+    process.env.TWILIO_AUTH_TOKEN.trim(), signature, url, params
   )) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 403 });
   }
@@ -24,7 +24,7 @@ export async function POST(request) {
   const twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Say voice="alice">Hi! This is the Vialoure concierge. Leave a message with your trip details and we'll pass it along.</Say>
-  <Record maxLength="120" timeout="10" action="${(process.env.TELNYX_VOICE_RECORDING_WEBHOOK_URL || '/api/concierge/voice/recording')}" />
+  <Record maxLength="120" timeout="10" action="${(process.env.TWILIO_VOICE_RECORDING_WEBHOOK_URL || '/api/concierge/voice/recording')}" />
   <Say voice="alice">I didn't catch anything. Try texting this number instead.</Say>
 </Response>`;
 
