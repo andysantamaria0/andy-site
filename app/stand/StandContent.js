@@ -193,7 +193,7 @@ export default function StandContent() {
             </p>
           </div>
           <div className="stand-ref">
-            <div className="stand-ref-name">Chuck</div>
+            <div className="stand-ref-name"><a href="https://www.linkedin.com/in/chuck-kimble-3812562/" target="_blank" rel="noopener noreferrer">Chuck</a></div>
             <p className="stand-ref-context">
               I worked with him as the head of product at Ponto. Chuck led partnerships, building relationships with large telecom companies to incorporate our infrastructure. I supported him on the customer front, taking complex, boring technology and turning it into products with applications they could tell a story about to their board members as well as consumers.
             </p>
