@@ -4,8 +4,11 @@ import { detectTrip, buildDisambiguationMessage } from '../../../lib/utils/tripD
 import { sendDisambiguationReply, sendAckReply, sendOwnerAutoAcceptNotification } from '../../../lib/utils/sendReply';
 import { tryAutoAccept } from '../../../lib/utils/autoAccept';
 import { checkFeature } from '../../../lib/features';
+import { createRateLimit } from '../../../lib/utils/rateLimit';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
+
+const limit = createRateLimit({ windowMs: 60_000, max: 30 });
 
 const anthropic = new Anthropic();
 
@@ -45,6 +48,9 @@ function stripHtml(html) {
 const CONCIERGE_ADDRESS = 'concierge@andysantamaria.com';
 
 export async function POST(request) {
+  const limited = limit(request);
+  if (limited) return limited;
+
   if (!(await checkFeature('concierge_email'))) {
     return NextResponse.json({ error: 'Feature disabled' }, { status: 403 });
   }
@@ -55,6 +61,12 @@ export async function POST(request) {
 
   if (!token || token !== process.env.POSTMARK_WEBHOOK_TOKEN) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  // Cap inbound email payload at 10MB
+  const contentLength = parseInt(request.headers.get('content-length') || '0', 10);
+  if (contentLength > 10_000_000) {
+    return NextResponse.json({ error: 'Payload too large' }, { status: 413 });
   }
 
   const payload = await request.json();

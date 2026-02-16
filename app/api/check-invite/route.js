@@ -1,10 +1,17 @@
 import { createClient } from '@supabase/supabase-js';
+import { createRateLimit } from '../../../lib/utils/rateLimit';
 import { NextResponse } from 'next/server';
 
+const limit = createRateLimit({ windowMs: 60_000, max: 10 });
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export async function POST(request) {
+  const limited = limit(request);
+  if (limited) return limited;
   const { email } = await request.json();
 
-  if (!email) {
+  if (!email || typeof email !== 'string' || email.length > 254 || !EMAIL_RE.test(email)) {
     return NextResponse.json({ invited: false });
   }
 

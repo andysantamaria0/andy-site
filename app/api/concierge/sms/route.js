@@ -7,8 +7,11 @@ import { validateTwilioSignature } from '../../../../lib/utils/twilioAuth';
 import { saveMediaToStorage } from '../../../../lib/utils/mediaStorage';
 import { generateSpeech, uploadAudioAndGetUrl } from '../../../../lib/utils/elevenlabs';
 import { checkFeature } from '../../../../lib/features';
+import { createRateLimit } from '../../../../lib/utils/rateLimit';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
+
+const limit = createRateLimit({ windowMs: 60_000, max: 20 });
 
 const anthropic = new Anthropic();
 
@@ -34,6 +37,9 @@ function escapeXml(str) {
 }
 
 export async function POST(request) {
+  const limited = limit(request);
+  if (limited) return limited;
+
   if (!(await checkFeature('concierge_sms'))) {
     return new NextResponse('<?xml version="1.0" encoding="UTF-8"?><Response><Message>This feature is currently disabled.</Message></Response>', {
       status: 200,
@@ -42,6 +48,9 @@ export async function POST(request) {
   }
 
   const body = await request.text();
+  if (body.length > 100_000) {
+    return emptyTwiml();
+  }
   const params = Object.fromEntries(new URLSearchParams(body));
 
   // Validate Twilio signature

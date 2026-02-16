@@ -1,8 +1,13 @@
 import { validateTwilioSignature } from '../../../../lib/utils/twilioAuth';
 import { checkFeature } from '../../../../lib/features';
+import { createRateLimit } from '../../../../lib/utils/rateLimit';
 import { NextResponse } from 'next/server';
 
+const limit = createRateLimit({ windowMs: 60_000, max: 20 });
+
 export async function POST(request) {
+  const limited = limit(request);
+  if (limited) return limited;
   if (!(await checkFeature('concierge_voice'))) {
     const twiml = `<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="alice">This feature is currently disabled.</Say></Response>`;
     return new NextResponse(twiml, { status: 200, headers: { 'Content-Type': 'text/xml' } });

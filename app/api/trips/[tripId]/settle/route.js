@@ -71,6 +71,18 @@ export async function PATCH(request, { params }) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
+  // Verify user is a member of this trip
+  const { data: membership } = await supabase
+    .from('trip_members')
+    .select('id')
+    .eq('trip_id', tripId)
+    .eq('user_id', user.id)
+    .single();
+
+  if (!membership) {
+    return NextResponse.json({ error: 'Not a trip member' }, { status: 403 });
+  }
+
   const { share_id, paid } = await request.json();
 
   if (!share_id || typeof paid !== 'boolean') {

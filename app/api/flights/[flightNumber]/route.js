@@ -1,7 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
+import { createClient as createServerClient } from '../../../../lib/supabase/server';
 import { NextResponse } from 'next/server';
 import { fetchFlightStatus, normalizeFlightResponse } from '../../../../lib/flightaware';
 import { checkFeature } from '../../../../lib/features';
+import { createRateLimit } from '../../../../lib/utils/rateLimit';
 
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
@@ -12,12 +14,29 @@ function getSupabase() {
   );
 }
 
+const limit = createRateLimit({ windowMs: 60_000, max: 30 });
+
 export async function GET(request, { params }) {
+  const limited = limit(request);
+  if (limited) return limited;
+
+  // Require authentication
+  const authClient = await createServerClient();
+  const { data: { user } } = await authClient.auth.getUser();
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   if (!(await checkFeature('flight_tracking'))) {
     return NextResponse.json({ error: 'Feature disabled' }, { status: 403 });
   }
 
   const { flightNumber } = await params;
+
+  if (!flightNumber || flightNumber.length > 10 || !/^[A-Za-z0-9]+$/.test(flightNumber)) {
+    return NextResponse.json({ error: 'Invalid flight number' }, { status: 400 });
+  }
+
   const { searchParams } = new URL(request.url);
   const date = searchParams.get('date');
 

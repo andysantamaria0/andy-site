@@ -2,13 +2,22 @@ import { createClient } from '@supabase/supabase-js';
 import { buildParsePrompt } from '../../../../../lib/utils/parsePrompt';
 import { detectTripForSms } from '../../../../../lib/utils/tripDetection';
 import { validateTwilioSignature } from '../../../../../lib/utils/twilioAuth';
+import { createRateLimit } from '../../../../../lib/utils/rateLimit';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 
 const anthropic = new Anthropic();
+const limit = createRateLimit({ windowMs: 60_000, max: 20 });
 
 export async function POST(request) {
+  const limited = limit(request);
+  if (limited) return limited;
   const body = await request.text();
+  if (body.length > 100_000) {
+    return new NextResponse('<?xml version="1.0" encoding="UTF-8"?><Response></Response>', {
+      status: 200, headers: { 'Content-Type': 'text/xml' },
+    });
+  }
   const params = Object.fromEntries(new URLSearchParams(body));
 
   // Validate Twilio signature
