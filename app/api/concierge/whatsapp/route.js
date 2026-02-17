@@ -167,8 +167,8 @@ export async function POST(request) {
           });
         } else if (mediaType.startsWith('audio/')) {
           contentBlocks.push({
-            type: 'document',
-            source: { type: 'base64', media_type: mediaType, data },
+            type: 'text',
+            text: '(Audio attachment received but cannot be processed directly. If the sender included a voice message, the content could not be transcribed.)',
           });
         }
       } catch (e) {

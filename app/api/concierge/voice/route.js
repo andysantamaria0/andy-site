@@ -30,7 +30,7 @@ export async function POST(request) {
   const twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Play>${baseUrl}/audio/concierge-greeting.mp3</Play>
-  <Record maxLength="120" timeout="10" action="${(process.env.TWILIO_VOICE_RECORDING_WEBHOOK_URL || '/api/concierge/voice/recording')}" />
+  <Record maxLength="120" timeout="10" action="${(process.env.TWILIO_VOICE_RECORDING_WEBHOOK_URL || '/api/concierge/voice/recording')}" transcribe="true" transcribeCallback="${baseUrl}/api/concierge/voice/transcription" />
   <Play>${baseUrl}/audio/concierge-fallback.mp3</Play>
 </Response>`;
 

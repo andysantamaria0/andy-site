@@ -1,12 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
-import { buildParsePrompt } from '../../../../../lib/utils/parsePrompt';
 import { detectTripForSms } from '../../../../../lib/utils/tripDetection';
 import { validateTwilioSignature } from '../../../../../lib/utils/twilioAuth';
 import { createRateLimit } from '../../../../../lib/utils/rateLimit';
-import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 
-const anthropic = new Anthropic();
 const limit = createRateLimit({ windowMs: 60_000, max: 20 });
 
 export async function POST(request) {
@@ -58,91 +55,8 @@ export async function POST(request) {
     });
   }
 
-  // Fetch the recording audio from Twilio
-  const sid = process.env.TWILIO_ACCOUNT_SID;
-  const token = process.env.TWILIO_AUTH_TOKEN;
-  const auth = 'Basic ' + Buffer.from(`${sid}:${token}`).toString('base64');
-
-  let audioBase64 = null;
-  try {
-    // Twilio recordings are available as .wav
-    const res = await fetch(`${RecordingUrl}.wav`, {
-      headers: { 'Authorization': auth },
-    });
-    if (res.ok) {
-      const buffer = await res.arrayBuffer();
-      audioBase64 = Buffer.from(buffer).toString('base64');
-    }
-  } catch (e) {
-    console.error('Failed to fetch recording:', e);
-  }
-
-  // Parse with Claude if we have audio and a trip
-  let parsedData = null;
-  let parseError = null;
-
-  if (audioBase64 && trip) {
-    try {
-      const { data: members } = await supabase
-        .from('trip_members')
-        .select(`
-          *,
-          profiles:user_id (
-            display_name,
-            avatar_url,
-            email
-          )
-        `)
-        .eq('trip_id', trip.id);
-
-      const memberContext = (members || []).map((m) => ({
-        member_id: m.id,
-        user_id: m.user_id,
-        name: m.profiles?.display_name || m.display_name || m.profiles?.email || m.email || 'Unknown',
-        email: m.profiles?.email || m.email,
-        is_manual: !m.user_id,
-        current_stay_start: m.stay_start,
-        current_stay_end: m.stay_end,
-      }));
-
-      const promptText = buildParsePrompt({
-        trip,
-        memberContext,
-        text: '(see attached voice recording)',
-      });
-
-      const content = [
-        {
-          type: 'document',
-          source: { type: 'base64', media_type: 'audio/wav', data: audioBase64 },
-        },
-        { type: 'text', text: promptText },
-      ];
-
-      const message = await anthropic.messages.create({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2048,
-        messages: [{ role: 'user', content }],
-      });
-
-      const responseText = message.content?.[0]?.text || '';
-      const jsonStart = responseText.indexOf('{');
-      const jsonEnd = responseText.lastIndexOf('}');
-      if (jsonStart !== -1 && jsonEnd > jsonStart) {
-        parsedData = JSON.parse(responseText.slice(jsonStart, jsonEnd + 1));
-      } else {
-        parsedData = JSON.parse(responseText);
-      }
-    } catch (e) {
-      parseError = e.message || 'Failed to parse voice recording';
-    }
-  } else if (!audioBase64) {
-    parseError = 'Could not retrieve recording audio';
-  } else {
-    parseError = 'Could not determine trip for this caller';
-  }
-
-  // Store in inbound_emails
+  // Save the recording metadata — parsing happens in the transcription callback
+  // once Twilio finishes transcribing the audio
   const { error: insertError } = await supabase
     .from('inbound_emails')
     .insert({
@@ -152,11 +66,11 @@ export async function POST(request) {
       subject: 'Voice Note',
       text_body: null,
       message_id: CallSid || null,
-      raw_payload: params,
+      raw_payload: { ...params, recording_url: RecordingUrl },
       sender_member_id: detection.member?.id || null,
       sender_profile_id: detection.member?.user_id || null,
-      parsed_data: parsedData,
-      parse_error: parseError,
+      parsed_data: null,
+      parse_error: null,
       status: 'pending',
       channel: 'voice',
       reply_to: from,

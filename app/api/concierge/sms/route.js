@@ -157,9 +157,10 @@ export async function POST(request) {
             source: { type: 'base64', media_type: 'application/pdf', data },
           });
         } else if (mediaType.startsWith('audio/')) {
+          // Audio can't be sent directly to Claude — note it in text
           contentBlocks.push({
-            type: 'document',
-            source: { type: 'base64', media_type: mediaType, data },
+            type: 'text',
+            text: '(Audio attachment received but cannot be processed directly. If the sender included a voice message, the content could not be transcribed.)',
           });
         }
       } catch (e) {
