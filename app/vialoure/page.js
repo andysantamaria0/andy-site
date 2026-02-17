@@ -473,7 +473,7 @@ export default async function LandingPage() {
 
         <div className="v-landing-showcase-row">
           <div className="v-landing-showcase-text">
-            <h3 className="v-landing-showcase-heading">Add it to the group chat</h3>
+            <h3 className="v-landing-showcase-heading">Add it to the group chat <span className="v-coming-soon">Coming Soon</span></h3>
             <p className="v-landing-showcase-body">
               Drop Vialoure into your WhatsApp group. It reads the chatter, pulls photos everyone shares, catches flight changes mentioned in passing. No extra app to open — your group chat becomes the interface.
             </p>
@@ -487,7 +487,7 @@ export default async function LandingPage() {
 
         <div className="v-landing-showcase-row v-landing-showcase-row-reverse">
           <div className="v-landing-showcase-text">
-            <h3 className="v-landing-showcase-heading">Every morning, a travel log</h3>
+            <h3 className="v-landing-showcase-heading">Every morning, a travel log <span className="v-coming-soon">Coming Soon</span></h3>
             <p className="v-landing-showcase-body">
               At 7 AM, the concierge writes up yesterday — where you went, what you ate, the best photos from the group. A proper travel journal, written for you, every single day.
             </p>

@@ -2644,6 +2644,22 @@ select.v-form-input {
   color: var(--v-pearl);
 }
 
+.v-coming-soon {
+  display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--v-champagne);
+  border: 1px solid var(--v-champagne);
+  padding: 2px 8px;
+  border-radius: 2px;
+  vertical-align: middle;
+  opacity: 0.7;
+  margin-left: 8px;
+}
+
 .v-landing-showcase-body {
   font-family: 'Crimson Pro', serif;
   font-size: 1.15rem;
