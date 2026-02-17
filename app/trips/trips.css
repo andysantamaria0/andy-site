@@ -175,6 +175,18 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 40px 24px;
+  animation: v-page-enter var(--v-standard) var(--v-ease) both;
+}
+
+@keyframes v-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .v-page-header {
@@ -188,6 +200,28 @@
   font-family: 'Fraunces', serif;
   font-size: 2rem;
   font-weight: 700;
+}
+
+/* ---- Utility classes ---- */
+
+.v-error {
+  color: var(--v-cinnabar);
+  font-size: 0.875rem;
+}
+
+.v-error-sm {
+  color: var(--v-cinnabar);
+  font-size: 0.75rem;
+}
+
+.v-hint {
+  color: var(--v-pearl-dim);
+  font-size: 0.875rem;
+}
+
+.v-hint-sm {
+  color: var(--v-pearl-dim);
+  font-size: 0.75rem;
 }
 
 /* ---- Buttons ---- */
@@ -1125,6 +1159,7 @@ select.v-form-input {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  animation: v-page-enter var(--v-standard) var(--v-ease) both;
 }
 
 .v-calendar-day {
@@ -1165,14 +1200,18 @@ select.v-form-input {
 
 .v-calendar-presence {
   display: flex;
-  gap: 4px;
+  gap: 2px;
+  align-items: center;
 }
 
-.v-presence-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  opacity: 0.85;
+.v-calendar-presence .v-member-avatar,
+.v-calendar-presence .v-member-avatar-placeholder {
+  border: 1.5px solid var(--v-surface);
+}
+
+.v-calendar-presence .v-member-avatar:not(:first-child),
+.v-calendar-presence .v-member-avatar-placeholder:not(:first-child) {
+  margin-left: -4px;
 }
 
 .v-calendar-events {
@@ -1284,6 +1323,12 @@ select.v-form-input {
   justify-content: center;
   z-index: 1000;
   padding: 24px;
+  animation: v-overlay-enter var(--v-micro) ease-out both;
+}
+
+@keyframes v-overlay-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .v-modal {
@@ -1295,6 +1340,7 @@ select.v-form-input {
   max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
+  animation: v-page-enter var(--v-standard) var(--v-ease) both;
 }
 
 .v-modal-header {
@@ -1630,7 +1676,7 @@ select.v-form-input {
 /* ---- Month Grid ---- */
 
 .v-month-grid-wrapper {
-  /* wrapper */
+  animation: v-page-enter var(--v-standard) var(--v-ease) both;
 }
 
 .v-month-nav {
@@ -1901,7 +1947,7 @@ select.v-form-input {
 /* ---- Week Grid ---- */
 
 .v-week-wrapper {
-  /* wrapper */
+  animation: v-page-enter var(--v-standard) var(--v-ease) both;
 }
 
 .v-week-grid {
@@ -2025,6 +2071,50 @@ select.v-form-input {
 }
 
 /* ---- Responsive ---- */
+
+@media (max-width: 900px) {
+  .v-overview-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .v-month-cell {
+    min-height: 64px;
+    padding: 4px 6px;
+  }
+
+  .v-month-cell-avatars .v-member-avatar,
+  .v-month-cell-avatars .v-member-avatar-placeholder {
+    width: 14px !important;
+    height: 14px !important;
+    font-size: 0.35rem !important;
+  }
+
+  .v-month-badge-name {
+    max-width: 40px;
+  }
+
+  .v-month-cell-event-line {
+    font-size: 0.6rem;
+  }
+
+  .v-week-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .v-week-col {
+    min-height: 160px;
+    padding: 6px;
+  }
+
+  .v-timeline-row-label {
+    width: 80px;
+    font-size: 0.75rem;
+  }
+
+  .v-header-tagline {
+    display: none;
+  }
+}
 
 @media (max-width: 600px) {
   .v-header {
@@ -4318,6 +4408,7 @@ select.v-form-input {
   justify-content: center;
   z-index: 200;
   padding: 24px;
+  animation: v-overlay-enter var(--v-micro) ease-out both;
 }
 
 .v-expense-modal {
@@ -4329,6 +4420,7 @@ select.v-form-input {
   max-width: 480px;
   max-height: 90vh;
   overflow-y: auto;
+  animation: v-page-enter var(--v-standard) var(--v-ease) both;
 }
 
 .v-expense-modal-title {

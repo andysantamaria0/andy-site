@@ -7,13 +7,14 @@ import { getMemberDisplayInfo } from '../../lib/utils/members';
 import EventCard from './EventCard';
 import EventForm from './EventForm';
 import LogisticsCard from './LogisticsCard';
+import MemberAvatar from './MemberAvatar';
 
 export default function CalendarDayList({ trip, members, events, logistics, isOwner }) {
   const [formState, setFormState] = useState(null); // null | { date, event? }
 
   if (!trip.start_date || !trip.end_date) {
     return (
-      <p style={{ color: 'var(--v-pearl-dim)', fontSize: '0.875rem' }}>
+      <p className="v-hint">
         Set trip dates to see the calendar.
       </p>
     );
@@ -90,11 +91,15 @@ export default function CalendarDayList({ trip, members, events, logistics, isOw
                     {present.map((m) => {
                       const info = getMemberDisplayInfo(m);
                       return (
-                        <div
+                        <MemberAvatar
                           key={m.id}
-                          className="v-presence-dot"
-                          style={{ backgroundColor: m.color || '#4A35D7' }}
-                          title={info.name}
+                          member={{
+                            display_name: info.name,
+                            avatar_url: info.avatarUrl,
+                            email: info.email,
+                            color: info.color,
+                          }}
+                          size={18}
                         />
                       );
                     })}

@@ -65,9 +65,13 @@ export default async function JournalPage({ params }) {
       <h2 className="v-section-title">Journal</h2>
 
       {(!logs || logs.length === 0) ? (
-        <p style={{ color: 'var(--v-pearl-dim)', fontSize: '0.9375rem' }}>
-          No entries yet. The journal writes itself each morning — a quiet record of the days as they pass.
-        </p>
+        <div className="v-empty">
+          <div className="v-empty-icon">&#x1F4D6;</div>
+          <div className="v-empty-title">No entries yet</div>
+          <div className="v-empty-text">
+            The journal writes itself each morning — a quiet record of the days as they pass.
+          </div>
+        </div>
       ) : (
         <div className="v-journal-list">
           {logs.map((log, i) => (

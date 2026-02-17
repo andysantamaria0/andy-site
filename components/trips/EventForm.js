@@ -73,17 +73,48 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
   const [deleting, setDeleting] = useState(false);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [error, setError] = useState(null);
+  const titleInputRef = useRef(null);
+
+  // Track whether form has been modified
+  const isDirty = useRef(false);
+  useEffect(() => {
+    // Mark dirty on any state change after initial render
+    const timer = setTimeout(() => { isDirty.current = false; }, 0);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Update dirty flag when any form field changes
+  useEffect(() => {
+    isDirty.current = true;
+  }, [title, category, eventDate, startTime, endTime, location, notes, selectedMembers, everyoneInvited, hasCost, costAmount, costCurrency, costPaidBy, useFriendsCard, splitType, invites]);
+
+  // Auto-focus title input on mount
+  useEffect(() => {
+    if (titleInputRef.current) titleInputRef.current.focus();
+  }, []);
+
+  const confirmCloseRef = useRef(null);
+  confirmCloseRef.current = function confirmClose() {
+    if (isDirty.current && (title || notes || location || costAmount)) {
+      if (!window.confirm('You have unsaved changes. Discard?')) return;
+    }
+    onClose();
+  };
+
+  function confirmClose() {
+    confirmCloseRef.current();
+  }
 
   useEffect(() => {
     function handleKeyDown(e) {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') confirmCloseRef.current();
     }
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  }, []);
 
   function handleOverlayClick(e) {
-    if (e.target === overlayRef.current) onClose();
+    if (e.target === overlayRef.current) confirmClose();
   }
 
   function toggleMember(memberId) {
@@ -126,9 +157,14 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
     return Object.values(customSplits).reduce((sum, v) => sum + (parseFloat(v) || 0), 0);
   }
 
+  const splitsInvalid = hasCost && (
+    (splitType === 'custom_percent' && getCustomTotal() !== 100) ||
+    (splitType === 'custom_amount' && costAmount && getCustomTotal() !== parseFloat(costAmount))
+  );
+
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!title.trim() || !eventDate) return;
+    if (!title.trim() || !eventDate || splitsInvalid) return;
     setSaving(true);
     setError(null);
 
@@ -241,6 +277,8 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
   async function handleDelete() {
     if (!confirmingDelete) {
       setConfirmingDelete(true);
+      // Auto-reset after 3 seconds if user doesn't confirm
+      setTimeout(() => setConfirmingDelete(false), 3000);
       return;
     }
     setDeleting(true);
@@ -260,18 +298,19 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
 
   return (
     <div className="v-modal-overlay" ref={overlayRef} onClick={handleOverlayClick}>
-      <div className="v-modal">
+      <div className="v-modal" role="dialog" aria-modal="true" aria-label={isEdit ? 'Edit Event' : 'Add Event'}>
         <div className="v-modal-header">
           <h3 className="v-section-title" style={{ marginBottom: 0 }}>
             {isEdit ? 'Edit Event' : 'Add Event'}
           </h3>
-          <button className="v-modal-close" onClick={onClose} aria-label="Close">&times;</button>
+          <button className="v-modal-close" onClick={confirmClose} aria-label="Close">&times;</button>
         </div>
 
         <form onSubmit={handleSubmit}>
           <div className="v-form-group">
             <label className="v-form-label">Title</label>
             <input
+              ref={titleInputRef}
               className="v-form-input"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -625,11 +664,11 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
           </div>
 
           {error && (
-            <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.875rem', marginBottom: 12 }}>{error}</div>
+            <div className="v-error" style={{ marginBottom: 12 }}>{error}</div>
           )}
 
           <div className="v-form-actions">
-            <button className="v-btn v-btn-primary" type="submit" disabled={saving || !title.trim() || !eventDate}>
+            <button className="v-btn v-btn-primary" type="submit" disabled={saving || !title.trim() || !eventDate || splitsInvalid}>
               {saving ? 'Saving...' : isEdit ? 'Save Changes' : 'Create Event'}
             </button>
             {isEdit && (
@@ -637,13 +676,12 @@ export default function EventForm({ tripId, members, event, initialDate, onClose
                 className="v-btn v-btn-danger"
                 type="button"
                 onClick={handleDelete}
-                onBlur={() => setConfirmingDelete(false)}
                 disabled={deleting}
               >
                 {deleting ? 'Deleting...' : confirmingDelete ? 'Confirm delete?' : 'Delete'}
               </button>
             )}
-            <button className="v-btn v-btn-secondary" type="button" onClick={onClose}>
+            <button className="v-btn v-btn-secondary" type="button" onClick={confirmClose}>
               Cancel
             </button>
           </div>

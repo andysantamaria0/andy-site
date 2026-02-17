@@ -77,7 +77,7 @@ export default function TripDatesEditor({ trip }) {
           style={{ fontSize: '0.85rem' }}
         />
       </div>
-      {error && <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.75rem', marginTop: 4 }}>{error}</div>}
+      {error && <div className="v-error-sm" style={{ marginTop: 4 }}>{error}</div>}
       <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
         <button className="v-btn v-btn-primary" onClick={handleSave} disabled={saving} style={{ fontSize: '0.8rem', padding: '6px 14px' }}>
           {saving ? '...' : 'Save'}

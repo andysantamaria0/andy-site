@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { format, parseISO } from 'date-fns';
 import { createClient } from '../../lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import AddExpenseForm from './AddExpenseForm';
@@ -131,12 +132,12 @@ export default function ExpensesView({ tripId, trip, members, expenses, eventCos
       <div className="v-expense-summary">
         <div className="v-expense-summary-card">
           <div className="v-expense-summary-label">Total Spent</div>
-          <div className="v-expense-summary-value">${totalSpent.toFixed(2)}</div>
+          <div className="v-expense-summary-value">{trip.currency || 'USD'} {totalSpent.toFixed(2)}</div>
         </div>
         {Object.entries(paidByPerson).sort((a, b) => b[1] - a[1]).map(([name, amount]) => (
           <div key={name} className="v-expense-summary-card">
             <div className="v-expense-summary-label">{name}</div>
-            <div className="v-expense-summary-value v-expense-summary-value-sm">${amount.toFixed(2)}</div>
+            <div className="v-expense-summary-value v-expense-summary-value-sm">{trip.currency || 'USD'} {amount.toFixed(2)}</div>
           </div>
         ))}
       </div>
@@ -176,7 +177,7 @@ export default function ExpensesView({ tripId, trip, members, expenses, eventCos
                   )}
                 </div>
                 <div className="v-expense-meta">
-                  {item.date} &middot; {item.payer}
+                  {item.date ? format(parseISO(item.date), 'MMM d') : ''} &middot; {item.payer}
                 </div>
               </div>
               <span className="v-expense-amount">{item.currency} {item.amount.toFixed(2)}</span>

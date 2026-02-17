@@ -222,7 +222,7 @@ export default function InboxItem({ email, tripId, isOwner }) {
           )}
 
           {email.parse_error && (
-            <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.875rem', marginBottom: 12 }}>
+            <div className="v-error" style={{ marginBottom: 12 }}>
               Parse error: {email.parse_error}
             </div>
           )}
@@ -317,7 +317,7 @@ export default function InboxItem({ email, tripId, isOwner }) {
               {parsed.notes && (
                 <div className="v-parsed-section">
                   <div className="v-parsed-section-title">Notes</div>
-                  <p style={{ color: 'var(--v-pearl-dim)', fontSize: '0.875rem' }}>{parsed.notes}</p>
+                  <p className="v-hint">{parsed.notes}</p>
                 </div>
               )}
             </div>
@@ -416,7 +416,7 @@ export default function InboxItem({ email, tripId, isOwner }) {
               {result.errors?.length > 0 && (
                 <div style={{ marginTop: 8 }}>
                   {result.errors.map((err, i) => (
-                    <div key={i} style={{ color: 'var(--v-cinnabar)', fontSize: '0.8125rem', marginTop: 4 }}>{err}</div>
+                    <div key={i} className="v-error" style={{ marginTop: 4 }}>{err}</div>
                   ))}
                 </div>
               )}
@@ -424,7 +424,7 @@ export default function InboxItem({ email, tripId, isOwner }) {
           )}
 
           {error && (
-            <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.875rem', marginTop: 8 }}>{error}</div>
+            <div className="v-error" style={{ marginTop: 8 }}>{error}</div>
           )}
 
           {email.status === 'pending' && isOwner && parsed && !result && (

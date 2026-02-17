@@ -202,7 +202,7 @@ export default function SmartPaste({ tripId }) {
       )}
 
       {error && (
-        <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.875rem', marginTop: 12 }}>{error}</div>
+        <div className="v-error" style={{ marginTop: 12 }}>{error}</div>
       )}
 
       {parsed && !result && (
@@ -280,7 +280,7 @@ export default function SmartPaste({ tripId }) {
           {parsed.notes && (
             <div className="v-parsed-section">
               <div className="v-parsed-section-title">Notes</div>
-              <p style={{ color: 'var(--v-pearl-dim)', fontSize: '0.875rem' }}>{parsed.notes}</p>
+              <p className="v-hint">{parsed.notes}</p>
             </div>
           )}
 
@@ -309,7 +309,7 @@ export default function SmartPaste({ tripId }) {
             {result.errors?.length > 0 && ` (${result.errors.length} error${result.errors.length !== 1 ? 's' : ''})`}
           </div>
           {result.errors?.length > 0 && (
-            <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.8125rem', marginTop: 8 }}>
+            <div className="v-error" style={{ marginTop: 8 }}>
               {result.errors.map((e, i) => <div key={i}>{e}</div>)}
             </div>
           )}

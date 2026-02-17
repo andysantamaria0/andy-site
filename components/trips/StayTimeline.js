@@ -35,7 +35,7 @@ export default function StayTimeline({ trip, members }) {
     return (
       <div style={{ marginBottom: 32 }}>
         <h2 className="v-section-title">Who&apos;s There When</h2>
-        <p style={{ color: 'var(--v-pearl-dim)', fontSize: '0.875rem' }}>
+        <p className="v-hint">
           No one has set their stay dates yet. Go to Members to add yours.
         </p>
       </div>

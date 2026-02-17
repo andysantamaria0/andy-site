@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createClient } from '../../lib/supabase/client';
 import { useRouter } from 'next/navigation';
 
@@ -19,8 +19,10 @@ export default function AddExpenseForm({ tripId, members, myMemberId, currency, 
   const isEditing = !!expense;
   const router = useRouter();
   const supabase = createClient();
+  const descInputRef = useRef(null);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [form, setForm] = useState({
     description: expense?.description || '',
     vendor: expense?.vendor || '',
@@ -35,6 +37,32 @@ export default function AddExpenseForm({ tripId, members, myMemberId, currency, 
   function update(field, value) {
     setForm(prev => ({ ...prev, [field]: value }));
   }
+
+  const isDirty = form.description || form.vendor || form.amount || form.notes;
+
+  const confirmCloseRef = useRef(null);
+  confirmCloseRef.current = function () {
+    if (!isEditing && isDirty) {
+      if (!window.confirm('You have unsaved changes. Discard?')) return;
+    }
+    onClose();
+  };
+
+  function confirmClose() {
+    confirmCloseRef.current();
+  }
+
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (e.key === 'Escape') confirmCloseRef.current();
+    }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    if (descInputRef.current) descInputRef.current.focus();
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -83,7 +111,11 @@ export default function AddExpenseForm({ tripId, members, myMemberId, currency, 
   }
 
   async function handleDelete() {
-    if (!confirm('Delete this expense?')) return;
+    if (!confirmingDelete) {
+      setConfirmingDelete(true);
+      setTimeout(() => setConfirmingDelete(false), 3000);
+      return;
+    }
     setDeleting(true);
     const { error } = await supabase.from('expenses').delete().eq('id', expense.id);
     setDeleting(false);
@@ -94,13 +126,14 @@ export default function AddExpenseForm({ tripId, members, myMemberId, currency, 
   }
 
   return (
-    <div className="v-expense-modal-overlay" onClick={onClose}>
-      <div className="v-expense-modal" onClick={e => e.stopPropagation()}>
+    <div className="v-expense-modal-overlay" onClick={confirmClose}>
+      <div className="v-expense-modal" role="dialog" aria-modal="true" aria-label={isEditing ? 'Edit Expense' : 'Add Expense'} onClick={e => e.stopPropagation()}>
         <div className="v-expense-modal-title">{isEditing ? 'Edit Expense' : 'Add Expense'}</div>
         <form onSubmit={handleSubmit}>
           <div className="v-expense-form-row">
             <label>Description *</label>
             <input
+              ref={descInputRef}
               className="v-form-input"
               value={form.description}
               onChange={e => update('description', e.target.value)}
@@ -202,10 +235,10 @@ export default function AddExpenseForm({ tripId, members, myMemberId, currency, 
             </button>
             {isEditing && (
               <button type="button" className="v-btn v-btn-danger" onClick={handleDelete} disabled={saving || deleting}>
-                {deleting ? 'Deleting...' : 'Delete'}
+                {deleting ? 'Deleting...' : confirmingDelete ? 'Confirm delete?' : 'Delete'}
               </button>
             )}
-            <button type="button" className="v-btn v-btn-secondary" onClick={onClose}>
+            <button type="button" className="v-btn v-btn-secondary" onClick={confirmClose}>
               Cancel
             </button>
           </div>

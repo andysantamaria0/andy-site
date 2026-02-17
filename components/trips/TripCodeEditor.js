@@ -85,7 +85,7 @@ export default function TripCodeEditor({ tripId, initialCode, initialKeywords })
         style={{ fontSize: '0.8125rem', marginBottom: 8, width: '100%' }}
       />
       {error && (
-        <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.75rem', marginBottom: 6 }}>{error}</div>
+        <div className="v-error-sm" style={{ marginBottom: 6 }}>{error}</div>
       )}
       <div style={{ display: 'flex', gap: 8 }}>
         <button className="v-btn v-btn-primary" onClick={handleSave} disabled={saving} style={{ fontSize: '0.75rem', padding: '4px 12px' }}>

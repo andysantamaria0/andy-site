@@ -42,15 +42,14 @@ export default function RequestAccessCTA() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="v-request-access-form" style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-start' }}>
+    <form onSubmit={handleSubmit} className="v-request-access-form" style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-start', maxWidth: 320 }}>
       <input
         type="text"
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
-        className="v-btn v-btn-google v-landing-cta"
-        style={{ width: '100%', textAlign: 'left', cursor: 'text' }}
+        className="v-form-input"
       />
       <input
         type="email"
@@ -58,8 +57,7 @@ export default function RequestAccessCTA() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="v-btn v-btn-google v-landing-cta"
-        style={{ width: '100%', textAlign: 'left', cursor: 'text' }}
+        className="v-form-input"
       />
       <button
         type="submit"

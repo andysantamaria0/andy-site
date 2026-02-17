@@ -75,7 +75,7 @@ export default function StayDatesEditor({ membership, tripStart, tripEnd }) {
           {saving ? 'Saving...' : status === 'saved' ? 'Saved' : 'Save'}
         </button>
         {status === 'error' && (
-          <span style={{ color: 'var(--v-cinnabar)', fontSize: '0.75rem', alignSelf: 'flex-end' }}>
+          <span className="v-error-sm" style={{ alignSelf: 'flex-end' }}>
             Failed to save. Try again.
           </span>
         )}

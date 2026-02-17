@@ -21,7 +21,13 @@ export const metadata = {
   },
 };
 
-function PhoneMockup() {
+function PhoneMockup({ trip, durationNights }) {
+  const dest = trip?.destination || 'CÔTE D\'AZUR';
+  const name = trip?.name || 'Summer in Nice';
+  const dates = trip?.start_date && trip?.end_date
+    ? `${formatDateRange(trip.start_date, trip.end_date)}${durationNights ? ` · ${durationNights} nights` : ''}`
+    : 'Jun 15 – Jun 22 · 7 nights';
+
   return (
     <div className="v-phone">
       <div className="v-phone-notch" />
@@ -34,11 +40,11 @@ function PhoneMockup() {
         {/* Trip card */}
         <div className="v-phone-trip-card">
           <div className="v-phone-trip-header">
-            <div className="v-phone-trip-dest">CÔTE D&apos;AZUR</div>
-            <div className="v-phone-trip-name">Summer in Nice</div>
+            <div className="v-phone-trip-dest">{dest.toUpperCase()}</div>
+            <div className="v-phone-trip-name">{name}</div>
             <span className="v-phone-live-badge">Live</span>
           </div>
-          <div className="v-phone-trip-dates">Jun 15 – Jun 22 · 7 nights</div>
+          <div className="v-phone-trip-dates">{dates}</div>
         </div>
         {/* Happening Now */}
         <div className="v-phone-section-label">HAPPENING NOW</div>
@@ -69,7 +75,7 @@ function PhoneMockup() {
   );
 }
 
-function CalendarMockup() {
+function CalendarMockup({ tripName }) {
   const days = [
     { day: 'Mon', date: '15', events: [{ label: 'Arrive Nice', color: 'royal', time: '2:32 PM', icon: '✈' }] },
     { day: 'Tue', date: '16', events: [{ label: 'Beach & Old Town', color: 'champagne', time: 'All day', icon: '☀' }] },
@@ -85,7 +91,7 @@ function CalendarMockup() {
     <div className="v-mock v-mock-calendar">
       <div className="v-mock-bar">
         <span className="v-mock-bar-title">June 2026</span>
-        <span className="v-mock-bar-sub">Summer in Nice</span>
+        <span className="v-mock-bar-sub">{tripName || 'Summer in Nice'}</span>
       </div>
       <div className="v-mock-cal-grid">
         {days.map(d => (
@@ -110,12 +116,12 @@ function CalendarMockup() {
   );
 }
 
-function ConciergeMockup() {
+function ConciergeMockup({ tripName }) {
   return (
     <div className="v-mock v-mock-chat">
       <div className="v-mock-bar">
         <span className="v-mock-bar-title">Concierge</span>
-        <span className="v-mock-bar-sub">Summer in Nice</span>
+        <span className="v-mock-bar-sub">{tripName || 'Summer in Nice'}</span>
       </div>
       <div className="v-mock-chat-body">
         <div className="v-mock-chat-msg v-mock-chat-user">
@@ -261,12 +267,12 @@ function WhatsAppMockup() {
   );
 }
 
-function TravelLogMockup() {
+function TravelLogMockup({ tripName }) {
   return (
     <div className="v-mock v-mock-log">
       <div className="v-mock-bar">
         <span className="v-mock-bar-title">Travel Log</span>
-        <span className="v-mock-bar-sub">Summer in Nice</span>
+        <span className="v-mock-bar-sub">{tripName || 'Summer in Nice'}</span>
       </div>
       <div className="v-mock-log-body">
         <div className="v-mock-log-entry">
@@ -390,7 +396,7 @@ export default async function LandingPage() {
           )}
         </div>
         <div className="v-landing-hero-visual">
-          <PhoneMockup />
+          <PhoneMockup trip={featuredTrip} durationNights={duration} />
         </div>
       </section>
 
@@ -430,7 +436,7 @@ export default async function LandingPage() {
             </p>
           </div>
           <div className="v-landing-showcase-visual">
-            <CalendarMockup />
+            <CalendarMockup tripName={featuredTrip?.name} />
           </div>
         </div>
 
@@ -444,7 +450,7 @@ export default async function LandingPage() {
             </p>
           </div>
           <div className="v-landing-showcase-pair">
-            <ConciergeMockup />
+            <ConciergeMockup tripName={featuredTrip?.name} />
             <InboxMockup />
           </div>
         </div>
@@ -487,7 +493,7 @@ export default async function LandingPage() {
             </p>
           </div>
           <div className="v-landing-showcase-visual">
-            <TravelLogMockup />
+            <TravelLogMockup tripName={featuredTrip?.name} />
           </div>
         </div>
       </section>

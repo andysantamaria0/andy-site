@@ -65,7 +65,7 @@ export default function ClaimForm({ membershipId, tripId }) {
 
   return (
     <div>
-      {error && <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.75rem', marginBottom: 8 }}>{error}</div>}
+      {error && <div className="v-error-sm" style={{ marginBottom: 8 }}>{error}</div>}
       <button
         className="v-btn v-btn-primary"
         onClick={handleClaim}

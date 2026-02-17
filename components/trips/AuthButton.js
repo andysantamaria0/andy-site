@@ -90,7 +90,7 @@ export default function AuthButton() {
 
       <form onSubmit={handleEmailSignIn} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {error && (
-          <div style={{ color: 'var(--v-cinnabar)', fontSize: '0.8125rem' }}>{error}</div>
+          <div className="v-error">{error}</div>
         )}
         <input
           className="v-form-input"

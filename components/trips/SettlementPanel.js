@@ -175,7 +175,7 @@ export default function SettlementPanel({ tripId, members, expenses, eventCosts,
         </div>
 
         {transactions.length === 0 ? (
-          <p style={{ color: 'var(--v-pearl-dim)', fontSize: '0.875rem' }}>
+          <p className="v-hint">
             All settled up — no payments needed.
           </p>
         ) : (

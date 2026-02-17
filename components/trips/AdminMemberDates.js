@@ -88,7 +88,7 @@ export default function AdminMemberDates({ member, tripStart, tripEnd }) {
           </button>
         )}
         {status === 'error' && (
-          <span style={{ color: 'var(--v-cinnabar)', fontSize: '0.75rem' }}>Error</span>
+          <span className="v-error-sm">Error</span>
         )}
       </div>
     </div>
