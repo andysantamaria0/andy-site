@@ -55,7 +55,7 @@ export default function VialoureDetail() {
             <li>Month grid and day list views</li>
             <li>Event categories: dinner out, dinner home, activity, outing, party, sightseeing</li>
             <li>Each event can have a time, location, Google Maps link, notes, and attendees</li>
-            <li>See who&apos;s present each day with member dots on the calendar</li>
+            <li>See who&apos;s present each day with overlapping mini avatars on the calendar</li>
             <li>Stay timeline shows arrivals and departures at a glance</li>
           </ul>
 
@@ -153,6 +153,34 @@ export default function VialoureDetail() {
             I designed every detail of the app — font choice, scaling, animations, UI components — to tell a consistent story. The aesthetic is &ldquo;Grand Tour&rdquo;: mysterious elegance, Côte d&apos;Azur at twilight, Grace Kelly sophistication. Dark-first with Fraunces for display, Crimson Pro for literary body text, and champagne accents throughout.
           </p>
           <img className="stand-screenshot" src="/stand/vialoure-invite.png" alt="Vialoure personal invite — typewriter-styled letter" style={{ marginTop: 16, marginBottom: 16 }} />
+
+          <h3>Animation &amp; Motion</h3>
+          <ul>
+            <li>Page content fades in with a subtle upward slide on every route change</li>
+            <li>Modals animate in with coordinated overlay fade and content entrance</li>
+            <li>Motion tokens (<span className="stand-detail-code">--v-micro</span>, <span className="stand-detail-code">--v-standard</span>, <span className="stand-detail-code">--v-dramatic</span>) and a shared easing curve keep timing consistent</li>
+          </ul>
+
+          <h3>Responsive Design</h3>
+          <ul>
+            <li>Three-tier layout: mobile (600px), tablet (900px), desktop</li>
+            <li>Calendar auto-switches from month grid to day list on mobile, with manual override</li>
+            <li>Overview grid, calendar cells, and navigation adapt at each breakpoint</li>
+          </ul>
+
+          <h3>Accessibility</h3>
+          <ul>
+            <li>All modals trap focus, close on Escape, and warn before discarding unsaved changes</li>
+            <li>Destructive actions (delete event, delete expense) require a two-click confirmation with auto-reset</li>
+            <li>Form validation blocks submission when custom cost splits don&apos;t add up</li>
+          </ul>
+
+          <h3>Design Tokens</h3>
+          <ul>
+            <li>All colors, spacing, typography, and motion values live in CSS custom properties with a <span className="stand-detail-code">v-</span> namespace</li>
+            <li>Utility classes (<span className="stand-detail-code">.v-error</span>, <span className="stand-detail-code">.v-hint</span>) replace repeated inline styles across 20+ components</li>
+            <li>Light mode via <span className="stand-detail-code">prefers-color-scheme</span> — no toggle, no flash</li>
+          </ul>
         </div>
 
         <NotchReveal compact />
