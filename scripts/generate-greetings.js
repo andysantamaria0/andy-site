@@ -16,7 +16,7 @@ if (!API_KEY) {
 const clips = [
   {
     filename: 'concierge-greeting.mp3',
-    text: "Hi! This is the Vialoure concierge. Leave a message with your trip details and we'll take care of it.",
+    text: "Hi, you've reached the Vialoure concierge. After the beep, leave your trip details — flights, expenses, reservations, whatever you've got. When you're done, stay on the line and we'll confirm we got everything sorted.",
   },
   {
     filename: 'concierge-thanks.mp3',
