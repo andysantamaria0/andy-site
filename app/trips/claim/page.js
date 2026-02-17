@@ -31,7 +31,7 @@ export default async function ClaimPage() {
         <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.75rem', marginBottom: 8 }}>
           You&apos;ve been invited!
         </h1>
-        <p style={{ color: 'var(--v-pearl-dim)', fontSize: '0.95rem' }}>
+        <p className="v-hint">
           {claimable.length === 1
             ? 'Someone added you to a trip. Claim your spot to join.'
             : `You've been added to ${claimable.length} trips. Claim your spots below.`}
@@ -43,10 +43,10 @@ export default async function ClaimPage() {
           <div style={{ fontWeight: 700, fontSize: '1.1rem', marginBottom: 4 }}>
             {membership.trips?.name || 'Trip'}
           </div>
-          <div style={{ color: 'var(--v-pearl-dim)', fontSize: '0.85rem', marginBottom: 12 }}>
+          <div className="v-hint" style={{ marginBottom: 12 }}>
             {membership.trips?.destination || 'Destination TBD'}
           </div>
-          <div style={{ fontSize: '0.8rem', color: 'var(--v-pearl-dim)', marginBottom: 12 }}>
+          <div className="v-hint-sm" style={{ marginBottom: 12 }}>
             Added as: <strong style={{ color: 'var(--v-pearl)' }}>{membership.display_name}</strong>
           </div>
           <ClaimForm membershipId={membership.id} tripId={membership.trip_id} />
@@ -54,7 +54,7 @@ export default async function ClaimPage() {
       ))}
 
       <div style={{ textAlign: 'center', marginTop: 24 }}>
-        <a href="/trips" style={{ color: 'var(--v-pearl-dim)', fontSize: '0.8rem' }}>
+        <a href="/trips" className="v-hint-sm">
           Skip for now &rarr;
         </a>
       </div>

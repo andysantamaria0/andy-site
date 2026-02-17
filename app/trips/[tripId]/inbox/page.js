@@ -60,7 +60,7 @@ export default async function InboxPage({ params }) {
       </h2>
 
       {pending.length === 0 ? (
-        <p style={{ color: 'var(--v-pearl-dim)', fontSize: '0.9375rem' }}>
+        <p className="v-hint">
           The inbox awaits its first correspondence. Send the concierge your booking confirmations, flight details, or travel plans.
         </p>
       ) : (
