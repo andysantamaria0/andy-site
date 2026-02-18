@@ -445,13 +445,10 @@ export default function ProposalContent() {
         <div className="stand-note">
           <div className="stand-note-label">The Bottom Line</div>
           <p>
-            You told me you want something kids feel like they&apos;re a part of, that feels cool and relevant, without being so heavy-handed that it takes away from their brand, their experience, their business. You want something that isn&apos;t &ldquo;vibe coded&rdquo; &mdash; something with real soul.
+            You told me you want something kids feel like they&apos;re a part of, that feels cool and relevant, without being so heavy-handed that it takes away from their brand, their experience, their business. You want something that isn&apos;t &ldquo;vibe coded.&rdquo;
           </p>
           <p>
-            I can promise you that in two weeks, you&apos;ll have something you can ship to a hundred families that you&apos;re proud of. Not a prototype. Not a demo. A real product that real kids will use to start real businesses.
-          </p>
-          <p>
-            Let&apos;s build it.
+            In two weeks, you&apos;ll have something with soul &mdash; something you can ship to a hundred families that you&apos;re proud of. Not a prototype. Not a demo. A real product that will engage and inspire kids to become entrepreneurs.
           </p>
           <div className="stand-note-signature">
             &mdash;Andy<span className="stand-note-cursor" />
