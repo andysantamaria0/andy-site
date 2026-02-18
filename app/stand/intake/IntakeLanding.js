@@ -36,14 +36,7 @@ export default function IntakeLanding() {
           </span>
           <span className="intake-landing-card-arrow">Get started &rarr;</span>
         </button>
-        <button className="intake-landing-card" onClick={() => startConcierge('freeform')}>
-          <span className="intake-landing-card-title">&ldquo;Let me talk&rdquo;</span>
-          <span className="intake-landing-card-desc">
-            Chat or speak freely. The AI fills in fields as you go &mdash; like a conversation instead of a form.
-          </span>
-          <span className="intake-landing-card-arrow">Start chatting &rarr;</span>
-        </button>
-        <button className="intake-landing-card" onClick={() => setMode('form')}>
+<button className="intake-landing-card" onClick={() => setMode('form')}>
           <span className="intake-landing-card-title">&ldquo;Just the form&rdquo;</span>
           <span className="intake-landing-card-desc">
             Step through each section one at a time. Review and edit the pre-filled answers directly.

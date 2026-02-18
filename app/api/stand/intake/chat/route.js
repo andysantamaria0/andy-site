@@ -6,7 +6,6 @@ const FIELD_LABELS = {
   elevator_pitch: 'What is the one sentence you\'d use to describe Stand to a parent?',
   success_6mo: 'What does success look like 6 months from now?',
   success_12mo: 'And 12 months from now?',
-  primary_user: 'Who is the primary user?',
   age_range: 'What age range are you targeting?',
   first_win: 'What does a kid\'s "first win" look like in the app?',
   built_today: 'What do you have built today?',
@@ -45,10 +44,10 @@ CRITICAL: When your response should update any form fields, end your message wit
 
 Only include fields that should actually change. Do NOT include the block if nothing should change.
 
-Field IDs: elevator_pitch, success_6mo, success_12mo, primary_user (must be one of: "The parent", "The kid", "Both equally"), age_range, first_win, built_today, working_not_working, real_money, personality_words, design_admire, mobile_desktop (must be one of: "Mobile-first", "Desktop-first", "Equal priority"), timeline`;
+Field IDs: elevator_pitch, success_6mo, success_12mo, age_range, first_win, built_today, working_not_working, real_money, personality_words, design_admire, mobile_desktop (must be one of: "Mobile-first", "Desktop-first", "Equal priority"), timeline`;
 }
 
-function buildGuidedPrompt(formState, currentFieldId) {
+function buildGuidedPrompt(formState, currentFieldId, fieldIndex) {
   const fieldSummary = Object.entries(formState)
     .map(([key, value]) => `- ${key}: ${value ? `"${value}"` : '(empty)'}`)
     .join('\n');
@@ -71,7 +70,7 @@ ${fieldSummary}
 CRITICAL: When she confirms submission, end your message with <SUBMIT/>. When updating fields, use:
 <FIELD_UPDATES>{"field_id":"new value"}</FIELD_UPDATES>
 
-Field IDs: elevator_pitch, success_6mo, success_12mo, primary_user, age_range, first_win, built_today, working_not_working, real_money, personality_words, design_admire, mobile_desktop, timeline`;
+Field IDs: elevator_pitch, success_6mo, success_12mo, age_range, first_win, built_today, working_not_working, real_money, personality_words, design_admire, mobile_desktop, timeline`;
   }
 
   const label = FIELD_LABELS[currentFieldId] || currentFieldId;
@@ -80,17 +79,20 @@ Field IDs: elevator_pitch, success_6mo, success_12mo, primary_user, age_range, f
   return `You are walking Lauren through her Stand intake questionnaire one question at a time. You're warm and conversational — like a friendly colleague, not a robot.
 
 The current question is: "${label}" (field: ${currentFieldId})
-${currentValue ? `Current answer: "${currentValue}"` : 'This field is currently empty.'}
+${currentValue ? `This field already has an answer filled in.` : 'This field is currently empty.'}
 
 Rules:
-- Ask this ONE question conversationally. Don't read it verbatim — rephrase naturally.
-- Keep it short — one or two sentences max.
-- When she answers, confirm briefly (one short sentence) and include <NEXT_FIELD/> at the very end of your message to signal we should move to the next question.
-- If the field already has a value, mention it briefly and ask if she wants to keep it or change it.
+- If the user message is "[ASK_NEXT]", this is a system signal to ask the current question. Just ask the question — do NOT include <NEXT_FIELD/> in your response. Only ask, nothing else.
+- State this ONE question conversationally. Don't read it verbatim — rephrase naturally.
+- Keep it very short — one sentence.
+- Do NOT read back or summarize the current answer. Just ask the question. The user can see the answer on the form.
+${fieldIndex < 2
+  ? `- If the field already has a value, after stating the question say something like "want to keep what's there or update it?"`
+  : `- Do NOT ask "want to keep or update?" — she knows the drill by now. Just ask the question.${fieldIndex === 4 || fieldIndex === 8 ? ` For this one, you can casually end with something like "what do you think?" to keep it conversational.` : ''}`}
+- ONLY include <NEXT_FIELD/> when she gives an actual answer or explicitly says to keep the current value (e.g. "keep it", "that's fine", "looks good").
+- When she answers, confirm briefly (one short sentence) and include <NEXT_FIELD/> at the very end of your message.
 - DO NOT give opinions, analysis, or commentary on her answers.
 - DO NOT ask follow-up questions beyond the current field.
-- If she says something like "keep it" or "that's fine," accept the current value and move on with <NEXT_FIELD/>.
-${currentFieldId === 'primary_user' ? '- Options are: "The parent", "The kid", or "Both equally".' : ''}
 ${currentFieldId === 'mobile_desktop' ? '- Options are: "Mobile-first", "Desktop-first", or "Equal priority".' : ''}
 
 Current form fields:
@@ -102,12 +104,12 @@ CRITICAL: When your response should update any form fields, end your message wit
 
 Only include the block if a field value should change. After confirming her answer, always end with <NEXT_FIELD/> (after the FIELD_UPDATES block if present).
 
-Field IDs: elevator_pitch, success_6mo, success_12mo, primary_user, age_range, first_win, built_today, working_not_working, real_money, personality_words, design_admire, mobile_desktop, timeline`;
+Field IDs: elevator_pitch, success_6mo, success_12mo, age_range, first_win, built_today, working_not_working, real_money, personality_words, design_admire, mobile_desktop, timeline`;
 }
 
 export async function POST(request) {
   try {
-    const { message, history, formState, mode, currentFieldId } = await request.json();
+    const { message, history, formState, mode, currentFieldId, fieldIndex } = await request.json();
 
     if (!message) {
       return new Response(JSON.stringify({ error: 'Message is required' }), {
@@ -117,7 +119,7 @@ export async function POST(request) {
     }
 
     const systemPrompt = mode === 'guided'
-      ? buildGuidedPrompt(formState || {}, currentFieldId)
+      ? buildGuidedPrompt(formState || {}, currentFieldId, fieldIndex ?? 0)
       : buildFreeformPrompt(formState || {});
 
     const messages = [

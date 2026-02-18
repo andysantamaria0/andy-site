@@ -29,21 +29,22 @@ export default function IntakeConcierge({ mode = 'freeform' }) {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
   const [currentFieldIndex, setCurrentFieldIndex] = useState(0);
-  const chatEndRef = useRef(null);
   const inputRef = useRef(null);
   const abortRef = useRef(null);
   const sendRef = useRef(null);
   const submitRef = useRef(null);
-  const formPaneRef = useRef(null);
 
   const { playAudio, stop: stopAudio, isSpeaking, muted, toggleMute } = useConciergeAudio();
 
   const currentField = isGuided ? ALL_FIELDS[currentFieldIndex] : null;
   const guidedComplete = isGuided && currentFieldIndex >= ALL_FIELDS.length;
 
-  // Auto-scroll chat
+  // Auto-scroll chat (scoped to messages container only)
+  const messagesRef = useRef(null);
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesRef.current) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
   }, [messages]);
 
   // Auto-resize textareas when form data changes
@@ -56,14 +57,6 @@ export default function IntakeConcierge({ mode = 'freeform' }) {
     });
   }, [formData]);
 
-  // Auto-scroll form pane to current field in guided mode
-  useEffect(() => {
-    if (!isGuided || !currentField) return;
-    const el = document.getElementById(`c-field-${currentField.id}`);
-    if (el && formPaneRef.current) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  }, [isGuided, currentField]);
 
   const { isListening, isSupported, toggle: toggleMic } = useSpeechRecognition({
     onResult: (transcript) => {
@@ -89,10 +82,15 @@ export default function IntakeConcierge({ mode = 'freeform' }) {
     setIsStreaming(true);
     setChatOpen(true);
 
+    const isSystemSignal = msg === '[ASK_NEXT]';
     const userMessage = { role: 'user', content: msg };
     const assistantMessage = { role: 'assistant', content: '' };
 
-    setMessages(prev => [...prev, userMessage, assistantMessage]);
+    // Hide system signals from chat display
+    setMessages(prev => isSystemSignal
+      ? [...prev, assistantMessage]
+      : [...prev, userMessage, assistantMessage]
+    );
 
     // Build history (exclude the initial greeting and new messages)
     const history = messages
@@ -111,6 +109,7 @@ export default function IntakeConcierge({ mode = 'freeform' }) {
       if (isGuided) {
         body.mode = 'guided';
         body.currentFieldId = currentField?.id;
+        body.fieldIndex = currentFieldIndex;
       }
 
       const res = await fetch('/api/stand/intake/chat', {
@@ -191,12 +190,10 @@ export default function IntakeConcierge({ mode = 'freeform' }) {
       }
 
       // Check for NEXT_FIELD signal in guided mode
+      // Only advance if this was an actual user answer, not an [ASK_NEXT] system signal
       const hasNextField = fullText.includes('<NEXT_FIELD/>');
-      if (isGuided && hasNextField) {
-        setCurrentFieldIndex(prev => {
-          const next = prev + 1;
-          return next;
-        });
+      if (isGuided && hasNextField && !isSystemSignal) {
+        setCurrentFieldIndex(prev => prev + 1);
       }
 
       // Check for SUBMIT signal
@@ -266,9 +263,9 @@ export default function IntakeConcierge({ mode = 'freeform' }) {
       return () => clearTimeout(timer);
     }
 
-    // Auto-ask next question
+    // Auto-ask next question (hidden system signal)
     const timer = setTimeout(() => {
-      sendRef.current?.("Next question, please.");
+      sendRef.current?.("[ASK_NEXT]");
     }, 1000);
     return () => clearTimeout(timer);
   }, [currentFieldIndex, isGuided]);
@@ -431,28 +428,28 @@ export default function IntakeConcierge({ mode = 'freeform' }) {
               className={`concierge-mute${muted ? ' concierge-mute-active' : ''}`}
               onClick={toggleMute}
               aria-label={muted ? 'Unmute voice' : 'Mute voice'}
-              title={muted ? 'Unmute voice' : 'Mute voice'}
             >
               {muted ? (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                   <line x1="23" y1="9" x2="17" y2="15" />
                   <line x1="17" y1="9" x2="23" y2="15" />
                 </svg>
               ) : (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                   <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
                   <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
                 </svg>
               )}
+              <span className="concierge-mute-tooltip">{muted ? 'Unmute concierge' : "Mute concierge, I\u2019ll read on my own"}</span>
             </button>
             <button className="concierge-chat-close" onClick={() => setChatOpen(false)} aria-label="Close chat">
               &times;
             </button>
           </div>
         </div>
-        <div className="concierge-messages">
+        <div className="concierge-messages" ref={messagesRef}>
           {messages.map((msg, i) => (
             <div key={i} className={`concierge-msg concierge-msg-${msg.role}`}>
               <div className={`concierge-bubble concierge-bubble-${msg.role}${isSpeaking && msg.role === 'assistant' && i === messages.length - 1 ? ' concierge-speaking' : ''}`}>
@@ -463,7 +460,33 @@ export default function IntakeConcierge({ mode = 'freeform' }) {
               </div>
             </div>
           ))}
-          <div ref={chatEndRef} />
+          {isGuided && !isStreaming && !guidedComplete && messages.length > 0 && messages[messages.length - 1]?.role === 'assistant' && (
+            <div className="concierge-actions">
+              <button
+                className="concierge-action concierge-action-keep"
+                onClick={() => sendMessage('Keep it')}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Keep it
+              </button>
+              {isSupported && (
+                <button
+                  className="concierge-action concierge-action-record"
+                  onClick={handleMicClick}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                    <line x1="12" y1="19" x2="12" y2="23" />
+                    <line x1="8" y1="23" x2="16" y2="23" />
+                  </svg>
+                  I&apos;ll tell you
+                </button>
+              )}
+            </div>
+          )}
         </div>
         <div className="concierge-input-row">
           <input
@@ -506,7 +529,7 @@ export default function IntakeConcierge({ mode = 'freeform' }) {
       </div>
 
       {/* Right: Form */}
-      <div className="concierge-form" ref={formPaneRef}>
+      <div className="concierge-form">
         <div className="concierge-form-inner">
           <div className="intake-brand">Andy Santamaria</div>
           <div className="concierge-form-heading">

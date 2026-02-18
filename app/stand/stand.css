@@ -773,6 +773,51 @@
   margin: 0;
 }
 
+/* ---- Sprint Milestones ---- */
+
+.stand-sprint-milestone {
+  margin-bottom: 24px;
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  background: rgba(196, 167, 125, 0.03);
+  border-radius: 0 4px 4px 0;
+}
+
+.stand-sprint-milestone-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.stand-sprint-milestone-day {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  white-space: nowrap;
+  min-width: 72px;
+}
+
+.stand-sprint-milestone-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.stand-sprint-milestone p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin: 0;
+}
+
 .stand-checklist {
   list-style: none;
   padding: 0;
@@ -805,6 +850,27 @@
   border-color: var(--accent);
 }
 
+.stand-checklist-done {
+  opacity: 0.5;
+}
+
+.stand-checklist-done::before {
+  border-color: var(--accent) !important;
+  background: var(--accent);
+}
+
+.stand-checklist-done::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 9px;
+  width: 8px;
+  height: 4px;
+  border-left: 2px solid var(--bg);
+  border-bottom: 2px solid var(--bg);
+  transform: rotate(-45deg);
+}
+
 .stand-checklist li strong {
   color: var(--text);
   font-weight: 600;
@@ -828,6 +894,101 @@
   font-size: 0.85rem;
   color: var(--text-dim);
   margin-top: 4px;
+}
+
+/* ---- Investment Split ---- */
+
+.stand-investment-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 32px 0;
+}
+
+.stand-investment-card {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 24px;
+  background: rgba(240, 237, 230, 0.02);
+}
+
+.stand-investment-card-header {
+  margin-bottom: 16px;
+}
+
+.stand-investment-card-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.stand-investment-card-role {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+.stand-investment-card-amount {
+  font-family: 'Fraunces', serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.stand-investment-card-hours {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+  margin-bottom: 16px;
+}
+
+.stand-investment-card-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.stand-investment-card-list li {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  padding-left: 16px;
+  position: relative;
+}
+
+.stand-investment-card-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 5px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.stand-investment-card-note {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 600px) {
+  .stand-investment-split {
+    grid-template-columns: 1fr;
+  }
 }
 
 .stand-decisions {
@@ -862,6 +1023,17 @@
 .stand-decisions li strong {
   color: var(--text);
   font-weight: 600;
+}
+
+.stand-decisions-note {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
 }
 
 @media (max-width: 600px) {
