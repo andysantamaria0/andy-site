@@ -36,6 +36,10 @@ export async function GET(request) {
         const members = (byUserId?.length ? byUserId : byEmail) || [];
 
         if (members.length === 0) {
+          // If heading to a join page, let it handle membership validation
+          if (next.startsWith('/trips/join/')) {
+            return NextResponse.redirect(`${origin}${next}`);
+          }
           // Not invited — sign out and redirect
           await supabase.auth.signOut();
           return NextResponse.redirect(`${origin}/trips/not-invited`);

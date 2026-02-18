@@ -35,6 +35,7 @@ export async function middleware(request) {
     pathname.startsWith('/trips') &&
     !pathname.startsWith('/trips/login') &&
     !pathname.startsWith('/trips/auth') &&
+    !pathname.startsWith('/trips/join') &&
     !pathname.startsWith('/trips/not-invited') &&
     !user
   ) {

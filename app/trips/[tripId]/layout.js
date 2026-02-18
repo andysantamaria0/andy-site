@@ -6,6 +6,9 @@ import HappeningNowProvider from '../../../components/trips/HappeningNowProvider
 import HappeningNowPill from '../../../components/trips/HappeningNowPill';
 import { computeHappeningNow } from '../../../lib/utils/happeningNow';
 import { loadFeatures, isFeatureEnabled } from '../../../lib/features';
+import OnboardingProvider from '../../../components/trips/OnboardingProvider';
+import OnboardingPanel from '../../../components/trips/OnboardingPanel';
+import OnboardingSpotlight from '../../../components/trips/OnboardingSpotlight';
 
 export async function generateMetadata({ params }) {
   const { tripId } = await params;
@@ -53,7 +56,7 @@ export default async function TripLayout({ children, params }) {
   const [{ data: membership }, { data: profile }, featureMap] = await Promise.all([
     supabase
       .from('trip_members')
-      .select('role')
+      .select('id, role, onboarding_completed_at')
       .eq('trip_id', tripId)
       .eq('user_id', user?.id)
       .single(),
@@ -141,8 +144,17 @@ export default async function TripLayout({ children, params }) {
         <TripNav tripId={tripId} inboxCount={inboxCount || 0} enabledTabs={enabledTabs} />
       </div>
       <HappeningNowProvider items={happeningNowItems} tripId={tripId}>
-        {children}
-        {showHappeningNow && <HappeningNowPill />}
+        <OnboardingProvider
+          tripId={tripId}
+          tripName={trip.name}
+          memberId={membership?.id}
+          onboardingCompletedAt={membership?.onboarding_completed_at}
+        >
+          {children}
+          {showHappeningNow && <HappeningNowPill />}
+          <OnboardingPanel />
+          <OnboardingSpotlight />
+        </OnboardingProvider>
       </HappeningNowProvider>
     </>
   );

@@ -4,7 +4,9 @@ export const metadata = {
   title: 'Vialoure — Sign In',
 };
 
-export default function LoginPage() {
+export default async function LoginPage({ searchParams }) {
+  const { next } = await searchParams;
+
   return (
     <div className="v-login">
       <div className="v-login-brand">
@@ -16,7 +18,7 @@ export default function LoginPage() {
       </div>
       <div className="v-login-card">
         <p>Sign in to plan trips with your crew — shared calendars, expenses, and logistics in one place.</p>
-        <AuthButton />
+        <AuthButton next={next} />
       </div>
     </div>
   );

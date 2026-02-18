@@ -8,6 +8,7 @@ import FeaturedToggle from '../../../components/trips/FeaturedToggle';
 import TripCodeEditor from '../../../components/trips/TripCodeEditor';
 import HappeningNowInline from '../../../components/trips/HappeningNowInline';
 import { loadFeatures, isFeatureEnabled } from '../../../lib/features';
+import InviteLinkButton from '../../../components/trips/InviteLinkButton';
 import NotchReveal from '../../../components/NotchReveal';
 
 export default async function TripOverviewPage({ params }) {
@@ -105,6 +106,12 @@ export default async function TripOverviewPage({ params }) {
           )}
         </div>
       </div>
+
+      {isOwner && trip.trip_code && (
+        <div style={{ marginBottom: 24 }}>
+          <InviteLinkButton tripCode={trip.trip_code} />
+        </div>
+      )}
 
       <NotchReveal compact />
 

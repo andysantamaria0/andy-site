@@ -46,6 +46,16 @@ export default function AddMemberForm({ tripId, tripStart, tripEnd, existingMemb
     if (insertError) {
       setError(insertError.message);
     } else {
+      // Send invite email if member has an email
+      if (email.trim()) {
+        fetch(`/api/trips/${tripId}/invite`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email.trim(), name: name.trim() }),
+        }).catch(() => {
+          // Invite email is best-effort; don't block the flow
+        });
+      }
       setName('');
       setEmail('');
       setPhone('');

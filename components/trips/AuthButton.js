@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '../../lib/supabase/client';
 
-export default function AuthButton() {
+export default function AuthButton({ next }) {
   const supabase = createClient();
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -14,10 +14,12 @@ export default function AuthButton() {
   const [mode, setMode] = useState('google'); // 'google' | 'email'
 
   async function handleGoogleSignIn() {
+    const callbackUrl = new URL('/trips/auth/callback', window.location.origin);
+    if (next) callbackUrl.searchParams.set('next', next);
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/trips/auth/callback`,
+        redirectTo: callbackUrl.toString(),
       },
     });
   }
