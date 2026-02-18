@@ -90,11 +90,15 @@ export async function POST(request) {
       ...data,
     };
 
-    const dir = path.join(process.cwd(), 'stand-project', 'reference');
-    await mkdir(dir, { recursive: true });
-
-    const filePath = path.join(dir, 'intake-response.json');
-    await writeFile(filePath, JSON.stringify(response, null, 2));
+    // Try to save locally (works in dev, fails silently on Vercel)
+    try {
+      const dir = path.join(process.cwd(), 'stand-project', 'reference');
+      await mkdir(dir, { recursive: true });
+      const filePath = path.join(dir, 'intake-response.json');
+      await writeFile(filePath, JSON.stringify(response, null, 2));
+    } catch {
+      // Read-only filesystem in production — that's fine, email is primary
+    }
 
     // Send email notification (don't block the response)
     sendNotificationEmail(response);
