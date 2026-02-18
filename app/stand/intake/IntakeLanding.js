@@ -1,13 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import IntakeConcierge from './IntakeConcierge';
 import IntakeForm from './IntakeForm';
+import { unlockAudio } from './useConciergeAudio';
 
 export default function IntakeLanding() {
-  const [mode, setMode] = useState(null); // null = landing, 'concierge', 'form'
+  const [mode, setMode] = useState(null); // null = landing, 'guided', 'freeform', 'form'
 
-  if (mode === 'concierge') return <IntakeConcierge />;
+  const startConcierge = useCallback((m) => {
+    unlockAudio(); // unlock during user gesture so TTS can play
+    setMode(m);
+  }, []);
+
+  if (mode === 'guided') return <IntakeConcierge mode="guided" />;
+  if (mode === 'freeform') return <IntakeConcierge mode="freeform" />;
   if (mode === 'form') return <IntakeForm />;
 
   return (
@@ -21,16 +28,23 @@ export default function IntakeLanding() {
         </p>
       </div>
       <div className="intake-landing-cards">
-        <button className="intake-landing-card intake-landing-card-recommended" onClick={() => setMode('concierge')}>
+        <button className="intake-landing-card intake-landing-card-recommended" onClick={() => startConcierge('guided')}>
           <span className="intake-landing-badge">Recommended</span>
-          <span className="intake-landing-card-title">&ldquo;The cool way&rdquo;</span>
+          <span className="intake-landing-card-title">&ldquo;Walk me through it&rdquo;</span>
           <span className="intake-landing-card-desc">
-            Talk or type to an AI assistant that fills in the form live. Like having a conversation instead of filling out boxes.
+            The concierge reads each question aloud and walks you through one at a time. Just talk.
           </span>
           <span className="intake-landing-card-arrow">Get started &rarr;</span>
         </button>
+        <button className="intake-landing-card" onClick={() => startConcierge('freeform')}>
+          <span className="intake-landing-card-title">&ldquo;Let me talk&rdquo;</span>
+          <span className="intake-landing-card-desc">
+            Chat or speak freely. The AI fills in fields as you go &mdash; like a conversation instead of a form.
+          </span>
+          <span className="intake-landing-card-arrow">Start chatting &rarr;</span>
+        </button>
         <button className="intake-landing-card" onClick={() => setMode('form')}>
-          <span className="intake-landing-card-title">&ldquo;The old-fashioned way&rdquo;</span>
+          <span className="intake-landing-card-title">&ldquo;Just the form&rdquo;</span>
           <span className="intake-landing-card-desc">
             Step through each section one at a time. Review and edit the pre-filled answers directly.
           </span>
