@@ -11,7 +11,7 @@ export async function POST(request) {
       });
     }
 
-    const audioBuffer = await generateSpeech(text, { model: 'eleven_flash_v2_5', speed: 1.1 });
+    const audioBuffer = await generateSpeech(text, { model: 'eleven_flash_v2_5', speed: 1.05 });
 
     return new Response(audioBuffer, {
       headers: {

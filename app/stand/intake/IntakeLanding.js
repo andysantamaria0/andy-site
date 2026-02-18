@@ -24,7 +24,7 @@ export default function IntakeLanding() {
         <div className="intake-landing-for">For Lauren</div>
         <h1 className="intake-landing-title">Stand Intake Questionnaire</h1>
         <p className="intake-landing-subtitle">
-          I&apos;ve pre-filled most of this from our calls. You just need to review, refine, and fill in a few gaps. Pick how you&apos;d like to do it.
+          I&apos;ve pre-filled most of this from our calls. You just need to review, refine, and fill in a few gaps.
         </p>
       </div>
       <div className="intake-landing-cards">
