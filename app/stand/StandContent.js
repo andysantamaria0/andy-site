@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import Link from 'next/link';
 import NotchReveal from '../../components/NotchReveal';
 
 const SECTIONS = [
@@ -580,6 +581,10 @@ export default function StandContent() {
             </p>
           </div>
         </Section>
+
+        <Link href="/stand/proposal" className="stand-link" style={{ marginTop: 48 }}>
+          Read the sprint proposal <span className="stand-link-arrow">&rarr;</span>
+        </Link>
 
         {/* Personal Note */}
         <div className="stand-note">

@@ -628,6 +628,256 @@
   }
 }
 
+/* ---- Proposal Page ---- */
+
+.stand-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  padding: 12px 0;
+  transition: color 0.2s ease;
+}
+
+.stand-nav-link:hover {
+  color: var(--accent);
+}
+
+.stand-nav-link-arrow {
+  transition: transform 0.2s ease;
+}
+
+.stand-nav-link:hover .stand-nav-link-arrow {
+  transform: translateX(-3px);
+}
+
+.stand-feature-block {
+  margin-bottom: 28px;
+  padding-left: 16px;
+  border-left: 2px solid var(--border);
+}
+
+.stand-feature-block:last-child {
+  margin-bottom: 0;
+}
+
+.stand-feature-block-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.stand-feature-block p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.155rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.stand-feature-block p:last-child {
+  margin-bottom: 0;
+}
+
+.stand-feature-block ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+}
+
+.stand-feature-block li {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  padding-left: 16px;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.stand-feature-block li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--coral);
+}
+
+.stand-feature-block li strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.stand-moment {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.stand-moment:last-child {
+  margin-bottom: 0;
+}
+
+.stand-moment-number {
+  flex-shrink: 0;
+  font-family: 'Special Elite', cursive;
+  font-size: 0.8rem;
+  color: var(--accent);
+  min-width: 20px;
+  padding-top: 3px;
+}
+
+.stand-moment-body {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.stand-moment-body strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.stand-milestone {
+  margin: 16px 0 4px;
+  padding: 16px 20px;
+  border-left: 3px solid var(--accent);
+  background: rgba(196, 167, 125, 0.06);
+}
+
+.stand-milestone-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.stand-milestone p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.stand-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.stand-checklist li {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  padding-left: 28px;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.stand-checklist li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 2px;
+  transition: border-color 0.2s ease;
+}
+
+.stand-checklist li:hover::before {
+  border-color: var(--accent);
+}
+
+.stand-checklist li strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.stand-price {
+  text-align: center;
+  padding: 32px 0;
+}
+
+.stand-price-amount {
+  font-family: 'Fraunces', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.stand-price-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.stand-decisions {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  counter-reset: decision;
+}
+
+.stand-decisions li {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  padding-left: 28px;
+  position: relative;
+  margin-bottom: 8px;
+  counter-increment: decision;
+}
+
+.stand-decisions li::before {
+  content: counter(decision);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-family: 'Special Elite', cursive;
+  font-size: 0.85rem;
+  color: var(--accent);
+  min-width: 20px;
+}
+
+.stand-decisions li strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .stand-price-amount {
+    font-size: 2rem;
+  }
+
+  .stand-feature-block p,
+  .stand-milestone p,
+  .stand-checklist li,
+  .stand-moment-body,
+  .stand-decisions li {
+    font-size: 1rem;
+  }
+}
+
 /* ---- Detail Pages ---- */
 
 .stand-detail-back {
