@@ -1,0 +1,491 @@
+/* ============================================
+   Stand Intake — Concierge Mode
+   Two-pane: Chat (left) + Form (right)
+   ============================================ */
+
+/* ---- Landing / Mode Selection ---- */
+
+.intake-landing {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 25% 20%, rgba(196, 167, 125, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 80%, rgba(194, 59, 34, 0.04) 0%, transparent 50%),
+    var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.intake-landing-brand {
+  font-family: 'Fraunces', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  letter-spacing: -0.01em;
+  margin-bottom: 60px;
+  opacity: 0;
+  animation: intake-line-in 0.5s ease forwards;
+}
+
+.intake-landing-heading {
+  text-align: center;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: intake-line-in 0.5s ease 0.1s forwards;
+}
+
+.intake-landing-for {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.intake-landing-title {
+  font-family: 'Fraunces', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+
+.intake-landing-subtitle {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  max-width: 480px;
+}
+
+.intake-landing-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 640px;
+  width: 100%;
+  opacity: 0;
+  animation: intake-line-in 0.5s ease 0.3s forwards;
+}
+
+.intake-landing-card {
+  background: rgba(240, 237, 230, 0.03);
+  border: 1px solid var(--border);
+  padding: 32px 28px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.intake-landing-card:hover {
+  border-color: var(--accent-border);
+  background: rgba(196, 167, 125, 0.04);
+}
+
+.intake-landing-card-recommended {
+  border-color: var(--accent-border);
+  background: rgba(196, 167, 125, 0.06);
+}
+
+.intake-landing-card-recommended:hover {
+  border-color: var(--accent);
+  background: rgba(196, 167, 125, 0.1);
+}
+
+.intake-landing-badge {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: rgba(196, 167, 125, 0.12);
+  padding: 4px 10px;
+  align-self: flex-start;
+}
+
+.intake-landing-card-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.intake-landing-card-desc {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.intake-landing-card-arrow {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-top: auto;
+  transition: transform 0.2s ease;
+}
+
+.intake-landing-card:hover .intake-landing-card-arrow {
+  transform: translateX(4px);
+}
+
+/* ---- Two-pane layout ---- */
+
+.concierge {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 25% 20%, rgba(196, 167, 125, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 80%, rgba(194, 59, 34, 0.04) 0%, transparent 50%),
+    var(--bg);
+  color: var(--text);
+  display: grid;
+  grid-template-columns: 380px 1fr;
+}
+
+/* ---- Chat Pane ---- */
+
+.concierge-chat {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.concierge-chat-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.concierge-chat-title {
+  font-family: 'Fraunces', serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.concierge-chat-close {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.concierge-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.concierge-msg {
+  display: flex;
+}
+
+.concierge-msg-user {
+  justify-content: flex-end;
+}
+
+.concierge-msg-assistant {
+  justify-content: flex-start;
+}
+
+.concierge-bubble {
+  max-width: 85%;
+  padding: 12px 16px;
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.concierge-bubble-user {
+  background: rgba(196, 167, 125, 0.1);
+  border: 1px solid var(--accent-border);
+  color: var(--text);
+  border-radius: 12px 12px 2px 12px;
+}
+
+.concierge-bubble-assistant {
+  background: rgba(240, 237, 230, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 12px 12px 12px 2px;
+}
+
+.concierge-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--accent);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: intake-cursor-blink 1s step-end infinite;
+}
+
+/* ---- Input Row ---- */
+
+.concierge-input-row {
+  padding: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.concierge-input {
+  flex: 1;
+  background: rgba(240, 237, 230, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.95rem;
+  padding: 10px 14px;
+  transition: border-color 0.2s ease;
+}
+
+.concierge-input:focus {
+  outline: none;
+  border-color: var(--accent-border);
+}
+
+.concierge-input::placeholder {
+  color: var(--text-faint);
+}
+
+.concierge-input:disabled {
+  opacity: 0.5;
+}
+
+.concierge-mic,
+.concierge-send {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.concierge-mic:hover,
+.concierge-send:hover {
+  border-color: var(--accent-border);
+  color: var(--text);
+}
+
+.concierge-send:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.concierge-mic-active {
+  border-color: var(--coral);
+  background: rgba(194, 59, 34, 0.15);
+  color: var(--coral);
+  animation: concierge-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes concierge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(194, 59, 34, 0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(194, 59, 34, 0); }
+}
+
+/* ---- Form Pane ---- */
+
+.concierge-form {
+  overflow-y: auto;
+  min-height: 100vh;
+}
+
+.concierge-form-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 40px 32px 120px;
+}
+
+.concierge-form-heading {
+  margin: 32px 0 48px;
+}
+
+.concierge-form-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.concierge-form-subtitle {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* ---- Sections ---- */
+
+.concierge-section {
+  margin-bottom: 56px;
+}
+
+.concierge-field {
+  margin-bottom: 32px;
+  padding: 8px;
+  margin-left: -8px;
+  margin-right: -8px;
+  border-radius: 4px;
+  transition: background-color 0.4s ease;
+}
+
+.concierge-textarea {
+  width: 100%;
+  min-height: 48px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  padding: 10px 0;
+  resize: none;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.concierge-textarea:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+}
+
+.concierge-textarea::placeholder {
+  color: var(--text-faint);
+  font-style: italic;
+}
+
+/* ---- Field Flash ---- */
+
+.concierge-field-flash {
+  animation: concierge-flash 1.5s ease-out;
+}
+
+@keyframes concierge-flash {
+  0% { background-color: rgba(196, 167, 125, 0.2); }
+  100% { background-color: transparent; }
+}
+
+/* ---- Form Actions ---- */
+
+.concierge-form-actions {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ---- Mobile FAB ---- */
+
+.concierge-fab {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  transition: transform 0.2s ease;
+}
+
+.concierge-fab:hover {
+  transform: scale(1.05);
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 860px) {
+  .concierge {
+    grid-template-columns: 1fr;
+  }
+
+  .concierge-chat {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70vh;
+    border-right: none;
+    border-top: 1px solid var(--border);
+    z-index: 200;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1);
+    background:
+      radial-gradient(ellipse at 50% 80%, rgba(196, 167, 125, 0.04) 0%, transparent 50%),
+      var(--bg);
+  }
+
+  .concierge-chat-open {
+    transform: translateY(0);
+  }
+
+  .concierge-chat-close {
+    display: block;
+  }
+
+  .concierge-form-inner {
+    padding: 40px 20px 100px;
+  }
+
+  .concierge-fab {
+    display: flex;
+  }
+
+  .intake-landing-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .intake-landing-title {
+    font-size: 1.6rem;
+  }
+}
