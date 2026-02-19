@@ -1,0 +1,25 @@
+{
+  "submittedAt": "2026-02-18T13:44:28.417Z",
+  "vision": {
+    "elevator_pitch": "Stand is an operating system where kids can build actual businesses — like an old-school lemonade stand, modernized for today's kids and today's age. Schools teach theory, but kids are creative and want a sense of purpose and doing.",
+    "success_6mo": "Test with 100+ families through a closed pilot by mid-March. Gather live feedback on onboarding, product marketplace, and business types. Then launch the MVP to a few hundred founding Stand CEOs in LA for the summer.",
+    "success_12mo": "Prove product-market fit. Reach first 1,000 customers. Seasonal product drops, partnerships, and a community that makes kids want to keep coming back — not just a one-time thing.",
+    "age_range": "8-15 (two cohorts: 8-11 younger, 12-15 older)",
+    "first_win": "Seeing their brand come to life visually — the business card, the storefront preview, their name on products. The moment they realize \"wow, I can actually do this.\" It needs to feel like magic, not like filling out a form."
+  },
+  "current": {
+    "built_today": "Functional prototype built by Chris on Claude Code — Next.js/React on Supabase, deployed on Vercel. Has onboarding flow (interests → business idea → brand creation → parent approval via QR/email). Voice input was attempted. Some Figma work from Dennis on brand evolution. Original Stand brand/logo exists. Summer beta tested physical elements.",
+    "working_not_working": "What's working: The basic flow logic (interests → narrow → product → brand → pitch → launch). QR code for parent approval. The physical beta validated demand.\n\nWhat's not working: Looks \"vibe coded\" — not branded or polished. Category selection is overwhelming (too many options). The reveal moment doesn't deliver excitement. Missing the magic/animation kids expect. Onboarding feels too long. Logo AI generation has quality/spelling issues. Design from Dennis feels AI-generated, missing soul."
+  },
+  "business": {
+    "real_money": "No transactions - kids won't be handling money in the pilot"
+  },
+  "design": {
+    "personality_words": "Nostalgic, elevated, cool",
+    "design_admire": "Uncommon (unc.mn) — simplicity, clarity, Apple-esque. Tin Can (tincan.kids) — nostalgia modernized beautifully. Double Good — gamification, leaderboards, pop-up selling concept. Girl Scouts as a structural inspiration. Gaming aesthetics married with soul. Wes Anderson, 80s vibes, vintage tennis posters, badges made cool again, streetwear/hype.",
+    "mobile_desktop": "Equal priority"
+  },
+  "rhythm": {
+    "timeline": "March 7th"
+  }
+}

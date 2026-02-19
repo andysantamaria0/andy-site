@@ -1,0 +1,298 @@
+00:00:00 Speaker 1
+And it's completely ruining all the travel. So, we have to drive to four hours tonight to get on a flight in the morning. So yeah,
+00:00:08 Andy Santamaria
+It's been mysticallyum figuring that over the last twenty four hours. So apologies. No, all good. It sounds yeah, it sounds it sounds uh like a a lot of hassle basically yeah.
+00:00:20 Speaker 1
+Traveling is becoming more and more like challenging people.
+00:00:23 Andy Santamaria
+Yeah, It's especially with like everything like I I have some family in El Paso and I was just like. I'm not going there, but I I was just like, oh, They just shut down El Paso like on a moment's notice because there was uh like a cartel drone or something that they shot down. I mean, I don't know, but it's just kind of crazy. Yeah.
+00:00:42 Speaker 1
+Um crazy. Well, I hope you had a nice weekend. Yeah,
+00:00:44 Andy Santamaria
+I did likewise.
+00:00:46 Speaker 1
+Good Thank you so much for putting this all together. Love the presentation of it too. 
+00:00:50 Andy Santamaria
+Awesome Yeah yeah for sure. And you can drive, like let me know what's helpful No,
+00:00:55 Speaker 1
+I mean let me pull it up right now. 
+00:00:58 Speaker 1
+Um, so I would love to just kind of get into it. It sounds like you had a lot of questions you wanted to ask me too. Um, you know, I think like between your profile and your suggested David Schimmel, who seems very impressive profile as well and and relevant to um to stand that this could be a really interesting sort of pairing. And so would love to just um, Talk through a bit around the different sort of roles andresponsibilities, And then like the more like in the depth of phases and how we'd approach this. Cause I know we talked about like wanting to get something out for March to test, and how realistic is that? And based on what I have, how much you think it's like I saw.
+00:01:47 Andy Santamaria
+Yeah, So so the let's see the thing that I would the way that I would start like overview isum let's see where would I start.
+00:01:56 Andy Santamaria
+Uh. Okay, What I didn't do intentionally is I didn't really tie phases and milestones together because it's too early for that. So you, you probably noticed like the approach is like that's true. And then I talked about the phases. And then like I didn't put any milestones like that. I, we don't have enough for that yet because i i really don't know enough, but um i did do some research on copa. And i feel pretty good about that in terms of like. We should build that into the architecture from the start, Even if even if you are doing this pilot and it's very uh light touch on sort of the stuff. I think you should start like that. So just that aside, like I would build for that right away. The second thing that I was thinking is um from from phases and sort of execution and stuff, I think you are probably like in a pretty good position to like. 
+00:02:50 Andy Santamaria
+Like, what I wanted to do is set this up so that you like have this foundation, and you can build on it. No matter what. Like the key, The key stuff in there at the very end is like you should be able to be swapping services. And talent sort of like interchangeably. And like, you don't have this like, oh gosh, Like I have to bring in something new. And like now I have to swap, you know, I have to like do this ramp up time with another if I am going to get another engineer, et cetera. Like want to make that the case so that you can kind of keep keep running as soon as you start running. Um and so, With, so you could think about like think about David and me as like talent, right? But obviously, like we're we're a lot more senior than than a normal sort of, you know, like a founding junior engineer might be. Um yeah. The. The thing that's cool about this is like with David sort of setting up the guardrails in place, Like I can be very effective on on a code base and like I've worked with David at this accelerator. Um so Like I've I've known him for for over six months and stuff. Um and. 
+00:03:49 Andy Santamaria
+Then, Like I think in a real, like best case scenario is like we do this thing. It's it's going great. It's going so great that you're like actually, I really need like we got to we need more engineering velocity. Um yeah and then in that case I will say great. I have a network through this accelerator and then through my own network, I'll be like great. I have all these people and like, I can help evaluate and onboard them and interview them with you. And then you know like you basically don't miss a beat and like When we get to that point, that means that it's going so well that you you know, you're just gonna you got you have a team in place and then like, You can probably continue to rely on someone like David if you want like proper fractional CTO or something. But you might, You might not need it honestly. Like, you might the dream would probably be we we find an engineer that's like right in the middle of that sweet spot where it's like, yeah I'll just hire them full time.
+00:04:47 Andy Santamaria
+And you know, You don't have to like do that whole thing. If you if you are having like trouble, like cause you've already raised money is is my point. So you've already got a little pre- seed so, You kind of Yeah.
+00:04:59 Speaker 1
+I mean, it's a small round. And so the idea in my head is that I can like sort of how I'm thinking about the process is I am able to test it with like a hundred plus people. Yeah. Further validate it, Ensure, we're building it on the right systems and like launching with the right types of curated products. And, you know, are there gamified elements or like community features that we should launch with? A lot of kids want to do this with their friends. Do, we enable like kind of like get together your Stan squad. And you can all kind of pool your things together, or whatever a la Girl Scouts? And there is a bunch of like things. Like I when Chris onboarded, I literally set up a drive for him with all my. 
+00:05:44 Speaker 1
+Docs everything I've done, um, all my like chat deep like all the random stuff and surfing et cetera. So kind of just I am sure you could push that through a system and be like, what do you you know, give you the LLMs. That'll be next for sure. Yeah. So you know we did that. Now we have this start of a prototype. We need to further evolve it. And he was always like I'll help you with the onboarding, but he's not the right person to ultimately kind of put the plumbing in place. And. Evolve it from like a super branded, But he brought some really good product ideas of like do the QR code to try and you know, for parents. And there is some more work that needs to be done. And so, Sort of two things : one is we're here getting to test with a hundred more people, ensuring we're getting that live feedback, validating business types, You know, finalizing what are like, what can we and should we launch with for MVP as it relates to payment rails as it relates to some of these things, plus the actual product features and roadmap.
+00:06:43 Speaker 1
+And then from there, like if I can get my first thousand customers and prove product market fit, At that point, I would raise, you know, more money and be able to really afford a proper, you know, CTO. And I do think or CEO whatever that looks like. Yeah, I do think that maybe it's a head of maybe it's not super senior. No but it is like a, I have a lot of, Thoughts on like the strategy, but how to always turn that into a product. What the right product features is or are, right? Roadmap like that's I am missing a bridge. Right, My concern with like, for example, just like working directly with an engineer, which I've, you know, I had a tech team um at my old company The Wing, for example, and we just spoke really different languages. And so I always think it was hard. Yeah.
+00:07:34 Speaker 1
+There was they were very like ship, like it was also you know seven years ago at this point, like shipping and like very sort of technical in how they dealt with things. And I am the opposite, And so wanting to ensure I am able to take some of the strategy and figure out what are the right product features, roadmap, et cetera. So that's where I am at. And from a timing standpoint, at that point, like maybe it could be a more junior person more quickly. But yeah, I think we'll see how that initial. 
+00:08:05 Andy Santamaria
+Yeah, I think that makes sense. And like I am confident that between like David and myself, that we can we could probably get you to that thousand customers. And the point, the reason why I am confident of that is because like I've done this before where we've set like with this with my one of my customers that I worked with a long time Noel, like we i've got that foundation sort of set up and soum. I trained like we trained an engineer that was. You know, I was doing all the product stuff. I was doing everything. I was like helping her because she's not a product person, But she's got all the vision, and she knows what she's trying to solve for her, um, for her company. And, it got to the point where, like I got this junior engineer like so good, that like I was not adding any more value. And, you know we would sort of give the feature. And then the engineer is like, "I already know how to fill in the gaps." And so, I'm confident that like we could get. Like I can be that. You know, "I'll be both." And then. 
+00:09:01 Andy Santamaria
+If things are going so so well, or you know, If you wanted to add more like it's very simple for for you to say cool. I want to I want to add another engineer to increase the velocity around this other thing. And like they are going to come on for for maybe a month. And then you can you know pause them or whatever. So like think about I've like I've set it up so that you can think about engineering as, Like I'll do the product and engineering at the beginning. And I will be, you know the person that that. Helps you with the product stuff, Making ideas and decisions and things like that, that are associated with your your career goals or business goals. But you can think about it like a faucet, and that's what's kind of cool. It really wasn't possible I think two five years ago. Like think about engineering talent as just like a faucet, like turn it on turn it off. And there aren't a lot of models that support that right now. Like the Dev Shop is the one, Like it's just it's a kind of a pain, and it's not really geared for a startup.
+00:09:58 Andy Santamaria
+Um, yeah, and then the other one is which again like this is my world. Like, the other one is that you? And then you go try to hire a like a founding engineer or like a CTO. And like that usually just isn't the in the budget for uh a startup like at that really early stage. Like you want to go hire David. David, you know, Is definitely the person that could do it. But like you know, he's he's making four hundred at at Google. And. Like, you know, he's like he's not gonna he's not gonna do this. Um, And then there's always the like needle in a haystack which people can hold out and we could find it. But the this sort of model lets you kind of start, and then like you can still keep looking for the needle in the haystack. Like, we were I worked with this one engineer that was like really brand new. I mean, I think he had two years of experience, and he just ended up being insanely good. And you know, he he became like it's very rare right? He was He's young He's like twenty seven. 
+00:10:54 Andy Santamaria
+Um, twenty six, and he became like a founding engineer. And, he just he was one of those haystacks where he's like good enough to to do all the stuff. And he went to this this company that was a Y C company, and they they kind of saw the shot, like they took a shot on him. And and yeah, I mean that so it does happen. I am not saying it doesn't happen, But like, oh yeah yeah yeah.
+00:11:15 Speaker 1
+I know. I talked the guy who helped me originally with the beta that we did with the twenty five families. Um. You know, set us up on Versal. He, we did the app like if you go to standkids dot com slash quincy. Did I show you that? Yeah, I did. I saw it. Yeah, you did all that like he set all that up and he's in college. He's taking a gap year because now like the company, I found him through TPBN, these guys have him working full time with them. So a lot of these people are like getting younger. Actually yeah, my investor from Sequoia I was like, do you know anyone you know when I talked to her?
+00:11:47 Speaker 1
+Couple weeks ago or whatever, she's you just really need to get someone to like drop out of college. I was like, okay.
+00:11:51 Andy Santamaria
+I've got I've got all of those people. That's what I'm saying. Like, I've got all them in the network. So if if at any point like once we were doing this, if you're like cool, I'm need to hire someone like right now full time, Like I will just be like here here are, you know, not literally ten, but like probably five people that could do it. Um and the cool thing is like, I will Like David. And i will already be able to sort of like ramp them. So. That that kind of thing would will make a lot of sense. Um, but yeah, I hope that's the case.
+00:12:21 Speaker 1
+Soum, Talk to me a little bit about, and then I want to make sure you have time to ask me any questions, and we can continue this conversation, you know, tomorrow or the next day. But talk to me about process, like how so I saw the approach, which is more of like I think like the strategic approach less how we. Really work together. I saw the phases, Which also feels like a little bit of a you know, depending on certain things. So just talk to me about sort of those two components more specifically.
+00:12:51 Andy Santamaria
+Yeah, Basically the like, if we were going right now, that I would I would sort of do the same thing you did with Chris, where I'd say, like I need everything like, give me get everything you have. And I am going to go come away with some questions and things like that. And then we'd come out with. A document. And it's that, that is the like the most tactical thing where it's like cool. This is the document that I that I have and this is the guiding, um, This is a guiding thing for March, if and March is the the milestone, or um you know, whatever, if we say end of March or that, that milestone, which is like this, is it there are success metrics defined by that. And it's a hundred, you know, hundred to two hundred people onboarded, Some some number of engagement of what that looks like. And then really just like, you know, the happy like.
+00:13:33 Andy Santamaria
+Really happy, like if you get less people, but there are ten families that are just like this has changed. You know, this has changed like my kid's life. You know already something like that. That's helpful. Um But yeah, we're then we're just building towards that. And then you just completely, you know, do that every time like we just keep repeating thatum and the the thing that we yeah, we think we don't have yet is a is that document that says like this is this is what we're building. 
+00:14:00 Speaker 1
+And. That's more of like a product. Like PDR, essentially.
+00:14:04 Andy Santamaria
+Yeah, it's sort of like a PRD, but I changed it to be a little bit. A little bit like the PRD is for me. The document for is for us is like you and me and David, and anybody else in your that, like it shouldn't be an engineer that can read this document. It should be like a user journey. And I can show you, I can go show you some of mine later. Like, it's just describing what the user can do and it's not a user story. It's like, These are things like they should be able to you. You kind of already walked me through a user journey, actually um you walked me through a few of those. So it's kind of like just going through those again to make sure that that's what you want um and and that that's what we build on. And so then once once we look at that and we're like cool, this is we're on the same page. Uh then I will I will go away, and I will come back and say, here's here's something that we built. And then we just keep iterating on on that until you are saying, uh.
+00:15:01 Andy Santamaria
+Well, until yeah, until you are saying like this is ready, I would like to distribute this to people. Um, and that goes pretty fast. Uh, yeah.
+00:15:11 Speaker 1
+Yeah. And would you so so you saw what I have fromum Chris? I know you call him Woody from Chrisum Like, would you take that just from a pro? Like how do we what's the kickoff? And like, how do you take what I have versus how collaborative is it in that way? Um, And then talk to me a little bit about your thoughts on the timeline, because I know like I talked about March being a good time to test. And so testing the first two weeks of March, for example, Then I just don't know how feasible that is if we if we kick this off on Monday. Like what would that look like?
+00:15:43 Andy Santamaria
+I mean, if you gave me so if we kick this off on Monday, you gave me everything that I had and and if you just said like, I want this that i want everything that i have. That you've shown me that workflow or so you know that user flow basically. If you said I want that, But I want it to look amazing, like I want it to look incredible, and that's that's basically the criteria. Um, could probably get that very quickly. Uh, because there is not a lot there. Um, And so that is very, very like, of course, I could get that in March like the first two weeks like before, like that's very simple. Um if you. 
+00:16:22 Andy Santamaria
+But I suspect you're going to want more, which you should. And like, cause the software is never done. That's kind of the thing. Um, So I think we'll probably get that knocked out pretty quick. And then we're going to be looking for like the right time to add a little bit more things so that you're like, okay cool. Cause, well, you know, you want to be building until you until you're kind of still afraid to share it with someone. Um I'm sure you've heard that before. 
+00:16:52 Andy Santamaria
+Where. Yeah, so yeah, so like.
+00:16:55 Speaker 1
+Yeah, I don't need it to be perfect. I think the question I'm having is is like how functional should it be? Very. In terms of yeah, Like right now, it's not showing it's not like giving me the dream of what I want it to be. And. So like how do we take this and evolve it into more of that dream state? But knowing it's not going to be perfect. And then how much of this is like like the system and architecture piece of this? Are we doing that parallel to this? Or is that coming like let's focus on the onboarding, let's further test that. Let's ensure that experience is magical and great and branded and looks amazing. Get distribute that. Meantime, We have to work on the like backend architecture as it relates to payments and coupon, Ensuring you know, all this, actually we can turn on from like a be able to charge people and make this reality. Yeah,
+00:17:40 Andy Santamaria
+We could do it all at the same time because what I don't want to like. There's no reason for me to hold off getting. Like full end to end product uh into production so that you and I can be using it. And and close friends and family can be using it while we while we sort of set up the role level, security policies and all the all the protocols around um like copa stuff. So there's no reason to like not do those together um and yeah I think again, like what I need is what I need. Is that document that we we don't have yet. Um yeah.
+00:18:18 Andy Santamaria
+Short of that, I need a read access to your GitHub repo. That then will give me like a very high level start. But like maybe and maybe I'll review our conversation just because all the stuff that I heard, Like I didn't hear anything that was really scary from a technical perspective or a feature perspective. Yeah. So you know, This is like classic. This is classic where like I am the like on the product side of me, like I'm going to be like, yeah, this is this is fine. And then the engineers will side and it's going to be like, okay, well this is going to be a little bit harder. Butum yeah. So I don't see anything that's preventing this from going pretty fast.
+00:19:04 Speaker 1
+Okay. Um what questions do you have for me?
+00:19:08 Andy Santamaria
+Um git GitHub repo? Is that available?
+00:19:12 Speaker 1
+I'm getting it. I got, I spoke to Chris yesterday, so he was setting giving me access to everything. So once I'm settled tomorrow, I'm gonna make sure I have everything. Perfect. Um and then I can have perfect.
+00:19:26 Andy Santamaria
+Okay, that would be helpful because that's going to give me the the clearest like this is what this is. What we have today sort of thing. Um if you had uh and if you can share any. Like any extra new design stuff that's come about in the last, you know, anything that I can that I can look at. Um.
+00:19:45 Speaker 1
+Like I did, I show this. I showed this to you the other day.
+00:19:48 Andy Santamaria
+I saw your Google Drive folder with some some stuff. Yeah, I saw some yeah, maybe those are new. Yeah.
+00:19:55 Speaker 1
+So like he's working on this. Yeah, I don't love it, honestly, so i need to talk to him because it feels very like ai y right now, and i'm not into it, but like i mean to start. It's fine for this, and there's things like I could tweak that make it like decent. Um, I just it's missing some like the soul. I would likeum, Like this feels like he just I feel like didn't put any real effort towards this.
+00:20:22 Andy Santamaria
+Do you have like is there any and we can do this right now, I guess or later, but like, is there anything that you do like about any? Like what is the stuff that you like? And maybe it's not.
+00:20:36 Speaker 1
+This is like I showed you, like the world in which it started. Yeah, I mean, I think this other world is. I mean, am curious your perspective. You have good taste. Um, I think this other world feels a little more basic. Like, yeah. It feels a little bit like he used an AI tool to make this and less of like his created, like his graphic design elements. And so like I feel like I've seen this before. Am trying to pair like the, The idea of like we're not, We need to be something kids feel like they're a part of that feels cool and relevant. But, we also don't want to be too heavy handed and that it takes away from their their brand, their experience, their business products that they're building on stand. And so I like the idea of utilizing things like nostalgia. So like badges and how do we like make those cool again? Of Like I can show you my Pinterest.
+00:21:30 Andy Santamaria
+Yeah yeah maybe even that, Like show me the stuff that you that you really like that maybe, That's like, show me the your inspiration type stuff.
+00:21:38 Speaker 1
+Yeah, yeah. Um, let me do that. So like just this was this was our old stuff, and it just skewed really young. It skewed way too young. But like I like like, Yeah, I see. How, do you like deconstruct the idea of like what they can build in a cool way that feels like a little bit of a not like I don't know if you are familiar with these brands called like the tin can, Which is a new landline coming out for that's that's out for. It's like a kid's safe landline where you it's like, yeah, a lot of people it's doing really well. Um or this one called Sticker Bot. Okay.
+00:22:30 Speaker 1
+Dollars in revenue in its first month of its first like drop, And it's like literally a physical device that kids can like talk into and be like," Make me a sticker that has my mom," like," like a magical unicorn." I've seen these.
+00:22:43 Andy Santamaria
+Yeah, I've seen stickers.
+00:22:45 Speaker 1
+Everyone's like really sort of like, you know, taking the nods of nostalgia and utilize, you know, but stand I think it starts to skew too young with some of these primary colors. Like I I like the whole Wes Anderson look. I like the whole yeah, You know, eighty s sort of like, um, what's that? That furniture designer at uh at a I am forgetting how to pronounce her name. Anyway, this was the original mood board.
+00:23:12 Andy Santamaria
+I like this is great. Like I I could work with this for sure. Um,
+00:23:16 Speaker 1
+Like it was like can we like make badges feel cool again? Like but how do you modernize this? And. So the idea is to take stand, which is like an old school concept, but like modernize it. This feels too young, And I don't think it would resonate with like a twelve, like it resonated with my son who's eight. Yeah, he was like, This he likes the stand old stand brand better versus like what I showed him on that I just showed you on Figma. But like this stuff, this like resonates a bit more with like an older kid, right? Like yeah. I don't like all the stuff, but if you I like the build your own thing. Yeah. You know do we use black?
+00:23:49 Andy Santamaria
+And like these don't look anything anything that your inspiration. And this doesn't look like they're connected in any way.
+00:23:56 Speaker 1
+Yeah, and I mean, he we talked about. He was like, I think we should create like maybe a more gaming world around it, like make it feel more of a game, which I do like. But I think there's this role to marry the two. Yeah. Uh, I don't want to go so in this like direction and lose the soul. But at the same time, the older brand felt a little stale and and too junior. I see okay So it's This was his attempt then he made this of like This feels almost Canva y Yeah. Yeah, Of like you know all these different things you could do in building your business. Um, and then he was like, Let me try combining these two worlds of like more of like a Canva tool versus a game. And that's what he put in on Friday. And I just am not I don't. 
+00:24:43 Andy Santamaria
+If if you're if you're able to share the inspiration stuff with meum that would be really great. I'd like toum, I want I want to just take a I have I have some I'll show you all the tricks and stuff that I'm doing. Um but I want to take a shot at something, um okay to see what comes up, um cool. Yeah that that makes sense. Um. And from a like. Yeah uh. Are there, any features? And i'll i'll go through the notes from from our call. Like are there any features that like.
+00:25:18 Andy Santamaria
+You're like, oh, I want to test this and I want to test. Yeah, I want to be testing this in March type thing that that maybe I didn't hear or maybe has top of mind.
+00:25:28 Speaker 1
+Um, I think the like group thing is super interesting. Um kids really do want ways to do it with friends. And. So I wonder like what sort of like we haven't tested any the the March thing was all about onboarding getting to a place where they feel like. They can choose like that feels really important. Choose the right business idea, that's simple and easy but fun and interesting. Create enough value that they're not like, I could do this on my own. I don't need to sign up for a stand, um, and come up with the right moments in that onboarding. Like that was the goal. And then be like, okay, what did you like? What you what didn't you like, get the intel and analytics survey, some live, you know, et cetera.
+00:26:09 Speaker 1
+Um, we didn't touch on like the dashboard, like the backend experience as much. That's where more of like the social features could come in. That's where it's like what's really to you as it relates to like being able to operate your business. That just feels like we first need to get them to join. And like that's that was the focus. But if there is a world where we're like building out a dashboard quickly, yeah, it's like hey invite your friends to do stand with you and yeah. You just stand together and get your stand squad, and maybe it's like a one time stamp they could do, yeah. Um, et cetera. And t here is a lot of like t here is this one called um see what's called Good. Um uh Double Good. You go to Double Good, so it's like a fundraising platform that kids kind of like Girl Scouts itch. It's a four day pop up okay. 
+00:27:03 Speaker 1
+Like online pop up, and it's all towards it's like a GoFundMe for kids thing. So, it's like you know my friends my son my friend's son sent it. He's thirteen, he's on a soccer team. They were funding fundraising for new uniforms, and so she sends it to a lot of her friends, etc. Anyway, I think it's a good thing to just look into as like sort of interesting kind of user face comp, cetera. Um, but there's a lot of like, you know, Leaderboard features and things like that, that you know gamify it a little, make it fun. I just don't know if that's like critical to start. Like I I put together this docum for Chris, when we started that I can share with you, which was the goal of the the beta test, essentially and what was most important to test and what were. 
+00:27:56 Andy Santamaria
+Yeah That'll be helpful for sure.
+00:27:57 Speaker 1
+Nice haves.
+00:28:05 Speaker 3
+Um. Yeah okay. Here so if you see this. So this was like okay.
+00:28:23 Speaker 1
+It's like the kid experience. Like we wanted to determine which steps create the most excitement and completion, which personalization levers matter the most, and if there are any critical components missing, like interest to business idea of brand vibe color name, like emojis, icons, logos. Coming up with like helping them come up with like what's your launch plan or set some goals. And like have this fun reveal moment of what that could look before they sign up. So like that was the onboarding. Then it was to further validate the business categories and demand. So it's like what are those top Categories kids choose and why is it because it's something they love? Is it that DIY they want to do more like I want to make it myself, or they want to resell things, customize them, et cetera. And then from there coming up with, like, what are the four businesses we want to push for launch of, like here is your four types of businesses you start on stand to start and then evolve the product marketplace from there. And then the value prop and pricing sensitivity where um I want to test.
+00:29:19 Speaker 1
+Whether, it's in this experience or via landing page before they get to the experience, you know what what value prop and pricing resonates the most with parents. These were more of like nice to haves, Like what motivates kids most as it relates to, like, you know why they're doing it and ultimately, their MVP dashboard recommendations. As you know, t here is again goals, badges, streaks, personalized versus friends. Like t here is all these different like community features things like that. So those are more like, Another bucket that wasn't my core because I don't have as clear of a, a vision for that bucket. Um, but like a separate sort of piece. So, these were the components I sent to him of like, what do we want to have done? Yeah.
+00:30:03 Andy Santamaria
+Okay. Yeah. Oh, It's so yeah, that's helpful. Um, I mean, yeah, there's there's like a couple of ways. There's a couple of ways to do it. Um one. Of the ways, like I going through like what you've just shown me and everything, and like, I mean. It yeah also it sort of depends on your working style. I am taking a shot now because I don't know for sure, But it sounds like maybe what might be helpful is like you basically sort of delegate the product to to like to like me. And like I will just be like here is here is the thing. And then you can say.
+00:30:42 Andy Santamaria
+No, I don't want to do that. Or like, this is like why are we going to test that instead? Or like, what are the other things? Um, because there's a lot in there too. And it all seems pretty reasonable. It all seems doable. Like I could probably just put together the doc that, that is that does the user journeys and does all the other stuff. Um, and then yeah, And then we're like we get aligned to it. And you're like, yeah, this feels like a great, a great thing to go out with. And maybe we do two different. Like onboarding experiences or two different features experiences, like if you wanted to test four, they get these four business categories, So they get this other four business categories or something like um that that's probably still doable too. Um yeah. So but I'm happy to do it that way, where, if you you know, if you said like, hey, just build everything in that doc like. And then if I surface, something I could surface something that I think is going to be useful or interesting, I could do that too.
+00:31:36 Speaker 1
+Yeah, I mean, I think like it was highly collaborative with Chris. For example, like he was showing me everything and like I was reacting. But I wasn't like wireframing things for him to go build, you know? And so is that what you're you mean by that?
+00:31:50 Andy Santamaria
+Yeah. Yeah. Cause like there's enough in here that like I could just build the whole thing. And then you know, you could just be like, well it turns out I don't like that. And, then you can kind of see like there's basically you have enough You have enough to be Like. It's time to build basically where.
+00:32:06 Speaker 1
+You have a link to the stand, the stand versus like you could just go through that onboarding right now yourself.
+00:32:13 Andy Santamaria
+Oh, I do. Oh, do I? Let me see.
+00:32:16 Speaker 1
+Um here. Like that's the link.
+00:32:19 Andy Santamaria
+Okay. Oh, I don't know if I got that. I have Quincy, I had the Quincy one at the end, I did not get this here.
+00:32:23 Speaker 1
+So, this is what this is.
+00:32:25 Andy Santamaria
+Whatum Mhm oh, cool,
+00:32:28 Speaker 1
+I showed. Yeah. Yeah. Yeah.
+00:32:29 Andy Santamaria
+You took me through this Yeah.
+00:32:32 Speaker 1
+Um so.
+00:32:38 Speaker 1
+I'm sure you could.
+00:32:41 Andy Santamaria
+Yeah, yeah. I mean, everything seems very it seems very doable. I thinkum uh the thing that I would probably like the thing that I have the least visibility into. Besides, besides, like the GitHub is is uh it's just to see like how how how far away we are from the design, like we're pretty far away on design. Right now, um, based on what you showed me in Figma, And so like I kind of try to like de de risk that by if you can share that Figma the inspiration stuff with me. And I took some notes of the websites that you mentioned. Like I could take a what I would do is like if we were if we were if this was Monday and we were starting, Like i I would go take a stab at that and and do like a spike basically. And you know, in one to two hours then I would probably give you. 
+00:33:36 Andy Santamaria
+Four or five like design system, uh, design systems. Um, let me see. Let me see if I can pull this up here one second.
+00:33:45 Speaker 1
+Yeah, if you have an example that's that's great.
+00:33:47 Andy Santamaria
+Well yeah. So I did send you one in my I know, there's a lot in there. So you maybe didn't, but That's, okay, i i did send you here. So i'll send you let me send you this firstum. 
+00:34:04 Speaker 1
+Like in my head. It's really. Playful and interactive, and they're icons. I just don't know in this first, you know, without a what kind of what kind of background you know is able to. Oh, you showed me this.
+00:34:15 Andy Santamaria
+Yeah, yeah. So what I wanted to show you is if I can find itum see if I can find it. Uh, wait one second.
+00:34:27 Speaker 1
+I mean we have like the color palette we have, A look like we have this stuff with the older stand stuff that maybe we could just apply to this one because it's already done and then take other sort of fun, you know, agencies before going sort of into some new rebrand because I am just not liking what Dennis delivered. Um,
+00:34:46 Andy Santamaria
+Here is, here is what this is what I wanted to show you where it's just for just as a reference point here. So, what you saw is the finalum uhhuh and, I will show you. Oh gosh, where is it? Exploration. I think it's this. So here is this was like the third prompt. Like you know, this is like the third shot if you can you can see this. Mhm. This is the third shot where I said okay, we're getting a little bit closer. Like I need I want three different options that are different, you know, but similar. And so like this first one was this, like it's called Riviera one, and you know has its own.
+00:35:29 Andy Santamaria
+Things it's got different font, different color ways, you know stuff. And then it kind of shows you what those look like in an app. Uh this is a a different one. This one's called Manifesto. You know it's like very what like it. This was inspired by the like old, um like Rome, sorry, what is it old cycling posters? Like from like the yeah from like the the fifties and sixties where you're like be bicycling in Tuscany or whatever. And like that's where this came from. Uh, and then this grand tour is the one that was like the like Hitchcock, Like To Catch, a Thief was was the movie that was like the main thing. And that this one is looks pretty different than what I ended up with, but it was the ultimate sort of. I was like, okay, this is a little bit closer. Like now let's go a lot deeper on that.
+00:36:17 Speaker 1
+What are you doing this on?
+00:36:19 Andy Santamaria
+I am doing this on Claude. Claude Code Um. 
+00:36:23 Speaker 1
+Yeah, I mean there are some like I said there are tricks, and like there are like.
+00:36:27 Andy Santamaria
+Tricks in the prompts and stuff, but I mean, I can show you what I'm. I can show you what I'm doing. It's basically, I'm gonna, I'm gonna take everything you said. Um, I'm gonna put that into Claude. i'm gonna i'm gonna give a link to every single website that you said. I'm going to put that into claude. I'm going to say specifically, this is what i want you to pay attention to on this site. This is what i want, because i heard you say stuff about different things. Uh, i heard you say something about wes anderson, but like not too much, not too kiddy. I mean, just basically do everything you just said, and i'm going to say now i want.
+00:36:57 Andy Santamaria
+I want three different design systems with UI components, and like I'll put some guardrails on it, and then I'm going to see what comes out. And then you know the the better that you can prompt it, like the better that you will get something. Yeah,
+00:37:12 Speaker 1
+And I think once I share the full Google Drive with you. Yeah. You'll see much more information. You know in the yeah,
+00:37:19 Andy Santamaria
+Yeah. And like from this is where it's like, this is the fun part where it's like between me like as a human like. Processing information, Like I am pretty sure I have a good sense of what you are looking for on the design based on just like I saw some really specific stuff. Like you've got you have a really specific design sense, Um uh from like the stuff like that little tennis poster and like the West End thing. Like I kind of know what you are going for. The hard part is like getting it getting it.
+00:37:47 Speaker 1
+Like, do you need the icons to do that? Or are you saying it could like. Spit all that out.
+00:37:51 Andy Santamaria
+Yeah, I can make I can make it most most of it. It'd be way better if somebody, it'd be way better if you hired an illustrator. Like, It'll be better prompt, like think about the illustrator as like a prompt prompter, but like a visual. Like, if you had an illustrator just be like, hey, do all the same stuff that I just said. But like make me gorgeous icons, uh that would be great because then we would do the same thing I would take that and feed that in. And and then just make an entire UI system, components, all those things. Yeah. Okay. Yeah. Got it because I also think that yours I think a lot of this is the hard. Even the harder part is that with kids, um what's really important is the animations um and sort of the the transition and like the like, basically motion rendering, so that it's like an incredible, yeah incredible experience like it has to be.
+00:38:46 Andy Santamaria
+Animated, I think, and at every every stage, And um whether they're really young or or even if they're in their teens or something or tweens. But that that there's a lot to to do there too. Like it's it's pretty it's pretty fun. But um you can you can do a lot with that. And I was thinking like there is probably there is probably a version of it, which is like I don't know could be almost completely voice controlled. And they're just like having a conversation with like. A little business expert person that's going to help them like go through this thing, and it's animated. And it feels like you're kind of controlling something because it's magic. Totally,
+00:39:24 Speaker 1
+I was like, can we test voice to text? Like you know, and he tried to do that but I don't think Chris can get it. Was he just sort of started that process? And so sounds like you might be more. You know, able to really get with the tools to that place where.
+00:39:40 Andy Santamaria
+Yeah, I've done I mean, I've done that before too. Like my like my app that my friends like I have. It's got a you can call it right now. I can give you the number. Well, I'd have to add you to it, but like it's a It's, an English It's, like an English woman that's like your concierge. And she will just like take all your flight information and put it into your system. And like add your friends and everything. And like It kind of feels like you're having a conversation. Mhm Um, I mean you are because it is, And then it translates it, puts it in your itinerary and everything. Um, yeah, but uh. I, yeah, I think so. I would say like happy to I can happy to chat tomorrow or or whenever you get back. Um let me know what else I can do.
+00:40:23 Speaker 1
+Yeah, I mean, I think the only questions I had outside of what we've talked about is.
+00:40:33 Speaker 1
+The estimates with the timeline and how we'd approach this sort of first push. Like I think there's a lot of sort of evolution from there, But it's like how do we get from where we are today to live testing it with a hundred people. And like your role in that? And then like taking that and then like regrouping on phase two. You know, phase one of many. Right. Um, I'm not sure how long based on this, it will really take and how to think about that as it relates to like. Weekly, etc.
+00:41:02 Andy Santamaria
+So there's okay that yeah, it's great. Good question. So, there's there's two, there's two main ways to do this and I've done both with customers like I've done both. In fact, I've done both with Noel. Like we switched both models. Like one of them is like we get really tight on the scope like we fix it. And it's like cool everything in this document is what's going to get built. Anything else is is like not it weren't like no. Uh. And then then you set a timeline. And then. You that's it, like like fixed scope, fixed price type stuff, right? Where you could just do that. Those especially at this stage, Like the earlier the startup, the the harder those are because everything is changing a lot. And so, like we could we definitely could do that. I don't recommend that and I get I know I get that it's like scarier because you are like okay well.
+00:41:57 Andy Santamaria
+Like when, Like when is the like I don't yeah I get I get that it feels more open ended. Um. But yeah, I mean, I am happy to like, I am happy to do a fixed scope thing, if you want, and then we could do that.
+00:42:11 Speaker 1
+I. Don't even know if that's necessary. Think it's more of like can we? I know you didn't want to do milestones, but create some over the course of the next four weeks. Like here is how we'll work together. And here is like what expected outcomes could be. And just it's less like fixed. Yeah, you know. Here's what the two weeks, because I don't want it to be, we don't get to what we need. It's like based on and I'm happy. And if you know, if you don't mind signing an NDA, I'm happy to send you all this stuff. Oh yeah,
+00:42:35 Andy Santamaria
+Happy happy to sign it. Yeah.
+00:42:37 Speaker 1
+Um so that you can sort of digest it and come back with more insight, if that's helpful.
+00:42:42 Andy Santamaria
+Like I'm again, like going through your going through the prototype, what I've got there that plus making it look? Incredible, if it was just like that, plus it looks incredible. Um, I mean probably could do that in definitely definitely a week. I mean less less than seven days. Um yeah. And and if that's what, if that's all you want it like I I would I think I would set the bar higher to to go out with people like i, i think i think that's possible. And so.
+00:43:22 Andy Santamaria
+The next question is sort of like, how many like, How many hours do you want me to be working on this You know per week.
+00:43:30 Speaker 1
+Be involved at this phase.
+00:43:32 Andy Santamaria
+Um he would, but he can sort of do he would, but he'd probably be less involved like. Yeah, he would be involved, but he'd do it in parallelum so. In the beginning, He'll He'll be in the very beginning He'll He'll actually be the one Like, he and I will set up all the services together. And then we will be. He'll probably stop, and we won't configure like we won't do all the configurations, but we'll hook everything up. Uh, and then and then it's like cool. Now I need to just basically show you something as fast as possible. Because whenever whenever I work with founders is like they're just like when am I going to get to see something that I like? And so it's like that that's why I'm saying like that's why I suggested. I was like, I would go all out for as many hours as you want basically uh. 
+00:44:20 Andy Santamaria
+To keep showing you stuff and like I mean, at the at the stage at the rate that I've been going, at least with my app that I've been working on, like, I am. Yeah, like I am. I am making huge changes. Like I just built. I built that whole the voice agent last over last night and today, um and like it's pretty pretty big so like. It's kind of a yeah, that's what i'm saying. It's sort of up to you in terms of like how how you'd want like how much you'd want me to spend on this because. I could go I could go pretty far, Pretty fast, if I clear, like a lot of the calendar,
+00:44:55 Speaker 1
+And then You have the bandwidth to, you know, do that over the next two weeks. Basically?
+00:45:01 Andy Santamaria
+Yeah. Yeah. If you were like, hey, Like I want to go two weeks like, and you know, you can go as hard as you can for two weeks. Like what can you get? I mean, I can do that too. I can I can sort of say like this is what I think we can do.
+00:45:13 Speaker 1
+Um Can you come back with that version of it? Sure. Yeah, That would be helpful, just to be like, What could like a two week deep? And then I could spend time on getting really clear on like what I really want to like now that I've seen the onboarding. Like, what do I not think is there? Where do we need to further push? What's not working? Looking great, cool, interesting, fun. That's like that's a table stakes. Like that has to happen. It's like what else are we trying to achieve here too?
+00:45:41 Andy Santamaria
+What was the last and I said this in the document butum, What do you think for the, the parent and for the, The child like the promise delivery is for. So like how if they're if the parent, let's actually forget about the parent for right now, but but don't. But so the kid, when they do this thing, and they go through this stuff, like how like what do they know that? How do they know they're done? And like how do they? How did you know that like the promise has been delivered? Like what has to be true.
+00:46:18 Speaker 1
+I think, What has to be true is that they have, like I think it's about getting them excited about the idea of starting a business and making it or doing a business and making it as fun and as easy as possible for to do this because I've gone back and forth in my head here. I'll put um this this tweet in here. Like if you look at this, like this is what's happening right now. And it's all like with parents helping their kids do it. And so if parents see stand, if you go on the X I just sent you, If parents see stand is like, oh, they're going to learn. And this is an investment in sort of their entrepreneurial skill building, And the kid and and they, this is a real, not only activity for them, but like a real learning for them. And great. They can make some money to make it back whatever, but like I care about them being taught these things, which they're not often taught at this age in school.
+00:47:17 Speaker 1
+And on the kid side, They're excited by like the magic and ease of it and the simplicity in running this. Like I've talked to a lot of kids who have ideas for businesses, but get to a point where they want they'd want to do t shirts, but they don't know how to actually do them or like there's too like big minimums or things like that, or kids who have built a business on Canva, their logo, have come up with their pricing, have done everything. Ordered the you know things off of Amazon, the Avery stickers to print their logo on and really DIYed it. And it's like okay, why would they use stand? It's because they actually, For example, in that case, like didn't learn that much about what he he was like. Oh, that didn't really cost me anything because I just did it really you know, easy myself. He was ten, and his parents were like, well, actually, we bought a three hundred fifty dollar ice cream machine maker for you to make the ice cream. And you didn't factor that into like the cost right. And so. 
+00:48:11 Speaker 1
+He's learning like the fun part, but not the business part. So I think we need to entice the kids with the fun part, but ultimately it's a business learning tool. And parents see it as their kids are excited to learn about business, but they're doing because they can you know.
+00:48:29 Andy Santamaria
+And this is a super dumb question. They're not like you are not incorporated, like the end of the flow is not like they don't incorporate it like a DBA or anything right for Well,
+00:48:37 Speaker 1
+That's come up and I don't like know how far we can push that because. You know, There are there's like if you for example, make over six hundred dollars as a kid in your business, You have to put um you have to declare taxes. And so you'd have to declare taxes with your parents in that case, right? And so there's some technical things that like if we could figure out I think it becomes actually very interesting and valuable. I just haven't started there. Um but it's an interesting world to explore. Um I just don't think a lot of these kids. 
+00:49:11 Speaker 1
+It's like almost like, okay, you've now made six hundred dollars like it makes sense for you to incorporate. Like here is how you could do that versus some of these kids are just going to do this once a month and sell some bracelets and make seventy five hundred dollars really fun activity. So she'll get in one direction or another, until I know more.
+00:49:27 Andy Santamaria
+Okay, yep. So so maybe the like one of the initial features of this is like they get a they get a business plan. They sort of get that outline for all of all the sort of things that would make up their business. And then like the. Part B to that is like, they if it's depending on the business, like they can do they can do the things in that business. Um. Is that something that like is is that what you're trying to aim for in in March?
+00:49:56 Speaker 1
+Do the thing in the business.
+00:49:58 Andy Santamaria
+Like if if the business is an e- com business, like they can also sell some stuff on on Shopify. Um.
+00:50:06 Speaker 1
+Yeah, I mean, I think the whole point is that they're able to actually do the business. And so like for example, in that sandkids dot com slash Quincy, that linked to their parent Stripe right and it just directly went there. They were still able to do it. And until you make six hundred dollars, you don't need to do anything with that. So the idea is like they're able to take payments etcetera. I don't need that all done for the first two weeks of March. But I want to test the rest of it before we like do the plumbing for payments. Um. And that would be the next thing to turn on, you know.
+00:50:36 Andy Santamaria
+Okay, got it. So then, So then maybe the pay like the payoff or sort of like the delivery promise delivery is sort of like here's all this stuff. Here's what your business looks like. Here's sort of the foundation for your business and and it could be some materials like you maybe it's a pitch deck, it's a business plan, it's a like a projection calculator or something like that.
+00:50:57 Speaker 1
+Yeah I think it's about making it fun and simple for them to do this. And. In, this figuring out what are the most important features to build for the MVP? Ultimately. Yep, yep. Um, because yeah, I don't want to go too deep in like them business planning, and they get fatigued right? So, it's like do we do some quick business calculator light, which is like something I've shown you. So I think I can send you a lot more materials that can bring you up to speed faster too. Um that might make sense for you to digest. And then maybe you can go off and think about like what would a two weeks sort of sprint really look like if you'd be like?
+00:51:32 Speaker 1
+Full, like you and David like really dove in. And what what do we think is realistic to achieve? Um, and I'm open to all recommendations, you know, in anything.
+00:51:41 Andy Santamaria
+Oh well, I I can promise you that in two weeks, you'll have something that you can ship to a hundred people that you're proud of. Like the end. Like I know that's doable because it just is. Um, I think it's what I'm gonna where I'm gonna need your guidance on is sort of like i'll give you all the idea like i'll be like this this this. And like. Sub out this to keep it into two weeks, like we can slot in this other thing, you know. But like we can't do that. Like that's where you are going to have really really be helpful. But like two weeks, like if we're going two weeks and we're going, You know, for if we, if we do twenty thirty hours a week or something like that, um David won't. He probably will never do that because he won't need to um like he'll, he's really just really setting it up for the most part. Um.
+00:52:28 Andy Santamaria
+Yeah, That's a very reasonable time to like get something that you could ship that is production grade. That's like real. That looks good. That is fully functional. That isn't uh like it's not something that you're going to say like, oh, this is this is not a prototype. It will be a real real app.
+00:52:47 Speaker 1
+Mhm, okay. Yeah. And I think the question people have asked me like, is it in the app store? Is it a web based app? You know I think. 
+00:52:54 Andy Santamaria
+Yeah, I would do so. What I would do is React Native is what you build this on or what we'll build this on. Um, and that does a bunch of different things. Uh, One is that it goes live on on the iPad or whatever on your, you know, the browser, um which is really, really great for this. Um you know, and you can drag and drop this onto your iPad or your computer, you know, like so we'll keep that as a it's called like a PWA. Um. Uh yeah, and so and then great. Then when you are ready, you can just like port this into the app store for Android and iPhone. Um automatically through React Native, that is really really good now for this to go so like. I wouldn't do that for this for this March two weeks thing. I wouldn't do that. Um no yeah. But but like once you once you get it working, like once once you basically once you validate it's like cool push it into the app store. We're good. Um yeah.
+00:53:52 Speaker 1
+You're Building this even two week sprint on React Native, is what you're saying. Yeah. Okay. Okay. Um, awesome. Okay, what do you think you're missing from me?
+00:54:01 Andy Santamaria
+Um, Nda Figma Figma file that Google Drive or if that that documentum GitHub would be nice, but I it's fine. Um I can I can still like I can probably deconstruct it myself. On on Versal for now. Um. Does the Figma stuff have colors?
+00:54:31 Speaker 1
+Yeah, it has my old colors and stuff, but I think we can just use those. Are,
+00:54:36 Andy Santamaria
+You do you have like in your mind? Do you have the colors in mind? Like what your might, what what what do you think the primary might be like the.
+00:54:49 Speaker 1
+Yeah, I mean, I liked. Did you like any of the branding stuff I just showed you?
+00:54:56 Andy Santamaria
+Uh, I liked your inspiration stuff. Like, I really like that, that old tennis ad thing. And then like the whatever the like the the badges type stuff. Um.
+00:55:07 Speaker 1
+Mhm. Yeah, I think the primary colors just feel a little juvenile, so I'd like to like live in that world but elevate it more. Mhm. I can send you some examples. Like, I think, Um, Yeah,
+00:55:19 Andy Santamaria
+Any any example, like specifically where you could be like this color exactly this hue. I like this as a main color or yeah, that that's really helpful because like yeah getting getting the main color right sort of sets the accent. Like, it's possible to get accents with that, but we can't really do without the main.
+00:55:38 Speaker 1
+Um There's this company here, this guy I talked to started this and then I'll let you jumpum. 
+00:55:47 Speaker 1
+And basically, it's kind of like stand, but for like anyone. Like essentially, where it's how to start your company better faster et cetera. I this is very Apple coded the design, but I liked the simplicity of it and like brand logo website. Like it was just so clear what you were getting. So I was like, oh, can we like do something inspired by that for kids? That is like, um that's. Mhm. Yeah. Yeah. Okay. Not like this simple appoly, But I'm just showing you as an example of something tangential that I think is interesting. Yeah,
+00:56:26 Andy Santamaria
+That's helpful. It's this is great, Like any anything, like this is is very helpful where it's just yeah, super specific Um. Okay, cool. Yeah. So I I think yeah, just give me give me all that stuff Um okay. And then i'll i'll just come back to you with like. I'm basically just gonna come back to sort of like what we said, like this is what we'll do. That's sort of fixed scope. Like I'll say this is what we can do in two weeks at you know, X number of time, Um and and then you know you can, you can basically refine and edit on the things that you'd yeah, You know would be like I I really want to do this or something else. Um cool. Well, yeah I once I get everything give me like, yeah, no more than a day or so um okay. And then I'll get this back to you.
+00:57:10 Speaker 1
+Amazing. I'm going to send over the NDA now, and then I could shoot you all the other stuff over. Cool. I'll do that later when I'm all settled. Sure. Okay, thank you.
+00:57:19 Andy Santamaria
+It's great to talk again. Yeah, have a good one.
+00:57:21 Speaker 1
+Okay, take care. Bye. 
