@@ -745,10 +745,6 @@ export default function ProposalContent() {
           </div>
         </div>
 
-        <Link href="/stand/intake" className="stand-link" style={{ marginTop: 24 }}>
-          Fill out the intake questionnaire <span className="stand-link-arrow">&rarr;</span>
-        </Link>
-
         {/* Footer */}
         <footer className="stand-footer">
           <svg viewBox="0 0 120 48" width="16" height="7" className="stand-footer-mark" aria-hidden="true">
