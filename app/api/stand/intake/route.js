@@ -100,8 +100,8 @@ export async function POST(request) {
       // Read-only filesystem in production — that's fine, email is primary
     }
 
-    // Send email notification (don't block the response)
-    sendNotificationEmail(response);
+    // Send email notification before responding
+    await sendNotificationEmail(response);
 
     return NextResponse.json({ success: true });
   } catch (error) {
