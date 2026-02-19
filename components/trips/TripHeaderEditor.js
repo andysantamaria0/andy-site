@@ -98,10 +98,19 @@ export default function TripHeaderEditor({ trip }) {
     return (
       <>
         <div className="v-trip-header-top">
-          <h1 className="v-trip-name" onClick={() => setEditing(true)} style={{ cursor: 'pointer' }}>{trip.name}</h1>
+          <h1 className="v-trip-name">
+            {trip.name}
+            <button
+              className="v-btn-link"
+              onClick={() => setEditing(true)}
+              style={{ marginLeft: 10, fontSize: '0.75rem' }}
+            >
+              edit
+            </button>
+          </h1>
           <a href="/trips" className="v-back">&larr; All Trips</a>
         </div>
-        <div className="v-trip-destination" onClick={() => setEditing(true)} style={{ cursor: 'pointer' }}>{trip.destination}</div>
+        <div className="v-trip-destination">{trip.destination}</div>
       </>
     );
   }
