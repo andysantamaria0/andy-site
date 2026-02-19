@@ -1,6 +1,6 @@
 import { createClient as createServiceClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
-import { ONBOARDING_STEPS } from '@/lib/onboarding/steps';
+import { ONBOARDING_STEPS } from '../../../../lib/onboarding/steps';
 
 const VOICE_ID = process.env.ELEVENLABS_VOICE_ID || 'Xb7hH8MSUJpSbSDYk0k2';
 const API_KEY = process.env.ELEVENLABS_API_KEY;
