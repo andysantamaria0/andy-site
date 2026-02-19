@@ -6,17 +6,42 @@
 
 ## Basecamp
 
-You've done the hard parts. You've raised capital, built a prototype, figured out who your customers are, and know what you want Stand to feel like. What's missing is the bridge between the vision in your head and a product that 100+ families can actually use — something that looks incredible, feels magical for kids, and makes parents say "holy shit, this is legit."
+You've done the hard parts. You've raised capital, built a prototype, ran a physical beta with 25 families, interviewed kids and parents, surveyed 100 families, and know what you want Stand to feel like. What's missing is the bridge between the vision in your head and a product that 100+ families can actually use — something that looks incredible, feels magical for kids, and makes parents say "holy shit, this is legit."
 
 That's what this sprint is.
+
+You described the pilot as a research exercise — A/B landing pages, surveys, analytics, a focus group in product form. I think we can do better. The best way to validate "does this onboarding work?" is to build an onboarding so good that kids can't stop talking about it. The best way to test pricing sensitivity is to put parents in front of a product so polished they'd pay for it. **The product IS the research.** We instrument the real thing, and you get all the learnings as a byproduct of building something you're proud to ship.
+
+Your research already tells us more than you think. Three kid interviews and a 100-family survey have validated the core categories, pricing range, motivations, and parent concerns. What's missing isn't more data — it's execution.
+
+---
+
+## What We Already Know
+
+Before we build, here's what your existing research tells us. These aren't open questions anymore:
+
+**Business categories (top 4 for pilot):**
+Your interviews and survey converge on the same answer. Crafts/jewelry (Azzy, Ripley), food/treats (Arlo, Dash, survey at 17%), personal care/beauty (Azzy, Dash, survey at 12%), and services (Azzy babysits, Ripley wants to teach gymnastics). The survey skewed toward educational toys (29%) and craft/DIY (20%) — but the kid interviews tell a richer story.
+
+**This is not all e-commerce.** Your original pitch includes pet-sitting, tutoring, and babysitting kits. Ripley wants to "sell leotards and teach lessons." Azzy already babysits. The Ripley survey has an entire services section. The product needs to handle both: physical goods (bracelets, cookies, custom merch) AND services (dog walking, tutoring, teaching). For the pilot, this means the onboarding and storefront need two paths — a product preview for e-commerce businesses, and a service card/booking preview for service businesses.
+
+**Pricing:** 65% of surveyed parents will pay $25+. 35% will pay $36+. Celestine (Ripley's mom) said "$25 or more I start to pay attention." Max and Arlo guessed $20-30/month. The sweet spot is $25-35/month.
+
+**What motivates kids:** Money first, then accomplishment/goals, then friends. Consistent across every interview. Ripley: "I don't really care about what I'm selling, just that I am selling something to make money." Leveling up and unlocking tiers came up unprompted in every conversation.
+
+**What parents want:** Financial literacy (71%), confidence/social skills (67%), earning potential (53%). Top features: structured curriculum (60%), tracking platform (52%), parent oversight (51%). Time commitment: 5 min/day max (Simone), 1-2 hours/week (45% of survey).
+
+**Target cohorts:** 8-11 and 11-14. The 11-year-old demo (Arlo, Ripley, Azzy) is the sweet spot — old enough to be self-directed, young enough to be genuinely excited.
+
+**Platform:** Mobile-first, iPad is a must. 64% of survey respondents are on iOS.
 
 ---
 
 ## What We're Building
 
-A production-quality MVP of Stand that delivers on the core promise: **a kid opens the app, and within minutes, they have a real business — branded, stocked, and ready to sell.** A parent opens the app, and they see a tool that's safe, beautiful, and genuinely teaching their kid something.
+A production-quality MVP of Stand that delivers on the core promise: **a kid opens the app, and within minutes, they have a real business — branded and ready to share.** A parent opens the app, and they see a tool that's safe, beautiful, and genuinely teaching their kid something. And because the whole thing is instrumented, you get every data point you asked for — funnel completion, drop-off points, category demand, parent sentiment — without needing a separate survey.
 
-### Three Core Features
+### The Five Deliverables
 
 **1. Onboarding — The Stand Coach Experience**
 
@@ -31,63 +56,82 @@ The journey is **6 moments**, not 14 steps:
 
 1. **"What do you want to be called?"** — CEO alias + avatar (fun AND COPPA-friendly — no real names)
 2. **"What do you love?"** — Open-ended, not a category picker. "I love making bracelets and my dog Biscuit" is richer than checking a box
-3. **"Here's what you could sell"** — 2-3 curated product suggestions based on what they said, each with a visual mockup
+3. **"Here's what you could build"** — 2-3 curated suggestions based on what they said. For product businesses: visual product mockups. For service businesses: a service card preview (what you offer, your rate, how to book). Each suggestion is matched against our curated catalog.
 4. **"What's your style?"** — Pick a vibe from visual mood boards, not color pickers. Each vibe is a pre-designed brand kit that transforms the entire preview
 5. **"Name your business"** — The storefront, cards, labels all update. The business becomes real.
-6. **"Set your goal"** — What do you want to do with the money? How much? A goal tracker animates into the dashboard.
+6. **"Set your goal"** — What do you want to do with the money? Save / Buy Something / Give Back / Split It. How much? A goal tracker animates into the dashboard.
 
 Pricing is handled through positioning ("For Everyone" / "Sweet Spot" / "Extra Special") — the app calculates the actual price backward from their goal, targeting ~10 sales as the sweet spot for engagement and learning.
 
-**2. Product Marketplace**
+Every moment is instrumented with PostHog — time spent, choices made, drop-off points. You'll know exactly where kids light up and where they stall.
 
-Curated products kids can actually sell. Not 50 options — a tight, beautiful catalog matched to what kids actually want to make and sell. Each product:
+**2. The Grand Reveal + Shareable Brand Card**
 
-- Has a real fulfillment path (Printify/partner integration)
-- Shows a mockup with the kid's brand applied (their colors, their name, their vibe)
-- Has a real price and real margin the kid can understand
+The reveal moment needs to hit. When the coach says "CEO Q-Money, welcome to Quincy's Charm Co." — the kid is looking at THEIR storefront, THEIR products, THEIR brand. Every piece was their decision. It's theirs.
 
-For the pilot, we start with the categories that matter most (from testing data) and ensure every product a kid picks can actually be ordered and delivered. Payment rails will be designed but may run semi-manually for the first 100 families — the UX will be production-grade even if the backend is human-assisted.
+The output is a **shareable brand card** — a beautiful, branded image/link the kid can text to friends, family, anyone. "Check out my business!" This is the viral loop. This is also what makes the pilot spread beyond the initial 100 families organically. For product businesses, it shows their products with their branding applied. For service businesses, it shows their service offering with their branding, rate, and how to get in touch.
 
-**3. Dashboard & Storefront**
+**3. Parent Gate + Pilot Survey**
+
+COPPA-compliant consent flow that doubles as your research instrument:
+
+- Parent email, kid age band, optional gender, consent checkbox
+- **Embedded value prop moment** — the parent sees what their kid built and gets a clear, compelling pitch for Stand
+- **3-4 survey questions** baked into the approval flow: value prop resonance ("which of these resonates most?"), pricing reaction ("what would you expect to pay?"), biggest concern, and how they heard about Stand
+- This replaces the need for a separate A/B landing page test — the parent gate IS the value prop test, delivered at the moment of highest engagement (right after their kid's eyes lit up)
+
+**4. CEO Dashboard (Light)**
 
 The kid's home base after onboarding:
 
-- **CEO Dashboard** — Goal progress tracker, sales count, earnings. Visual, animated, makes the kid feel like they're running something real.
-- **Shareable Storefront** — A link the kid can send to family, friends, neighbors. "Check out my business!" This is the viral loop. The storefront is branded with their vibe, shows their products, and lets people buy.
-- **Quick Actions** — Record a sale, share your store, update your goal. Keep it simple, keep them coming back.
+- **Goal progress tracker** — visual, animated, makes the kid feel like they're running something real
+- **Share your business** — one-tap sharing of their brand card
+- **Post-onboarding pulse** — 2-3 quick fun questions after the reveal: "How pumped are you?" / "Would you show this to a friend?" / "What was your favorite part?" Captures the motivation and gamification data you want without a separate survey
 
-The parent gets a parallel view: their kid's progress, order management, and the tools to actually fulfill orders and handle money responsibly.
+For the pilot, the dashboard is intentionally light — the focus is on the onboarding experience and getting the reveal right. The full dashboard (sales tracking, earnings, quick actions, leveling) is Sprint 2 once we know what kids care about most.
+
+**5. Pilot Admin Dashboard (For Lauren)**
+
+A simple, private view where you can see real-time pilot data:
+
+- How many kids have started / completed onboarding
+- Where they drop off (funnel visualization)
+- What business categories they're picking
+- What age bands are completing vs. abandoning
+- Parent survey responses (value prop, pricing, concerns)
+- Kid pulse responses (excitement, favorites)
+- Export to CSV for your investor updates and internal analysis
+
+This is your "analytics + export access" deliverable — but instead of a spreadsheet, it's a live dashboard you can check anytime.
 
 ---
 
 ## The Promise Delivery
 
-From the pitch page: *the moment the customer gets what they came for.*
-
-**For the kid:** The moment the right pane is fully built and the coach says something like "CEO Q-Money, welcome to Quincy's Charm Co." — and they're looking at THEIR storefront, THEIR products, THEIR brand. They built it. Every piece was their decision. It's theirs. That moment needs to hit.
+**For the kid:** The moment the right pane is fully built and the coach says something like "CEO Q-Money, welcome to Quincy's Charm Co." — and they're looking at THEIR storefront, THEIR brand. They built it. Every piece was their decision. It's theirs. And they can share it immediately.
 
 **For the parent:** The moment they see their kid's eyes light up. And then, practically: the moment they see a well-designed, safe, educational tool that they trust. Not "vibe coded." Not "AI-y." Something that feels considered, intentional, and real.
+
+**For you (Lauren):** The moment you open the admin dashboard and see real families going through the experience, picking categories, completing onboarding — and the data is telling a story you can act on.
 
 ---
 
 ## The Approach
 
-This builds on the phases outlined in the original pitch, compressed into a focused sprint:
-
-### Phase 1 — Alignment (Already Underway)
-Roles clear, expectations set, highest-level goals illuminated. We've done two calls. This proposal formalizes the rest. The intake questionnaire gives us the remaining detail to lock scope.
+### Phase 1 — Alignment (Complete)
+Two calls done. Intake questionnaire received. Materials reviewed — pitch docs, kid interviews, survey results, brand assets, color palette, logos. This proposal formalizes the plan.
 
 ### Phase 2 — Design Systems + Architecture (Days 1-2)
-David Shimel sets up the technical foundation: Supabase schema, auth flows (COPPA-compliant), deployment pipeline, and the architectural guardrails that let me move fast and safe for the rest of the sprint. In parallel, I build the design system — the typography, color system, component library, and animation patterns that make everything feel cohesive and elevated. This is informed by your brand assets and Figma files.
+David Shimel sets up the technical foundation: Supabase schema, auth flows (COPPA-compliant), deployment pipeline, PostHog integration, and the architectural guardrails that let me move fast and safe for the rest of the sprint. In parallel, I build the design system — the typography, color system, component library, and animation patterns that make everything feel cohesive and elevated. Informed by your existing brand assets: Stand logos (Black, Blank Slate, Founder Red), color palette, and design references (Uncommon, Tin Can, A24, Lego — nostalgia modernized, elevated not toyish, gaming meets soul).
 
 ### Phase 3 — Product Engineering (Days 3-10)
-The build. This is where the 6 moments come to life, the marketplace takes shape, and the dashboard gets built. Daily progress — you'll see things moving. I'll share builds frequently so we're never more than a day away from course-correcting.
+The build. This is where the 6 moments come to life, the parent gate takes shape, and the dashboard gets built. Daily progress — you'll see things moving. I'll share builds frequently so we're never more than a day away from course-correcting.
 
 ### Phase 4 — Front-End Interactive + Polish (Days 11-13)
 The difference between "works" and "wow." Animations, transitions, micro-interactions, responsive refinement, the Grand Reveal moment. This is where the magic gets applied. This is where kids go from "this is cool" to "this is MINE."
 
 ### Phase 5 — Live + Testing (Day 14 onward)
-Ship to your first cohort. Testing parties — intense, in-person sessions if possible, remote if not. Real kids, real parents, real feedback. Async feedback channels. Recorded sessions. The pilot begins.
+Ship to your first cohort. Testing parties — intense, in-person sessions if possible, remote if not. Real kids, real parents, real feedback. The admin dashboard is live, data is flowing. The pilot begins.
 
 ---
 
@@ -97,29 +141,29 @@ Ship to your first cohort. Testing parties — intense, in-person sessions if po
 
 | Day | Focus | Deliverable |
 |-----|-------|-------------|
-| 1 | Architecture + design system | Supabase schema, auth, deployment pipeline, brand tokens, component foundations |
-| 2 | Design system + onboarding shell | Typography, colors, layout system, two-pane interface scaffold |
-| 3 | Stand Coach — Moments 1-3 | Alias/avatar selection, open-ended interest input, AI-powered product suggestions |
-| 4 | Stand Coach — Moments 4-6 | Vibe/style selection, business naming, goal setting |
-| 5 | The Live Build pane | Real-time preview rendering — every input visually updates the storefront/brand |
-| 6 | Grand Reveal + parent flow | The reveal moment (animations, transitions), COPPA consent, parent approval |
-| 7 | Voice input + integration | Whisper API integration, voice-to-text in the coach conversation |
+| 1 | Architecture + design system | Supabase schema, auth, deployment pipeline, PostHog setup, brand tokens, component foundations |
+| 2 | Design system + onboarding shell | Typography, colors, layout system, two-pane interface scaffold, mobile/iPad responsive foundation |
+| 3 | Stand Coach — Moments 1-3 | Alias/avatar selection, open-ended interest input, AI-powered business suggestions (products AND services) |
+| 4 | Stand Coach — Moments 4-6 | Vibe/style selection, business naming, goal setting (save/buy/give/split) |
+| 5 | The Live Build pane | Real-time preview rendering — every input visually updates the brand. Product mockups for e-commerce, service cards for service businesses |
+| 6 | Grand Reveal + shareable output | The reveal moment (animations, transitions), shareable brand card generation |
+| 7 | Parent gate + survey | COPPA consent flow, embedded value prop/pricing survey questions, parent approval |
 
-**Milestone: End of Week 1** — A kid can go through the full onboarding journey and have a branded business with products, a name, and a goal. The reveal moment works. A parent can approve it.
+**Milestone: End of Week 1** — A kid can go through the full onboarding journey and have a branded business with a name, a style, and a goal. The reveal moment works. They can share their brand card. A parent can approve it and answer survey questions in the process.
 
-### Week 2: Marketplace + Dashboard + Ship
+### Week 2: Dashboard + Admin + Ship
 
 | Day | Focus | Deliverable |
 |-----|-------|-------------|
-| 8 | Product marketplace | Curated catalog, product pages with branded mockups, pricing display |
-| 9 | Storefront | Shareable storefront link, branded layout, product listings, buy flow |
-| 10 | CEO Dashboard | Goal tracker, sales/earnings display, quick actions |
-| 11 | Parent experience | Parent dashboard, order management, kid progress view |
-| 12 | Polish + animations | Micro-interactions, loading states, transitions, responsive QA |
+| 8 | CEO Dashboard (light) | Goal tracker, share button, post-onboarding pulse questions |
+| 9 | Pilot admin dashboard | Funnel visualization, category breakdown, parent survey responses, export |
+| 10 | Landing page | One incredible landing page — the entry point for pilot families. Clear, branded, compelling. |
+| 11 | Analytics + instrumentation | PostHog events on every moment, funnel tracking, session replays configured |
+| 12 | Polish + animations | Micro-interactions, loading states, transitions, responsive QA (mobile + iPad) |
 | 13 | Testing + bug fixes | End-to-end testing, edge cases, performance, mobile/tablet QA |
 | 14 | Deploy + handoff | Production deployment, pilot onboarding plan, documentation |
 
-**Milestone: End of Week 2** — Stand is live. 100-200 families can onboard, build their business, share their storefront, and start selling. Production-grade. Design standards met. Ready for the pilot.
+**Milestone: End of Week 2** — Stand is live. 100 families can find the landing page, go through onboarding, build their business, share their brand card, and complete the parent gate. You have a live admin dashboard with real-time pilot data. Production-grade. Design standards met. Ready for your first cohort.
 
 ---
 
@@ -128,14 +172,47 @@ Ship to your first cohort. Testing parties — intense, in-person sessions if po
 At the end of this sprint:
 
 - [ ] **A production app** deployed on Vercel, installable as a PWA (works like a native app on iPad/phone)
-- [ ] **The Stand Coach onboarding** — conversational, voice-enabled, two-pane, with the Grand Reveal
-- [ ] **A curated product marketplace** with branded mockups and real fulfillment paths
-- [ ] **CEO dashboards for kids** with goal tracking and shareable storefronts
-- [ ] **A parent experience** with COPPA-compliant consent, progress views, and order management
+- [ ] **The Stand Coach onboarding** — conversational, two-pane, with the Grand Reveal. Handles both product and service businesses.
+- [ ] **A shareable brand card** — the viral output kids send to friends and family
+- [ ] **A parent gate** with COPPA-compliant consent and embedded research questions (value prop, pricing, concerns)
+- [ ] **A CEO dashboard** with goal tracking, sharing, and a post-onboarding pulse
+- [ ] **A pilot admin dashboard** for you — real-time funnel data, category breakdown, survey responses, CSV export
+- [ ] **Full PostHog instrumentation** — session replays, funnel analytics, drop-off tracking on every moment
+- [ ] **A landing page** — the entry point for pilot families
 - [ ] **A design system** — not just a pretty app, but a system that scales. Typography, color, components, animation patterns.
 - [ ] **A Supabase backend** with auth, database, storage — architected by David for security and scale
-- [ ] **Testing infrastructure** ready for your first 100+ family pilot
 - [ ] **Documentation** — what was built, how it works, how to iterate on it
+
+### Pilot Research Outputs (Built Into the Product)
+
+You asked for specific deliverables from the pilot. Here's how each one gets answered:
+
+| Your Question | How We Answer It |
+|---------------|-----------------|
+| Must-have onboarding steps + personalization winners | PostHog funnel data — time per moment, completion rates, drop-off points |
+| Top 4 business areas for kids + "why" | Category selection data from Moment 3, broken down by age band and gender |
+| Value prop A/B directional winner | Parent gate survey — which framing resonated, in the moment of highest engagement |
+| Pricing sensitivity summary | Parent gate survey — pricing expectation question, correlated with completion |
+| Key objections + proposed fixes | Parent gate survey — concerns question + drop-off analysis |
+| Gamification preference findings | Post-onboarding pulse — what excited them most, would they share, favorite part |
+
+---
+
+## Infrastructure Costs
+
+David Shimel is laying out the system architecture. Here's what it costs to run Stand for the pilot:
+
+| Service | What | Cost/month |
+|---------|------|------------|
+| Static Content Storage (S3) | Images, videos, backups | ~$10 |
+| Compute (Vercel/EC2) | Application hosting | ~$10 |
+| Text-to-Speech (ElevenLabs) | Stand Coach voice | $5–$22 |
+| LLM (Claude / Anthropic) | Stand Coach conversations | ~$25 |
+| AI Image Generation | Brand/product rendering | $1–$13 |
+| Data Storage (Supabase) | Database, auth | Free |
+| Code Storage (GitHub) | Repository | Free |
+
+**Total: ~$65–$85/month** at 100 users. Scales linearly. The biggest variable costs (LLM at $0.25/session and image gen) have cheaper alternatives if needed. Your infrastructure costs for the pilot are essentially negligible.
 
 ---
 
@@ -151,36 +228,37 @@ I'm clearing the calendar. 40 hours a week, fully dedicated to Stand. You'll see
 
 ### What's Not Included (Yet)
 
-- **Printify/fulfillment integration** — the marketplace UX will be production-grade, but actual order fulfillment may be semi-manual for the pilot. We design the full flow, wire what we can, and handle the rest with human ops until volume justifies full automation.
-- **Payment processing** — the UX for buying/selling will be designed and built. For the pilot, actual money movement can go through a simple Stripe checkout or even manual invoicing. We architect for Stripe/Step/Greenlight integration.
-- **AI image generation for logos** — product mockups use templates with dynamic overlays (brand colors, names). Not AI-generated images — those aren't good enough yet per your feedback.
-- **Social features** (Stand Squad, leaderboards, friends) — designed into the architecture but not built in Sprint 1. This is Sprint 2 territory.
+- **Product marketplace / fulfillment integration** — the pilot focuses on the onboarding-to-reveal journey. Branded product mockups appear in the reveal, but actual Printify/partner integration for ordering and fulfillment is Sprint 2. For the pilot, we're validating which categories kids pick — not processing orders.
+- **Payment processing** — no real money for the pilot per your scope. The architecture is designed for Stripe/Step/Greenlight integration when you're ready.
+- **AI image generation for logos** — product mockups use templates with dynamic overlays (brand colors, names, vibes). Not AI-generated images — those aren't good enough yet per your feedback. The brand card uses styled templates, not generated art.
+- **Social features** (Stand Squad, leaderboards, friends) — designed into the architecture but not built in Sprint 1. The kid interviews confirm this matters (leveling, competing with friends), but it's the retention layer — you need acquisition first.
+- **Voice input** — stretch goal for the sprint. The coach works great with typing. Voice (Whisper API) would make it magical on iPad but adds meaningful scope. We'll get to it if time allows, or it's first up in Sprint 2.
 
 ---
 
 ## What I Need From You
 
-To hit the ground running:
-
 ### Before Day 1
-- [ ] **Signed NDA** — so you can share everything freely
-- [ ] **Brand assets** — whatever you have. Figma files, mood boards, color palettes, typography preferences. Even rough direction helps.
-- [ ] **Google Drive access** — pilot milestones doc, any other planning materials
+- [x] ~~Intake questionnaire~~ — received
+- [x] ~~Brand assets~~ — logos (3 variants), color palette received
+- [ ] **Figma files** — whatever Devin has, even if you don't love it. Useful for understanding what's been explored.
 - [ ] **GitHub repo access** — transfer from Chris or grant read access so I can evaluate what's reusable
-- [ ] **Intake questionnaire** — the form at andy.ws/stand/intake, takes ~15 minutes
+- [ ] **Google Drive access** — any remaining planning materials
 
 ### During the Sprint
 - [ ] **30 minutes daily** — async check-in (Slack or text), plus a quick call 2-3x per week to review progress
-- [ ] **Product decisions** — I'll flag choices as they come up (which products to include, copy tone, specific design calls). Quick responses keep the sprint moving.
+- [ ] **Product decisions** — I'll flag choices as they come up (copy tone, specific design calls, which product/service mockups to include). Quick responses keep the sprint moving.
 - [ ] **2-3 test families** by end of Week 1 — even just friends/family who can do a walkthrough and give raw feedback before the broader pilot
 
-### Your Decisions to Make
-These are the open questions I'll need answers on to build:
+### Decisions Already Made (From Your Intake)
+These were open questions in the previous draft. Your intake answered them:
 
-1. **Starting product catalog** — which 4-6 business types do we launch with? (I'll recommend based on our analysis, but you decide)
-2. **Voice input priority** — must-have for pilot, or nice-to-have? (Affects scope significantly)
-3. **Payment for pilot** — are families paying real money, or is the pilot free with simulated transactions?
-4. **Storefront sharing** — public links, or invite-only for the pilot?
+1. **Starting categories:** Products (crafts/jewelry, food/treats, personal care) + Services (tutoring, pet care, teaching). We'll curate 4-6 specific business types across both.
+2. **Voice input:** Stretch goal — Chris attempted it, didn't land. We'll build for typing first, add voice if time allows.
+3. **Payment for pilot:** No real money. Theoretical pricing captured via parent survey.
+4. **Storefront sharing:** The shareable brand card is the pilot's sharing mechanism — lightweight, viral, no storefront purchasing flow needed yet.
+5. **Mobile vs desktop:** Mobile-first, iPad is a must.
+6. **Age cohorts:** 8-11 and 11-14.
 
 ---
 
@@ -188,9 +266,12 @@ These are the open questions I'll need answers on to build:
 
 The sprint gets Stand to "shippable pilot." What comes next:
 
-- **Pilot feedback loop** (Weeks 3-4) — Testing parties, user sessions, async feedback. Real data from real families. This is Phase 6 from the original approach: sharing the product, collecting feedback, live recorded sessions.
+- **Pilot feedback loop** (Weeks 3-4) — Testing parties, user sessions, async feedback. Real data from real families flowing through your admin dashboard. Live recorded sessions with kids and parents.
+- **Learnings report** — We pull the pilot data together: onboarding completion funnel, top categories, parent survey results, pricing sensitivity, drop-off analysis, and recommendations for MVP scope.
 - **Iteration sprint** — Based on pilot data, we prioritize what to build/fix/cut. Could be another 2-week sprint or an ongoing rhythm.
-- **Social features** — Stand Squad, leaderboards, friend invites. This is the retention/viral layer.
+- **Product marketplace** — Once categories are validated, build the actual product/service catalog with real fulfillment paths (Printify for physical goods, booking/scheduling for services).
+- **Full dashboard + gamification** — Goal tracking, leveling, badges, earnings. Informed by what kids actually responded to in the pilot.
+- **Social features** — Stand Squad, leaderboards, friend invites. The retention/viral layer.
 - **Full payment rails** — Stripe integration, parent-controlled wallets, real money movement.
 - **Founding engineer hire** — Once the product is validated and you're ready to scale, I help you hire your first full-time engineer and hand off a clean, well-documented codebase.
 
@@ -200,10 +281,8 @@ The sprint gets Stand to "shippable pilot." What comes next:
 
 You told me you want something kids feel like they're a part of, that feels cool and relevant, without being so heavy-handed that it takes away from *their* brand, *their* experience, *their* business. You want something that isn't "vibe coded" — something with real soul.
 
-I can promise you that in two weeks, you'll have something you can ship to a hundred families that you're proud of. Not a prototype. Not a demo. A real product that real kids will use to start real businesses.
+Your instinct to run a research pilot is right — but you don't need A/B landing pages and surveys to get the answers. You need a product so good that the data tells itself. Kids either light up or they don't. Parents either say "wow" or they don't. We'll capture every signal, and you'll have a learnings report that's backed by real behavior, not hypothetical survey responses.
+
+I can promise you that in two weeks, you'll have something you can ship to a hundred families that you're proud of. Not a prototype. Not a demo. A real product that real kids will use to start real businesses — and a dashboard that tells you exactly what's working.
 
 Let's build it.
-
----
-
-*Ready to start? Fill out the intake at [andy.ws/stand/intake](https://andy.ws/stand/intake) and let's align on Day 1.*
