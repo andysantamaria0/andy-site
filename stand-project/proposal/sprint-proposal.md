@@ -254,7 +254,7 @@ I'm clearing the calendar. 40 hours a week, fully dedicated to Stand. You'll see
 These were open questions in the previous draft. Your intake answered them:
 
 1. **Starting categories:** Products (crafts/jewelry, food/treats, personal care) + Services (tutoring, pet care, teaching). We'll curate 4-6 specific business types across both.
-2. **Voice input:** Stretch goal — Chris attempted it, didn't land. We'll build for typing first, add voice if time allows.
+2. **Input methods:** Tap-first design — big buttons, chips, and preset options so 8-year-olds aren't stuck typing. Typing as a fallback for open-ended fields. Voice is a stretch goal — Chris attempted it, didn't land, but we'll revisit if time allows.
 3. **Payment for pilot:** No real money. Theoretical pricing captured via parent survey.
 4. **Storefront sharing:** The shareable brand card is the pilot's sharing mechanism — lightweight, viral, no storefront purchasing flow needed yet.
 5. **Mobile vs desktop:** Mobile-first, iPad is a must.
