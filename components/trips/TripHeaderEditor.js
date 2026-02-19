@@ -86,29 +86,22 @@ export default function TripHeaderEditor({ trip }) {
     };
 
     try {
-      // Handle cover image upload
+      // Handle cover image via API route (uses service role server-side)
       if (coverFile) {
-        const ext = extFromType(coverFile.type);
-        const storagePath = `${trip.id}/cover.${ext}`;
-        const { error: uploadErr } = await supabase.storage
-          .from('trip-photos')
-          .upload(storagePath, coverFile, { contentType: coverFile.type, upsert: true });
-        if (uploadErr) throw uploadErr;
-        const { data: urlData } = supabase.storage
-          .from('trip-photos')
-          .getPublicUrl(storagePath);
-        updates.cover_image_url = urlData.publicUrl;
+        const formData = new FormData();
+        formData.append('file', coverFile);
+        const res = await fetch(`/api/trips/${trip.id}/cover`, { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Upload failed');
       } else if (removeCover) {
-        updates.cover_image_url = null;
-        // Best-effort delete old file from storage
-        if (trip.cover_image_url) {
-          const oldPath = trip.cover_image_url.split('/trip-photos/')[1];
-          if (oldPath) {
-            await supabase.storage.from('trip-photos').remove([decodeURIComponent(oldPath)]);
-          }
+        const res = await fetch(`/api/trips/${trip.id}/cover`, { method: 'DELETE' });
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.error || 'Remove failed');
         }
       }
 
+      // Update name/destination/description
       const { error: updateError } = await supabase
         .from('trips')
         .update(updates)
