@@ -54,7 +54,7 @@ Instead of the current 14-step form journey, we're building a **conversational, 
 
 The journey is **6 moments**, not 14 steps:
 
-1. **"What do you want to be called?"** — CEO alias + avatar (fun AND COPPA-friendly — no real names)
+1. **"What do you want to be called?"** — CEO alias + avatar (fun AND no real names collected)
 2. **"What do you love?"** — Open-ended, not a category picker. "I love making bracelets and my dog Biscuit" is richer than checking a box
 3. **"Here's what you could build"** — 2-3 curated suggestions based on what they said. For product businesses: visual product mockups. For service businesses: a service card preview (what you offer, your rate, how to book). Each suggestion is matched against our curated catalog.
 4. **"What's your style?"** — Pick a vibe from visual mood boards, not color pickers. Each vibe is a pre-designed brand kit that transforms the entire preview
@@ -73,7 +73,7 @@ The output is a **shareable brand card** — a beautiful, branded image/link the
 
 **3. Parent Gate + Pilot Survey**
 
-COPPA-compliant consent flow that doubles as your research instrument:
+parent-gated consent flow that doubles as your research instrument:
 
 - Parent email, kid age band, optional gender, consent checkbox
 - **Embedded value prop moment** — the parent sees what their kid built and gets a clear, compelling pitch for Stand
@@ -122,7 +122,7 @@ This is your "analytics + export access" deliverable — but instead of a spread
 Two calls done. Intake questionnaire received. Materials reviewed — pitch docs, kid interviews, survey results, brand assets, color palette, logos. This proposal formalizes the plan.
 
 ### Phase 2 — Design Systems + Architecture (Days 1-2)
-David Shimel sets up the technical foundation: Supabase schema, auth flows (COPPA-compliant), deployment pipeline, PostHog integration, and the architectural guardrails that let me move fast and safe for the rest of the sprint. In parallel, I build the design system — the typography, color system, component library, and animation patterns that make everything feel cohesive and elevated. Informed by your existing brand assets: Stand logos (Black, Blank Slate, Founder Red), color palette, and design references (Uncommon, Tin Can, A24, Lego — nostalgia modernized, elevated not toyish, gaming meets soul).
+David Shimel sets up the technical foundation: Supabase schema, auth flows (parent-gated), deployment pipeline, PostHog integration, and the architectural guardrails that let me move fast and safe for the rest of the sprint. In parallel, I build the design system — the typography, color system, component library, and animation patterns that make everything feel cohesive and elevated. Informed by your existing brand assets: Stand logos (Black, Blank Slate, Founder Red), color palette, and design references (Uncommon, Tin Can, A24, Lego — nostalgia modernized, elevated not toyish, gaming meets soul).
 
 ### Phase 3 — Product Engineering (Days 3-10)
 The build. This is where the 6 moments come to life, the parent gate takes shape, and the dashboard gets built. Daily progress — you'll see things moving. I'll share builds frequently so we're never more than a day away from course-correcting.
@@ -147,7 +147,7 @@ Ship to your first cohort. Testing parties — intense, in-person sessions if po
 | 4 | Stand Coach — Moments 4-6 | Vibe/style selection, business naming, goal setting (save/buy/give/split) |
 | 5 | The Live Build pane | Real-time preview rendering — every input visually updates the brand. Product mockups for e-commerce, service cards for service businesses |
 | 6 | Grand Reveal + shareable output | The reveal moment (animations, transitions), shareable brand card generation |
-| 7 | Parent gate + survey | COPPA consent flow, embedded value prop/pricing survey questions, parent approval |
+| 7 | Parent gate + survey | Parent consent flow, embedded value prop/pricing survey questions, parent approval |
 
 **Milestone: End of Week 1** — A kid can go through the full onboarding journey and have a branded business with a name, a style, and a goal. The reveal moment works. They can share their brand card. A parent can approve it and answer survey questions in the process.
 
@@ -174,7 +174,7 @@ At the end of this sprint:
 - [ ] **A production app** deployed on Vercel, installable as a PWA (works like a native app on iPad/phone)
 - [ ] **The Stand Coach onboarding** — conversational, two-pane, with the Grand Reveal. Handles both product and service businesses.
 - [ ] **A shareable brand card** — the viral output kids send to friends and family
-- [ ] **A parent gate** with COPPA-compliant consent and embedded research questions (value prop, pricing, concerns)
+- [ ] **A parent gate** with parent-gated consent and embedded research questions (value prop, pricing, concerns)
 - [ ] **A CEO dashboard** with goal tracking, sharing, and a post-onboarding pulse
 - [ ] **A pilot admin dashboard** for you — real-time funnel data, category breakdown, survey responses, CSV export
 - [ ] **Full PostHog instrumentation** — session replays, funnel analytics, drop-off tracking on every moment

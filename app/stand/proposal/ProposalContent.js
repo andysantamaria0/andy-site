@@ -246,7 +246,7 @@ export default function ProposalContent() {
           <div className="stand-feature-block">
             <div className="stand-feature-block-name">3. Parent Gate + Pilot Survey</div>
             <p>
-              COPPA-compliant consent flow that doubles as your research instrument:
+              Parent consent flow that doubles as your research instrument:
             </p>
             <ul>
               <li>Parent email, kid age band, optional gender, consent checkbox</li>
@@ -294,7 +294,7 @@ export default function ProposalContent() {
 
           <div className="stand-moment">
             <span className="stand-moment-number">1</span>
-            <span className="stand-moment-body"><strong>&ldquo;What do you want to be called?&rdquo;</strong> &mdash; CEO alias + avatar (fun AND COPPA-friendly &mdash; no real names)</span>
+            <span className="stand-moment-body"><strong>&ldquo;What do you want to be called?&rdquo;</strong> &mdash; CEO alias + avatar (fun AND no real names collected)</span>
           </div>
           <div className="stand-moment">
             <span className="stand-moment-number">2</span>
@@ -357,7 +357,7 @@ export default function ProposalContent() {
             <div className="stand-phase-number">Phase 2</div>
             <div className="stand-phase-name">Design Systems + Architecture (Days 1&ndash;2)</div>
             <p>
-              David Shimel sets up the technical foundation: Supabase schema, auth flows (COPPA-compliant), deployment pipeline, PostHog integration, and the architectural guardrails that let me move fast and safe for the rest of the sprint. In parallel, I build the design system &mdash; the typography, color system, component library, and animation patterns that make everything feel cohesive and elevated. Informed by your existing brand assets: Stand logos (Black, Blank Slate, Founder Red), color palette, and design references (Uncommon, Tin Can, A24, Lego &mdash; nostalgia modernized, elevated not toyish, gaming meets soul).
+              David Shimel sets up the technical foundation: Supabase schema, auth flows (parent-gated), deployment pipeline, PostHog integration, and the architectural guardrails that let me move fast and safe for the rest of the sprint. In parallel, I build the design system &mdash; the typography, color system, component library, and animation patterns that make everything feel cohesive and elevated. Informed by your existing brand assets: Stand logos (Black, Blank Slate, Founder Red), color palette, and design references (Uncommon, Tin Can, A24, Lego &mdash; nostalgia modernized, elevated not toyish, gaming meets soul).
             </p>
           </div>
 
@@ -435,7 +435,7 @@ export default function ProposalContent() {
                 <tr>
                   <td>7</td>
                   <td>Parent gate + survey</td>
-                  <td style={{ textAlign: 'left' }}>COPPA consent flow, embedded value prop/pricing survey questions, parent approval</td>
+                  <td style={{ textAlign: 'left' }}>Parent consent flow, embedded value prop/pricing survey questions, parent approval</td>
                 </tr>
               </tbody>
             </table>
@@ -512,7 +512,7 @@ export default function ProposalContent() {
             <li><strong>A production app</strong> deployed on Vercel, installable as a PWA (works like a native app on iPad/phone)</li>
             <li><strong>The Stand Coach onboarding</strong> &mdash; conversational, two-pane, with the Grand Reveal. Handles both product and service businesses.</li>
             <li><strong>A shareable brand card</strong> &mdash; the viral output kids send to friends and family</li>
-            <li><strong>A parent gate</strong> with COPPA-compliant consent and embedded research questions (value prop, pricing, concerns)</li>
+            <li><strong>A parent gate</strong> with parent consent and embedded research questions (value prop, pricing, concerns)</li>
             <li><strong>A CEO dashboard</strong> with goal tracking, sharing, and a post-onboarding pulse</li>
             <li><strong>A pilot admin dashboard</strong> for you &mdash; real-time funnel data, category breakdown, survey responses, CSV export</li>
             <li><strong>Full PostHog instrumentation</strong> &mdash; session replays, funnel analytics, drop-off tracking on every moment</li>
@@ -663,7 +663,7 @@ export default function ProposalContent() {
               <div className="stand-investment-card-hours">5 hours &middot; capped</div>
               <ul className="stand-investment-card-list">
                 <li>Supabase schema &amp; database design</li>
-                <li>Auth flows (COPPA-compliant)</li>
+                <li>Auth flows (parent-gated)</li>
                 <li>Deployment pipeline</li>
                 <li>PostHog integration</li>
               </ul>
