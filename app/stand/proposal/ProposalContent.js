@@ -738,7 +738,7 @@ export default function ProposalContent() {
         <div className="stand-note">
           <div className="stand-note-label">Closing</div>
           <p>
-            In two weeks, you&apos;ll have something with soul, something you can ship to a hundred families that you&apos;re proud of. Not a prototype. Not a demo. A real product that real kids will use to start real businesses, and a dashboard that tells you exactly what&apos;s working.
+            In two weeks, you&apos;ll have something with soul, something you can ship to a hundred families that you&apos;re proud of. A real product that real kids will use to start businesses, and a dashboard that tells you exactly what&apos;s working.
           </p>
           <div className="stand-note-signature">
             &mdash;Andy<span className="stand-note-cursor" />

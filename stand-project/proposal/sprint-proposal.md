@@ -279,4 +279,4 @@ The sprint gets Stand to "shippable pilot." What comes next:
 
 ## Closing
 
-In two weeks, you'll have something with soul, something you can ship to a hundred families that you're proud of. Not a prototype. Not a demo. A real product that real kids will use to start real businesses, and a dashboard that tells you exactly what's working.
+In two weeks, you'll have something with soul, something you can ship to a hundred families that you're proud of. A real product that real kids will use to start businesses, and a dashboard that tells you exactly what's working.
