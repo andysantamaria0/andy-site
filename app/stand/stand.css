@@ -1185,6 +1185,94 @@
   letter-spacing: 0.03em;
 }
 
+/* ---- Finding Blocks (What We Already Know) ---- */
+
+.stand-finding-block {
+  margin-bottom: 28px;
+  padding-left: 16px;
+  border-left: 2px solid var(--border);
+}
+
+.stand-finding-block:last-child {
+  margin-bottom: 0;
+}
+
+.stand-finding-block-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.stand-finding-block p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.155rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.stand-finding-block p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Phase Complete Badge ---- */
+
+.stand-phase-complete {
+  display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  padding: 2px 8px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+/* ---- Sprint Day-by-Day Table ---- */
+
+.stand-sprint-table td:first-child {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.85rem;
+  color: var(--accent);
+  white-space: nowrap;
+  min-width: 36px;
+}
+
+.stand-sprint-table td:nth-child(2) {
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* ---- Research Outputs Table ---- */
+
+.stand-research-table th:first-child,
+.stand-research-table td:first-child {
+  text-align: left;
+  min-width: 200px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.stand-research-table th:last-child,
+.stand-research-table td:last-child {
+  text-align: left;
+}
+
+/* ---- Infrastructure Costs Table ---- */
+
+.stand-infra-table td:first-child {
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+}
+
 /* ---- Responsive ---- */
 
 @media (max-width: 600px) {
@@ -1224,5 +1312,22 @@
   .stand-nav-tab {
     padding: 12px 10px;
     font-size: 0.7rem;
+  }
+
+  .stand-finding-block p,
+  .stand-finding-block-name {
+    font-size: 1rem;
+  }
+
+  .stand-sprint-table td:nth-child(2) {
+    white-space: normal;
+  }
+
+  .stand-research-table td:first-child {
+    min-width: auto;
+  }
+
+  .stand-infra-table td:first-child {
+    white-space: normal;
   }
 }
