@@ -736,18 +736,9 @@ export default function ProposalContent() {
 
         {/* Closing note */}
         <div className="stand-note">
-          <div className="stand-note-label">The Bottom Line</div>
+          <div className="stand-note-label">Closing</div>
           <p>
-            You told me you want something kids feel like they&apos;re a part of, that feels cool and relevant, without being so heavy-handed that it takes away from their brand, their experience, their business. You want something that isn&apos;t &ldquo;vibe coded&rdquo; &mdash; something with real soul.
-          </p>
-          <p>
-            Your instinct to run a research pilot is right &mdash; but you don&apos;t need A/B landing pages and surveys to get the answers. You need a product so good that the data tells itself. Kids either light up or they don&apos;t. Parents either say &ldquo;wow&rdquo; or they don&apos;t. We&apos;ll capture every signal, and you&apos;ll have a learnings report that&apos;s backed by real behavior, not hypothetical survey responses.
-          </p>
-          <p>
-            I can promise you that in two weeks, you&apos;ll have something you can ship to a hundred families that you&apos;re proud of. Not a prototype. Not a demo. A real product that real kids will use to start real businesses &mdash; and a dashboard that tells you exactly what&apos;s working.
-          </p>
-          <p>
-            Let&apos;s build it.
+            In two weeks, you&apos;ll have something with soul, something you can ship to a hundred families that you&apos;re proud of. Not a prototype. Not a demo. A real product that real kids will use to start real businesses, and a dashboard that tells you exactly what&apos;s working.
           </p>
           <div className="stand-note-signature">
             &mdash;Andy<span className="stand-note-cursor" />

@@ -277,12 +277,6 @@ The sprint gets Stand to "shippable pilot." What comes next:
 
 ---
 
-## The Bottom Line
+## Closing
 
-You told me you want something kids feel like they're a part of, that feels cool and relevant, without being so heavy-handed that it takes away from *their* brand, *their* experience, *their* business. You want something that isn't "vibe coded" — something with real soul.
-
-Your instinct to run a research pilot is right — but you don't need A/B landing pages and surveys to get the answers. You need a product so good that the data tells itself. Kids either light up or they don't. Parents either say "wow" or they don't. We'll capture every signal, and you'll have a learnings report that's backed by real behavior, not hypothetical survey responses.
-
-I can promise you that in two weeks, you'll have something you can ship to a hundred families that you're proud of. Not a prototype. Not a demo. A real product that real kids will use to start real businesses — and a dashboard that tells you exactly what's working.
-
-Let's build it.
+In two weeks, you'll have something with soul, something you can ship to a hundred families that you're proud of. Not a prototype. Not a demo. A real product that real kids will use to start real businesses, and a dashboard that tells you exactly what's working.
