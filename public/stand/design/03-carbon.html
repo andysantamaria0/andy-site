@@ -1366,6 +1366,663 @@
   </div>
 </section>
 
+<div class="divider"></div>
+
+
+<!-- =============================================
+     SECTION 6: PILOT ADMIN DASHBOARD
+     ============================================= -->
+<section class="light-bg" id="dashboard">
+<style>
+  /* ========================================
+     6. PILOT ADMIN DASHBOARD
+     ======================================== */
+  .admin-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Dashboard Header */
+  .dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 64px;
+  }
+
+  .dash-header-left .dash-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .dash-header-left .dash-subtitle {
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    color: var(--mid);
+    font-weight: 400;
+  }
+
+  .dash-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--black);
+    background: var(--white);
+    padding: 10px 20px;
+    border-radius: var(--radius-pill);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .dash-user-avatar {
+    width: 32px;
+    height: 32px;
+    background: var(--black);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  /* KPI Row */
+  .dash-kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+
+  .dash-kpi {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    padding: 32px;
+    position: relative;
+  }
+
+  .dash-kpi-number {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .dash-kpi-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    color: var(--mid);
+    font-weight: 400;
+  }
+
+  .dash-kpi-target {
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    color: var(--mid);
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--light);
+  }
+
+  .dash-kpi-target span {
+    color: var(--black);
+    font-weight: 500;
+  }
+
+  /* Two-column layout for middle panels */
+  .dash-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+
+  .dash-panel {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    padding: 36px;
+  }
+
+  .dash-panel-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+  }
+
+  /* Onboarding Funnel */
+  .dash-funnel-step {
+    display: grid;
+    grid-template-columns: 140px 1fr 56px;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .dash-funnel-step:last-child {
+    margin-bottom: 0;
+  }
+
+  .dash-funnel-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--black);
+    white-space: nowrap;
+  }
+
+  .dash-funnel-bar-track {
+    height: 28px;
+    background: var(--light);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .dash-funnel-bar-fill {
+    height: 100%;
+    background: var(--black);
+    border-radius: 6px;
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .dash-funnel-pct {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mid);
+    text-align: right;
+  }
+
+  .dash-funnel-pct--accent {
+    color: var(--red);
+    font-weight: 500;
+  }
+
+  .dash-funnel-count {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: var(--white);
+    z-index: 1;
+  }
+
+  /* Category Breakdown */
+  .dash-cat-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .dash-cat-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .dash-cat-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--black);
+    width: 110px;
+    flex-shrink: 0;
+  }
+
+  .dash-cat-bar-track {
+    flex: 1;
+    height: 24px;
+    background: var(--light);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .dash-cat-bar-fill {
+    height: 100%;
+    background: var(--black);
+    border-radius: 6px;
+  }
+
+  .dash-cat-val {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mid);
+    width: 64px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* Survey Snapshot */
+  .dash-survey-group {
+    margin-bottom: 32px;
+  }
+
+  .dash-survey-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .dash-survey-question {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+
+  .dash-survey-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .dash-survey-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .dash-survey-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    color: var(--black);
+    width: 130px;
+    flex-shrink: 0;
+  }
+
+  .dash-survey-bar-track {
+    flex: 1;
+    height: 20px;
+    background: var(--light);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .dash-survey-bar-fill {
+    height: 100%;
+    background: var(--black);
+    border-radius: 5px;
+  }
+
+  .dash-survey-pct {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mid);
+    width: 40px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* Activity Feed */
+  .dash-bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 0;
+  }
+
+  .dash-activity-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--light);
+  }
+
+  .dash-activity-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .dash-activity-item:first-child {
+    padding-top: 0;
+  }
+
+  .dash-activity-handle {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--black);
+  }
+
+  .dash-activity-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.5;
+  }
+
+  .dash-activity-time {
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    color: var(--mid);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-left: 24px;
+    margin-top: 2px;
+  }
+
+  /* Export Button */
+  .dash-export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--mid);
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 24px;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid rgba(0,0,0,0.12);
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+    margin-top: 32px;
+  }
+
+  .dash-export-btn:hover {
+    border-color: var(--black);
+    color: var(--black);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .dash-kpi-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dash-two-col,
+    .dash-bottom-row {
+      grid-template-columns: 1fr;
+    }
+
+    .dash-kpi-number {
+      font-size: 36px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .dash-kpi-row {
+      grid-template-columns: 1fr;
+    }
+
+    .dash-header {
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .dash-funnel-step {
+      grid-template-columns: 100px 1fr 48px;
+    }
+  }
+</style>
+
+  <div style="padding: 0 80px 0 0;">
+    <div class="section-label">06 / Pilot Admin Dashboard</div>
+  </div>
+
+  <div class="admin-dashboard">
+
+    <!-- Dashboard Header -->
+    <div class="dash-header fade-up">
+      <div class="dash-header-left">
+        <div class="dash-title">Pilot Dashboard</div>
+        <div class="dash-subtitle">Real-time view of your Stand pilot</div>
+      </div>
+      <div class="dash-user">
+        <div class="dash-user-avatar">L</div>
+        Lauren
+      </div>
+    </div>
+
+    <!-- KPI Row -->
+    <div class="dash-kpi-row fade-up">
+      <div class="dash-kpi">
+        <div class="dash-kpi-number">47</div>
+        <div class="dash-kpi-label">Kids Onboarded</div>
+        <div class="dash-kpi-target">of <span>100</span> target</div>
+      </div>
+      <div class="dash-kpi">
+        <div class="dash-kpi-number">89%</div>
+        <div class="dash-kpi-label">Parent Approval Rate</div>
+        <div class="dash-kpi-target"><span>42</span> of 47 approved</div>
+      </div>
+      <div class="dash-kpi">
+        <div class="dash-kpi-number" style="color: var(--red);">4.7</div>
+        <div class="dash-kpi-label">Avg Kid Excitement</div>
+        <div class="dash-kpi-target">out of <span>5.0</span></div>
+      </div>
+      <div class="dash-kpi">
+        <div class="dash-kpi-number">38</div>
+        <div class="dash-kpi-label">Storefronts Live</div>
+        <div class="dash-kpi-target"><span>81%</span> of onboarded</div>
+      </div>
+    </div>
+
+    <!-- Onboarding Funnel + Category Breakdown -->
+    <div class="dash-two-col fade-up">
+
+      <!-- Onboarding Funnel -->
+      <div class="dash-panel">
+        <div class="dash-panel-title">Onboarding Funnel</div>
+        <div class="dash-funnel-step">
+          <div class="dash-funnel-label">Started</div>
+          <div class="dash-funnel-bar-track">
+            <div class="dash-funnel-bar-fill" style="width: 100%;"><span class="dash-funnel-count">62</span></div>
+          </div>
+          <div class="dash-funnel-pct">&mdash;</div>
+        </div>
+        <div class="dash-funnel-step">
+          <div class="dash-funnel-label">Named Business</div>
+          <div class="dash-funnel-bar-track">
+            <div class="dash-funnel-bar-fill" style="width: 87%;"><span class="dash-funnel-count">54</span></div>
+          </div>
+          <div class="dash-funnel-pct">87%</div>
+        </div>
+        <div class="dash-funnel-step">
+          <div class="dash-funnel-label">Chose Category</div>
+          <div class="dash-funnel-bar-track">
+            <div class="dash-funnel-bar-fill" style="width: 82%;"><span class="dash-funnel-count">51</span></div>
+          </div>
+          <div class="dash-funnel-pct">82%</div>
+        </div>
+        <div class="dash-funnel-step">
+          <div class="dash-funnel-label">Set Goal</div>
+          <div class="dash-funnel-bar-track">
+            <div class="dash-funnel-bar-fill" style="width: 77%;"><span class="dash-funnel-count">48</span></div>
+          </div>
+          <div class="dash-funnel-pct">77%</div>
+        </div>
+        <div class="dash-funnel-step">
+          <div class="dash-funnel-label">Parent Approved</div>
+          <div class="dash-funnel-bar-track">
+            <div class="dash-funnel-bar-fill" style="width: 68%;"><span class="dash-funnel-count">42</span></div>
+          </div>
+          <div class="dash-funnel-pct dash-funnel-pct--accent">68%</div>
+        </div>
+        <div class="dash-funnel-step">
+          <div class="dash-funnel-label">Storefront Live</div>
+          <div class="dash-funnel-bar-track">
+            <div class="dash-funnel-bar-fill" style="width: 61%;"><span class="dash-funnel-count">38</span></div>
+          </div>
+          <div class="dash-funnel-pct">61%</div>
+        </div>
+      </div>
+
+      <!-- Category Breakdown -->
+      <div class="dash-panel">
+        <div class="dash-panel-title">Category Breakdown</div>
+        <div class="dash-cat-row">
+          <div class="dash-cat-name">Art & Crafts</div>
+          <div class="dash-cat-bar-track">
+            <div class="dash-cat-bar-fill" style="width: 100%;"></div>
+          </div>
+          <div class="dash-cat-val">14 (37%)</div>
+        </div>
+        <div class="dash-cat-row">
+          <div class="dash-cat-name">Food & Treats</div>
+          <div class="dash-cat-bar-track">
+            <div class="dash-cat-bar-fill" style="width: 64%;"></div>
+          </div>
+          <div class="dash-cat-val">9 (24%)</div>
+        </div>
+        <div class="dash-cat-row">
+          <div class="dash-cat-name">Services</div>
+          <div class="dash-cat-bar-track">
+            <div class="dash-cat-bar-fill" style="width: 57%;"></div>
+          </div>
+          <div class="dash-cat-val">8 (21%)</div>
+        </div>
+        <div class="dash-cat-row">
+          <div class="dash-cat-name">Fashion</div>
+          <div class="dash-cat-bar-track">
+            <div class="dash-cat-bar-fill" style="width: 29%;"></div>
+          </div>
+          <div class="dash-cat-val">4 (11%)</div>
+        </div>
+        <div class="dash-cat-row">
+          <div class="dash-cat-name">Tech</div>
+          <div class="dash-cat-bar-track">
+            <div class="dash-cat-bar-fill" style="width: 21%;"></div>
+          </div>
+          <div class="dash-cat-val">3 (8%)</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Parent Survey + Activity Feed -->
+    <div class="dash-bottom-row fade-up">
+
+      <!-- Parent Survey Snapshot -->
+      <div class="dash-panel">
+        <div class="dash-panel-title">Parent Survey Snapshot</div>
+
+        <div class="dash-survey-group">
+          <div class="dash-survey-question">"What excites you most?"</div>
+          <div class="dash-survey-row">
+            <div class="dash-survey-label">Financial literacy</div>
+            <div class="dash-survey-bar-track">
+              <div class="dash-survey-bar-fill" style="width: 42%;"></div>
+            </div>
+            <div class="dash-survey-pct">42%</div>
+          </div>
+          <div class="dash-survey-row">
+            <div class="dash-survey-label">Creativity</div>
+            <div class="dash-survey-bar-track">
+              <div class="dash-survey-bar-fill" style="width: 28%;"></div>
+            </div>
+            <div class="dash-survey-pct">28%</div>
+          </div>
+          <div class="dash-survey-row">
+            <div class="dash-survey-label">Confidence</div>
+            <div class="dash-survey-bar-track">
+              <div class="dash-survey-bar-fill" style="width: 19%;"></div>
+            </div>
+            <div class="dash-survey-pct">19%</div>
+          </div>
+        </div>
+
+        <div class="dash-survey-group">
+          <div class="dash-survey-question">"Expected monthly price"</div>
+          <div class="dash-survey-row">
+            <div class="dash-survey-label">$15 &ndash; $20</div>
+            <div class="dash-survey-bar-track">
+              <div class="dash-survey-bar-fill" style="width: 18%;"></div>
+            </div>
+            <div class="dash-survey-pct">18%</div>
+          </div>
+          <div class="dash-survey-row">
+            <div class="dash-survey-label">$25 &ndash; $30</div>
+            <div class="dash-survey-bar-track">
+              <div class="dash-survey-bar-fill" style="width: 45%;"></div>
+            </div>
+            <div class="dash-survey-pct">45%</div>
+          </div>
+          <div class="dash-survey-row">
+            <div class="dash-survey-label">$30 &ndash; $35</div>
+            <div class="dash-survey-bar-track">
+              <div class="dash-survey-bar-fill" style="width: 28%;"></div>
+            </div>
+            <div class="dash-survey-pct">28%</div>
+          </div>
+          <div class="dash-survey-row">
+            <div class="dash-survey-label">$35+</div>
+            <div class="dash-survey-bar-track">
+              <div class="dash-survey-bar-fill" style="width: 9%;"></div>
+            </div>
+            <div class="dash-survey-pct">9%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity Feed -->
+      <div class="dash-panel">
+        <div class="dash-panel-title">Recent Activity</div>
+
+        <div class="dash-activity-item">
+          <div class="dash-activity-text">
+            <span class="dash-activity-handle">Cookie-Q</span> launched <strong>Nana's Sweet Spot</strong>
+          </div>
+          <div class="dash-activity-time">2m ago</div>
+        </div>
+
+        <div class="dash-activity-item">
+          <div class="dash-activity-text">
+            <span class="dash-activity-handle">DogBoss</span> parent approved <strong>Paws & Go</strong>
+          </div>
+          <div class="dash-activity-time">8m ago</div>
+        </div>
+
+        <div class="dash-activity-item">
+          <div class="dash-activity-text">
+            <span class="dash-activity-handle">Sparkle-B</span> shared brand card <span style="color: var(--mid);">(3 views)</span>
+          </div>
+          <div class="dash-activity-time">15m ago</div>
+        </div>
+
+        <div class="dash-activity-item">
+          <div class="dash-activity-text">
+            <span class="dash-activity-handle">ArtBoss</span> set goal: $50 for art supplies
+          </div>
+          <div class="dash-activity-time">22m ago</div>
+        </div>
+
+        <div class="dash-activity-item">
+          <div class="dash-activity-text">
+            <span class="dash-activity-handle">BraceletQueen</span> completed onboarding
+          </div>
+          <div class="dash-activity-time">31m ago</div>
+        </div>
+
+        <!-- Export Button -->
+        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--light);">
+          <button class="dash-export-btn">Export CSV &darr;</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
 <div style="height:120px;"></div>
 
 

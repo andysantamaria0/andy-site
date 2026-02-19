@@ -1551,6 +1551,423 @@ h1, h2, h3, h4, h5 {
   letter-spacing: 0.08em;
   color: rgba(44,44,44,0.3);
 }
+
+
+/* ========================================================
+   6. PILOT ADMIN DASHBOARD
+   ======================================================== */
+
+.admin-dashboard {
+  text-align: center;
+}
+
+.admin-dashboard .dashboard-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: rgba(44,44,44,0.55);
+  max-width: 480px;
+  margin: 0 auto 3rem;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+/* -- KPI Row -- */
+.admin-dashboard .kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.admin-dashboard .kpi-card {
+  background: var(--parchment);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.25rem;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-dashboard .kpi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.admin-dashboard .kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--terracotta), var(--dusty-rose));
+}
+
+.admin-dashboard .kpi-value {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 300;
+  color: var(--terracotta);
+  line-height: 1.1;
+  margin-bottom: 0.25rem;
+}
+
+.admin-dashboard .kpi-label {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--forest);
+  margin-bottom: 0.25rem;
+}
+
+.admin-dashboard .kpi-detail {
+  font-family: var(--font-accent);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: rgba(44,44,44,0.4);
+}
+
+/* -- Dashboard Grid (2 columns) -- */
+.admin-dashboard .dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3.5rem;
+  text-align: left;
+}
+
+/* -- Panel cards used inside grid -- */
+.admin-dashboard .dash-panel {
+  background: var(--parchment);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-card);
+}
+
+.admin-dashboard .dash-panel-label {
+  font-family: var(--font-accent);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dusty-rose);
+  margin-bottom: 0.5rem;
+}
+
+.admin-dashboard .dash-panel-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--charcoal);
+  margin-bottom: 1.5rem;
+}
+
+/* -- Funnel -- */
+.admin-dashboard .funnel-step {
+  display: grid;
+  grid-template-columns: 160px 1fr 48px;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.admin-dashboard .funnel-label {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--forest);
+  text-align: right;
+}
+
+.admin-dashboard .funnel-bar-track {
+  height: 28px;
+  background: rgba(44,44,44,0.04);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+.admin-dashboard .funnel-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--terracotta), var(--dusty-rose));
+  border-radius: var(--radius-sm);
+  transition: width 0.6s ease;
+  position: relative;
+}
+
+.admin-dashboard .funnel-bar-fill::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--terracotta);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.admin-dashboard .funnel-count {
+  font-family: var(--font-accent);
+  font-size: 0.78rem;
+  color: rgba(44,44,44,0.5);
+  text-align: left;
+}
+
+/* -- Category Bars -- */
+.admin-dashboard .category-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 54px;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.admin-dashboard .category-label {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--forest);
+  text-align: right;
+}
+
+.admin-dashboard .category-bar-track {
+  height: 22px;
+  background: rgba(44,44,44,0.04);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.admin-dashboard .category-bar-fill {
+  height: 100%;
+  background: var(--forest);
+  border-radius: var(--radius-sm);
+  opacity: 0.8;
+  transition: width 0.6s ease;
+}
+
+.admin-dashboard .category-count {
+  font-family: var(--font-accent);
+  font-size: 0.75rem;
+  color: rgba(44,44,44,0.5);
+  text-align: left;
+}
+
+/* -- Survey section -- */
+.admin-dashboard .survey-group {
+  margin-bottom: 1.75rem;
+}
+
+.admin-dashboard .survey-group:last-child {
+  margin-bottom: 0;
+}
+
+.admin-dashboard .survey-question {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--charcoal);
+  margin-bottom: 0.75rem;
+  font-style: italic;
+}
+
+.admin-dashboard .survey-option {
+  display: grid;
+  grid-template-columns: 140px 1fr 42px;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.admin-dashboard .survey-option-label {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--forest);
+  text-align: right;
+}
+
+.admin-dashboard .survey-bar-track {
+  height: 18px;
+  background: rgba(44,44,44,0.04);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.admin-dashboard .survey-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-sm);
+  transition: width 0.6s ease;
+}
+
+.admin-dashboard .survey-bar-fill.rose {
+  background: var(--dusty-rose);
+  opacity: 0.7;
+}
+
+.admin-dashboard .survey-bar-fill.cream-fill {
+  background: var(--cream);
+  border: 1px solid rgba(44,44,44,0.08);
+}
+
+.admin-dashboard .survey-pct {
+  font-family: var(--font-accent);
+  font-size: 0.72rem;
+  color: rgba(44,44,44,0.5);
+  text-align: left;
+}
+
+/* -- Activity Feed (vintage ledger) -- */
+.admin-dashboard .activity-feed {
+  background: var(--parchment);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+  text-align: left;
+}
+
+.admin-dashboard .feed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid rgba(44,44,44,0.08);
+}
+
+.admin-dashboard .feed-header-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--charcoal);
+}
+
+.admin-dashboard .feed-header-badge {
+  font-family: var(--font-accent);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dusty-rose);
+  border: 1.5px dashed var(--dusty-rose);
+  border-radius: 50px;
+  padding: 0.3rem 0.75rem;
+}
+
+.admin-dashboard .feed-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid rgba(44,44,44,0.05);
+  align-items: center;
+  transition: background 0.2s ease;
+}
+
+.admin-dashboard .feed-item:last-child {
+  border-bottom: none;
+}
+
+.admin-dashboard .feed-item:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.admin-dashboard .feed-time {
+  font-family: var(--font-accent);
+  font-size: 0.72rem;
+  color: rgba(44,44,44,0.4);
+  letter-spacing: 0.04em;
+  text-align: right;
+}
+
+.admin-dashboard .feed-text {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--charcoal);
+  line-height: 1.5;
+}
+
+.admin-dashboard .feed-text strong {
+  font-weight: 600;
+  color: var(--terracotta);
+}
+
+.admin-dashboard .feed-stamp {
+  width: 36px;
+  height: 36px;
+  border: 1.5px dashed var(--dusty-rose);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-accent);
+  font-size: 0.5rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dusty-rose);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+/* -- Export row -- */
+.admin-dashboard .export-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.admin-dashboard .btn-export {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--forest);
+  padding: 0.75rem 1.6rem;
+  border-radius: 100px;
+  border: 2px solid var(--forest);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-dashboard .btn-export:hover {
+  background: var(--forest);
+  color: var(--linen);
+  transform: translateY(-1px);
+}
+
+.admin-dashboard .btn-export .export-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* -- Responsive -- */
+@media (max-width: 900px) {
+  .admin-dashboard .kpi-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .admin-dashboard .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-dashboard .kpi-row {
+    grid-template-columns: 1fr;
+  }
+  .admin-dashboard .funnel-step {
+    grid-template-columns: 100px 1fr 40px;
+  }
+  .admin-dashboard .category-row {
+    grid-template-columns: 90px 1fr 44px;
+  }
+  .admin-dashboard .survey-option {
+    grid-template-columns: 100px 1fr 36px;
+  }
+  .admin-dashboard .feed-item {
+    grid-template-columns: 60px 1fr auto;
+    padding: 0.75rem 1.25rem;
+  }
+}
 </style>
 </head>
 <body>
@@ -1573,6 +1990,7 @@ h1, h2, h3, h4, h5 {
     <a href="#onboarding">Onboarding</a>
     <a href="#brand-card">Brand Card</a>
     <a href="#parent-gate">Parent Gate</a>
+    <a href="#admin-dashboard">Dashboard</a>
   </nav>
 </header>
 
@@ -2042,6 +2460,272 @@ h1, h2, h3, h4, h5 {
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     6. PILOT ADMIN DASHBOARD
+     ============================================================ -->
+<section class="section admin-dashboard" id="admin-dashboard">
+  <div class="container">
+    <span class="section-label fade-in">Founder&rsquo;s View</span>
+    <h2 class="section-title fade-in delay-1">Pilot Dashboard</h2>
+    <p class="dashboard-subtitle fade-in delay-2">
+      Your Stand pilot at a glance &mdash; field notes from forty-seven young entrepreneurs finding their footing.
+    </p>
+
+    <!-- KPI Row -->
+    <div class="kpi-row fade-in delay-3">
+      <div class="kpi-card">
+        <div class="kpi-value">47</div>
+        <div class="kpi-label">Kids Onboarded</div>
+        <div class="kpi-detail">of 100 target</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">89%</div>
+        <div class="kpi-label">Parent Approval Rate</div>
+        <div class="kpi-detail">42 of 47 approved</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">4.7</div>
+        <div class="kpi-label">Kid Excitement</div>
+        <div class="kpi-detail">avg out of 5.0</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">38</div>
+        <div class="kpi-label">Storefronts Live</div>
+        <div class="kpi-detail">81% of onboarded</div>
+      </div>
+    </div>
+
+    <!-- Two-column grid: Funnel + Categories -->
+    <div class="dashboard-grid">
+
+      <!-- Onboarding Funnel -->
+      <div class="dash-panel fade-in delay-4">
+        <div class="dash-panel-label">Conversion</div>
+        <div class="dash-panel-title">Onboarding Funnel</div>
+
+        <div class="funnel-step">
+          <span class="funnel-label">Started</span>
+          <div class="funnel-bar-track">
+            <div class="funnel-bar-fill" style="width: 100%;"></div>
+          </div>
+          <span class="funnel-count">62</span>
+        </div>
+        <div class="funnel-step">
+          <span class="funnel-label">Named Business</span>
+          <div class="funnel-bar-track">
+            <div class="funnel-bar-fill" style="width: 87%;"></div>
+          </div>
+          <span class="funnel-count">54</span>
+        </div>
+        <div class="funnel-step">
+          <span class="funnel-label">Chose Category</span>
+          <div class="funnel-bar-track">
+            <div class="funnel-bar-fill" style="width: 82%;"></div>
+          </div>
+          <span class="funnel-count">51</span>
+        </div>
+        <div class="funnel-step">
+          <span class="funnel-label">Set Goal</span>
+          <div class="funnel-bar-track">
+            <div class="funnel-bar-fill" style="width: 77%;"></div>
+          </div>
+          <span class="funnel-count">48</span>
+        </div>
+        <div class="funnel-step">
+          <span class="funnel-label">Parent Approved</span>
+          <div class="funnel-bar-track">
+            <div class="funnel-bar-fill" style="width: 68%;"></div>
+          </div>
+          <span class="funnel-count">42</span>
+        </div>
+        <div class="funnel-step">
+          <span class="funnel-label">Storefront Live</span>
+          <div class="funnel-bar-track">
+            <div class="funnel-bar-fill" style="width: 61%;"></div>
+          </div>
+          <span class="funnel-count">38</span>
+        </div>
+      </div>
+
+      <!-- Category Breakdown -->
+      <div class="dash-panel fade-in delay-5">
+        <div class="dash-panel-label">Distribution</div>
+        <div class="dash-panel-title">Category Breakdown</div>
+
+        <div class="category-row">
+          <span class="category-label">Art &amp; Crafts</span>
+          <div class="category-bar-track">
+            <div class="category-bar-fill" style="width: 100%;"></div>
+          </div>
+          <span class="category-count">14 (37%)</span>
+        </div>
+        <div class="category-row">
+          <span class="category-label">Food &amp; Treats</span>
+          <div class="category-bar-track">
+            <div class="category-bar-fill" style="width: 64%;"></div>
+          </div>
+          <span class="category-count">9 (24%)</span>
+        </div>
+        <div class="category-row">
+          <span class="category-label">Services</span>
+          <div class="category-bar-track">
+            <div class="category-bar-fill" style="width: 57%;"></div>
+          </div>
+          <span class="category-count">8 (21%)</span>
+        </div>
+        <div class="category-row">
+          <span class="category-label">Fashion</span>
+          <div class="category-bar-track">
+            <div class="category-bar-fill" style="width: 29%;"></div>
+          </div>
+          <span class="category-count">4 (11%)</span>
+        </div>
+        <div class="category-row">
+          <span class="category-label">Tech</span>
+          <div class="category-bar-track">
+            <div class="category-bar-fill" style="width: 21%;"></div>
+          </div>
+          <span class="category-count">3 (8%)</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Two-column grid: Survey Snapshot -->
+    <div class="dashboard-grid">
+
+      <!-- Parent Survey — What excites you -->
+      <div class="dash-panel fade-in delay-4">
+        <div class="dash-panel-label">Research</div>
+        <div class="dash-panel-title">Parent Survey Snapshot</div>
+
+        <div class="survey-group">
+          <div class="survey-question">&ldquo;What excites you most about Stand?&rdquo;</div>
+          <div class="survey-option">
+            <span class="survey-option-label">Financial literacy</span>
+            <div class="survey-bar-track">
+              <div class="survey-bar-fill rose" style="width: 100%;"></div>
+            </div>
+            <span class="survey-pct">42%</span>
+          </div>
+          <div class="survey-option">
+            <span class="survey-option-label">Creativity</span>
+            <div class="survey-bar-track">
+              <div class="survey-bar-fill rose" style="width: 67%;"></div>
+            </div>
+            <span class="survey-pct">28%</span>
+          </div>
+          <div class="survey-option">
+            <span class="survey-option-label">Confidence</span>
+            <div class="survey-bar-track">
+              <div class="survey-bar-fill rose" style="width: 45%;"></div>
+            </div>
+            <span class="survey-pct">19%</span>
+          </div>
+          <div class="survey-option">
+            <span class="survey-option-label">Other</span>
+            <div class="survey-bar-track">
+              <div class="survey-bar-fill rose" style="width: 26%;"></div>
+            </div>
+            <span class="survey-pct">11%</span>
+          </div>
+        </div>
+
+        <div class="survey-group">
+          <div class="survey-question">&ldquo;What would you expect to pay monthly?&rdquo;</div>
+          <div class="survey-option">
+            <span class="survey-option-label">$15 &ndash; $20</span>
+            <div class="survey-bar-track">
+              <div class="survey-bar-fill cream-fill" style="width: 40%;"></div>
+            </div>
+            <span class="survey-pct">18%</span>
+          </div>
+          <div class="survey-option">
+            <span class="survey-option-label">$25 &ndash; $30</span>
+            <div class="survey-bar-track">
+              <div class="survey-bar-fill cream-fill" style="width: 100%;"></div>
+            </div>
+            <span class="survey-pct">45%</span>
+          </div>
+          <div class="survey-option">
+            <span class="survey-option-label">$30 &ndash; $35</span>
+            <div class="survey-bar-track">
+              <div class="survey-bar-fill cream-fill" style="width: 62%;"></div>
+            </div>
+            <span class="survey-pct">28%</span>
+          </div>
+          <div class="survey-option">
+            <span class="survey-option-label">$35+</span>
+            <div class="survey-bar-track">
+              <div class="survey-bar-fill cream-fill" style="width: 20%;"></div>
+            </div>
+            <span class="survey-pct">9%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right-column placeholder: could add cohort notes, etc. For now, a decorative "field notes" card -->
+      <div class="dash-panel fade-in delay-5" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: 2px dashed rgba(44,44,44,0.08); background: rgba(255,255,255,0.25);">
+        <div style="width: 80px; height: 80px; border: 2.5px dashed var(--dusty-rose); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; position: relative;">
+          <span style="position: absolute; inset: 5px; border: 1px solid rgba(196,130,122,0.3); border-radius: 50%;"></span>
+          <span style="font-family: var(--font-accent); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dusty-rose);">Pilot</span>
+        </div>
+        <div style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 400; color: var(--charcoal); margin-bottom: 0.5rem;">Cohort&nbsp;01</div>
+        <div style="font-family: var(--font-accent); font-size: 0.72rem; letter-spacing: 0.06em; color: rgba(44,44,44,0.4); margin-bottom: 1rem;">Feb 3 &ndash; Mar 14, 2026</div>
+        <div style="font-family: var(--font-body); font-size: 0.88rem; color: rgba(44,44,44,0.5); line-height: 1.7; max-width: 260px;">
+          Three schools, two community centers, and forty-seven kids who said &ldquo;I want to try.&rdquo;
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Activity Feed -->
+    <div class="activity-feed fade-in delay-3">
+      <div class="feed-header">
+        <span class="feed-header-title">Recent Activity</span>
+        <span class="feed-header-badge">Live</span>
+      </div>
+      <div class="feed-item">
+        <span class="feed-time">2m ago</span>
+        <span class="feed-text"><strong>Cookie-Q</strong> launched <strong>Nana&rsquo;s Sweet Spot</strong></span>
+        <span class="feed-stamp">New</span>
+      </div>
+      <div class="feed-item">
+        <span class="feed-time">8m ago</span>
+        <span class="feed-text"><strong>DogBoss</strong> parent approved <strong>Paws &amp; Go</strong></span>
+        <span class="feed-stamp">OK&rsquo;d</span>
+      </div>
+      <div class="feed-item">
+        <span class="feed-time">15m ago</span>
+        <span class="feed-text"><strong>Sparkle-B</strong> shared brand card &mdash; 3 views</span>
+        <span class="feed-stamp">Share</span>
+      </div>
+      <div class="feed-item">
+        <span class="feed-time">22m ago</span>
+        <span class="feed-text"><strong>ArtBoss</strong> set goal: $50 for art supplies</span>
+        <span class="feed-stamp">Goal</span>
+      </div>
+      <div class="feed-item">
+        <span class="feed-time">31m ago</span>
+        <span class="feed-text"><strong>BraceletQueen</strong> completed onboarding</span>
+        <span class="feed-stamp">Done</span>
+      </div>
+    </div>
+
+    <!-- Export -->
+    <div class="export-row fade-in delay-4">
+      <button class="btn-export">
+        <span class="export-icon">&darr;</span> Export CSV
+      </button>
+      <button class="btn-export">
+        <span class="export-icon">&#9776;</span> Full Report
+      </button>
+    </div>
+
   </div>
 </section>
 
