@@ -694,7 +694,7 @@ export default function ProposalContent() {
             <li className="stand-checklist-done"><strong>Brand assets</strong> &mdash; logos (3 variants), color palette received</li>
             <li><strong>Figma files</strong> &mdash; whatever Devin has, even if you don&apos;t love it. Useful for understanding what&apos;s been explored.</li>
             <li><strong>GitHub repo access</strong> &mdash; transfer from Chris or grant read access so I can evaluate what&apos;s reusable</li>
-            <li><strong>Google Drive access</strong> &mdash; any remaining planning materials</li>
+            <li className="stand-checklist-done"><strong>Google Drive access</strong> &mdash; planning materials received</li>
           </ul>
 
           <h4>During the Sprint</h4>

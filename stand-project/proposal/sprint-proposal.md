@@ -243,7 +243,7 @@ I'm clearing the calendar. 40 hours a week, fully dedicated to Stand. You'll see
 - [x] ~~Brand assets~~ — logos (3 variants), color palette received
 - [ ] **Figma files** — whatever Devin has, even if you don't love it. Useful for understanding what's been explored.
 - [ ] **GitHub repo access** — transfer from Chris or grant read access so I can evaluate what's reusable
-- [ ] **Google Drive access** — any remaining planning materials
+- [x] **Google Drive access** — planning materials received
 
 ### During the Sprint
 - [ ] **30 minutes daily** — async check-in (Slack or text), plus a quick call 2-3x per week to review progress
