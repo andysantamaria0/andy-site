@@ -1,0 +1,2630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STAND — Varsity Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   CSS VARIABLES
+   ============================================ */
+:root {
+  --navy: #1a1f36;
+  --navy-light: #252b48;
+  --navy-mid: #2e3555;
+  --red: #df0000;
+  --red-hover: #ff1a1a;
+  --red-dark: #b80000;
+  --cream: #fdebc3;
+  --cream-light: #fef4dc;
+  --gold: #d4a853;
+  --gold-light: #e8c777;
+  --white: #ffffff;
+  --warm-gray: #f0ede8;
+  --warm-gray-dark: #d8d4ce;
+  --text-dark: #1a1f36;
+  --text-muted: #6b7194;
+  --text-light: #9ba1be;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --border-thick: 3.5px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.12);
+  --shadow-elevated: 0 12px 48px rgba(0,0,0,0.2);
+  --shadow-glow-red: 0 0 30px rgba(223,0,0,0.25);
+  --shadow-glow-gold: 0 0 20px rgba(212,168,83,0.3);
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--navy);
+  color: var(--white);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+
+/* ============================================
+   VARSITY STRIPE UTILITY
+   ============================================ */
+.varsity-stripe {
+  height: 8px;
+  background: linear-gradient(90deg,
+    var(--red) 0%, var(--red) 33.33%,
+    var(--cream) 33.33%, var(--cream) 66.66%,
+    var(--navy) 66.66%, var(--navy) 100%
+  );
+}
+
+.varsity-stripe--thin {
+  height: 4px;
+}
+
+.varsity-stripe--vertical {
+  width: 8px;
+  height: 100%;
+  background: linear-gradient(180deg,
+    var(--red) 0%, var(--red) 33.33%,
+    var(--cream) 33.33%, var(--cream) 66.66%,
+    var(--navy) 66.66%, var(--navy) 100%
+  );
+}
+
+/* ============================================
+   SCROLL REVEAL ANIMATIONS
+   ============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-6 { transition-delay: 0.6s; }
+
+/* ============================================
+   PULSE ANIMATION (BADGES)
+   ============================================ */
+@keyframes badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,83,0.5); }
+  50% { box-shadow: 0 0 0 10px rgba(212,168,83,0); }
+}
+
+@keyframes badge-pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(223,0,0,0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(223,0,0,0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes typing-dot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-4px); }
+}
+
+@keyframes progress-fill {
+  from { width: 0; }
+}
+
+@keyframes counter-glow {
+  0%, 100% { text-shadow: 0 0 0 transparent; }
+  50% { text-shadow: 0 0 20px rgba(223,0,0,0.3); }
+}
+
+/* ============================================
+   PAGE HEADER
+   ============================================ */
+.page-header {
+  padding: 60px 40px 40px;
+  text-align: center;
+  position: relative;
+}
+
+.page-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 4px;
+  background: var(--red);
+}
+
+.page-header__logo {
+  font-family: var(--font-display);
+  font-size: 96px;
+  letter-spacing: 8px;
+  line-height: 1;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.page-header__logo span {
+  color: var(--red);
+}
+
+.page-header__sub {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.page-header__tag {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 6px 20px;
+  border: 2px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 100px;
+}
+
+/* ============================================
+   SECTION LAYOUT
+   ============================================ */
+.section {
+  padding: 80px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.section--wide {
+  max-width: 1400px;
+}
+
+.section__header {
+  margin-bottom: 56px;
+  position: relative;
+}
+
+.section__number {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--red);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.section__title {
+  font-family: var(--font-display);
+  font-size: 56px;
+  letter-spacing: 3px;
+  line-height: 1.05;
+  color: var(--white);
+}
+
+.section__divider {
+  width: 60px;
+  height: 4px;
+  background: var(--red);
+  margin-top: 20px;
+}
+
+/* ============================================
+   1. DESIGN SYSTEM OVERVIEW
+   ============================================ */
+
+/* Color Swatches */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+  margin-bottom: 64px;
+}
+
+.swatch {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: var(--border-thick) solid var(--navy-light);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.swatch:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-elevated);
+}
+
+.swatch__color {
+  height: 120px;
+  position: relative;
+}
+
+.swatch__info {
+  background: var(--navy-light);
+  padding: 14px 16px;
+}
+
+.swatch__name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.swatch__hex {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+/* Typography Scale */
+.type-scale {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.type-row {
+  display: flex;
+  align-items: baseline;
+  gap: 32px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: background 0.3s;
+}
+
+.type-row:hover {
+  background: rgba(255,255,255,0.02);
+  padding-left: 12px;
+}
+
+.type-row__meta {
+  flex-shrink: 0;
+  width: 140px;
+  text-align: right;
+}
+
+.type-row__size {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--red);
+  line-height: 1;
+}
+
+.type-row__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.type-row__sample {
+  flex: 1;
+  min-width: 0;
+}
+
+.type-row__sample--display {
+  font-family: var(--font-display);
+  line-height: 1.1;
+  letter-spacing: 2px;
+}
+
+.type-row__sample--body {
+  font-family: var(--font-body);
+  color: var(--cream);
+}
+
+.type-row__sample--mono {
+  font-family: var(--font-mono);
+  color: var(--gold);
+}
+
+/* ============================================
+   2. COMPONENT LIBRARY
+   ============================================ */
+
+.components-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.component-card {
+  background: var(--navy-light);
+  border: var(--border-thick) solid var(--navy-mid);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+.component-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--red), var(--cream), var(--navy-mid));
+}
+
+.component-card__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+  color: var(--cream);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn--primary {
+  background: var(--red);
+  color: var(--white);
+  border: var(--border-thick) solid var(--red);
+}
+
+.btn--primary:hover {
+  background: var(--red-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow-red);
+}
+
+.btn--primary:active {
+  transform: translateY(0);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--navy);
+  border: var(--border-thick) solid var(--navy);
+}
+
+.btn--secondary:hover {
+  background: var(--navy);
+  color: var(--cream);
+  transform: translateY(-2px);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--cream);
+  border: var(--border-thick) solid transparent;
+}
+
+.btn--ghost:hover {
+  border-color: rgba(253,235,195,0.3);
+  background: rgba(253,235,195,0.05);
+}
+
+.btn--small {
+  padding: 10px 20px;
+  font-size: 13px;
+}
+
+.btn-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Badges / Patches */
+.badge-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  position: relative;
+  width: 100px;
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: default;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.badge:hover {
+  transform: scale(1.1);
+}
+
+.badge__shape {
+  position: absolute;
+  inset: 0;
+}
+
+.badge__shape svg {
+  width: 100%;
+  height: 100%;
+}
+
+.badge__content {
+  position: relative;
+  z-index: 1;
+}
+
+.badge__level {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.badge__value {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 1px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.badge__title {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.badge--gold {
+  animation: badge-pulse 2.5s ease-in-out infinite;
+}
+
+.badge--gold .badge__value { color: var(--gold); }
+.badge--gold .badge__title { color: var(--gold-light); }
+
+.badge--red .badge__value { color: var(--red); }
+.badge--red .badge__title { color: var(--cream); }
+
+.badge--cream .badge__value { color: var(--navy); }
+.badge--cream .badge__title { color: var(--navy); }
+
+/* Business Card Component */
+.biz-card {
+  background: var(--cream);
+  border: var(--border-thick) solid var(--navy);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  max-width: 340px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s;
+}
+
+.biz-card:hover {
+  transform: translateY(-4px) rotate(-0.5deg);
+  box-shadow: var(--shadow-elevated);
+}
+
+.biz-card__stripe {
+  height: 6px;
+  background: linear-gradient(90deg,
+    var(--red) 0%, var(--red) 33.33%,
+    var(--cream) 33.33%, var(--cream) 66.66%,
+    var(--navy) 66.66%, var(--navy) 100%
+  );
+}
+
+.biz-card__body {
+  padding: 24px;
+}
+
+.biz-card__name {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--navy);
+  letter-spacing: 1px;
+}
+
+.biz-card__role {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.biz-card__desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--navy);
+  margin-top: 12px;
+  line-height: 1.5;
+}
+
+.biz-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  background: var(--navy);
+}
+
+.biz-card__stat {
+  text-align: center;
+}
+
+.biz-card__stat-val {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.biz-card__stat-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* Input Field */
+.input-group {
+  max-width: 320px;
+}
+
+.input-label {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  color: var(--cream);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.input-field {
+  width: 100%;
+  padding: 14px 18px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--white);
+  background: rgba(255,255,255,0.06);
+  border: var(--border-thick) solid var(--navy-mid);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.input-field::placeholder {
+  color: var(--text-muted);
+}
+
+.input-field:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 4px rgba(223,0,0,0.15);
+}
+
+/* Tile Selector */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.tile {
+  padding: 18px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 2.5px solid var(--navy-mid);
+  border-radius: var(--radius-md);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.tile:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--text-muted);
+  transform: translateY(-2px);
+}
+
+.tile--selected {
+  background: rgba(223,0,0,0.08);
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(223,0,0,0.12);
+}
+
+.tile__icon {
+  font-size: 28px;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+.tile__label {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--cream);
+  letter-spacing: 0.3px;
+}
+
+/* Achievement Banner */
+.achievement-banner {
+  background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
+  border: var(--border-thick) solid var(--gold);
+  border-radius: var(--radius-md);
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.achievement-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.achievement-banner__icon {
+  width: 56px;
+  height: 56px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+  animation: badge-pulse 2.5s ease-in-out infinite;
+}
+
+.achievement-banner__text {
+  flex: 1;
+}
+
+.achievement-banner__title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: var(--gold);
+}
+
+.achievement-banner__desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ============================================
+   3. STAND COACH ONBOARDING MOCK
+   ============================================ */
+.mock-frame {
+  background: var(--navy-light);
+  border: var(--border-thick) solid var(--navy-mid);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-elevated);
+}
+
+.mock-browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  background: var(--navy);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.mock-browser-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--navy-mid);
+}
+
+.mock-browser-dot:nth-child(1) { background: #ff5f57; }
+.mock-browser-dot:nth-child(2) { background: #febc2e; }
+.mock-browser-dot:nth-child(3) { background: #28c840; }
+
+.mock-browser-url {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.04);
+  padding: 6px 16px;
+  border-radius: 6px;
+  margin-left: 12px;
+  margin-right: 60px;
+}
+
+/* Coach Onboarding */
+.coach-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 600px;
+}
+
+/* Left: Chat */
+.coach-chat {
+  background: var(--navy);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.coach-chat__header {
+  padding: 20px 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.coach-avatar {
+  width: 42px;
+  height: 42px;
+  background: var(--red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--white);
+  border: 2.5px solid rgba(255,255,255,0.15);
+}
+
+.coach-chat__name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--white);
+}
+
+.coach-chat__status {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #28c840;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.coach-chat__status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: #28c840;
+  border-radius: 50%;
+}
+
+.coach-chat__messages {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.chat-msg {
+  display: flex;
+  gap: 10px;
+  max-width: 88%;
+  animation: float 0s ease-in-out;
+}
+
+.chat-msg--coach {
+  align-self: flex-start;
+}
+
+.chat-msg--kid {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.chat-msg__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.chat-msg--coach .chat-msg__avatar {
+  background: var(--red);
+  font-family: var(--font-display);
+  color: var(--white);
+  font-size: 15px;
+}
+
+.chat-msg--kid .chat-msg__avatar {
+  background: var(--gold);
+  font-size: 16px;
+}
+
+.chat-msg__bubble {
+  padding: 14px 18px;
+  border-radius: 18px;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.chat-msg--coach .chat-msg__bubble {
+  background: var(--navy-light);
+  border: 1.5px solid var(--navy-mid);
+  color: var(--cream);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-msg--kid .chat-msg__bubble {
+  background: var(--red);
+  color: var(--white);
+  border-bottom-right-radius: 4px;
+}
+
+.chat-msg__time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  padding: 0 4px;
+}
+
+.chat-msg--kid .chat-msg__time {
+  text-align: right;
+}
+
+.coach-chat__input-area {
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  gap: 12px;
+}
+
+.coach-chat__input {
+  flex: 1;
+  padding: 12px 18px;
+  background: rgba(255,255,255,0.05);
+  border: 2px solid var(--navy-mid);
+  border-radius: 24px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--white);
+  outline: none;
+}
+
+.coach-chat__input::placeholder {
+  color: var(--text-muted);
+}
+
+.coach-chat__send {
+  width: 44px;
+  height: 44px;
+  background: var(--red);
+  border: none;
+  border-radius: 50%;
+  color: var(--white);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.coach-chat__send:hover {
+  background: var(--red-hover);
+  transform: scale(1.08);
+}
+
+/* Right: Preview */
+.coach-preview {
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+}
+
+.coach-preview__header {
+  position: relative;
+}
+
+.coach-preview__stripe {
+  height: 8px;
+  background: linear-gradient(90deg,
+    #e8729a 0%, #e8729a 33.33%,
+    var(--gold) 33.33%, var(--gold) 66.66%,
+    var(--cream) 66.66%, var(--cream) 100%
+  );
+}
+
+.coach-preview__topbar {
+  padding: 18px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--white);
+  border-bottom: 2px solid rgba(26,31,54,0.08);
+}
+
+.coach-preview__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.coach-preview__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  background: var(--navy);
+  color: var(--cream);
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.coach-preview__badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: #28c840;
+  border-radius: 50%;
+}
+
+.coach-preview__content {
+  flex: 1;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Storefront Card inside preview */
+.storefront-card {
+  background: var(--white);
+  border: 3.5px solid var(--navy);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(26,31,54,0.1);
+}
+
+.storefront-card__header {
+  background: linear-gradient(135deg, #e8729a, #f4a0be);
+  padding: 32px 24px 24px;
+  position: relative;
+}
+
+.storefront-card__header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg,
+    #e8729a 0%, #e8729a 33%,
+    var(--gold) 33%, var(--gold) 66%,
+    var(--white) 66%, var(--white) 100%
+  );
+}
+
+.storefront-card__biz-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  border: 3px solid var(--navy);
+  margin-bottom: 12px;
+}
+
+.storefront-card__biz-name {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--white);
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.storefront-card__tagline {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  margin-top: 4px;
+}
+
+.storefront-card__body {
+  padding: 24px;
+}
+
+.storefront-card__products-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.product-row {
+  display: flex;
+  gap: 12px;
+}
+
+.product-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-sm);
+  border: 2.5px solid rgba(26,31,54,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  background: var(--warm-gray);
+}
+
+.product-thumb--add {
+  border-style: dashed;
+  border-color: rgba(26,31,54,0.2);
+  color: var(--text-muted);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* CEO Badge inside preview */
+.ceo-badge {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--navy);
+  border-radius: var(--radius-md);
+  border: 2.5px solid var(--gold);
+}
+
+.ceo-badge__shield {
+  width: 44px;
+  height: 44px;
+  background: var(--gold);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  transform: rotate(-3deg);
+  flex-shrink: 0;
+}
+
+.ceo-badge__info {
+  flex: 1;
+}
+
+.ceo-badge__role {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.ceo-badge__name {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--white);
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+
+.color-picks {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.color-picks__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-right: 4px;
+}
+
+.color-pick {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid var(--navy);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.color-pick:hover { transform: scale(1.15); }
+
+.color-pick--selected {
+  box-shadow: 0 0 0 3px var(--cream), 0 0 0 6px var(--navy);
+}
+
+/* ============================================
+   4. SHAREABLE BRAND CARD
+   ============================================ */
+.brand-card-wrapper {
+  display: flex;
+  justify-content: center;
+  perspective: 800px;
+}
+
+.brand-card {
+  width: 375px;
+  min-height: 560px;
+  background: var(--white);
+  border: 4px solid var(--navy);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-elevated), 0 0 60px rgba(232,114,154,0.15);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.brand-card:hover {
+  transform: rotateY(-3deg) rotateX(2deg) scale(1.02);
+}
+
+.brand-card__hero {
+  background: linear-gradient(160deg, #e8729a 0%, #f0a0c0 50%, #f4c4d8 100%);
+  padding: 48px 32px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-card__hero::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+}
+
+.brand-card__hero::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  width: 80px;
+  height: 80px;
+  background: rgba(212,168,83,0.15);
+  border-radius: 50%;
+}
+
+.brand-card__logo-mark {
+  width: 72px;
+  height: 72px;
+  background: var(--white);
+  border-radius: 18px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  border: 3.5px solid var(--navy);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.brand-card__biz-name {
+  font-family: var(--font-display);
+  font-size: 40px;
+  color: var(--white);
+  letter-spacing: 2px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  position: relative;
+  z-index: 1;
+}
+
+.brand-card__tagline {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 15px;
+  color: rgba(255,255,255,0.9);
+  margin-top: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.brand-card__stripe {
+  height: 8px;
+  background: linear-gradient(90deg,
+    #e8729a 0%, #e8729a 33.33%,
+    var(--gold) 33.33%, var(--gold) 66.66%,
+    var(--navy) 66.66%, var(--navy) 100%
+  );
+}
+
+.brand-card__body {
+  padding: 32px;
+  text-align: center;
+  background: var(--white);
+}
+
+.brand-card__ceo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: var(--navy);
+  border-radius: 100px;
+  margin-bottom: 28px;
+}
+
+.brand-card__ceo-shield {
+  font-size: 18px;
+}
+
+.brand-card__ceo-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.brand-card__ceo-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--white);
+  letter-spacing: 1px;
+}
+
+.brand-card__stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 28px;
+}
+
+.brand-card__stat {
+  text-align: center;
+}
+
+.brand-card__stat-val {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.brand-card__stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 2px;
+}
+
+.brand-card__products-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.brand-card__product {
+  width: 64px;
+  height: 64px;
+  background: var(--warm-gray);
+  border-radius: 12px;
+  border: 2.5px solid rgba(26,31,54,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.brand-card__footer {
+  padding: 18px 32px;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.brand-card__stand-logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: var(--white);
+}
+
+.brand-card__stand-logo span {
+  color: var(--red);
+}
+
+.brand-card__built-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* ============================================
+   5. CEO DASHBOARD
+   ============================================ */
+.dashboard-frame {
+  background: var(--navy-light);
+  border: var(--border-thick) solid var(--navy-mid);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-elevated);
+}
+
+.dashboard-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px;
+  background: var(--navy);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.dashboard-topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dashboard-topbar__logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 3px;
+  color: var(--white);
+}
+
+.dashboard-topbar__logo span { color: var(--red); }
+
+.dashboard-topbar__nav {
+  display: flex;
+  gap: 4px;
+}
+
+.dashboard-topbar__nav-item {
+  padding: 8px 16px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dashboard-topbar__nav-item:hover {
+  color: var(--cream);
+  background: rgba(255,255,255,0.05);
+}
+
+.dashboard-topbar__nav-item--active {
+  color: var(--white);
+  background: rgba(255,255,255,0.08);
+}
+
+.dashboard-topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dashboard-topbar__avatar {
+  width: 36px;
+  height: 36px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border: 2px solid var(--gold-light);
+}
+
+.dashboard-body {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.dashboard-welcome {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.dashboard-welcome__greeting {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+.dashboard-welcome__name {
+  font-family: var(--font-display);
+  font-size: 40px;
+  color: var(--white);
+  letter-spacing: 2px;
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+.dashboard-welcome__biz {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  margin-top: 4px;
+}
+
+/* Goal Tracker */
+.goal-card {
+  background: var(--navy);
+  border: var(--border-thick) solid var(--navy-mid);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.goal-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+}
+
+.goal-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.goal-card__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.goal-card__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--cream);
+  letter-spacing: 1px;
+}
+
+.goal-card__icon {
+  font-size: 36px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.goal-card__progress-bar {
+  width: 100%;
+  height: 24px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 100px;
+  overflow: hidden;
+  border: 2px solid var(--navy-mid);
+  position: relative;
+}
+
+.goal-card__progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--red-hover));
+  border-radius: 100px;
+  width: 36%;
+  animation: progress-fill 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  position: relative;
+}
+
+.goal-card__progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15));
+}
+
+.goal-card__progress-text {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.goal-card__progress-amount {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--white);
+}
+
+.goal-card__progress-amount span {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.goal-card__progress-pct {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--red);
+}
+
+/* Stats Row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.stat-card {
+  background: var(--navy);
+  border: var(--border-thick) solid var(--navy-mid);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--red);
+}
+
+.stat-card__icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.stat-card__number {
+  font-family: var(--font-mono);
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+  animation: counter-glow 3s ease-in-out infinite;
+}
+
+.stat-card__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.stat-card__stripe {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.stat-card:nth-child(1) .stat-card__stripe { background: var(--red); }
+.stat-card:nth-child(2) .stat-card__stripe { background: var(--gold); }
+.stat-card:nth-child(3) .stat-card__stripe { background: var(--cream); }
+
+/* Level Badge (Dashboard) */
+.level-section {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.level-badge-card {
+  flex: 1;
+  background: var(--navy);
+  border: var(--border-thick) solid var(--gold);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+  animation: badge-pulse 3s ease-in-out infinite;
+}
+
+.level-badge-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.level-shield {
+  width: 80px;
+  height: 90px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.level-shield__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.level-shield__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.level-shield__number {
+  font-family: var(--font-mono);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.level-shield__label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+.level-info__title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+
+.level-info__subtitle {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.level-info__xp {
+  margin-top: 12px;
+}
+
+.level-info__xp-bar {
+  width: 200px;
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.level-info__xp-fill {
+  height: 100%;
+  width: 65%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 100px;
+}
+
+.level-info__xp-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Quick Actions */
+.quick-actions {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quick-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 24px;
+  background: var(--navy);
+  border: var(--border-thick) solid var(--navy-mid);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.quick-action-btn:hover {
+  border-color: var(--red);
+  transform: translateX(6px);
+  background: rgba(223,0,0,0.04);
+}
+
+.quick-action-btn__icon {
+  width: 44px;
+  height: 44px;
+  background: var(--red);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.quick-action-btn:nth-child(2) .quick-action-btn__icon {
+  background: var(--gold);
+}
+
+.quick-action-btn__text {
+  flex: 1;
+}
+
+.quick-action-btn__label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--white);
+}
+
+.quick-action-btn__desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.quick-action-btn__arrow {
+  font-size: 20px;
+  color: var(--text-muted);
+  transition: transform 0.2s, color 0.2s;
+}
+
+.quick-action-btn:hover .quick-action-btn__arrow {
+  color: var(--red);
+  transform: translateX(4px);
+}
+
+/* ============================================
+   SECTION DIVIDERS
+   ============================================ */
+.section-divider {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.section-divider__line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--navy-mid), transparent);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+  .coach-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .components-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  .level-section {
+    flex-direction: column;
+  }
+
+  .brand-card {
+    width: 100%;
+    max-width: 375px;
+  }
+
+  .section__title {
+    font-size: 40px;
+  }
+
+  .page-header__logo {
+    font-size: 64px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ==========================================
+     PAGE HEADER
+     ========================================== -->
+<header class="page-header reveal">
+  <div class="page-header__logo">ST<span>A</span>ND</div>
+  <div class="page-header__sub">Design System Exploration</div>
+  <div class="page-header__tag">01 / Varsity</div>
+</header>
+
+<div class="varsity-stripe"></div>
+
+<!-- ==========================================
+     1. DESIGN SYSTEM OVERVIEW
+     ========================================== -->
+<section class="section">
+  <div class="section__header reveal">
+    <span class="section__number">01 / System</span>
+    <h2 class="section__title">DESIGN SYSTEM</h2>
+    <div class="section__divider"></div>
+  </div>
+
+  <!-- Color Palette -->
+  <h3 style="font-family: var(--font-display); font-size: 32px; letter-spacing: 2px; margin-bottom: 28px; color: var(--cream);" class="reveal">COLOR PALETTE</h3>
+
+  <div class="swatches">
+    <div class="swatch reveal reveal-delay-1">
+      <div class="swatch__color" style="background: var(--navy);"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">Navy</div>
+        <div class="swatch__hex">#1a1f36</div>
+      </div>
+    </div>
+    <div class="swatch reveal reveal-delay-2">
+      <div class="swatch__color" style="background: var(--red);"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">Founder Red</div>
+        <div class="swatch__hex">#df0000</div>
+      </div>
+    </div>
+    <div class="swatch reveal reveal-delay-3">
+      <div class="swatch__color" style="background: var(--cream);"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">Cream</div>
+        <div class="swatch__hex">#fdebc3</div>
+      </div>
+    </div>
+    <div class="swatch reveal reveal-delay-4">
+      <div class="swatch__color" style="background: var(--gold);"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">Gold</div>
+        <div class="swatch__hex">#d4a853</div>
+      </div>
+    </div>
+    <div class="swatch reveal reveal-delay-5">
+      <div class="swatch__color" style="background: var(--white);"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">White</div>
+        <div class="swatch__hex">#ffffff</div>
+      </div>
+    </div>
+    <div class="swatch reveal reveal-delay-6">
+      <div class="swatch__color" style="background: var(--warm-gray);"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">Warm Gray</div>
+        <div class="swatch__hex">#f0ede8</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Typography Scale -->
+  <h3 style="font-family: var(--font-display); font-size: 32px; letter-spacing: 2px; margin-bottom: 28px; color: var(--cream);" class="reveal">TYPOGRAPHY SCALE</h3>
+
+  <div class="type-scale">
+    <div class="type-row reveal">
+      <div class="type-row__meta">
+        <div class="type-row__size">64</div>
+        <div class="type-row__label">Display XL</div>
+      </div>
+      <div class="type-row__sample type-row__sample--display" style="font-size: 64px;">STAND UP</div>
+    </div>
+    <div class="type-row reveal reveal-delay-1">
+      <div class="type-row__meta">
+        <div class="type-row__size">48</div>
+        <div class="type-row__label">Display LG</div>
+      </div>
+      <div class="type-row__sample type-row__sample--display" style="font-size: 48px;">BUILD YOUR THING</div>
+    </div>
+    <div class="type-row reveal reveal-delay-2">
+      <div class="type-row__meta">
+        <div class="type-row__size">36</div>
+        <div class="type-row__label">Display MD</div>
+      </div>
+      <div class="type-row__sample type-row__sample--display" style="font-size: 36px;">EVERY KID IS A CEO</div>
+    </div>
+    <div class="type-row reveal reveal-delay-3">
+      <div class="type-row__meta">
+        <div class="type-row__size">18</div>
+        <div class="type-row__label">Body LG</div>
+      </div>
+      <div class="type-row__sample type-row__sample--body" style="font-size: 18px;">Your first real business starts here. Build something you're proud of and share it with the world.</div>
+    </div>
+    <div class="type-row reveal reveal-delay-4">
+      <div class="type-row__meta">
+        <div class="type-row__size">16</div>
+        <div class="type-row__label">Body MD</div>
+      </div>
+      <div class="type-row__sample type-row__sample--body" style="font-size: 16px;">Track your sales, level up, and earn real badges for real achievements. No cheat codes.</div>
+    </div>
+    <div class="type-row reveal reveal-delay-5">
+      <div class="type-row__meta">
+        <div class="type-row__size">14</div>
+        <div class="type-row__label">Body SM</div>
+      </div>
+      <div class="type-row__sample type-row__sample--body" style="font-size: 14px;">Fine print, labels, and metadata. Still readable, still clean. The details matter.</div>
+    </div>
+    <div class="type-row reveal reveal-delay-6">
+      <div class="type-row__meta">
+        <div class="type-row__size">M</div>
+        <div class="type-row__label">Mono</div>
+      </div>
+      <div class="type-row__sample type-row__sample--mono" style="font-size: 18px;">$142.50 &mdash; 23 sales &mdash; Level 5 &mdash; 98% rating</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><div class="section-divider__line"></div></div>
+
+<!-- ==========================================
+     2. COMPONENT LIBRARY
+     ========================================== -->
+<section class="section">
+  <div class="section__header reveal">
+    <span class="section__number">02 / Components</span>
+    <h2 class="section__title">COMPONENT LIBRARY</h2>
+    <div class="section__divider"></div>
+  </div>
+
+  <div class="components-grid">
+
+    <!-- Buttons -->
+    <div class="component-card reveal">
+      <div class="component-card__title">BUTTONS</div>
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div class="btn-row">
+          <button class="btn btn--primary">Get Started</button>
+          <button class="btn btn--primary btn--small">Level Up</button>
+        </div>
+        <div class="btn-row" style="background: var(--cream); padding: 20px; border-radius: 8px; margin: 0 -12px;">
+          <button class="btn btn--secondary">View Store</button>
+          <button class="btn btn--secondary btn--small">Edit</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--ghost">Learn More</button>
+          <button class="btn btn--ghost btn--small">Skip</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Badges / Patches -->
+    <div class="component-card reveal reveal-delay-1">
+      <div class="component-card__title">BADGES & PATCHES</div>
+      <div class="badge-row">
+        <div class="badge badge--gold">
+          <div class="badge__shape">
+            <svg viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 2L93 28V82L50 108L7 82V28L50 2Z" stroke="#d4a853" stroke-width="3.5" fill="rgba(212,168,83,0.08)"/>
+            </svg>
+          </div>
+          <div class="badge__content">
+            <div class="badge__level">Level</div>
+            <div class="badge__value">3</div>
+            <div class="badge__title">Hustler</div>
+          </div>
+        </div>
+        <div class="badge badge--red">
+          <div class="badge__shape">
+            <svg viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 2L93 28V82L50 108L7 82V28L50 2Z" stroke="#df0000" stroke-width="3.5" fill="rgba(223,0,0,0.08)"/>
+            </svg>
+          </div>
+          <div class="badge__content">
+            <div class="badge__level" style="color: var(--text-muted);">Award</div>
+            <div class="badge__value" style="font-size: 18px;">TOP</div>
+            <div class="badge__title">Seller</div>
+          </div>
+        </div>
+        <div class="badge badge--cream">
+          <div class="badge__shape">
+            <svg viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 2L93 28V82L50 108L7 82V28L50 2Z" stroke="#fdebc3" stroke-width="3.5" fill="rgba(253,235,195,0.1)"/>
+            </svg>
+          </div>
+          <div class="badge__content">
+            <div class="badge__level" style="color: var(--text-muted);">First</div>
+            <div class="badge__value" style="font-size: 16px; color: var(--cream);">1ST</div>
+            <div class="badge__title" style="color: var(--cream);">Sale</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Card -->
+    <div class="component-card reveal reveal-delay-2">
+      <div class="component-card__title">BUSINESS CARD</div>
+      <div class="biz-card">
+        <div class="biz-card__stripe"></div>
+        <div class="biz-card__body">
+          <div class="biz-card__name">Juice Squad</div>
+          <div class="biz-card__role">CEO: FreshKid42</div>
+          <div class="biz-card__desc">Fresh smoothies and juice blends made from real fruit. No cap.</div>
+        </div>
+        <div class="biz-card__footer">
+          <div class="biz-card__stat">
+            <div class="biz-card__stat-val">12</div>
+            <div class="biz-card__stat-label">Sales</div>
+          </div>
+          <div class="biz-card__stat">
+            <div class="biz-card__stat-val">4.9</div>
+            <div class="biz-card__stat-label">Rating</div>
+          </div>
+          <div class="biz-card__stat">
+            <div class="biz-card__stat-val">Lv3</div>
+            <div class="biz-card__stat-label">Level</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inputs & Tiles -->
+    <div class="component-card reveal reveal-delay-3">
+      <div class="component-card__title">INPUTS & TILES</div>
+      <div class="input-group" style="margin-bottom: 28px;">
+        <label class="input-label">Business Name</label>
+        <input type="text" class="input-field" placeholder="e.g. Biscuit & Bead Co.">
+      </div>
+      <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px;">Pick Your Category</div>
+      <div class="tile-grid">
+        <div class="tile tile--selected">
+          <div class="tile__icon">🎨</div>
+          <div class="tile__label">Art & Crafts</div>
+        </div>
+        <div class="tile">
+          <div class="tile__icon">🍪</div>
+          <div class="tile__label">Food</div>
+        </div>
+        <div class="tile">
+          <div class="tile__icon">🛠️</div>
+          <div class="tile__label">Services</div>
+        </div>
+        <div class="tile">
+          <div class="tile__icon">👕</div>
+          <div class="tile__label">Fashion</div>
+        </div>
+        <div class="tile">
+          <div class="tile__icon">🎮</div>
+          <div class="tile__label">Digital</div>
+        </div>
+        <div class="tile">
+          <div class="tile__icon">🌱</div>
+          <div class="tile__label">Nature</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Achievement Banner (full width) -->
+  <div style="margin-top: 40px;" class="reveal">
+    <div class="achievement-banner">
+      <div class="achievement-banner__icon">🏆</div>
+      <div class="achievement-banner__text">
+        <div class="achievement-banner__title">ACHIEVEMENT UNLOCKED</div>
+        <div class="achievement-banner__desc">You made your first sale! You're officially in business. Keep going, CEO.</div>
+      </div>
+      <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold); letter-spacing: 1.5px;">+50 XP</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><div class="section-divider__line"></div></div>
+
+<!-- ==========================================
+     3. STAND COACH ONBOARDING
+     ========================================== -->
+<section class="section section--wide">
+  <div class="section__header reveal">
+    <span class="section__number">03 / Feature Mock</span>
+    <h2 class="section__title">STAND COACH ONBOARDING</h2>
+    <div class="section__divider"></div>
+  </div>
+
+  <div class="mock-frame reveal">
+    <div class="mock-browser-bar">
+      <div class="mock-browser-dot"></div>
+      <div class="mock-browser-dot"></div>
+      <div class="mock-browser-dot"></div>
+      <div class="mock-browser-url">app.stand.biz/coach/onboarding</div>
+    </div>
+
+    <div class="coach-layout">
+      <!-- LEFT PANE: Chat -->
+      <div class="coach-chat">
+        <div class="coach-chat__header">
+          <div class="coach-avatar">S</div>
+          <div>
+            <div class="coach-chat__name">Stand Coach</div>
+            <div class="coach-chat__status">Online</div>
+          </div>
+        </div>
+
+        <div class="coach-chat__messages">
+          <div class="chat-msg chat-msg--coach">
+            <div class="chat-msg__avatar">S</div>
+            <div>
+              <div class="chat-msg__bubble">Hey there! Welcome to STAND. I'm your Coach, and I'm here to help you build your first real business. Ready? 🚀</div>
+              <div class="chat-msg__time">2:31 PM</div>
+            </div>
+          </div>
+
+          <div class="chat-msg chat-msg--coach">
+            <div class="chat-msg__avatar">S</div>
+            <div>
+              <div class="chat-msg__bubble">What do you love doing? Tell me about your favorite things!</div>
+              <div class="chat-msg__time">2:31 PM</div>
+            </div>
+          </div>
+
+          <div class="chat-msg chat-msg--kid">
+            <div class="chat-msg__avatar">🌟</div>
+            <div>
+              <div class="chat-msg__bubble">I love making bracelets and my dog Biscuit 🐕</div>
+              <div class="chat-msg__time">2:32 PM</div>
+            </div>
+          </div>
+
+          <div class="chat-msg chat-msg--coach">
+            <div class="chat-msg__avatar">S</div>
+            <div>
+              <div class="chat-msg__bubble">Love it! Bracelets + Biscuit = amazing brand potential. Here are some businesses you could start...</div>
+              <div class="chat-msg__time">2:32 PM</div>
+            </div>
+          </div>
+
+          <div class="chat-msg chat-msg--coach">
+            <div class="chat-msg__avatar">S</div>
+            <div>
+              <div class="chat-msg__bubble" style="padding: 0; overflow: hidden; border: none; background: transparent;">
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  <div style="padding: 14px 18px; background: var(--navy-light); border: 2px solid var(--red); border-radius: 16px 16px 16px 4px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='rgba(223,0,0,0.08)'" onmouseout="this.style.background='var(--navy-light)'">
+                    <div style="font-weight: 700; color: var(--cream); font-size: 14px;">📿 Biscuit & Bead Co.</div>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Custom bracelets made with love</div>
+                  </div>
+                  <div style="padding: 14px 18px; background: var(--navy-light); border: 2px solid var(--navy-mid); border-radius: 16px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--cream)'" onmouseout="this.style.borderColor='var(--navy-mid)'">
+                    <div style="font-weight: 700; color: var(--cream); font-size: 14px;">🐾 Biscuit's Boutique</div>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Pet accessories & handmade goods</div>
+                  </div>
+                  <div style="padding: 14px 18px; background: var(--navy-light); border: 2px solid var(--navy-mid); border-radius: 16px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--cream)'" onmouseout="this.style.borderColor='var(--navy-mid)'">
+                    <div style="font-weight: 700; color: var(--cream); font-size: 14px;">✨ Sparkle Studio</div>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Jewelry & custom beadwork</div>
+                  </div>
+                </div>
+              </div>
+              <div class="chat-msg__time">2:33 PM</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="coach-chat__input-area">
+          <input type="text" class="coach-chat__input" placeholder="Type a message...">
+          <button class="coach-chat__send">&#9654;</button>
+        </div>
+      </div>
+
+      <!-- RIGHT PANE: Business Preview -->
+      <div class="coach-preview">
+        <div class="coach-preview__header">
+          <div class="coach-preview__stripe"></div>
+          <div class="coach-preview__topbar">
+            <div class="coach-preview__label">Live Preview</div>
+            <div class="coach-preview__badge">Building...</div>
+          </div>
+        </div>
+
+        <div class="coach-preview__content">
+          <div class="storefront-card">
+            <div class="storefront-card__header">
+              <div class="storefront-card__biz-icon">📿</div>
+              <div class="storefront-card__biz-name">BISCUIT & BEAD CO.</div>
+              <div class="storefront-card__tagline">Custom bracelets made with love</div>
+            </div>
+            <div class="storefront-card__body">
+              <div class="storefront-card__products-label">Products</div>
+              <div class="product-row">
+                <div class="product-thumb">📿</div>
+                <div class="product-thumb">🌈</div>
+                <div class="product-thumb">🐾</div>
+                <div class="product-thumb product-thumb--add">+</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ceo-badge">
+            <div class="ceo-badge__shield">🛡️</div>
+            <div class="ceo-badge__info">
+              <div class="ceo-badge__role">Chief Executive Officer</div>
+              <div class="ceo-badge__name">SPARKLE-B</div>
+            </div>
+          </div>
+
+          <div class="color-picks">
+            <div class="color-picks__label">Brand Colors</div>
+            <div class="color-pick color-pick--selected" style="background: #e8729a;"></div>
+            <div class="color-pick" style="background: var(--gold);"></div>
+            <div class="color-pick" style="background: #f4c4d8;"></div>
+            <div class="color-pick" style="background: var(--navy);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><div class="section-divider__line"></div></div>
+
+<!-- ==========================================
+     4. SHAREABLE BRAND CARD
+     ========================================== -->
+<section class="section">
+  <div class="section__header reveal">
+    <span class="section__number">04 / Shareable</span>
+    <h2 class="section__title">BRAND CARD</h2>
+    <div class="section__divider"></div>
+  </div>
+
+  <div class="brand-card-wrapper reveal">
+    <div class="brand-card">
+      <div class="brand-card__hero">
+        <div class="brand-card__logo-mark">📿</div>
+        <div class="brand-card__biz-name">BISCUIT & BEAD CO.</div>
+        <div class="brand-card__tagline">Custom bracelets made with love</div>
+      </div>
+      <div class="brand-card__stripe"></div>
+      <div class="brand-card__body">
+        <div class="brand-card__ceo-chip">
+          <div class="brand-card__ceo-shield">🛡️</div>
+          <div>
+            <div class="brand-card__ceo-label">CEO</div>
+            <div class="brand-card__ceo-name">SPARKLE-B</div>
+          </div>
+        </div>
+
+        <div class="brand-card__stats">
+          <div class="brand-card__stat">
+            <div class="brand-card__stat-val">3</div>
+            <div class="brand-card__stat-label">Sales</div>
+          </div>
+          <div class="brand-card__stat">
+            <div class="brand-card__stat-val">5.0</div>
+            <div class="brand-card__stat-label">Rating</div>
+          </div>
+          <div class="brand-card__stat">
+            <div class="brand-card__stat-val">Lv2</div>
+            <div class="brand-card__stat-label">Level</div>
+          </div>
+        </div>
+
+        <div class="brand-card__products-row">
+          <div class="brand-card__product">📿</div>
+          <div class="brand-card__product">🌈</div>
+          <div class="brand-card__product">🐾</div>
+        </div>
+      </div>
+      <div class="brand-card__footer">
+        <div class="brand-card__built-tag">Built on</div>
+        <div class="brand-card__stand-logo">ST<span>A</span>ND</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><div class="section-divider__line"></div></div>
+
+<!-- ==========================================
+     5. CEO DASHBOARD
+     ========================================== -->
+<section class="section section--wide">
+  <div class="section__header reveal">
+    <span class="section__number">05 / Dashboard</span>
+    <h2 class="section__title">CEO DASHBOARD</h2>
+    <div class="section__divider"></div>
+  </div>
+
+  <div class="dashboard-frame reveal">
+    <div class="dashboard-topbar">
+      <div class="dashboard-topbar__left">
+        <div class="dashboard-topbar__logo">ST<span>A</span>ND</div>
+        <div class="dashboard-topbar__nav">
+          <div class="dashboard-topbar__nav-item dashboard-topbar__nav-item--active">Dashboard</div>
+          <div class="dashboard-topbar__nav-item">My Store</div>
+          <div class="dashboard-topbar__nav-item">Orders</div>
+          <div class="dashboard-topbar__nav-item">Learn</div>
+        </div>
+      </div>
+      <div class="dashboard-topbar__right">
+        <div style="font-family: var(--font-mono); font-size: 12px; color: var(--gold); letter-spacing: 1px;">Lv2</div>
+        <div class="dashboard-topbar__avatar">🌟</div>
+      </div>
+    </div>
+
+    <div class="varsity-stripe--thin varsity-stripe"></div>
+
+    <div class="dashboard-body">
+      <!-- Welcome -->
+      <div class="dashboard-welcome">
+        <div>
+          <div class="dashboard-welcome__greeting">Good afternoon,</div>
+          <div class="dashboard-welcome__name">SPARKLE-B</div>
+          <div class="dashboard-welcome__biz">Biscuit & Bead Co.</div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn--primary btn--small">+ New Product</button>
+        </div>
+      </div>
+
+      <!-- Goal Tracker -->
+      <div class="goal-card">
+        <div class="goal-card__header">
+          <div>
+            <div class="goal-card__label">Current Goal</div>
+            <div class="goal-card__title">"$50 FOR A SKATEBOARD"</div>
+          </div>
+          <div class="goal-card__icon">🛹</div>
+        </div>
+        <div class="goal-card__progress-bar">
+          <div class="goal-card__progress-fill"></div>
+        </div>
+        <div class="goal-card__progress-text">
+          <div class="goal-card__progress-amount">$18 <span>/ $50</span></div>
+          <div class="goal-card__progress-pct">36%</div>
+        </div>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-card__icon">💰</div>
+          <div class="stat-card__number">3</div>
+          <div class="stat-card__label">Sales</div>
+          <div class="stat-card__stripe"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">👀</div>
+          <div class="stat-card__number">12</div>
+          <div class="stat-card__label">Views</div>
+          <div class="stat-card__stripe"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">🔗</div>
+          <div class="stat-card__number">2</div>
+          <div class="stat-card__label">Shares</div>
+          <div class="stat-card__stripe"></div>
+        </div>
+      </div>
+
+      <!-- Level Badge + Quick Actions -->
+      <div class="level-section">
+        <div class="level-badge-card">
+          <div class="level-shield">
+            <div class="level-shield__bg">
+              <svg viewBox="0 0 80 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40 2L76 22V68L40 88L4 68V22L40 2Z" stroke="#d4a853" stroke-width="3" fill="rgba(212,168,83,0.06)"/>
+                <path d="M40 10L68 26V62L40 78L12 62V26L40 10Z" stroke="rgba(212,168,83,0.3)" stroke-width="1.5" fill="none"/>
+              </svg>
+            </div>
+            <div class="level-shield__content">
+              <div class="level-shield__number">2</div>
+              <div class="level-shield__label">Level</div>
+            </div>
+          </div>
+          <div class="level-info">
+            <div class="level-info__title">RISING STAR</div>
+            <div class="level-info__subtitle">You're on your way. Keep building.</div>
+            <div class="level-info__xp">
+              <div class="level-info__xp-bar">
+                <div class="level-info__xp-fill"></div>
+              </div>
+              <div class="level-info__xp-text">130 / 200 XP to Level 3</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          <div class="quick-action-btn" tabindex="0">
+            <div class="quick-action-btn__icon">📤</div>
+            <div class="quick-action-btn__text">
+              <div class="quick-action-btn__label">Share My Store</div>
+              <div class="quick-action-btn__desc">Send your link to friends & family</div>
+            </div>
+            <div class="quick-action-btn__arrow">&#8594;</div>
+          </div>
+          <div class="quick-action-btn" tabindex="0">
+            <div class="quick-action-btn__icon">🧾</div>
+            <div class="quick-action-btn__text">
+              <div class="quick-action-btn__label">Record a Sale</div>
+              <div class="quick-action-btn__desc">Log a new sale and earn XP</div>
+            </div>
+            <div class="quick-action-btn__arrow">&#8594;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div class="varsity-stripe" style="margin-top: 40px;"></div>
+<footer style="text-align: center; padding: 48px 40px; opacity: 0.5;">
+  <div style="font-family: var(--font-display); font-size: 28px; letter-spacing: 4px; margin-bottom: 8px;">ST<span style="color: var(--red);">A</span>ND</div>
+  <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); letter-spacing: 2px;">VARSITY DESIGN SYSTEM &middot; EXPLORATION 01</div>
+</footer>
+
+<!-- ==========================================
+     SCROLL REVEAL SCRIPT
+     ========================================== -->
+<script>
+(function() {
+  const reveals = document.querySelectorAll('.reveal');
+
+  function checkReveal() {
+    const windowHeight = window.innerHeight;
+    const triggerPoint = windowHeight * 0.88;
+
+    reveals.forEach(function(el) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < triggerPoint) {
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  // Initial check
+  checkReveal();
+
+  // On scroll
+  let ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        checkReveal();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // Tile selector interactivity
+  document.querySelectorAll('.tile').forEach(function(tile) {
+    tile.addEventListener('click', function() {
+      document.querySelectorAll('.tile').forEach(function(t) {
+        t.classList.remove('tile--selected');
+      });
+      tile.classList.add('tile--selected');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

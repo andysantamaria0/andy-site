@@ -1,0 +1,2301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STAND — Arcade Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   STAND ARCADE — Design System Exploration 04
+   "Premium indie game UI meets fintech trust"
+   ============================================================ */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --black: #0f0f0f;
+  --surface: #1a1a1a;
+  --border: #2a2a2a;
+  --border-light: #333;
+  --mint: #00e676;
+  --mint-dim: rgba(0, 230, 118, 0.08);
+  --mint-glow: rgba(0, 230, 118, 0.15);
+  --mint-glow-md: rgba(0, 230, 118, 0.25);
+  --mint-glow-lg: rgba(0, 230, 118, 0.4);
+  --red: #df0000;
+  --red-dim: rgba(223, 0, 0, 0.1);
+  --red-glow: rgba(223, 0, 0, 0.2);
+  --white: #e8e8e8;
+  --dim: #666;
+  --dim-light: #888;
+  --font-display: 'Chakra Petch', sans-serif;
+  --font-body: 'Lexend', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+}
+
+html {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--black);
+  min-height: 100vh;
+}
+
+/* Page shell */
+.page-header {
+  text-align: center;
+  padding: 80px 24px 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 48px;
+  letter-spacing: 12px;
+  text-transform: uppercase;
+  color: var(--white);
+  text-shadow: 0 0 30px var(--mint-glow), 0 0 60px rgba(0,230,118,0.06);
+  margin-bottom: 8px;
+}
+
+.page-header .subtitle {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--dim-light);
+  letter-spacing: 2px;
+}
+
+.page-header .direction-note {
+  max-width: 600px;
+  margin: 24px auto 0;
+  font-size: 14px;
+  color: var(--dim);
+  line-height: 1.7;
+}
+
+section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 24px;
+}
+
+section + section {
+  border-top: 1px solid var(--border);
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+
+.section-desc {
+  font-size: 15px;
+  color: var(--dim-light);
+  max-width: 560px;
+  margin-bottom: 48px;
+  line-height: 1.7;
+}
+
+/* ============================================================
+   1. DESIGN SYSTEM OVERVIEW
+   ============================================================ */
+
+/* Color Swatches */
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 56px;
+}
+
+.swatch {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.swatch:hover {
+  transform: translateY(-2px);
+}
+
+.swatch-color {
+  height: 80px;
+  position: relative;
+}
+
+.swatch-info {
+  padding: 14px 16px;
+}
+
+.swatch-name {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+
+.swatch-hex {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.swatch--mint:hover {
+  box-shadow: 0 0 30px var(--mint-glow);
+}
+
+.swatch--mint .swatch-color {
+  background: var(--mint);
+}
+
+.swatch--black .swatch-color {
+  background: var(--black);
+  border-bottom: 1px solid var(--border);
+}
+
+.swatch--surface .swatch-color {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.swatch--red .swatch-color {
+  background: var(--red);
+}
+
+.swatch--white .swatch-color {
+  background: var(--white);
+}
+
+.swatch--border .swatch-color {
+  background: var(--border);
+}
+
+.swatch--dim-mint .swatch-color {
+  background: var(--mint-dim);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Typography specimens */
+.type-specimens {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 56px;
+}
+
+.type-specimen {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+}
+
+.type-specimen-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--mint);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.type-specimen--display .type-sample {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 42px;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.type-specimen--display .type-secondary {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--dim-light);
+}
+
+.type-specimen--body .type-sample {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--white);
+  line-height: 1.7;
+  max-width: 520px;
+}
+
+.type-specimen--mono .type-sample {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--mint);
+  margin-bottom: 8px;
+}
+
+.type-specimen--mono .type-secondary {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--dim-light);
+}
+
+/* Number showcase */
+.number-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.number-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+}
+
+.number-card .big-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 36px;
+  color: var(--mint);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.number-card .num-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ============================================================
+   2. COMPONENT LIBRARY
+   ============================================================ */
+
+.component-group {
+  margin-bottom: 56px;
+}
+
+.component-group-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--white);
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Buttons */
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.btn {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  padding: 12px 28px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-transform: uppercase;
+}
+
+.btn--primary {
+  background: var(--mint);
+  color: var(--black);
+  box-shadow: 0 0 0px transparent;
+}
+
+.btn--primary:hover {
+  box-shadow: 0 0 24px var(--mint-glow-md), 0 2px 8px rgba(0,0,0,0.4);
+  transform: translateY(-1px);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--mint);
+  border: 1.5px solid var(--mint);
+}
+
+.btn--secondary:hover {
+  background: var(--mint-dim);
+  box-shadow: 0 0 20px var(--mint-glow);
+}
+
+.btn--danger {
+  background: var(--red);
+  color: var(--white);
+}
+
+.btn--danger:hover {
+  box-shadow: 0 0 20px var(--red-glow);
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--dim-light);
+  border: 1px solid var(--border);
+}
+
+.btn--ghost:hover {
+  color: var(--white);
+  border-color: var(--border-light);
+}
+
+.btn--sm {
+  font-size: 12px;
+  padding: 8px 18px;
+}
+
+/* Level Badges */
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.lvl-badge {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: var(--mint-dim);
+  color: var(--mint);
+  border: 1px solid rgba(0,230,118,0.2);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.lvl-badge--5 {
+  border-color: rgba(0,230,118,0.35);
+  box-shadow: 0 0 12px var(--mint-glow);
+}
+
+.lvl-badge--10 {
+  border-color: rgba(0,230,118,0.5);
+  box-shadow: 0 0 20px var(--mint-glow-md), 0 0 40px var(--mint-glow);
+  background: rgba(0,230,118,0.12);
+}
+
+.lvl-badge--max {
+  border-color: rgba(0,230,118,0.7);
+  box-shadow: 0 0 24px var(--mint-glow-md), 0 0 48px var(--mint-glow), inset 0 0 12px rgba(0,230,118,0.06);
+  background: rgba(0,230,118,0.15);
+  animation: badge-breathe 3s ease-in-out infinite;
+}
+
+@keyframes badge-breathe {
+  0%, 100% { box-shadow: 0 0 24px var(--mint-glow-md), 0 0 48px var(--mint-glow); }
+  50% { box-shadow: 0 0 32px var(--mint-glow-lg), 0 0 60px var(--mint-glow-md); }
+}
+
+/* XP Progress Bar */
+.xp-bar-container {
+  max-width: 480px;
+}
+
+.xp-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.xp-bar-title {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--white);
+}
+
+.xp-bar-numbers {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--mint);
+}
+
+.xp-bar-track {
+  height: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  overflow: hidden;
+  position: relative;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  background: var(--mint);
+  border-radius: 100px;
+  position: relative;
+  transition: width 1s ease;
+}
+
+.xp-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.25) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s ease-in-out infinite;
+  border-radius: 100px;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.xp-bar-sublabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--dim);
+  margin-top: 6px;
+}
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 0 20px var(--mint-glow);
+  border-color: rgba(0,230,118,0.2);
+  transform: translateY(-2px);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.card-desc {
+  font-size: 14px;
+  color: var(--dim-light);
+  line-height: 1.6;
+}
+
+.card-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--dim);
+  margin-top: 12px;
+}
+
+/* Inputs */
+.input-group {
+  max-width: 400px;
+}
+
+.input-label {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--dim-light);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.text-input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--white);
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.text-input::placeholder {
+  color: var(--dim);
+}
+
+.text-input:focus {
+  border-color: var(--mint);
+  box-shadow: 0 0 16px var(--mint-glow);
+}
+
+.input-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.input-row .input-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Achievement tiles */
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.achievement {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.achievement--unlocked {
+  border-color: rgba(0,230,118,0.15);
+}
+
+.achievement--unlocked:hover {
+  box-shadow: 0 0 20px var(--mint-glow);
+  transform: scale(1.02);
+}
+
+.achievement-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.achievement--unlocked .achievement-icon {
+  background: var(--mint-dim);
+}
+
+.achievement--locked .achievement-icon {
+  background: rgba(255,255,255,0.04);
+}
+
+.achievement-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.achievement-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+
+.achievement--unlocked .achievement-title {
+  color: var(--white);
+}
+
+.achievement--locked .achievement-title {
+  color: var(--dim);
+}
+
+.achievement-desc {
+  font-size: 12px;
+  color: var(--dim);
+  line-height: 1.4;
+}
+
+.achievement-check {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--mint);
+  position: absolute;
+  top: 12px;
+  right: 14px;
+}
+
+.achievement--locked .achievement-lock {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--dim);
+  position: absolute;
+  top: 12px;
+  right: 14px;
+}
+
+/* Stat Counters */
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.stat-counter {
+  text-align: center;
+  min-width: 100px;
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 40px;
+  color: var(--mint);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-value--white {
+  color: var(--white);
+}
+
+.stat-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* ============================================================
+   3. COACH ONBOARDING MOCK
+   ============================================================ */
+
+.onboarding-shell {
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 600px;
+}
+
+/* Progress dots */
+.onboarding-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.progress-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.progress-dot--filled {
+  background: var(--mint);
+  border-color: var(--mint);
+  box-shadow: 0 0 8px var(--mint-glow);
+}
+
+.progress-dot--current {
+  border-color: var(--mint);
+  box-shadow: 0 0 8px var(--mint-glow);
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+  0%, 100% { box-shadow: 0 0 8px var(--mint-glow); }
+  50% { box-shadow: 0 0 16px var(--mint-glow-md); }
+}
+
+.progress-step-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--dim);
+  margin-left: 12px;
+  letter-spacing: 1px;
+}
+
+/* Two-pane layout */
+.onboarding-panes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 560px;
+}
+
+@media (max-width: 800px) {
+  .onboarding-panes {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left: Chat */
+.pane-chat {
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 16px;
+  border-right: 1px solid var(--border);
+}
+
+.chat-msg {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  max-width: 95%;
+}
+
+.chat-msg--coach {
+  align-self: flex-start;
+}
+
+.chat-msg--kid {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.chat-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.chat-avatar--coach {
+  background: var(--mint-dim);
+  border: 1px solid rgba(0,230,118,0.2);
+}
+
+.chat-avatar--kid {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+}
+
+.chat-bubble {
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.chat-msg--coach .chat-bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--white);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-msg--kid .chat-bubble {
+  background: var(--mint-dim);
+  border: 1px solid rgba(0,230,118,0.15);
+  color: var(--white);
+  border-bottom-right-radius: 4px;
+}
+
+.chat-bubble .coach-accent {
+  color: var(--mint);
+  font-weight: 500;
+}
+
+.chat-typing {
+  display: flex;
+  gap: 4px;
+  padding: 14px 18px;
+  align-self: flex-start;
+}
+
+.chat-typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dim);
+  animation: typing-bounce 1.4s ease-in-out infinite;
+}
+
+.chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Right: Business builder */
+.pane-builder {
+  background: var(--surface);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.builder-header {
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.builder-biz-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.builder-biz-type {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--dim-light);
+}
+
+.builder-xp {
+  max-width: 100%;
+}
+
+.builder-section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.builder-product {
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.product-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(0,230,118,0.1), rgba(0,230,118,0.03));
+  border: 1px solid rgba(0,230,118,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.product-info {
+  flex: 1;
+}
+
+.product-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+
+.product-price {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--mint);
+}
+
+.product-status {
+  font-size: 11px;
+  color: var(--dim);
+  margin-top: 2px;
+}
+
+.builder-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================================
+   4. BRAND CARD MOCK
+   ============================================================ */
+
+.brand-card-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.brand-card {
+  width: 380px;
+  background: var(--surface);
+  border: 1.5px solid rgba(0,230,118,0.2);
+  border-radius: 20px;
+  padding: 32px 28px;
+  position: relative;
+  box-shadow: 0 0 40px var(--mint-glow), 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.brand-card::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--mint), transparent);
+  border-radius: 2px;
+}
+
+.brand-card-stand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.brand-card-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--white);
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.brand-card-ceo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.brand-card-ceo-name {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--dim-light);
+}
+
+.brand-card-desc {
+  font-size: 14px;
+  color: var(--dim);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.brand-card-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0;
+}
+
+.brand-card-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.brand-stat {
+  text-align: center;
+}
+
+.brand-stat-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--mint);
+}
+
+.brand-stat-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.brand-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.ceo-badge {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mint);
+  padding: 8px 18px;
+  border: 1.5px solid rgba(0,230,118,0.3);
+  border-radius: 100px;
+  box-shadow: 0 0 16px var(--mint-glow);
+  animation: badge-breathe 3s ease-in-out infinite;
+}
+
+.qr-placeholder {
+  width: 64px;
+  height: 64px;
+  border: 1.5px solid rgba(0,230,118,0.2);
+  border-radius: 10px;
+  background: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.qr-placeholder::after {
+  content: '';
+  width: 36px;
+  height: 36px;
+  background:
+    linear-gradient(var(--dim) 2px, transparent 2px),
+    linear-gradient(90deg, var(--dim) 2px, transparent 2px);
+  background-size: 8px 8px;
+  opacity: 0.3;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   5. CEO DASHBOARD MOCK
+   ============================================================ */
+
+.dashboard {
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.dashboard-header {
+  padding: 28px 32px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.dashboard-welcome {
+  flex: 1;
+  min-width: 240px;
+}
+
+.dashboard-greeting {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.dashboard-greeting span {
+  color: var(--mint);
+}
+
+.dashboard-level-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-level-title {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--dim-light);
+}
+
+.dashboard-xp-bar {
+  flex: 1;
+  max-width: 320px;
+}
+
+.dashboard-xp-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard-xp-track {
+  flex: 1;
+  height: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.dashboard-xp-fill {
+  height: 100%;
+  width: 49%;
+  background: var(--mint);
+  border-radius: 100px;
+  position: relative;
+}
+
+.dashboard-xp-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+  animation: shimmer 2s ease-in-out infinite;
+  border-radius: 100px;
+}
+
+.dashboard-xp-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--dim-light);
+  white-space: nowrap;
+}
+
+.dashboard-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.dashboard-body {
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 800px) {
+  .dashboard-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Stats row */
+.dash-stats {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .dash-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.dash-stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.dash-stat-card:hover {
+  border-color: rgba(0,230,118,0.15);
+  box-shadow: 0 0 16px var(--mint-glow);
+}
+
+.dash-stat-value {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--mint);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.dash-stat-value--white {
+  color: var(--white);
+}
+
+.dash-stat-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Goal card */
+.dash-goal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.dash-goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.dash-goal-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--white);
+}
+
+.dash-goal-pct {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--mint);
+}
+
+.dash-goal-desc {
+  font-size: 13px;
+  color: var(--dim-light);
+  margin-bottom: 16px;
+}
+
+.dash-goal-track {
+  height: 10px;
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.dash-goal-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--mint);
+  border-radius: 100px;
+  position: relative;
+  animation: goal-fill-in 1.5s ease forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes goal-fill-in {
+  to { width: 43%; }
+}
+
+.dash-goal-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  animation: shimmer 2s ease-in-out infinite;
+  border-radius: 100px;
+}
+
+.dash-goal-amounts {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.dash-goal-current {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--mint);
+}
+
+.dash-goal-target {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--dim);
+}
+
+/* Achievements section */
+.dash-achievements {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.dash-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.dash-section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--white);
+}
+
+.dash-section-link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--dim);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.dash-section-link:hover {
+  color: var(--mint);
+}
+
+.dash-achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .dash-achievement-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.dash-ach {
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.dash-ach--unlocked:hover {
+  border-color: rgba(0,230,118,0.2);
+  box-shadow: 0 0 12px var(--mint-glow);
+  transform: scale(1.03);
+}
+
+.dash-ach-icon {
+  font-size: 22px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.dash-ach-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 11px;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+
+.dash-ach--locked .dash-ach-icon {
+  opacity: 0.25;
+  filter: grayscale(1);
+}
+
+.dash-ach--locked .dash-ach-title {
+  color: var(--dim);
+}
+
+.dash-ach-status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.dash-ach--unlocked .dash-ach-status {
+  color: var(--mint);
+}
+
+.dash-ach--locked .dash-ach-status {
+  color: var(--dim);
+}
+
+/* Quick Actions */
+.dash-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+/* Leaderboard strip */
+.dash-leaderboard {
+  grid-column: 1 / -1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leaderboard-rank {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.leaderboard-hash {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--mint);
+}
+
+.leaderboard-text {
+  font-size: 14px;
+  color: var(--dim-light);
+}
+
+.leaderboard-trend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--mint);
+}
+
+.leaderboard-arrow {
+  display: inline-block;
+  animation: float-up 1.5s ease-in-out infinite;
+}
+
+@keyframes float-up {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* ============================================================
+   ACHIEVEMENT UNLOCK ANIMATION (bonus)
+   ============================================================ */
+
+.unlock-demo {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.unlock-trigger {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 24px;
+  background: transparent;
+  color: var(--dim-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.unlock-trigger:hover {
+  color: var(--mint);
+  border-color: rgba(0,230,118,0.3);
+}
+
+/* Unlock animation overlay */
+.unlock-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(15,15,15,0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.unlock-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.unlock-card {
+  background: var(--surface);
+  border: 1.5px solid rgba(0,230,118,0.3);
+  border-radius: 24px;
+  padding: 48px 40px;
+  text-align: center;
+  transform: scale(0.8);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 60px var(--mint-glow), 0 0 120px rgba(0,230,118,0.08);
+  max-width: 340px;
+}
+
+.unlock-overlay.active .unlock-card {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.unlock-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 16px;
+}
+
+.unlock-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+  animation: unlock-bounce 0.6s ease 0.3s both;
+}
+
+@keyframes unlock-bounce {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.unlock-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.unlock-desc {
+  font-size: 14px;
+  color: var(--dim-light);
+  margin-bottom: 20px;
+}
+
+.unlock-xp {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--mint);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.page-footer {
+  text-align: center;
+  padding: 48px 24px 64px;
+  border-top: 1px solid var(--border);
+}
+
+.page-footer p {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--dim);
+  letter-spacing: 1px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .wordmark { font-size: 32px; letter-spacing: 8px; }
+  .section-title { font-size: 24px; }
+  .type-specimen--display .type-sample { font-size: 28px; }
+  .stat-value { font-size: 28px; }
+  .brand-card { width: 100%; }
+  .dashboard-header { padding: 20px; }
+  .dashboard-body { padding: 20px; }
+  .dashboard-greeting { font-size: 20px; }
+  .dash-stat-value { font-size: 24px; }
+  .dash-achievement-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     PAGE HEADER
+     ============================================================ -->
+<header class="page-header">
+  <div class="wordmark">STAND</div>
+  <div class="subtitle">Design Exploration 04 — Arcade</div>
+  <p class="direction-note">
+    Premium indie game UI meets fintech trust. Dark mode native. NOT childish
+    — more like a beautifully designed indie game that adults admire.
+    Think Firewatch art team designed a fintech app for kids.
+  </p>
+</header>
+
+<!-- ============================================================
+     1. DESIGN SYSTEM OVERVIEW
+     ============================================================ -->
+<section>
+  <div class="section-label">01 / Foundation</div>
+  <h2 class="section-title">Design System Overview</h2>
+  <p class="section-desc">
+    A dark-native palette where electric mint signals progress, money, and growth.
+    Every number in monospace. Every headline with game-title energy.
+  </p>
+
+  <!-- Color Swatches -->
+  <div class="component-group">
+    <div class="component-group-title">Palette</div>
+    <div class="swatch-grid">
+      <div class="swatch swatch--black">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Deep Black</div>
+          <div class="swatch-hex">#0f0f0f</div>
+        </div>
+      </div>
+      <div class="swatch swatch--surface">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Dark Surface</div>
+          <div class="swatch-hex">#1a1a1a</div>
+        </div>
+      </div>
+      <div class="swatch swatch--mint">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Electric Mint</div>
+          <div class="swatch-hex">#00e676</div>
+        </div>
+      </div>
+      <div class="swatch swatch--red">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Founder Red</div>
+          <div class="swatch-hex">#df0000</div>
+        </div>
+      </div>
+      <div class="swatch swatch--white">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Soft White</div>
+          <div class="swatch-hex">#e8e8e8</div>
+        </div>
+      </div>
+      <div class="swatch swatch--border">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Border</div>
+          <div class="swatch-hex">#2a2a2a</div>
+        </div>
+      </div>
+      <div class="swatch swatch--dim-mint">
+        <div class="swatch-color"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Dim Mint</div>
+          <div class="swatch-hex">rgba(0,230,118,0.08)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Typography -->
+  <div class="component-group">
+    <div class="component-group-title">Typography</div>
+    <div class="type-specimens">
+      <div class="type-specimen type-specimen--display">
+        <div class="type-specimen-label">Display — Chakra Petch 700</div>
+        <div class="type-sample">Build Something Real</div>
+        <div class="type-secondary">Level Up Your Business</div>
+      </div>
+      <div class="type-specimen type-specimen--body">
+        <div class="type-specimen-label">Body — Lexend 400</div>
+        <div class="type-sample">
+          STAND helps kids ages 8-14 build real businesses. Set your price,
+          make your first sale, and level up as you grow. Your journey starts
+          with one product and one goal.
+        </div>
+      </div>
+      <div class="type-specimen type-specimen--mono">
+        <div class="type-specimen-label">Mono — Fira Code 600</div>
+        <div class="type-sample">$127.50 &nbsp; 2,450 XP &nbsp; LVL 5</div>
+        <div class="type-secondary">Every number. Money, XP, stats, levels.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Number showcase -->
+  <div class="component-group">
+    <div class="component-group-title">Numbers in Mono</div>
+    <div class="number-showcase">
+      <div class="number-card">
+        <div class="big-num">$32</div>
+        <div class="num-label">Revenue</div>
+      </div>
+      <div class="number-card">
+        <div class="big-num">2,450</div>
+        <div class="num-label">XP Earned</div>
+      </div>
+      <div class="number-card">
+        <div class="big-num">LVL 2</div>
+        <div class="num-label">Current Level</div>
+      </div>
+      <div class="number-card">
+        <div class="big-num">8</div>
+        <div class="num-label">Sales</div>
+      </div>
+      <div class="number-card">
+        <div class="big-num">43%</div>
+        <div class="num-label">Goal Progress</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     2. COMPONENT LIBRARY
+     ============================================================ -->
+<section>
+  <div class="section-label">02 / Components</div>
+  <h2 class="section-title">Component Library</h2>
+  <p class="section-desc">
+    Reusable building blocks. Mint glows earned through interaction.
+    Dark surfaces that feel solid and premium.
+  </p>
+
+  <!-- Buttons -->
+  <div class="component-group">
+    <div class="component-group-title">Buttons</div>
+    <div class="btn-row">
+      <button class="btn btn--primary">Share Store</button>
+      <button class="btn btn--secondary">Record Sale</button>
+      <button class="btn btn--danger">Delete</button>
+      <button class="btn btn--ghost">Cancel</button>
+      <button class="btn btn--primary btn--sm">Level Up</button>
+      <button class="btn btn--secondary btn--sm">View All</button>
+    </div>
+  </div>
+
+  <!-- Level Badges -->
+  <div class="component-group">
+    <div class="component-group-title">Level Badges</div>
+    <div class="badge-row">
+      <span class="lvl-badge">LVL 1</span>
+      <span class="lvl-badge">LVL 3</span>
+      <span class="lvl-badge lvl-badge--5">LVL 5</span>
+      <span class="lvl-badge lvl-badge--5">LVL 7</span>
+      <span class="lvl-badge lvl-badge--10">LVL 10</span>
+      <span class="lvl-badge lvl-badge--max">LVL 20</span>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="component-group">
+    <div class="component-group-title">XP Progress Bar</div>
+    <div class="xp-bar-container">
+      <div class="xp-bar-labels">
+        <span class="xp-bar-title">Level 2 — Rising Star</span>
+        <span class="xp-bar-numbers">2,450 / 5,000 XP</span>
+      </div>
+      <div class="xp-bar-track">
+        <div class="xp-bar-fill" style="width: 49%"></div>
+      </div>
+      <div class="xp-bar-sublabel">2,550 XP to Level 3</div>
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div class="component-group">
+    <div class="component-group-title">Cards</div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Custom Stickers</div>
+        <div class="card-desc">Waterproof vinyl stickers with original art. Perfect for laptops and water bottles.</div>
+        <div class="card-meta">$8.00 each &middot; 12 sold</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Art Prints</div>
+        <div class="card-desc">5x7 prints on premium paper. Each one signed by the artist.</div>
+        <div class="card-meta">$12.00 each &middot; 3 sold</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Sticker Pack</div>
+        <div class="card-desc">Bundle of 5 stickers at a discount. Best seller for gift-giving.</div>
+        <div class="card-meta">$30.00 pack &middot; 2 sold</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inputs -->
+  <div class="component-group">
+    <div class="component-group-title">Inputs</div>
+    <div class="input-row">
+      <div class="input-group">
+        <label class="input-label">Business Name</label>
+        <input type="text" class="text-input" placeholder="What's your business called?">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Price</label>
+        <input type="text" class="text-input" placeholder="$0.00" style="font-family: var(--font-mono);">
+      </div>
+    </div>
+  </div>
+
+  <!-- Achievement Tiles -->
+  <div class="component-group">
+    <div class="component-group-title">Achievement Tiles</div>
+    <div class="achievement-grid">
+      <div class="achievement achievement--unlocked">
+        <div class="achievement-icon">&#127919;</div>
+        <div class="achievement-info">
+          <div class="achievement-title">First Sale</div>
+          <div class="achievement-desc">Made your first real sale</div>
+        </div>
+        <span class="achievement-check">&#10003;</span>
+      </div>
+      <div class="achievement achievement--unlocked">
+        <div class="achievement-icon">&#128640;</div>
+        <div class="achievement-info">
+          <div class="achievement-title">Launch Day</div>
+          <div class="achievement-desc">Opened your store</div>
+        </div>
+        <span class="achievement-check">&#10003;</span>
+      </div>
+      <div class="achievement achievement--unlocked">
+        <div class="achievement-icon">&#128172;</div>
+        <div class="achievement-info">
+          <div class="achievement-title">Pitch Pro</div>
+          <div class="achievement-desc">Shared with 5 people</div>
+        </div>
+        <span class="achievement-check">&#10003;</span>
+      </div>
+      <div class="achievement achievement--locked">
+        <div class="achievement-icon">&#128274;</div>
+        <div class="achievement-info">
+          <div class="achievement-title">???</div>
+          <div class="achievement-desc">Keep going to unlock</div>
+        </div>
+        <span class="achievement-lock">???</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stat Counters -->
+  <div class="component-group">
+    <div class="component-group-title">Stat Counters</div>
+    <div class="stat-row">
+      <div class="stat-counter">
+        <div class="stat-value">$127</div>
+        <div class="stat-label">Revenue</div>
+      </div>
+      <div class="stat-counter">
+        <div class="stat-value--white stat-value">23</div>
+        <div class="stat-label">Sales</div>
+      </div>
+      <div class="stat-counter">
+        <div class="stat-value">4,800</div>
+        <div class="stat-label">XP</div>
+      </div>
+      <div class="stat-counter">
+        <div class="stat-value--white stat-value">89</div>
+        <div class="stat-label">Views</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unlock Animation Demo -->
+  <div class="component-group">
+    <div class="component-group-title">Achievement Unlock Animation</div>
+    <div class="unlock-demo">
+      <button class="unlock-trigger" onclick="showUnlock()">Trigger Unlock</button>
+    </div>
+  </div>
+</section>
+
+<!-- Unlock overlay (hidden) -->
+<div class="unlock-overlay" id="unlockOverlay" onclick="hideUnlock()">
+  <div class="unlock-card" onclick="event.stopPropagation()">
+    <div class="unlock-label">Achievement Unlocked</div>
+    <span class="unlock-icon">&#127942;</span>
+    <div class="unlock-title">Goal Crusher</div>
+    <div class="unlock-desc">Reached 50% of your first savings goal</div>
+    <div class="unlock-xp">+250 XP</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     3. COACH ONBOARDING MOCK
+     ============================================================ -->
+<section>
+  <div class="section-label">03 / Mock</div>
+  <h2 class="section-title">Stand Coach Onboarding</h2>
+  <p class="section-desc">
+    Character creation meets business building. The coach guides, the business
+    takes shape in real time. Feels like choosing your class in a premium RPG.
+  </p>
+
+  <div class="onboarding-shell">
+    <!-- Progress dots -->
+    <div class="onboarding-progress">
+      <div class="progress-dot progress-dot--filled"></div>
+      <div class="progress-dot progress-dot--filled"></div>
+      <div class="progress-dot progress-dot--filled"></div>
+      <div class="progress-dot progress-dot--filled"></div>
+      <div class="progress-dot progress-dot--current"></div>
+      <div class="progress-dot"></div>
+      <span class="progress-step-label">Step 5 of 6</span>
+    </div>
+
+    <!-- Two panes -->
+    <div class="onboarding-panes">
+      <!-- Left: Chat -->
+      <div class="pane-chat">
+        <div class="chat-msg chat-msg--coach">
+          <div class="chat-avatar chat-avatar--coach">&#9889;</div>
+          <div class="chat-bubble">
+            Hey! I'm your <span class="coach-accent">Stand Coach</span>. Let's figure out what you want to build. What's something you're really good at or love doing?
+          </div>
+        </div>
+
+        <div class="chat-msg chat-msg--kid">
+          <div class="chat-avatar chat-avatar--kid">&#127912;</div>
+          <div class="chat-bubble">
+            I want to sell custom stickers and cool art prints &#127912;
+          </div>
+        </div>
+
+        <div class="chat-msg chat-msg--coach">
+          <div class="chat-avatar chat-avatar--coach">&#9889;</div>
+          <div class="chat-bubble">
+            <span class="coach-accent">Nice!</span> Creative energy. Stickers are one of the best first products — low cost, high demand. Let me show you what your business could look like...
+          </div>
+        </div>
+
+        <div class="chat-msg chat-msg--coach">
+          <div class="chat-avatar chat-avatar--coach">&#9889;</div>
+          <div class="chat-bubble">
+            I set up <span class="coach-accent">Stick & Print Studio</span> for you. Check it out on the right &#8594; How does that name feel?
+          </div>
+        </div>
+
+        <div class="chat-typing">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <!-- Right: Business Builder -->
+      <div class="pane-builder">
+        <div class="builder-header">
+          <div class="builder-biz-name">Stick & Print Studio</div>
+          <div class="builder-biz-type">Custom Stickers & Art Prints</div>
+        </div>
+
+        <!-- XP Bar -->
+        <div class="builder-xp">
+          <div class="xp-bar-labels">
+            <span class="xp-bar-title">Onboarding</span>
+            <span class="xp-bar-numbers">4 / 6 complete</span>
+          </div>
+          <div class="xp-bar-track">
+            <div class="xp-bar-fill" style="width: 66.6%"></div>
+          </div>
+        </div>
+
+        <!-- Product preview -->
+        <div>
+          <div class="builder-section-label">Your First Product</div>
+          <div class="builder-product">
+            <div class="product-thumb">&#127912;</div>
+            <div class="product-info">
+              <div class="product-name">Custom Vinyl Sticker</div>
+              <div class="product-price">$8.00</div>
+              <div class="product-status">Waterproof &middot; Ready to sell</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second product hint -->
+        <div>
+          <div class="builder-product" style="opacity: 0.4; border-style: dashed;">
+            <div class="product-thumb" style="opacity: 0.5;">&#128444;</div>
+            <div class="product-info">
+              <div class="product-name" style="color: var(--dim);">Art Print (5x7)</div>
+              <div class="product-price" style="color: var(--dim);">Unlocks at LVL 2</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="builder-footer">
+          <span class="lvl-badge">LVL 1 &mdash; Apprentice</span>
+          <span style="font-family: var(--font-mono); font-size: 12px; color: var(--dim);">+150 XP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     4. SHAREABLE BRAND CARD
+     ============================================================ -->
+<section>
+  <div class="section-label">04 / Mock</div>
+  <h2 class="section-title">Shareable Brand Card</h2>
+  <p class="section-desc">
+    The player card you screenshot and share. Achievement unlock energy.
+    Every kid wants this on their profile.
+  </p>
+
+  <div class="brand-card-wrapper">
+    <div class="brand-card">
+      <div class="brand-card-stand">STAND</div>
+      <div class="brand-card-name">Stick & Print Studio</div>
+      <div class="brand-card-ceo">
+        <span class="brand-card-ceo-name">CEO: ArtBoss</span>
+        <span class="lvl-badge" style="font-size: 11px; padding: 4px 10px;">LVL 2</span>
+      </div>
+      <div class="brand-card-desc">Custom stickers & art prints</div>
+
+      <div class="brand-card-divider"></div>
+
+      <div class="brand-card-stats">
+        <div class="brand-stat">
+          <div class="brand-stat-value">$75</div>
+          <div class="brand-stat-label">Goal</div>
+        </div>
+        <div class="brand-stat">
+          <div class="brand-stat-value">$8</div>
+          <div class="brand-stat-label">Per Sticker</div>
+        </div>
+      </div>
+
+      <div class="brand-card-divider"></div>
+
+      <div class="brand-card-bottom">
+        <span class="ceo-badge">STAND CEO</span>
+        <div class="qr-placeholder"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     5. CEO DASHBOARD
+     ============================================================ -->
+<section>
+  <div class="section-label">05 / Mock</div>
+  <h2 class="section-title">CEO Dashboard</h2>
+  <p class="section-desc">
+    Where gaming direction shines. The screen that makes kids come back every day.
+    Progress is visible, achievements are earned, every number tells a story.
+  </p>
+
+  <div class="dashboard">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <div class="dashboard-welcome">
+        <div class="dashboard-greeting">Welcome back, <span>ArtBoss</span>!</div>
+        <div class="dashboard-level-row">
+          <span class="lvl-badge lvl-badge--5" style="font-size: 11px; padding: 4px 12px;">LVL 2</span>
+          <span class="dashboard-level-title">Rising Star</span>
+          <div class="dashboard-xp-inline">
+            <div class="dashboard-xp-track">
+              <div class="dashboard-xp-fill"></div>
+            </div>
+            <span class="dashboard-xp-label">2,450 / 5,000</span>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-nav">
+        <button class="btn btn--primary btn--sm">Share Store</button>
+        <button class="btn btn--secondary btn--sm">Record Sale</button>
+      </div>
+    </div>
+
+    <div class="dashboard-body">
+      <!-- Stats -->
+      <div class="dash-stats">
+        <div class="dash-stat-card">
+          <div class="dash-stat-value">$32</div>
+          <div class="dash-stat-label">Revenue</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-value dash-stat-value--white">8</div>
+          <div class="dash-stat-label">Sales</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-value dash-stat-value--white">23</div>
+          <div class="dash-stat-label">Views</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-value dash-stat-value--white">5</div>
+          <div class="dash-stat-label">Shares</div>
+        </div>
+      </div>
+
+      <!-- Goal -->
+      <div class="dash-goal">
+        <div class="dash-goal-header">
+          <div class="dash-goal-title">Current Goal</div>
+          <div class="dash-goal-pct">43%</div>
+        </div>
+        <div class="dash-goal-desc">$75 for new art supplies</div>
+        <div class="dash-goal-track">
+          <div class="dash-goal-fill"></div>
+        </div>
+        <div class="dash-goal-amounts">
+          <span class="dash-goal-current">$32.00</span>
+          <span class="dash-goal-target">$75.00</span>
+        </div>
+      </div>
+
+      <!-- Achievements -->
+      <div class="dash-achievements">
+        <div class="dash-section-header">
+          <div class="dash-section-title">Achievements</div>
+          <span class="dash-section-link">View all &#8594;</span>
+        </div>
+        <div class="dash-achievement-grid">
+          <div class="dash-ach dash-ach--unlocked">
+            <span class="dash-ach-icon">&#128640;</span>
+            <div class="dash-ach-title">Launch Day</div>
+            <div class="dash-ach-status">&#10003; Unlocked</div>
+          </div>
+          <div class="dash-ach dash-ach--unlocked">
+            <span class="dash-ach-icon">&#127919;</span>
+            <div class="dash-ach-title">First Sale</div>
+            <div class="dash-ach-status">&#10003; Unlocked</div>
+          </div>
+          <div class="dash-ach dash-ach--unlocked">
+            <span class="dash-ach-icon">&#128172;</span>
+            <div class="dash-ach-title">Pitch Pro</div>
+            <div class="dash-ach-status">&#10003; Unlocked</div>
+          </div>
+          <div class="dash-ach dash-ach--unlocked">
+            <span class="dash-ach-icon">&#127775;</span>
+            <div class="dash-ach-title">5-Star Review</div>
+            <div class="dash-ach-status">&#10003; Unlocked</div>
+          </div>
+          <div class="dash-ach dash-ach--locked">
+            <span class="dash-ach-icon">&#128274;</span>
+            <div class="dash-ach-title">???</div>
+            <div class="dash-ach-status">Locked</div>
+          </div>
+          <div class="dash-ach dash-ach--locked">
+            <span class="dash-ach-icon">&#128274;</span>
+            <div class="dash-ach-title">???</div>
+            <div class="dash-ach-status">Locked</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="dash-actions">
+        <button class="btn btn--primary">Share Store</button>
+        <button class="btn btn--secondary">Record Sale</button>
+        <button class="btn btn--ghost">Edit Products</button>
+        <button class="btn btn--ghost">View Store</button>
+      </div>
+
+      <!-- Leaderboard -->
+      <div class="dash-leaderboard">
+        <div class="leaderboard-rank">
+          <div class="leaderboard-hash">#12</div>
+          <div class="leaderboard-text">in your area</div>
+        </div>
+        <div class="leaderboard-trend">
+          <span class="leaderboard-arrow">&#9650;</span>
+          3 spots this week
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="page-footer">
+  <p>STAND &mdash; Arcade Design System &mdash; Exploration 04</p>
+</footer>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script>
+function showUnlock() {
+  document.getElementById('unlockOverlay').classList.add('active');
+}
+
+function hideUnlock() {
+  document.getElementById('unlockOverlay').classList.remove('active');
+}
+
+// Close on Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') hideUnlock();
+});
+</script>
+
+</body>
+</html>
