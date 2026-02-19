@@ -5,9 +5,41 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '../../lib/supabase/client';
 
 const ACCEPT_TYPES = 'image/jpeg,image/png,image/webp';
+const COVER_MAX_WIDTH = 1600;
+const COVER_QUALITY = 0.8;
 
 function extFromType(mime) {
   return { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }[mime] || 'jpg';
+}
+
+function resizeImage(file, maxWidth, quality) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      if (img.width <= maxWidth) {
+        resolve(file);
+        return;
+      }
+      const scale = maxWidth / img.width;
+      const canvas = document.createElement('canvas');
+      canvas.width = maxWidth;
+      canvas.height = Math.round(img.height * scale);
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(
+        (blob) => resolve(new File([blob], file.name, { type: 'image/jpeg' })),
+        'image/jpeg',
+        quality,
+      );
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve(file);
+    };
+    img.src = url;
+  });
 }
 
 export default function TripHeaderEditor({ trip }) {
@@ -34,10 +66,11 @@ export default function TripHeaderEditor({ trip }) {
     return () => URL.revokeObjectURL(url);
   }, [coverFile]);
 
-  function handleFileSelect(e) {
+  async function handleFileSelect(e) {
     const file = e.target.files?.[0];
     if (!file) return;
-    setCoverFile(file);
+    const resized = await resizeImage(file, COVER_MAX_WIDTH, COVER_QUALITY);
+    setCoverFile(resized);
     setRemoveCover(false);
   }
 
