@@ -2,6 +2,7 @@ import './trips.css';
 import Link from 'next/link';
 import { createClient } from '../../lib/supabase/server';
 import SignOutButton from './SignOutButton';
+import HeaderAvatar from './HeaderAvatar';
 import { Toaster } from 'react-hot-toast';
 
 export const metadata = {
@@ -38,9 +39,7 @@ export default async function TripsLayout({ children }) {
           <span className="v-header-tagline">For Andy's Friends</span>
         </div>
         <div className="v-header-user">
-          {profile?.avatar_url && (
-            <img src={profile.avatar_url} alt="" className="v-header-avatar" />
-          )}
+          <HeaderAvatar src={profile?.avatar_url} />
           {profile?.role === 'super_admin' && (
             <Link href="/admin" className="v-admin-header-link">Admin</Link>
           )}
