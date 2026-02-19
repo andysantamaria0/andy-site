@@ -49,12 +49,12 @@ function OnboardingPanelInner() {
 
   const isLastStep = stepIndex === totalSteps - 1;
 
-  // Build audio URL
-  let audioUrl = currentStep?.audio || null;
+  // Build audio URL — all steps use dynamic TTS with server-side caching
+  const audioParams = new URLSearchParams({ stepId: currentStep?.id || '' });
   if (currentStep?.id === 'welcome') {
-    const params = new URLSearchParams({ tripName: tripName || '' });
-    audioUrl = `/api/onboarding/welcome-audio?${params}`;
+    audioParams.set('tripName', tripName || '');
   }
+  const audioUrl = currentStep ? `/api/onboarding/step-audio?${audioParams}` : null;
 
   return (
     <div className="v-onboarding-panel">
