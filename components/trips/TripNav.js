@@ -5,10 +5,10 @@ import { usePathname } from 'next/navigation';
 
 const allTabs = [
   { label: 'Overview', path: '', feature: null },
+  { label: 'Concierge', path: '/concierge', feature: 'concierge' },
   { label: 'Calendar', path: '/calendar', feature: 'calendar' },
   { label: 'Expenses', path: '/expenses', feature: 'expenses' },
   { label: 'Members', path: '/members', feature: 'members' },
-  { label: 'Inbox', path: '/inbox', feature: 'inbox' },
   { label: 'Journal', path: '/journal', feature: 'travel_log' },
 ];
 
@@ -34,7 +34,7 @@ export default function TripNav({ tripId, inboxCount = 0, enabledTabs }) {
             className={`v-trip-nav-link${isActive ? ' active' : ''}`}
           >
             {tab.label}
-            {tab.label === 'Inbox' && inboxCount > 0 && (
+            {tab.label === 'Concierge' && inboxCount > 0 && (
               <span className="v-inbox-badge-count">{inboxCount}</span>
             )}
           </Link>

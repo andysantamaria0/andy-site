@@ -2,11 +2,9 @@ import { createClient } from '../../../../lib/supabase/server';
 import MemberAvatar from '../../../../components/trips/MemberAvatar';
 import StayDatesEditor from '../../../../components/trips/StayDatesEditor';
 import AdminMemberDates from '../../../../components/trips/AdminMemberDates';
-import SmartPaste from '../../../../components/trips/SmartPaste';
 import AddMemberForm from '../../../../components/trips/AddMemberForm';
 import { formatDateRange } from '../../../../lib/utils/dates';
 import { getMemberDisplayInfo } from '../../../../lib/utils/members';
-import { loadFeatures, isFeatureEnabled } from '../../../../lib/features';
 
 export default async function MembersPage({ params }) {
   const { tripId } = await params;
@@ -36,17 +34,8 @@ export default async function MembersPage({ params }) {
   const myMembership = (members || []).find((m) => m.user_id === user.id);
   const isOwner = myMembership?.role === 'owner';
 
-  const [featureMap, { data: profile }] = await Promise.all([
-    loadFeatures(),
-    supabase.from('profiles').select('role').eq('email', user.email).single(),
-  ]);
-  const userRole = profile?.role || 'user';
-  const showSmartPaste = isFeatureEnabled(featureMap, 'smart_paste', userRole);
-
   return (
     <div className="v-page">
-      {/* Smart Paste — owner only, feature-gated */}
-      {isOwner && showSmartPaste && <SmartPaste tripId={tripId} />}
 
       {/* Current user's stay dates editor (non-owner view) */}
       {myMembership && !isOwner && (

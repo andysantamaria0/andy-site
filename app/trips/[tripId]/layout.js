@@ -9,6 +9,8 @@ import { loadFeatures, isFeatureEnabled } from '../../../lib/features';
 import OnboardingProvider from '../../../components/trips/OnboardingProvider';
 import OnboardingPanel from '../../../components/trips/OnboardingPanel';
 import OnboardingSpotlight from '../../../components/trips/OnboardingSpotlight';
+import ConciergePillProvider from '../../../components/trips/ConciergePillProvider';
+import ConciergePill from '../../../components/trips/ConciergePill';
 
 export async function generateMetadata({ params }) {
   const { tripId } = await params;
@@ -72,7 +74,7 @@ export default async function TripLayout({ children, params }) {
   const userRole = profile?.role || 'user';
 
   // Determine which tab features are enabled for this user's role
-  const tabFeatures = ['calendar', 'expenses', 'members', 'inbox', 'travel_log'];
+  const tabFeatures = ['calendar', 'expenses', 'members', 'concierge', 'travel_log'];
   const enabledTabs = tabFeatures.filter((f) => isFeatureEnabled(featureMap, f, userRole));
 
   const showHappeningNow = isFeatureEnabled(featureMap, 'happening_now', userRole);
@@ -144,17 +146,20 @@ export default async function TripLayout({ children, params }) {
         <TripNav tripId={tripId} inboxCount={inboxCount || 0} enabledTabs={enabledTabs} />
       </div>
       <HappeningNowProvider items={happeningNowItems} tripId={tripId}>
-        <OnboardingProvider
-          tripId={tripId}
-          tripName={trip.name}
-          memberId={membership?.id}
-          onboardingCompletedAt={membership?.onboarding_completed_at}
-        >
-          {children}
-          {showHappeningNow && <HappeningNowPill />}
-          <OnboardingPanel />
-          <OnboardingSpotlight />
-        </OnboardingProvider>
+        <ConciergePillProvider tripId={tripId} tripCode={trip.trip_code}>
+          <OnboardingProvider
+            tripId={tripId}
+            tripName={trip.name}
+            memberId={membership?.id}
+            onboardingCompletedAt={membership?.onboarding_completed_at}
+          >
+            {children}
+            {showHappeningNow && <HappeningNowPill />}
+            <ConciergePill />
+            <OnboardingPanel />
+            <OnboardingSpotlight />
+          </OnboardingProvider>
+        </ConciergePillProvider>
       </HappeningNowProvider>
     </>
   );
