@@ -6,13 +6,13 @@
 
 ## Basecamp
 
-You've done the hard parts. You've raised capital, built a prototype, ran a physical beta with 25 families, interviewed kids and parents, surveyed 100 families, and know what you want Stand to feel like. What's missing is the bridge between the vision in your head and a product that 100+ families can actually use — something that looks incredible, feels magical for kids, and makes parents say "holy shit, this is legit."
+You've already done a lot. You've raised capital, built a prototype, ran a physical beta, interviewed kids and parents, surveyed families, and know what you want Stand to feel like. What's missing is the bridge between the vision in your head and a product that 100+ families can actually use. Something with Soul.
 
 That's what this sprint is.
 
-You described the pilot as a research exercise — A/B landing pages, surveys, analytics, a focus group in product form. I think we can do better. The best way to validate "does this onboarding work?" is to build an onboarding so good that kids can't stop talking about it. The best way to test pricing sensitivity is to put parents in front of a product so polished they'd pay for it. **The product IS the research.** We instrument the real thing, and you get all the learnings as a byproduct of building something you're proud to ship.
+To kick off this first sprint I want to aim high. Together, I want us to validate onboarding when we hear kids can't stop talking about Stand. Same goes for pricing, when parents see how polished it is there's no question they'd pay for it.
 
-Your research already tells us more than you think. Three kid interviews and a 100-family survey have validated the core categories, pricing range, motivations, and parent concerns. What's missing isn't more data — it's execution.
+The product is the research that gets us the data and the conviction to get to the next stage of the business.
 
 ---
 
