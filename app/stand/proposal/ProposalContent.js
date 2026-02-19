@@ -621,7 +621,7 @@ export default function ProposalContent() {
           </div>
 
           <p>
-            <strong>Total: ~$65&ndash;$85/month</strong> at 100 users. Scales linearly. The biggest variable costs (LLM at $0.25/session and image gen) have cheaper alternatives if needed. Your infrastructure costs for the pilot are essentially negligible.
+            <strong>Estimated total: ~$65&ndash;$85/month</strong> at 100 users. These are estimates and may shift as we finalize the stack &mdash; e.g. Recraft or other asset generation services could add ~$10&ndash;20/month. Scales linearly. The biggest variable costs (LLM at $0.25/session and image gen) have cheaper alternatives if needed. Your infrastructure costs for the pilot will be minimal either way.
           </p>
         </Section>
 

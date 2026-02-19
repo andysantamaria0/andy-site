@@ -212,7 +212,7 @@ David Shimel is laying out the system architecture. Here's what it costs to run 
 | Data Storage (Supabase) | Database, auth | Free |
 | Code Storage (GitHub) | Repository | Free |
 
-**Total: ~$65–$85/month** at 100 users. Scales linearly. The biggest variable costs (LLM at $0.25/session and image gen) have cheaper alternatives if needed. Your infrastructure costs for the pilot are essentially negligible.
+**Estimated total: ~$65–$85/month** at 100 users. These are estimates and may shift as we finalize the stack — e.g. Recraft or other asset generation services could add ~$10–20/month. Scales linearly. The biggest variable costs (LLM at $0.25/session and image gen) have cheaper alternatives if needed. Your infrastructure costs for the pilot will be minimal either way.
 
 ---
 
