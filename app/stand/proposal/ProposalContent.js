@@ -630,7 +630,7 @@ export default function ProposalContent() {
         {/* VIII. Investment */}
         <Section id="investment" number="VIII" title="Investment" open={openSections.investment} onToggle={() => toggleSection('investment')}>
           <div className="stand-price">
-            <div className="stand-price-amount">$9,000</div>
+            <div className="stand-price-amount">$10,000</div>
             <div className="stand-price-label">2-week all-out sprint</div>
           </div>
 
@@ -640,7 +640,7 @@ export default function ProposalContent() {
                 <div className="stand-investment-card-name">Andy Santamaria</div>
                 <div className="stand-investment-card-role">Product Engineering</div>
               </div>
-              <div className="stand-investment-card-amount">$7,500</div>
+              <div className="stand-investment-card-amount">$8,000</div>
               <div className="stand-investment-card-hours">~80 hours &middot; 2 weeks full-time</div>
               <ul className="stand-investment-card-list">
                 <li>Design system &amp; brand implementation</li>
@@ -659,7 +659,7 @@ export default function ProposalContent() {
                 <div className="stand-investment-card-name">David Shimel</div>
                 <div className="stand-investment-card-role">System Architecture</div>
               </div>
-              <div className="stand-investment-card-amount">$1,500</div>
+              <div className="stand-investment-card-amount">$2,000</div>
               <div className="stand-investment-card-hours">5 hours &middot; capped</div>
               <ul className="stand-investment-card-list">
                 <li>Supabase schema &amp; database design</li>

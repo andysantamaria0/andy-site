@@ -220,9 +220,9 @@ David Shimel is laying out the system architecture. Here's what it costs to run 
 
 ### The Deal
 
-**$7,500 flat** for a 2-week all-out sprint.
+**$10,000 flat** for a 2-week all-out sprint.
 
-That covers ~80 hours of product engineering from me — design, code, architecture, testing, deployment — plus David Shimel's system architecture work upfront (auth, database schema, security guardrails, deployment pipeline). Alignment sessions are waived.
+That covers $8,000 for product engineering from me — design, code, architecture, testing, deployment — plus $2,000 for David Shimel's system architecture work upfront (auth, database schema, security guardrails, deployment pipeline). Alignment sessions are waived.
 
 I'm clearing the calendar. 40 hours a week, fully dedicated to Stand. You'll see daily progress and have something shippable at the end.
 
