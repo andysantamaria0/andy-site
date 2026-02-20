@@ -35,10 +35,6 @@ Used throughout the app — onboarding, storefront, sharing:
 7. **Lock/Shield** — for the parent gate and safety
 8. **Sparkle/Magic** — for the grand reveal moment
 
-### Stand Coach Character (1)
-
-A character or mascot that appears in the onboarding as the kid's creative partner. This is the personality of the app — it guides them through building their business. Should feel like a cool older sibling or camp counselor, not a teacher. Could be human, could be abstract — but needs warmth and personality. Will appear at roughly 80-120px in the app alongside chat-style messages.
-
 ---
 
 ## Priority 2 — Need by mid-Week 2 (Mar 3)
