@@ -18,17 +18,18 @@ Email: _______________
 
 Contractor will perform a 2-week product design and engineering sprint for the Stand application ("the Project"), delivering the following:
 
-1. **Stand Coach Onboarding Experience** — A conversational, two-pane interface with 6 guided moments, supporting both product and service business types
-2. **Grand Reveal + Shareable Brand Card** — Animated reveal moment and a shareable branded output (image/link)
+1. **Stand Coach Onboarding Experience** — A conversational, two-pane interface with 6 guided moments, supporting both product and service business types across 6 categories (Sports, Toys & Games, Fashion & Style, Cats & Dogs, Beauty & Design, Cooking + Other). Categories may be adjusted by Client during the sprint.
+2. **Grand Reveal + Live Storefront** — Animated reveal moment, a hosted storefront page per kid (standkids.com/[business-name]), and a shareable brand card (image/link). Storefronts display products and branding but do not include payment processing or order fulfillment.
 3. **Parent Gate + Pilot Survey** — COPPA-lite consent flow with embedded research questions (value prop, pricing, concerns)
-4. **CEO Dashboard (Light)** — Goal progress tracker, sharing, and post-onboarding pulse questions
-5. **Pilot Admin Dashboard** — Real-time funnel data, category breakdown, survey responses, and CSV export
-6. **Landing Page** — Branded entry point for pilot families
-7. **Design System** — Typography, color, components, and animation patterns
-8. **PostHog Instrumentation** — Session replays, funnel analytics, and drop-off tracking
-9. **Supabase Backend** — Auth, database, and storage (architecture by Contractor's subcontractor, David Shimel)
-10. **Production Deployment** — Deployed on Vercel as a PWA
-11. **Documentation** — What was built, how it works, how to iterate
+4. **Printify Product Integration (Visual Only)** — Product mockup rendering via the Printify API showing the kid's branding on real products, with wholesale pricing and margin display. This is for visual display and education only — not order processing, payment collection, or fulfillment. Actual Printify order fulfillment is explicitly excluded (see Section 2).
+5. **AI-Generated Logo/Icon** — First-version logo/icon generation for each kid's business during onboarding. This is an initial implementation; quality and style refinement are expected in future sprints.
+6. **Pilot Admin Dashboard** — Real-time funnel data, category breakdown, survey responses, and CSV export
+7. **Landing Page** — Branded entry point for pilot families
+8. **Design System** — Built on the existing Stand brand (logo, palette, fonts), with typography, color, components, and animation patterns
+9. **PostHog Instrumentation** — Session replays, funnel analytics, and drop-off tracking
+10. **Supabase Backend** — Auth, database, and storage (architecture by Contractor's subcontractor, David Shimel)
+11. **Production Deployment** — Deployed on Vercel as a PWA
+12. **Documentation** — What was built, how it works, how to iterate
 
 These deliverables are described in further detail in the Sprint Proposal dated February 2026, which is incorporated by reference.
 
@@ -36,12 +37,13 @@ These deliverables are described in further detail in the Sprint Proposal dated 
 
 The following are explicitly **not included** in this engagement:
 
-- Product marketplace or fulfillment integration (e.g., Printify)
-- Payment processing (Stripe, Step, Greenlight, etc.)
-- AI-generated image generation for logos or brand art
-- Social features (leaderboards, friend invites, Stand Squad)
-- Voice input (stretch goal only — not guaranteed)
-- Ongoing maintenance, hosting management, or support after delivery
+- **Printify order fulfillment and payment processing** — Printify integration in Section 1 is limited to visual mockup rendering and margin display. Actual order processing, shipping, inventory management, and payment collection (via Stripe, Step, Greenlight, or any other provider) are excluded.
+- **Custom domains** — Kid storefronts are hosted at standkids.com/[name]. Custom domain mapping (e.g., quincyscharms.com) is excluded.
+- **CEO Dashboard** — The kid's post-onboarding home base (goal tracking, earnings, leveling, sales data) is excluded from this sprint. Kids land on their storefront as their home base.
+- **Curriculum / learning modules** — Structured business education content (marketing lessons, pricing strategy, customer feedback modules) is excluded. Business education in this sprint is embedded in the experience (real margins, real pricing).
+- **Social features** (leaderboards, friend invites, Stand Squad)
+- **Voice input** (stretch goal only — not guaranteed)
+- **Ongoing maintenance, hosting management, or support after delivery**
 - Any work not described in Section 1
 
 Any work beyond the scope defined above requires a written Change Order (see Section 7).
@@ -65,7 +67,7 @@ The Contractor engages David Shimel as a subcontractor for system architecture. 
 
 The sprint is planned for **14 calendar days** beginning on a mutually agreed start date.
 
-Client delays — including but not limited to delayed feedback, unavailability for required decisions, or failure to provide required assets (Figma files, GitHub repo access) — will extend the timeline day-for-day at no additional cost to Client, but will not be deemed a breach by Contractor.
+Client delays — including but not limited to delayed feedback, unavailability for required decisions, or failure to provide required assets (GitHub repo access, Printify API documentation, business categories documentation) — will extend the timeline day-for-day at no additional cost to Client, but will not be deemed a breach by Contractor.
 
 Contractor will provide daily progress updates and share working builds throughout the sprint.
 
@@ -83,8 +85,8 @@ Client retains all rights to their pre-existing brand assets, logos, content, an
 
 Client agrees to provide:
 
-- **Before Day 1:** Figma files (if available), GitHub repo access (existing codebase)
-- **During the sprint:** 30 minutes daily for async check-ins, timely product decisions when flagged, and 2-3 test families by end of Week 1
+- **Before Day 1:** GitHub repo access (existing codebase), Printify SDK/API documentation, business categories documentation (working draft from Lauren and Alex/Petra)
+- **During the sprint:** Daily 30-minute standing check-in (text/call), MWF 1-hour product review sessions, timely product decisions when flagged, and 2-3 test families by end of Week 1
 - **Timely feedback:** Contractor will flag decisions as they arise. Client will respond within 1 business day. Delays in response extend the timeline per Section 4.
 
 ## 7. Change Orders
@@ -114,7 +116,7 @@ Contractor warrants that deliverables will function substantially as described i
 Contractor will fix bugs and defects reported within **14 days of delivery** at no additional charge, provided they relate to functionality described in Section 1. This warranty does not cover:
 
 - Issues caused by Client modifications after delivery
-- Third-party service outages (Vercel, Supabase, PostHog, Anthropic, ElevenLabs, etc.)
+- Third-party service outages (Vercel, Supabase, PostHog, Anthropic, Printify, etc.)
 - Browser or device compatibility beyond modern versions of Chrome, Safari, and Firefox on iOS, iPadOS, and desktop
 - New feature requests
 
