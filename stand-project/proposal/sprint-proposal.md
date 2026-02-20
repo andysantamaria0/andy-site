@@ -4,6 +4,23 @@
 
 ---
 
+### What's Changed (Updated Feb 20 after our call)
+
+Based on our conversation today, here's what's new in this version:
+
+- **AI image generation is now in scope.** Kids will get a generated logo/icon for their business during onboarding. First version for the pilot — we'll refine it post-sprint. *(Previously excluded)*
+- **Printify product integration is now in scope.** Real product mockups with your branding, real wholesale pricing, real margin math baked into the experience. *(Previously excluded)*
+- **Each kid gets a live storefront** at standkids.com/[business-name] — not just a brand card. Products, branding, logo, pricing. Looks almost operational. Payments are Sprint 2. *(Previously just a shareable brand card)*
+- **CEO Dashboard swapped out** to make room for Printify + storefronts. Kids land on their storefront as their home base. Dashboard comes back in Sprint 2 with real sales data to show. *(Previously Deliverable #4)*
+- **Design system built on your existing brand** — current Stand logo, palette, and fonts as the foundation. Elevated and made more playful, not replaced. No Figma from Devin needed. *(Previously open-ended design exploration)*
+- **Business categories updated** to the 6 you and Alex have been refining: Sports, Toys & Games, Fashion & Style, Cats & Dogs, Beauty & Design, Cooking + Other. Categories are a working draft — you finalize during the sprint. *(Previously based on survey data)*
+- **Operating rhythm updated** — daily 30-min standing check-in + MWF 1-hour product review sessions. *(Previously 30-min async + 2-3x/week calls)*
+- **Voice input** stays as a stretch goal, feature-flagged so we can enable it per-user for testing.
+
+Everything else — pricing, timeline, the 6-moment onboarding structure, parent gate, admin dashboard, analytics — is unchanged.
+
+---
+
 ## Basecamp
 
 You've already done a lot. You've raised capital, built a prototype, ran a physical beta, interviewed kids and parents, surveyed families, and know what you want Stand to feel like. What's missing is the bridge between the vision in your head and a product that 100+ families can actually use. Something with Soul.
@@ -65,7 +82,7 @@ Pricing is handled through positioning ("For Everyone" / "Sweet Spot" / "Extra S
 
 Every moment is instrumented with PostHog — time spent, choices made, drop-off points. You'll know exactly where kids light up and where they stall.
 
-**2. The Grand Reveal + Live Storefront**
+**2. The Grand Reveal + Live Storefront** *(Updated — now includes hosted storefront, not just a brand card)*
 
 The reveal moment needs to hit. When the coach says "CEO Q-Money, welcome to Quincy's Charm Co." — the kid is looking at THEIR storefront, THEIR products, THEIR brand. Every piece was their decision. It's theirs.
 
@@ -80,7 +97,7 @@ COPPA-lite consent flow that doubles as your research instrument:
 - **3-4 survey questions** baked into the approval flow: value prop resonance ("which of these resonates most?"), pricing reaction ("what would you expect to pay?"), biggest concern, and how they heard about Stand
 - This replaces the need for a separate A/B landing page test — the parent gate IS the value prop test, delivered at the moment of highest engagement (right after their kid's eyes lit up)
 
-**4. Printify Product Integration**
+**4. Printify Product Integration** *(New — replaces CEO Dashboard)*
 
 This is what makes Stand feel real, not pretend. During onboarding, when a kid picks a product business, they see their brand applied to actual Printify products — stickers, t-shirts, mugs, tote bags. Real wholesale pricing, real margins.
 
@@ -121,7 +138,7 @@ This is your "analytics + export access" deliverable — but instead of a spread
 ### Phase 1 — Alignment (Complete)
 Two calls done. Intake questionnaire received. Materials reviewed — pitch docs, kid interviews, survey results, brand assets, color palette, logos. This proposal formalizes the plan.
 
-### Phase 2 — Design Systems + Architecture (Days 1-2)
+### Phase 2 — Design Systems + Architecture (Days 1-2) *(Updated)*
 David Shimel sets up the technical foundation: Supabase schema, auth flows (COPPA-lite), deployment pipeline, PostHog integration, Printify API connection, and the architectural guardrails that let me move fast and safe for the rest of the sprint. In parallel, I build the design system — the typography, color system, component library, and animation patterns that make everything feel cohesive and elevated. Built on the existing Stand brand: the current logo, color palette, and fonts — elevated and made more playful, not replaced. If a graphic designer delivers custom icons, illustrations, or badges during the sprint, they feed directly into the design system.
 
 ### Phase 3 — Product Engineering (Days 3-10)
@@ -135,7 +152,7 @@ Ship to your first cohort. Testing parties — intense, in-person sessions if po
 
 ---
 
-## Sprint Plan — 2 Weeks
+## Sprint Plan — 2 Weeks *(Updated)*
 
 ### Week 1: Foundation + The Hero Feature
 
@@ -229,7 +246,7 @@ That covers $8,000 for product engineering from me — design, code, architectur
 
 I'm clearing the calendar. 40 hours a week, fully dedicated to Stand. You'll see daily progress and have something shippable at the end.
 
-### What's Not Included (Yet)
+### What's Not Included (Yet) *(Updated)*
 
 - **Payment processing / order fulfillment** — Printify products are displayed with real pricing and margins, but no actual ordering or payment in the pilot. The architecture is designed for Stripe/Step/Greenlight integration when you're ready. Storefronts look operational — payments are the one missing piece for Sprint 2.
 - **Custom domain per kid** — storefronts live at standkids.com/[name] for now. Custom domains (quincyscharms.com) are a future upsell opportunity.
@@ -240,7 +257,7 @@ I'm clearing the calendar. 40 hours a week, fully dedicated to Stand. You'll see
 
 ---
 
-## What I Need From You
+## What I Need From You *(Updated)*
 
 ### Before Day 1
 - [x] ~~Intake questionnaire~~ — received
@@ -256,7 +273,7 @@ I'm clearing the calendar. 40 hours a week, fully dedicated to Stand. You'll see
 - [ ] **Product decisions** — I'll flag choices as they come up (copy tone, specific design calls, which product/service mockups to include). Quick responses keep the sprint moving.
 - [ ] **2-3 test families** by end of Week 1 — even just friends/family who can do a walkthrough and give raw feedback before the broader pilot
 
-### Decisions Already Made
+### Decisions Already Made *(Updated)*
 These were open questions in earlier drafts. Now resolved:
 
 1. **Starting categories:** Sports, Toys & Games, Fashion & Style, Cats & Dogs, Beauty & Design, Cooking — plus Other. 6 categories with subcategories, age-differentiated product lists, and fulfillment already mapped (Printify, Merchize, DIY kits). Services (dog walking, pet sitting, private training) woven into relevant categories. Categories are a working draft — Lauren finalizes during the sprint.
