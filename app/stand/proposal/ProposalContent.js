@@ -135,6 +135,22 @@ export default function ProposalContent() {
           <div className="stand-rule" />
         </header>
 
+        {/* Changelog */}
+        <div className="stand-changelog">
+          <div className="stand-changelog-label">What&apos;s Changed <span className="stand-changelog-date">Updated Feb 20 after our call</span></div>
+          <ul className="stand-changelog-list">
+            <li><strong>AI image generation is now in scope.</strong> Kids will get a generated logo/icon for their business during onboarding. First version for the pilot &mdash; we&apos;ll refine it post-sprint. <em>(Previously excluded)</em></li>
+            <li><strong>Printify product integration is now in scope.</strong> Real product mockups with your branding, real wholesale pricing, real margin math baked into the experience. <em>(Previously excluded)</em></li>
+            <li><strong>Each kid gets a live storefront</strong> at standkids.com/[business-name] &mdash; not just a brand card. Products, branding, logo, pricing. Looks almost operational. Payments are Sprint 2. <em>(Previously just a shareable brand card)</em></li>
+            <li><strong>CEO Dashboard swapped out</strong> to make room for Printify + storefronts. Kids land on their storefront as their home base. Dashboard comes back in Sprint 2 with real sales data to show. <em>(Previously Deliverable #4)</em></li>
+            <li><strong>Design system built on your existing brand</strong> &mdash; current Stand logo, palette, and fonts as the foundation. Elevated and made more playful, not replaced. No Figma from Devin needed. <em>(Previously open-ended design exploration)</em></li>
+            <li><strong>Business categories updated</strong> to the 6 you and Alex have been refining: Sports, Toys &amp; Games, Fashion &amp; Style, Cats &amp; Dogs, Beauty &amp; Design, Cooking + Other. Categories are a working draft &mdash; you finalize during the sprint. <em>(Previously based on survey data)</em></li>
+            <li><strong>Operating rhythm updated</strong> &mdash; daily 30-min standing check-in + MWF 1-hour product review sessions. <em>(Previously 30-min async + 2-3x/week calls)</em></li>
+            <li><strong>Voice input</strong> stays as a stretch goal, feature-flagged so we can enable it per-user for testing.</li>
+          </ul>
+          <p className="stand-changelog-note">Everything else &mdash; pricing, timeline, the 6-moment onboarding structure, parent gate, admin dashboard, analytics &mdash; is unchanged.</p>
+        </div>
+
         {/* Basecamp */}
         <Section id="basecamp" number="" title="Basecamp" open={openSections.basecamp} onToggle={() => toggleSection('basecamp')}>
           <p>
@@ -160,16 +176,16 @@ export default function ProposalContent() {
           </p>
 
           <div className="stand-finding-block">
-            <div className="stand-finding-block-name">Business categories (top 4 for pilot)</div>
+            <div className="stand-finding-block-name">Business categories (6 for pilot + Other) <span className="stand-updated-badge">Updated</span></div>
             <p>
-              Your interviews and survey converge on the same answer. Crafts/jewelry (Azzy, Ripley), food/treats (Arlo, Dash, survey at 17%), personal care/beauty (Azzy, Dash, survey at 12%), and services (Azzy babysits, Ripley wants to teach gymnastics). The survey skewed toward educational toys (29%) and craft/DIY (20%) &mdash; but the kid interviews tell a richer story.
+              Lauren and Alex (Petra) have built a detailed product catalog with fulfillment paths already mapped. The current 6 categories are: <strong>Sports</strong>, <strong>Toys &amp; Games</strong>, <strong>Fashion &amp; Style</strong>, <strong>Cats &amp; Dogs</strong>, <strong>Beauty &amp; Design</strong>, and <strong>Cooking</strong> &mdash; plus an <strong>Other</strong> option with open-ended input. Each category has subcategories (e.g., Sports &rarr; Basketball, Soccer, Dance &amp; Gym) and specific products mapped to fulfillment partners (Printify, Merchize, GoTeamSports, etc.) or DIY kits. The full catalog is split by age cohort: 8&ndash;12 year olds get simpler options, 12&ndash;15 year olds get more sophisticated products and services like private training. <em>Note: these categories are a working draft. Lauren will finalize the category list during the sprint &mdash; the architecture is built to accommodate changes without rework.</em>
             </p>
           </div>
 
           <div className="stand-finding-block">
-            <div className="stand-finding-block-name">This is not all e-commerce</div>
+            <div className="stand-finding-block-name">This is not all e-commerce <span className="stand-updated-badge">Updated</span></div>
             <p>
-              Your original pitch includes pet-sitting, tutoring, and babysitting kits. Ripley wants to &ldquo;sell leotards and teach lessons.&rdquo; Azzy already babysits. The product needs to handle both: physical goods (bracelets, cookies, custom merch) AND services (dog walking, tutoring, teaching). For the pilot, this means the onboarding and storefront need two paths &mdash; a product preview for e-commerce businesses, and a service card/booking preview for service businesses.
+              Services are woven into the categories &mdash; dog walking and pet sitting under Cats &amp; Dogs, private training under Sports. The onboarding and storefront need two paths: a product preview for physical goods businesses, and a service card/booking preview for service businesses. Every category includes an &ldquo;Other&rdquo; option so we capture what&apos;s missing.
             </p>
           </div>
 
@@ -228,18 +244,18 @@ export default function ProposalContent() {
               Instead of the current 14-step form journey, we&apos;re building a <strong>conversational, two-pane interface</strong> where kids collaborate with a Stand Coach to build their business in real time:
             </p>
             <ul>
-              <li><strong>Left pane:</strong> The conversation. The coach asks questions, reacts, encourages. Kids can type or talk (voice-first on iPad). It adapts to their energy. It feels like brainstorming with a creative partner, not answering a questionnaire.</li>
-              <li><strong>Right pane:</strong> The live build. Every answer immediately renders into something visual. Kid says &ldquo;I want to sell bracelets&rdquo; &rarr; a bracelet mockup appears. They pick a vibe &rarr; the whole brand recolors. They name their business &rarr; the storefront header updates. By the end, the right pane IS their business. The reveal isn&apos;t a surprise at the end &mdash; it&apos;s been building the whole time.</li>
+              <li><strong>Left pane:</strong> The input. Interactive buttons, chips, and visual selectors that make every choice feel engaging &mdash; not a form, not a questionnaire. Typing as a fallback for open-ended fields. Voice input is a stretch goal, feature-flagged for testing. The primary experience is tap-first: big, clear options that an 8-year-old can navigate confidently. <span className="stand-updated-badge">Updated</span></li>
+              <li><strong>Right pane:</strong> The live build. Every answer immediately renders into something visual. Kid picks &ldquo;cookies&rdquo; &rarr; a cookie product mockup appears with their branding. They pick a vibe &rarr; the whole brand recolors. They name their business &rarr; the storefront header updates. By the end, the right pane IS their business. The reveal isn&apos;t a surprise at the end &mdash; it&apos;s been building the whole time.</li>
             </ul>
           </div>
 
           <div className="stand-feature-block">
-            <div className="stand-feature-block-name">2. The Grand Reveal + Shareable Brand Card</div>
+            <div className="stand-feature-block-name">2. The Grand Reveal + Live Storefront <span className="stand-updated-badge">Updated</span></div>
             <p>
               The reveal moment needs to hit. When the coach says &ldquo;CEO Q-Money, welcome to Quincy&apos;s Charm Co.&rdquo; &mdash; the kid is looking at THEIR storefront, THEIR products, THEIR brand. Every piece was their decision. It&apos;s theirs.
             </p>
             <p>
-              The output is a <strong>shareable brand card</strong> &mdash; a beautiful, branded image/link the kid can text to friends, family, anyone. &ldquo;Check out my business!&rdquo; This is the viral loop. This is also what makes the pilot spread beyond the initial 100 families organically. For product businesses, it shows their products with their branding applied. For service businesses, it shows their service offering with their branding, rate, and how to get in touch.
+              The output is a <strong>real, hosted storefront</strong> &mdash; a live page at standkids.com/[business-name] that the kid can share with friends, family, anyone. It shows their products with their branding, their AI-generated logo, and real Printify product mockups with actual pricing. For service businesses, it shows their service offering with their branding, rate, and how to get in touch. It looks almost operational &mdash; the only thing missing is payments (Sprint 2). On top of the storefront, kids also get a <strong>shareable brand card</strong> &mdash; a beautiful, branded image they can text or post. &ldquo;Check out my business!&rdquo; This is the viral loop.
             </p>
           </div>
 
@@ -257,17 +273,17 @@ export default function ProposalContent() {
           </div>
 
           <div className="stand-feature-block">
-            <div className="stand-feature-block-name">4. CEO Dashboard (Light)</div>
+            <div className="stand-feature-block-name">4. Printify Product Integration <span className="stand-new-badge">New</span></div>
             <p>
-              The kid&apos;s home base after onboarding:
+              This is what makes Stand feel real, not pretend. During onboarding, when a kid picks a product business, they see their brand applied to actual Printify products &mdash; stickers, t-shirts, mugs, tote bags. Real wholesale pricing, real margins.
             </p>
             <ul>
-              <li><strong>Goal progress tracker</strong> &mdash; visual, animated, makes the kid feel like they&apos;re running something real</li>
-              <li><strong>Share your business</strong> &mdash; one-tap sharing of their brand card</li>
-              <li><strong>Post-onboarding pulse</strong> &mdash; 2&ndash;3 quick fun questions after the reveal: &ldquo;How pumped are you?&rdquo; / &ldquo;Would you show this to a friend?&rdquo; / &ldquo;What was your favorite part?&rdquo; Captures the motivation and gamification data you want without a separate survey</li>
+              <li><strong>Product mockup rendering</strong> &mdash; Printify&apos;s API generates mockups with the kid&apos;s branding applied. Their logo on a sticker. Their colors on a t-shirt. Visual, tangible, shareable.</li>
+              <li><strong>Real economics</strong> &mdash; the app shows real numbers. &ldquo;This sticker costs $1.42 to make. You sell it for $8. You keep $6.58.&rdquo; That&apos;s actual business education baked into the product, not a separate lesson.</li>
+              <li><strong>Storefront catalog</strong> &mdash; the kid&apos;s storefront (standkids.com/[name]) displays their selected products with pricing. No payment processing yet &mdash; but it looks and feels like a real store that&apos;s one step away from going live.</li>
             </ul>
             <p>
-              For the pilot, the dashboard is intentionally light &mdash; the focus is on the onboarding experience and getting the reveal right. The full dashboard (sales tracking, earnings, quick actions, leveling) is Sprint 2 once we know what kids care about most.
+              For the pilot, Printify is visual + educational &mdash; we&apos;re rendering mockups and teaching margins, not processing orders. Payment rails and actual fulfillment are Sprint 2.
             </p>
           </div>
 
@@ -331,7 +347,7 @@ export default function ProposalContent() {
         {/* III. The Promise Delivery */}
         <Section id="promise" number="III" title="The Promise Delivery" open={openSections.promise} onToggle={() => toggleSection('promise')}>
           <p>
-            <strong>For the kid:</strong> The moment the right pane is fully built and the coach says something like &ldquo;CEO Q-Money, welcome to Quincy&apos;s Charm Co.&rdquo; &mdash; and they&apos;re looking at THEIR storefront, THEIR brand. They built it. Every piece was their decision. It&apos;s theirs. And they can share it immediately.
+            <strong>For the kid:</strong> The moment the right pane is fully built and the coach says something like &ldquo;CEO Q-Money, welcome to Quincy&apos;s Charm Co.&rdquo; &mdash; and they&apos;re looking at THEIR storefront with THEIR logo, THEIR products with real prices, THEIR brand. They built it. Every piece was their decision. It&apos;s theirs. And they&apos;ve got a real URL they can share immediately. <span className="stand-updated-badge">Updated</span>
           </p>
           <p>
             <strong>For the parent:</strong> The moment they see their kid&apos;s eyes light up. And then, practically: the moment they see a well-designed, safe, educational tool that they trust. Not &ldquo;vibe coded.&rdquo; Not &ldquo;AI-y.&rdquo; Something that feels considered, intentional, and real.
@@ -355,9 +371,9 @@ export default function ProposalContent() {
 
           <div className="stand-phase">
             <div className="stand-phase-number">Phase 2</div>
-            <div className="stand-phase-name">Design Systems + Architecture (Days 1&ndash;2)</div>
+            <div className="stand-phase-name">Design Systems + Architecture (Days 1&ndash;2) <span className="stand-updated-badge">Updated</span></div>
             <p>
-              David Shimel sets up the technical foundation: Supabase schema, auth flows (COPPA-lite), deployment pipeline, PostHog integration, and the architectural guardrails that let me move fast and safe for the rest of the sprint. In parallel, I build the design system &mdash; the typography, color system, component library, and animation patterns that make everything feel cohesive and elevated. Informed by your existing brand assets: Stand logos (Black, Blank Slate, Founder Red), color palette, and design references (Uncommon, Tin Can, A24, Lego &mdash; nostalgia modernized, elevated not toyish, gaming meets soul).
+              David Shimel sets up the technical foundation: Supabase schema, auth flows (COPPA-lite), deployment pipeline, PostHog integration, Printify API connection, and the architectural guardrails that let me move fast and safe for the rest of the sprint. In parallel, I build the design system &mdash; the typography, color system, component library, and animation patterns that make everything feel cohesive and elevated. Built on the existing Stand brand: the current logo, color palette, and fonts &mdash; elevated and made more playful, not replaced. If a graphic designer delivers custom icons, illustrations, or badges during the sprint, they feed directly into the design system.
             </p>
           </div>
 
@@ -365,7 +381,7 @@ export default function ProposalContent() {
             <div className="stand-phase-number">Phase 3</div>
             <div className="stand-phase-name">Product Engineering (Days 3&ndash;10)</div>
             <p>
-              The build. This is where the 6 moments come to life, the parent gate takes shape, and the dashboard gets built. Daily progress &mdash; you&apos;ll see things moving. I&apos;ll share builds frequently so we&apos;re never more than a day away from course-correcting.
+              The build. This is where the 6 moments come to life, the AI image generation takes shape, Printify products get integrated, the parent gate comes together, and the admin dashboard gets built. Daily progress &mdash; you&apos;ll see things moving. I&apos;ll share builds frequently so we&apos;re never more than a day away from course-correcting.
             </p>
           </div>
 
@@ -405,17 +421,17 @@ export default function ProposalContent() {
                 <tr>
                   <td>1</td>
                   <td>Architecture + design system</td>
-                  <td style={{ textAlign: 'left' }}>Supabase schema, auth, deployment pipeline, PostHog setup, brand tokens, component foundations</td>
+                  <td style={{ textAlign: 'left' }}>Supabase schema, auth, deployment pipeline, PostHog setup, Printify API connection, brand tokens, component foundations</td>
                 </tr>
                 <tr>
                   <td>2</td>
                   <td>Design system + onboarding shell</td>
-                  <td style={{ textAlign: 'left' }}>Typography, colors, layout system, two-pane interface scaffold, mobile/iPad responsive foundation</td>
+                  <td style={{ textAlign: 'left' }}>Typography, colors, layout system (built on existing Stand brand), two-pane interface scaffold, mobile/iPad responsive foundation</td>
                 </tr>
                 <tr>
                   <td>3</td>
                   <td>Stand Coach &mdash; Moments 1&ndash;3</td>
-                  <td style={{ textAlign: 'left' }}>Alias/avatar selection, open-ended interest input, AI-powered business suggestions (products AND services)</td>
+                  <td style={{ textAlign: 'left' }}>Alias/avatar selection, open-ended interest input, AI-powered business suggestions across 6 categories (products AND services)</td>
                 </tr>
                 <tr>
                   <td>4</td>
@@ -424,13 +440,13 @@ export default function ProposalContent() {
                 </tr>
                 <tr>
                   <td>5</td>
-                  <td>The Live Build pane</td>
-                  <td style={{ textAlign: 'left' }}>Real-time preview rendering &mdash; every input visually updates the brand. Product mockups for e-commerce, service cards for service businesses</td>
+                  <td>AI image gen + Printify</td>
+                  <td style={{ textAlign: 'left' }}>Logo/icon generation for kid businesses, Printify product mockup rendering with kid&apos;s branding applied, margin calculator</td>
                 </tr>
                 <tr>
                   <td>6</td>
-                  <td>Grand Reveal + shareable output</td>
-                  <td style={{ textAlign: 'left' }}>The reveal moment (animations, transitions), shareable brand card generation</td>
+                  <td>Grand Reveal + storefront</td>
+                  <td style={{ textAlign: 'left' }}>The reveal moment (animations, transitions), live storefront at standkids.com/[name], shareable brand card generation</td>
                 </tr>
                 <tr>
                   <td>7</td>
@@ -443,10 +459,10 @@ export default function ProposalContent() {
 
           <div className="stand-milestone">
             <div className="stand-milestone-label">Milestone: End of Week 1</div>
-            <p>A kid can go through the full onboarding journey and have a branded business with a name, a style, and a goal. The reveal moment works. They can share their brand card. A parent can approve it and answer survey questions in the process.</p>
+            <p>A kid can go through the full onboarding journey, get an AI-generated logo, see their brand on real Printify products with real pricing, and land on a live storefront they can share. A parent can approve it and answer survey questions in the process.</p>
           </div>
 
-          <h4>Week 2: Dashboard + Admin + Ship</h4>
+          <h4>Week 2: Storefront + Admin + Ship <span className="stand-updated-badge">Updated</span></h4>
 
           <div className="stand-table-wrapper">
             <table className="stand-table stand-sprint-table">
@@ -460,8 +476,8 @@ export default function ProposalContent() {
               <tbody>
                 <tr>
                   <td>8</td>
-                  <td>CEO Dashboard (light)</td>
-                  <td style={{ textAlign: 'left' }}>Goal tracker, share button, post-onboarding pulse questions</td>
+                  <td>Storefront polish</td>
+                  <td style={{ textAlign: 'left' }}>Product catalog display, service cards, storefront sharing, brand card download</td>
                 </tr>
                 <tr>
                   <td>9</td>
@@ -499,7 +515,7 @@ export default function ProposalContent() {
 
           <div className="stand-milestone">
             <div className="stand-milestone-label">Milestone: End of Week 2</div>
-            <p>Stand is live. 100 families can find the landing page, go through onboarding, build their business, share their brand card, and complete the parent gate. You have a live admin dashboard with real-time pilot data. Production-grade. Design standards met. Ready for your first cohort.</p>
+            <p>Stand is live. 100 families can find the landing page, go through onboarding, get an AI-generated logo, build their storefront with real Printify products, share it with anyone, and complete the parent gate. You have a live admin dashboard with real-time pilot data. Production-grade. Design standards met. Ready for your first cohort.</p>
           </div>
         </Section>
 
@@ -510,14 +526,16 @@ export default function ProposalContent() {
           <p>At the end of this sprint:</p>
           <ul className="stand-checklist">
             <li><strong>A production app</strong> deployed on Vercel, installable as a PWA (works like a native app on iPad/phone)</li>
-            <li><strong>The Stand Coach onboarding</strong> &mdash; conversational, two-pane, with the Grand Reveal. Handles both product and service businesses.</li>
+            <li><strong>The Stand Coach onboarding</strong> &mdash; interactive, two-pane, with the Grand Reveal. Handles both product and service businesses across 6 categories.</li>
+            <li><strong>AI-generated logos</strong> &mdash; kids get a custom logo/icon for their business, generated during onboarding <span className="stand-new-badge">New</span></li>
+            <li><strong>Printify product integration</strong> &mdash; real product mockups with the kid&apos;s branding, real wholesale pricing, real margin math <span className="stand-new-badge">New</span></li>
+            <li><strong>Live storefronts</strong> &mdash; each kid gets a hosted storefront at standkids.com/[name] with their products, branding, and logo <span className="stand-new-badge">New</span></li>
             <li><strong>A shareable brand card</strong> &mdash; the viral output kids send to friends and family</li>
             <li><strong>A parent gate</strong> with COPPA-lite consent and embedded research questions (value prop, pricing, concerns)</li>
-            <li><strong>A CEO dashboard</strong> with goal tracking, sharing, and a post-onboarding pulse</li>
             <li><strong>A pilot admin dashboard</strong> for you &mdash; real-time funnel data, category breakdown, survey responses, CSV export</li>
             <li><strong>Full PostHog instrumentation</strong> &mdash; session replays, funnel analytics, drop-off tracking on every moment</li>
             <li><strong>A landing page</strong> &mdash; the entry point for pilot families</li>
-            <li><strong>A design system</strong> &mdash; not just a pretty app, but a system that scales. Typography, color, components, animation patterns.</li>
+            <li><strong>A design system</strong> &mdash; built on the existing Stand brand (logo, palette, fonts), elevated and made playful. Typography, color, components, animation patterns. <span className="stand-updated-badge">Updated</span></li>
             <li><strong>A Supabase backend</strong> with auth, database, storage &mdash; architected by David for security and scale</li>
             <li><strong>Documentation</strong> &mdash; what was built, how it works, how to iterate on it</li>
           </ul>
@@ -592,19 +610,19 @@ export default function ProposalContent() {
                   <td>~$10</td>
                 </tr>
                 <tr>
-                  <td>Text-to-Speech (ElevenLabs)</td>
-                  <td>Stand Coach voice</td>
-                  <td>$5&ndash;$22</td>
-                </tr>
-                <tr>
                   <td>LLM (Claude / Anthropic)</td>
                   <td>Stand Coach conversations</td>
                   <td>~$25</td>
                 </tr>
                 <tr>
                   <td>AI Image Generation</td>
-                  <td>Brand/product rendering</td>
-                  <td>$1&ndash;$13</td>
+                  <td>Logo/icon generation per session</td>
+                  <td>$5&ndash;$20</td>
+                </tr>
+                <tr>
+                  <td>Printify API</td>
+                  <td>Product mockup rendering</td>
+                  <td>Free (API access)</td>
                 </tr>
                 <tr>
                   <td>Data Storage (Supabase)</td>
@@ -616,12 +634,17 @@ export default function ProposalContent() {
                   <td>Repository</td>
                   <td>Free</td>
                 </tr>
+                <tr>
+                  <td>Recraft</td>
+                  <td>Custom illustration assets</td>
+                  <td>~$10</td>
+                </tr>
               </tbody>
             </table>
           </div>
 
           <p>
-            <strong>Estimated total: ~$65&ndash;$85/month</strong> at 100 users. These are estimates and may shift as we finalize the stack &mdash; e.g. Recraft or other asset generation services could add ~$10&ndash;20/month. Scales linearly. The biggest variable costs (LLM at $0.25/session and image gen) have cheaper alternatives if needed. Your infrastructure costs for the pilot will be minimal either way.
+            <strong>Estimated total: ~$60&ndash;$75/month</strong> at 100 users. These are estimates and may shift as we finalize the stack. Scales linearly. The biggest variable costs (LLM at $0.25/session and image gen) have cheaper alternatives if needed &mdash; we&apos;ll use different models for different tasks to keep costs down. Your infrastructure costs for the pilot will be minimal either way. <span className="stand-updated-badge">Updated</span>
           </p>
         </Section>
 
@@ -645,9 +668,10 @@ export default function ProposalContent() {
               <ul className="stand-investment-card-list">
                 <li>Design system &amp; brand implementation</li>
                 <li>Stand Coach onboarding experience</li>
-                <li>Grand Reveal + shareable brand card</li>
+                <li>AI-generated logo/icon system</li>
+                <li>Printify product integration</li>
+                <li>Grand Reveal + live storefronts</li>
                 <li>Parent gate + embedded survey</li>
-                <li>CEO Dashboard (light)</li>
                 <li>Pilot admin dashboard</li>
                 <li>Landing page</li>
                 <li>Animations, polish &amp; responsive QA</li>
@@ -674,13 +698,14 @@ export default function ProposalContent() {
             Alignment sessions are waived. I&apos;m clearing the calendar &mdash; 40 hours a week, fully dedicated to Stand. You&apos;ll see daily progress and have something shippable at the end.
           </p>
 
-          <h4>What&apos;s Not Included (Yet)</h4>
+          <h4>What&apos;s Not Included (Yet) <span className="stand-updated-badge">Updated</span></h4>
           <ul className="stand-checklist">
-            <li><strong>Product marketplace / fulfillment integration</strong> &mdash; the pilot focuses on the onboarding-to-reveal journey. Branded product mockups appear in the reveal, but actual Printify/partner integration for ordering and fulfillment is Sprint 2. For the pilot, we&apos;re validating which categories kids pick &mdash; not processing orders.</li>
-            <li><strong>Payment processing</strong> &mdash; no real money for the pilot per your scope. The architecture is designed for Stripe/Step/Greenlight integration when you&apos;re ready.</li>
-            <li><strong>AI image generation for logos</strong> &mdash; product mockups use templates with dynamic overlays (brand colors, names, vibes). Not AI-generated images &mdash; those aren&apos;t good enough yet per your feedback. The brand card uses styled templates, not generated art.</li>
+            <li><strong>Payment processing / order fulfillment</strong> &mdash; Printify products are displayed with real pricing and margins, but no actual ordering or payment in the pilot. The architecture is designed for Stripe/Step/Greenlight integration when you&apos;re ready. Storefronts look operational &mdash; payments are the one missing piece for Sprint 2.</li>
+            <li><strong>Custom domain per kid</strong> &mdash; storefronts live at standkids.com/[name] for now. Custom domains (quincyscharms.com) are a future upsell opportunity.</li>
+            <li><strong>CEO Dashboard</strong> &mdash; the kid&apos;s post-onboarding home base (goal tracking, earnings, leveling) is deferred to Sprint 2. For the pilot, kids land on their storefront as their home base.</li>
             <li><strong>Social features</strong> (Stand Squad, leaderboards, friends) &mdash; designed into the architecture but not built in Sprint 1. The kid interviews confirm this matters (leveling, competing with friends), but it&apos;s the retention layer &mdash; you need acquisition first.</li>
-            <li><strong>Voice input</strong> &mdash; stretch goal for the sprint. The coach works great with typing. Voice (Whisper API) would make it magical on iPad but adds meaningful scope. We&apos;ll get to it if time allows, or it&apos;s first up in Sprint 2.</li>
+            <li><strong>Curriculum / learning modules</strong> &mdash; the business education in Sprint 1 is baked into the experience (real margins, real pricing, real products). Structured curriculum modules (marketing, customer feedback, pivoting, new SKUs) are Sprint 2+.</li>
+            <li><strong>Voice input</strong> &mdash; stretch goal for the sprint, feature-flagged. The onboarding is tap-first with typing as fallback. If time allows, voice gets built and feature-flagged so it can be enabled per-user for testing.</li>
           </ul>
         </Section>
 
@@ -688,32 +713,36 @@ export default function ProposalContent() {
 
         {/* IX. What I Need From You */}
         <Section id="from-you" number="IX" title="What I Need From You" open={openSections['from-you']} onToggle={() => toggleSection('from-you')}>
-          <h4>Before Day 1</h4>
+          <h4>Before Day 1 <span className="stand-updated-badge">Updated</span></h4>
           <ul className="stand-checklist">
             <li className="stand-checklist-done"><strong>Intake questionnaire</strong> &mdash; received</li>
             <li className="stand-checklist-done"><strong>Brand assets</strong> &mdash; logos (3 variants), color palette received</li>
-            <li><strong>Figma files</strong> &mdash; whatever Devin has, even if you don&apos;t love it. Useful for understanding what&apos;s been explored.</li>
-            <li><strong>GitHub repo access</strong> &mdash; transfer from Chris or grant read access so I can evaluate what&apos;s reusable</li>
             <li className="stand-checklist-done"><strong>Google Drive access</strong> &mdash; planning materials received</li>
+            <li><strong>GitHub repo access</strong> &mdash; Lauren has the repo from Chris. Needs to add Andy as a collaborator.</li>
+            <li><strong>Printify SDK/API docs</strong> &mdash; Lauren received docs from Printify. Share with Andy for integration planning.</li>
+            <li><strong>Business categories doc</strong> &mdash; Lauren and Alex (Petra) have a working doc on the pilot categories. Share final version.</li>
           </ul>
 
-          <h4>During the Sprint</h4>
+          <h4>During the Sprint <span className="stand-updated-badge">Updated</span></h4>
           <ul className="stand-checklist">
-            <li><strong>30 minutes daily</strong> &mdash; async check-in (Slack or text), plus a quick call 2&ndash;3x per week to review progress</li>
+            <li><strong>Daily 30-min standing check-in</strong> &mdash; text/call, every day</li>
+            <li><strong>MWF 1-hour product review</strong> &mdash; deeper dive on progress, product decisions, course corrections</li>
             <li><strong>Product decisions</strong> &mdash; I&apos;ll flag choices as they come up (copy tone, specific design calls, which product/service mockups to include). Quick responses keep the sprint moving.</li>
             <li><strong>2&ndash;3 test families</strong> by end of Week 1 &mdash; even just friends/family who can do a walkthrough and give raw feedback before the broader pilot</li>
           </ul>
 
-          <h4>Decisions Already Made (From Your Intake)</h4>
-          <p>These were open questions in the previous draft. Your intake answered them:</p>
+          <h4>Decisions Already Made <span className="stand-updated-badge">Updated</span></h4>
+          <p>These were open questions in earlier drafts. Now resolved:</p>
 
           <ol className="stand-decisions">
-            <li><strong>Starting categories:</strong> Products (crafts/jewelry, food/treats, personal care) + Services (tutoring, pet care, teaching). We&apos;ll curate 4&ndash;6 specific business types across both.</li>
-            <li><strong>Input methods:</strong> Tap-first design &mdash; big buttons, chips, and preset options so 8-year-olds aren&apos;t stuck typing. Typing as a fallback for open-ended fields. Voice is a stretch goal &mdash; Chris attempted it, didn&apos;t land, but we&apos;ll revisit if time allows.</li>
-            <li><strong>Payment for pilot:</strong> No real money. Theoretical pricing captured via parent survey.</li>
-            <li><strong>Storefront sharing:</strong> The shareable brand card is the pilot&apos;s sharing mechanism &mdash; lightweight, viral, no storefront purchasing flow needed yet.</li>
+            <li><strong>Starting categories:</strong> Sports, Toys &amp; Games, Fashion &amp; Style, Cats &amp; Dogs, Beauty &amp; Design, Cooking &mdash; plus Other. 6 categories with subcategories, age-differentiated product lists, and fulfillment already mapped (Printify, Merchize, DIY kits). Services (dog walking, pet sitting, private training) woven into relevant categories. Categories are a working draft &mdash; Lauren finalizes during the sprint.</li>
+            <li><strong>Input methods:</strong> Tap-first design &mdash; big buttons, chips, and preset options so 8-year-olds aren&apos;t stuck typing. Typing as a fallback for open-ended fields. Voice is a stretch goal, feature-flagged.</li>
+            <li><strong>Payment for pilot:</strong> No real money. Printify products displayed with real pricing/margins for education. Payments are Sprint 2.</li>
+            <li><strong>Storefront:</strong> Each kid gets a live hosted storefront at standkids.com/[name] with their products, branding, and logo. Plus a shareable brand card for viral distribution.</li>
+            <li><strong>Design system:</strong> Built on the existing Stand brand (current logo, palette, fonts) &mdash; elevated and made more playful, not replaced. No Figma from Devin needed.</li>
             <li><strong>Mobile vs desktop:</strong> Mobile-first, iPad is a must.</li>
             <li><strong>Age cohorts:</strong> 8&ndash;11 and 11&ndash;14.</li>
+            <li><strong>AI image generation:</strong> In scope &mdash; first version of logo/icon generation during onboarding. Will be refined post-sprint.</li>
           </ol>
         </Section>
 
@@ -726,10 +755,11 @@ export default function ProposalContent() {
             <li><strong>Pilot feedback loop</strong> (Weeks 3&ndash;4) &mdash; Testing parties, user sessions, async feedback. Real data from real families flowing through your admin dashboard. Live recorded sessions with kids and parents.</li>
             <li><strong>Learnings report</strong> &mdash; We pull the pilot data together: onboarding completion funnel, top categories, parent survey results, pricing sensitivity, drop-off analysis, and recommendations for MVP scope.</li>
             <li><strong>Iteration sprint</strong> &mdash; Based on pilot data, we prioritize what to build/fix/cut. Could be another 2-week sprint or an ongoing rhythm.</li>
-            <li><strong>Product marketplace</strong> &mdash; Once categories are validated, build the actual product/service catalog with real fulfillment paths (Printify for physical goods, booking/scheduling for services).</li>
-            <li><strong>Full dashboard + gamification</strong> &mdash; Goal tracking, leveling, badges, earnings. Informed by what kids actually responded to in the pilot.</li>
+            <li><strong>Payment rails + live commerce</strong> &mdash; Turn the storefronts on. Stripe integration, Printify order fulfillment, parent-controlled wallets, real money movement. The storefronts already look real &mdash; payments make them real.</li>
+            <li><strong>CEO Dashboard + gamification</strong> &mdash; Goal tracking, leveling, badges, earnings, sales tracking. The kid&apos;s home base. Informed by what kids actually responded to in the pilot.</li>
+            <li><strong>Curriculum modules</strong> &mdash; Structured business education: marketing, pricing, customer feedback, pivoting, launching new SKUs. The foundation Lauren keeps coming back to.</li>
             <li><strong>Social features</strong> &mdash; Stand Squad, leaderboards, friend invites. The retention/viral layer.</li>
-            <li><strong>Full payment rails</strong> &mdash; Stripe integration, parent-controlled wallets, real money movement.</li>
+            <li><strong>AI image generation v2</strong> &mdash; Refined logo generation, more sophisticated brand assets, cost-optimized model routing.</li>
             <li><strong>Founding engineer hire</strong> &mdash; Once the product is validated and you&apos;re ready to scale, I help you hire your first full-time engineer and hand off a clean, well-documented codebase.</li>
           </ul>
         </Section>
@@ -738,7 +768,7 @@ export default function ProposalContent() {
         <div className="stand-note">
           <div className="stand-note-label">Closing</div>
           <p>
-            In two weeks, you&apos;ll have something with soul, something you can ship to a hundred families that you&apos;re proud of. A real product that real kids will use to start businesses, and a dashboard that tells you exactly what&apos;s working.
+            In two weeks, you&apos;ll have something with soul, something you can ship to a hundred families that you&apos;re proud of. A real product where kids build a business with an AI-generated logo, see their brand on real products with real pricing, and walk away with a live storefront they can share with anyone. And you&apos;ll have a dashboard that tells you exactly what&apos;s working.
           </p>
           <div className="stand-note-signature">
             &mdash;Andy<span className="stand-note-cursor" />

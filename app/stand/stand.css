@@ -1050,6 +1050,120 @@
   }
 }
 
+/* ---- Changelog Callout ---- */
+
+.stand-changelog {
+  margin-bottom: 48px;
+  padding: 28px 32px;
+  border: 1px solid var(--accent-border);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+  background: rgba(196, 167, 125, 0.04);
+}
+
+.stand-changelog-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.stand-changelog-date {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  color: var(--text-dim);
+  margin-left: 8px;
+  font-size: 0.75rem;
+}
+
+.stand-changelog-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.stand-changelog-list li {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  padding-left: 16px;
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.stand-changelog-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--accent);
+}
+
+.stand-changelog-list li strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.stand-changelog-list li em {
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+.stand-changelog-note {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+  font-style: italic;
+  margin: 0;
+}
+
+/* ---- Updated / New Badges ---- */
+
+.stand-updated-badge,
+.stand-new-badge {
+  display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 2px;
+  padding: 2px 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.stand-updated-badge {
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.stand-new-badge {
+  color: var(--coral);
+  border: 1px solid var(--coral);
+}
+
+@media (max-width: 600px) {
+  .stand-changelog {
+    padding: 20px 20px;
+  }
+
+  .stand-changelog-list li {
+    font-size: 0.95rem;
+  }
+}
+
 /* ---- Detail Pages ---- */
 
 .stand-detail-back {
