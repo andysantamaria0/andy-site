@@ -486,26 +486,21 @@ export default function ProposalContent() {
                 </tr>
                 <tr>
                   <td>10</td>
-                  <td>Landing page</td>
-                  <td style={{ textAlign: 'left' }}>One incredible landing page &mdash; the entry point for pilot families. Clear, branded, compelling.</td>
-                </tr>
-                <tr>
-                  <td>11</td>
                   <td>Analytics + instrumentation</td>
                   <td style={{ textAlign: 'left' }}>PostHog events on every moment, funnel tracking, session replays configured</td>
                 </tr>
                 <tr>
-                  <td>12</td>
+                  <td>11</td>
                   <td>Polish + animations</td>
                   <td style={{ textAlign: 'left' }}>Micro-interactions, loading states, transitions, responsive QA (mobile + iPad)</td>
                 </tr>
                 <tr>
-                  <td>13</td>
+                  <td>12</td>
                   <td>Testing + bug fixes</td>
                   <td style={{ textAlign: 'left' }}>End-to-end testing, edge cases, performance, mobile/tablet QA</td>
                 </tr>
                 <tr>
-                  <td>14</td>
+                  <td>13</td>
                   <td>Deploy + handoff</td>
                   <td style={{ textAlign: 'left' }}>Production deployment, pilot onboarding plan, documentation</td>
                 </tr>
@@ -515,7 +510,7 @@ export default function ProposalContent() {
 
           <div className="stand-milestone">
             <div className="stand-milestone-label">Milestone: End of Week 2</div>
-            <p>Stand is live. 100 families can find the landing page, go through onboarding, get an AI-generated logo, build their storefront with real Printify products, share it with anyone, and complete the parent gate. You have a live admin dashboard with real-time pilot data. Production-grade. Design standards met. Ready for your first cohort.</p>
+            <p>Stand is live. 100 families can go through onboarding, get an AI-generated logo, build their storefront with real Printify products, share it with anyone, and complete the parent gate. You have a live admin dashboard with real-time pilot data. Production-grade. Design standards met. Ready for your first cohort.</p>
           </div>
         </Section>
 
@@ -534,7 +529,6 @@ export default function ProposalContent() {
             <li><strong>A parent gate</strong> with COPPA-lite consent and embedded research questions (value prop, pricing, concerns)</li>
             <li><strong>A pilot admin dashboard</strong> for you &mdash; real-time funnel data, category breakdown, survey responses, CSV export</li>
             <li><strong>Full PostHog instrumentation</strong> &mdash; session replays, funnel analytics, drop-off tracking on every moment</li>
-            <li><strong>A landing page</strong> &mdash; the entry point for pilot families</li>
             <li><strong>A design system</strong> &mdash; built on the existing Stand brand (logo, palette, fonts), elevated and made playful. Typography, color, components, animation patterns. <span className="stand-updated-badge">Updated</span></li>
             <li><strong>A Supabase backend</strong> with auth, database, storage &mdash; architected by David for security and scale</li>
             <li><strong>Documentation</strong> &mdash; what was built, how it works, how to iterate on it</li>
@@ -673,7 +667,6 @@ export default function ProposalContent() {
                 <li>Grand Reveal + live storefronts</li>
                 <li>Parent gate + embedded survey</li>
                 <li>Pilot admin dashboard</li>
-                <li>Landing page</li>
                 <li>Animations, polish &amp; responsive QA</li>
                 <li>Testing &amp; production deployment</li>
               </ul>
@@ -719,7 +712,7 @@ export default function ProposalContent() {
             <li className="stand-checklist-done"><strong>Brand assets</strong> &mdash; logos (3 variants), color palette received</li>
             <li className="stand-checklist-done"><strong>Google Drive access</strong> &mdash; planning materials received</li>
             <li><strong>GitHub repo access</strong> &mdash; Lauren has the repo from Chris. Needs to add Andy as a collaborator.</li>
-            <li><strong>Printify SDK/API docs</strong> &mdash; Lauren received docs from Printify. Share with Andy for integration planning.</li>
+            <li><strong>Printify API access</strong> &mdash; Account + API token for integration planning.</li>
             <li><strong>Business categories doc</strong> &mdash; Lauren and Alex (Petra) have a working doc on the pilot categories. Share final version.</li>
           </ul>
 

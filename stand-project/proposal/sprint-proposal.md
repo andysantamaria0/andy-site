@@ -174,13 +174,12 @@ Ship to your first cohort. Testing parties — intense, in-person sessions if po
 |-----|-------|-------------|
 | 8 | Storefront polish | Product catalog display, service cards, storefront sharing, brand card download |
 | 9 | Pilot admin dashboard | Funnel visualization, category breakdown, parent survey responses, export |
-| 10 | Landing page | One incredible landing page — the entry point for pilot families. Clear, branded, compelling. |
-| 11 | Analytics + instrumentation | PostHog events on every moment, funnel tracking, session replays configured |
-| 12 | Polish + animations | Micro-interactions, loading states, transitions, responsive QA (mobile + iPad) |
-| 13 | Testing + bug fixes | End-to-end testing, edge cases, performance, mobile/tablet QA |
-| 14 | Deploy + handoff | Production deployment, pilot onboarding plan, documentation |
+| 10 | Analytics + instrumentation | PostHog events on every moment, funnel tracking, session replays configured |
+| 11 | Polish + animations | Micro-interactions, loading states, transitions, responsive QA (mobile + iPad) |
+| 12 | Testing + bug fixes | End-to-end testing, edge cases, performance, mobile/tablet QA |
+| 13 | Deploy + handoff | Production deployment, pilot onboarding plan, documentation |
 
-**Milestone: End of Week 2** — Stand is live. 100 families can find the landing page, go through onboarding, get an AI-generated logo, build their storefront with real Printify products, share it with anyone, and complete the parent gate. You have a live admin dashboard with real-time pilot data. Production-grade. Design standards met. Ready for your first cohort.
+**Milestone: End of Week 2** — Stand is live. 100 families can go through onboarding, get an AI-generated logo, build their storefront with real Printify products, share it with anyone, and complete the parent gate. You have a live admin dashboard with real-time pilot data. Production-grade. Design standards met. Ready for your first cohort.
 
 ---
 
@@ -197,7 +196,6 @@ At the end of this sprint:
 - [ ] **A parent gate** with COPPA-lite consent and embedded research questions (value prop, pricing, concerns)
 - [ ] **A pilot admin dashboard** for you — real-time funnel data, category breakdown, survey responses, CSV export
 - [ ] **Full PostHog instrumentation** — session replays, funnel analytics, drop-off tracking on every moment
-- [ ] **A landing page** — the entry point for pilot families
 - [ ] **A design system** — built on the existing Stand brand (logo, palette, fonts), elevated and made playful. Typography, color, components, animation patterns.
 - [ ] **A Supabase backend** with auth, database, storage — architected by David for security and scale
 - [ ] **Documentation** — what was built, how it works, how to iterate on it
@@ -264,7 +262,7 @@ I'm clearing the calendar. 40 hours a week, fully dedicated to Stand. You'll see
 - [x] ~~Brand assets~~ — logos (3 variants), color palette received
 - [x] ~~Google Drive access~~ — planning materials received
 - [ ] **GitHub repo access** — Lauren has the repo from Chris. Needs to add Andy as a collaborator.
-- [ ] **Printify SDK/API docs** — Lauren received docs from Printify. Share with Andy for integration planning.
+- [ ] **Printify API access** — Account + API token for integration planning.
 - [ ] **Business categories doc** — Lauren and Alex (Petra) have a working doc on the 5 pilot categories. Share final version.
 
 ### During the Sprint

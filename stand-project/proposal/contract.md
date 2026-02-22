@@ -24,12 +24,11 @@ Contractor will perform a 2-week product design and engineering sprint for the S
 4. **Printify Product Integration (Visual Only)** — Product mockup rendering via the Printify API showing the kid's branding on real products, with wholesale pricing and margin display. This is for visual display and education only — not order processing, payment collection, or fulfillment. Actual Printify order fulfillment is explicitly excluded (see Section 2).
 5. **AI-Generated Logo/Icon** — First-version logo/icon generation for each kid's business during onboarding. This is an initial implementation; quality and style refinement are expected in future sprints.
 6. **Pilot Admin Dashboard** — Real-time funnel data, category breakdown, survey responses, and CSV export
-7. **Landing Page** — Branded entry point for pilot families
-8. **Design System** — Built on the existing Stand brand (logo, palette, fonts), with typography, color, components, and animation patterns
-9. **PostHog Instrumentation** — Session replays, funnel analytics, and drop-off tracking
-10. **Supabase Backend** — Auth, database, and storage (architecture by Contractor's subcontractor, David Shimel)
-11. **Production Deployment** — Deployed on Vercel as a PWA
-12. **Documentation** — What was built, how it works, how to iterate
+7. **Design System** — Built on the existing Stand brand (logo, palette, fonts), with typography, color, components, and animation patterns
+8. **Analytics Instrumentation** — Event tracking and funnel analytics via PostHog. Session replays are configurable directly in PostHog by Client.
+9. **Supabase Backend** — Auth, database, and storage (architecture by Contractor's subcontractor, David Shimel)
+10. **Production Deployment** — Deployed on Vercel. The web app will be saveable as a home screen bookmark on iOS devices.
+11. **Documentation** — What was built, how it works, how to iterate
 
 These deliverables are described in further detail in the Sprint Proposal dated February 2026, which is incorporated by reference.
 
@@ -85,7 +84,7 @@ Client retains all rights to their pre-existing brand assets, logos, content, an
 
 Client agrees to provide:
 
-- **Before Day 1:** GitHub repo access (existing codebase), Printify SDK/API documentation, business categories documentation (working draft from Lauren and Alex/Petra)
+- **Before Day 1:** GitHub repo access (existing codebase), Printify API access (account + API token), business categories documentation (working draft from Lauren and Alex/Petra)
 - **During the sprint:** Daily 30-minute standing check-in (text/call), MWF 1-hour product review sessions, timely product decisions when flagged, and 2-3 test families by end of Week 1
 - **Timely feedback:** Contractor will flag decisions as they arise. Client will respond within 1 business day. Delays in response extend the timeline per Section 4.
 
@@ -113,14 +112,14 @@ Either party may terminate this agreement with written notice.
 
 Contractor warrants that deliverables will function substantially as described in Section 1 at the time of delivery.
 
-Contractor will fix bugs and defects reported within **14 days of delivery** at no additional charge, provided they relate to functionality described in Section 1. This warranty does not cover:
+Contractor will fix bugs and defects reported within **7 days of delivery** at no additional charge, provided they relate to functionality described in Section 1. Bug reports must be submitted via email to Contractor's address listed above and must include a description of the issue, steps to reproduce, and any relevant screenshots or screen recordings. Contractor will acknowledge receipt within 1 business day and deliver a fix within 48 hours of acknowledgment. This warranty does not cover:
 
 - Issues caused by Client modifications after delivery
 - Third-party service outages (Vercel, Supabase, PostHog, Anthropic, Printify, etc.)
 - Browser or device compatibility beyond modern versions of Chrome, Safari, and Firefox on iOS, iPadOS, and desktop
 - New feature requests
 
-After the 14-day warranty period, any additional work will be scoped and quoted separately.
+After the 7-day warranty period, any additional work will be scoped and quoted separately. An optional Maintenance & Support Agreement is available as a separate addendum for ongoing bug fixes, minor updates, and priority support.
 
 ## 10. Limitation of Liability
 
