@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
-export default function SmartPaste({ tripId }) {
+export default function SmartPaste({ tripId, legs = [] }) {
   const router = useRouter();
   const [text, setText] = useState('');
   const [images, setImages] = useState([]); // { file, preview }
@@ -16,6 +16,8 @@ export default function SmartPaste({ tripId }) {
   const [error, setError] = useState(null);
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef(null);
+  const [mode, setMode] = useState('apply'); // 'apply' | 'suggest'
+  const [itemLegs, setItemLegs] = useState({}); // index → leg_id for suggest mode
 
   const addImages = useCallback((files) => {
     const newImages = [];
@@ -114,6 +116,101 @@ export default function SmartPaste({ tripId }) {
     setApplying(false);
   }
 
+  function matchLegByDestination(legDest) {
+    if (!legDest || legs.length === 0) return '';
+    const destLower = legDest.toLowerCase().trim();
+    const match = legs.find((l) =>
+      l.destination.toLowerCase().includes(destLower) || destLower.includes(l.destination.toLowerCase())
+    );
+    return match?.id || '';
+  }
+
+  // Pre-fill leg assignments from parsed data when entering suggest mode
+  function initItemLegs() {
+    if (!parsed) return;
+    const assignments = {};
+    let idx = 0;
+    for (const l of (parsed.logistics || [])) {
+      assignments[`logistics-${idx}`] = matchLegByDestination(l.leg_destination);
+      idx++;
+    }
+    idx = 0;
+    for (const e of (parsed.events || [])) {
+      assignments[`event-${idx}`] = matchLegByDestination(e.leg_destination);
+      idx++;
+    }
+    idx = 0;
+    for (const ex of (parsed.expenses || [])) {
+      assignments[`expense-${idx}`] = '';
+      idx++;
+    }
+    setItemLegs(assignments);
+  }
+
+  async function handleSaveAsSuggestions() {
+    setApplying(true);
+    try {
+      const items = [];
+
+      (parsed.logistics || []).forEach((l, i) => {
+        const legId = itemLegs[`logistics-${i}`] || null;
+        const leg = legs.find((lg) => lg.id === legId);
+        items.push({
+          suggestion_type: 'logistics',
+          title: l.title || `${l.type || 'Logistics'} for ${l.person_name || 'unknown'}`,
+          subtitle: l.notes || null,
+          leg_id: legId,
+          group_key: legId ? `${legId}:${l.type || 'other'}` : null,
+          group_label: legId && leg ? `${leg.destination} ${(l.type || 'Other').charAt(0).toUpperCase() + (l.type || 'other').slice(1)}` : null,
+          payload: l,
+          source: 'smart_paste',
+        });
+      });
+
+      (parsed.events || []).forEach((ev, i) => {
+        const legId = itemLegs[`event-${i}`] || null;
+        const leg = legs.find((lg) => lg.id === legId);
+        items.push({
+          suggestion_type: 'event',
+          title: ev.title || 'Event',
+          subtitle: ev.location || null,
+          leg_id: legId,
+          group_key: legId ? `${legId}:${ev.category || 'activity'}` : null,
+          group_label: legId && leg ? `${leg.destination} ${(ev.category || 'Activity').replace(/_/g, ' ')}` : null,
+          payload: ev,
+          source: 'smart_paste',
+        });
+      });
+
+      (parsed.expenses || []).forEach((ex, i) => {
+        items.push({
+          suggestion_type: 'expense',
+          title: ex.description || ex.vendor || 'Expense',
+          price_amount: ex.amount || null,
+          price_currency: ex.currency || 'USD',
+          payload: ex,
+          source: 'smart_paste',
+        });
+      });
+
+      let saved = 0;
+      for (const item of items) {
+        const res = await fetch(`/api/trips/${tripId}/suggestions`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(item),
+        });
+        if (res.ok) saved++;
+      }
+
+      setResult({ suggestions_saved: saved });
+      router.refresh();
+    } catch (e) {
+      setError('Failed to save suggestions.');
+    }
+    setApplying(false);
+  }
+
   function handleReset() {
     setText('');
     for (const img of images) URL.revokeObjectURL(img.preview);
@@ -121,6 +218,8 @@ export default function SmartPaste({ tripId }) {
     setParsed(null);
     setResult(null);
     setError(null);
+    setMode('apply');
+    setItemLegs({});
   }
 
   const hasContent = text.trim() || images.length > 0;
@@ -209,6 +308,24 @@ export default function SmartPaste({ tripId }) {
         <div className="v-parsed-results">
           <div className="v-parsed-summary">{parsed.summary}</div>
 
+          {/* Mode toggle: Apply Now vs Save as Suggestions */}
+          {((parsed.logistics?.length > 0) || (parsed.events?.length > 0) || (parsed.expenses?.length > 0)) && (
+            <div className="v-smart-paste-mode-toggle">
+              <button
+                className={`v-smart-paste-mode-btn${mode === 'apply' ? ' v-smart-paste-mode-btn-active' : ''}`}
+                onClick={() => setMode('apply')}
+              >
+                Apply Now
+              </button>
+              <button
+                className={`v-smart-paste-mode-btn${mode === 'suggest' ? ' v-smart-paste-mode-btn-active' : ''}`}
+                onClick={() => { setMode('suggest'); initItemLegs(); }}
+              >
+                Save as Suggestions
+              </button>
+            </div>
+          )}
+
           {parsed.member_updates?.length > 0 && (
             <div className="v-parsed-section">
               <div className="v-parsed-section-title">Stay Date Updates</div>
@@ -257,6 +374,18 @@ export default function SmartPaste({ tripId }) {
                   <span className="v-parsed-item-detail">
                     {l.person_name}{l.start_time ? ` — ${l.start_time}` : ''}
                   </span>
+                  {mode === 'suggest' && legs.length > 0 && (
+                    <select
+                      className="v-form-select v-smart-paste-leg-select"
+                      value={itemLegs[`logistics-${i}`] || ''}
+                      onChange={(e) => setItemLegs((prev) => ({ ...prev, [`logistics-${i}`]: e.target.value }))}
+                    >
+                      <option value="">No leg</option>
+                      {legs.map((lg) => (
+                        <option key={lg.id} value={lg.id}>{lg.destination}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
               ))}
             </div>
@@ -272,6 +401,18 @@ export default function SmartPaste({ tripId }) {
                   <span className="v-parsed-item-detail">
                     {ev.event_date}{ev.start_time ? ` at ${ev.start_time}` : ''}{ev.location ? ` — ${ev.location}` : ''}
                   </span>
+                  {mode === 'suggest' && legs.length > 0 && (
+                    <select
+                      className="v-form-select v-smart-paste-leg-select"
+                      value={itemLegs[`event-${i}`] || ''}
+                      onChange={(e) => setItemLegs((prev) => ({ ...prev, [`event-${i}`]: e.target.value }))}
+                    >
+                      <option value="">No leg</option>
+                      {legs.map((lg) => (
+                        <option key={lg.id} value={lg.id}>{lg.destination}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
               ))}
             </div>
@@ -285,13 +426,23 @@ export default function SmartPaste({ tripId }) {
           )}
 
           <div style={{ display: 'flex', gap: 12, marginTop: 16 }}>
-            <button
-              className="v-btn v-btn-primary"
-              onClick={handleApply}
-              disabled={applying}
-            >
-              {applying ? 'Applying...' : 'Apply Changes'}
-            </button>
+            {mode === 'apply' ? (
+              <button
+                className="v-btn v-btn-primary"
+                onClick={handleApply}
+                disabled={applying}
+              >
+                {applying ? 'Applying...' : 'Apply Changes'}
+              </button>
+            ) : (
+              <button
+                className="v-btn v-btn-primary"
+                onClick={handleSaveAsSuggestions}
+                disabled={applying}
+              >
+                {applying ? 'Saving...' : 'Save as Suggestions'}
+              </button>
+            )}
             <button className="v-btn v-btn-secondary" onClick={handleReset}>
               Cancel
             </button>
@@ -302,11 +453,17 @@ export default function SmartPaste({ tripId }) {
       {result && (
         <div className="v-parsed-results">
           <div className="v-parsed-summary" style={{ color: 'var(--v-champagne)' }}>
-            Done! Updated {result.updated} member{result.updated !== 1 ? 's' : ''}
-            {result.members_added > 0 && `, added ${result.members_added} new member${result.members_added !== 1 ? 's' : ''}`}
-            {result.logistics_added > 0 && `, added ${result.logistics_added} logistics entr${result.logistics_added !== 1 ? 'ies' : 'y'}`}
-            {result.events_added > 0 && `, created ${result.events_added} event${result.events_added !== 1 ? 's' : ''}`}.
-            {result.errors?.length > 0 && ` (${result.errors.length} error${result.errors.length !== 1 ? 's' : ''})`}
+            {result.suggestions_saved != null ? (
+              <>Done! Saved {result.suggestions_saved} suggestion{result.suggestions_saved !== 1 ? 's' : ''} for review.</>
+            ) : (
+              <>
+                Done! Updated {result.updated} member{result.updated !== 1 ? 's' : ''}
+                {result.members_added > 0 && `, added ${result.members_added} new member${result.members_added !== 1 ? 's' : ''}`}
+                {result.logistics_added > 0 && `, added ${result.logistics_added} logistics entr${result.logistics_added !== 1 ? 'ies' : 'y'}`}
+                {result.events_added > 0 && `, created ${result.events_added} event${result.events_added !== 1 ? 's' : ''}`}.
+                {result.errors?.length > 0 && ` (${result.errors.length} error${result.errors.length !== 1 ? 's' : ''})`}
+              </>
+            )}
           </div>
           {result.errors?.length > 0 && (
             <div className="v-error" style={{ marginTop: 8 }}>

@@ -2,6 +2,7 @@ import { createClient } from '../../../../lib/supabase/server';
 import { redirect } from 'next/navigation';
 import ConciergeHero from '../../../../components/trips/ConciergeHero';
 import SmartPaste from '../../../../components/trips/SmartPaste';
+import SuggestionsPanel from '../../../../components/trips/SuggestionsPanel';
 import InboxItem from '../../../../components/trips/InboxItem';
 import { loadFeatures, isFeatureEnabled } from '../../../../lib/features';
 
@@ -41,6 +42,12 @@ export default async function ConciergePage({ params }) {
 
   const showSmartPaste = isOwner && isFeatureEnabled(featureMap, 'smart_paste', userRole);
 
+  // Fetch legs and members for suggestions
+  const [{ data: tripLegs }, { data: tripMembers }] = await Promise.all([
+    supabase.from('trip_legs').select('id, destination').eq('trip_id', tripId).order('leg_order', { ascending: true }),
+    supabase.from('trip_members').select('id, user_id, display_name, email, profiles:user_id(display_name, email)').eq('trip_id', tripId),
+  ]);
+
   // Only fetch emails for owners
   let pending = [];
   let processed = [];
@@ -61,9 +68,18 @@ export default async function ConciergePage({ params }) {
 
       {showSmartPaste && (
         <div style={{ marginTop: 24 }}>
-          <SmartPaste tripId={tripId} />
+          <SmartPaste tripId={tripId} legs={tripLegs || []} />
         </div>
       )}
+
+      <div style={{ marginTop: 24 }}>
+        <SuggestionsPanel
+          tripId={tripId}
+          legs={tripLegs || []}
+          members={tripMembers || []}
+          isOwner={isOwner}
+        />
+      </div>
 
       {isOwner && (
         <>
