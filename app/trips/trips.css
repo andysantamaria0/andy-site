@@ -5445,6 +5445,28 @@ select.v-form-input {
   margin-bottom: 12px;
 }
 
+/* Quick-add bar */
+.v-suggestion-quick {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.v-suggestion-quick-input {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+}
+
+.v-suggestion-quick-leg {
+  width: auto;
+  max-width: 130px;
+  padding: 10px 10px;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
 .v-suggestion-filters {
   display: flex;
   align-items: center;

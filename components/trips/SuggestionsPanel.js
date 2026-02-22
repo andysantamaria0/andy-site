@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import SuggestionGroup from './SuggestionGroup';
 import SuggestionCard from './SuggestionCard';
 import SuggestionForm from './SuggestionForm';
@@ -12,6 +12,12 @@ export default function SuggestionsPanel({ tripId, legs, members, isOwner }) {
   const [legFilter, setLegFilter] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editingSuggestion, setEditingSuggestion] = useState(null);
+
+  // Quick-add state
+  const [quickText, setQuickText] = useState('');
+  const [quickLeg, setQuickLeg] = useState('');
+  const [quickAdding, setQuickAdding] = useState(false);
+  const quickRef = useRef(null);
 
   const fetchSuggestions = useCallback(async () => {
     const params = new URLSearchParams();
@@ -57,6 +63,31 @@ export default function SuggestionsPanel({ tripId, legs, members, isOwner }) {
     };
   }, [fetchSuggestions]);
 
+  // Quick-add handler
+  async function handleQuickAdd(e) {
+    e.preventDefault();
+    if (!quickText.trim() || quickAdding) return;
+    setQuickAdding(true);
+    try {
+      const res = await fetch(`/api/trips/${tripId}/suggestions/quick`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: quickText.trim(),
+          leg_id: quickLeg || undefined,
+        }),
+      });
+      if (res.ok) {
+        setQuickText('');
+        fetchSuggestions();
+      }
+    } catch (e) {
+      // ignore
+    }
+    setQuickAdding(false);
+    quickRef.current?.focus();
+  }
+
   // Group suggestions by group_key
   const grouped = [];
   const standalone = [];
@@ -99,10 +130,43 @@ export default function SuggestionsPanel({ tripId, legs, members, isOwner }) {
         <button
           className="v-btn v-btn-secondary v-btn-sm"
           onClick={() => { setEditingSuggestion(null); setShowForm(true); }}
+          title="Add with full details"
         >
-          + Add Suggestion
+          + Detailed
         </button>
       </div>
+
+      {/* Quick-add bar */}
+      <form className="v-suggestion-quick" onSubmit={handleQuickAdd}>
+        <input
+          ref={quickRef}
+          className="v-form-input v-suggestion-quick-input"
+          type="text"
+          value={quickText}
+          onChange={(e) => setQuickText(e.target.value)}
+          placeholder="Paste a link or type a suggestion..."
+          disabled={quickAdding}
+        />
+        {legs && legs.length > 1 && (
+          <select
+            className="v-form-select v-suggestion-quick-leg"
+            value={quickLeg}
+            onChange={(e) => setQuickLeg(e.target.value)}
+          >
+            <option value="">Leg</option>
+            {legs.map((l) => (
+              <option key={l.id} value={l.id}>{l.destination}</option>
+            ))}
+          </select>
+        )}
+        <button
+          type="submit"
+          className="v-btn v-btn-primary v-btn-sm"
+          disabled={!quickText.trim() || quickAdding}
+        >
+          {quickAdding ? '...' : 'Add'}
+        </button>
+      </form>
 
       <div className="v-suggestion-filters">
         <div className="v-suggestion-status-tabs">
@@ -135,7 +199,7 @@ export default function SuggestionsPanel({ tripId, legs, members, isOwner }) {
       ) : suggestions.length === 0 ? (
         <p className="v-hint">
           {statusFilter === 'pending'
-            ? 'No pending suggestions yet. Add options you\'re considering — villas, restaurants, activities — and greenlight the winners.'
+            ? 'No pending suggestions yet. Paste a link above to get started.'
             : `No ${statusFilter} suggestions.`}
         </p>
       ) : (
