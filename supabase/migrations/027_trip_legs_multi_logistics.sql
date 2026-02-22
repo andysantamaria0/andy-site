@@ -171,7 +171,7 @@ create index if not exists idx_expenses_leg on public.expenses(leg_id) where leg
 
 -- Create one default leg per existing trip
 insert into public.trip_legs (trip_id, destination, start_date, end_date, leg_order)
-select id, destination, start_date, end_date, 1
+select id, coalesce(destination, name, 'TBD'), start_date, end_date, 1
 from public.trips
 on conflict (trip_id, leg_order) do nothing;
 

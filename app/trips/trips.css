@@ -5115,6 +5115,41 @@ select.v-form-input {
   border-radius: 10px;
   padding: 14px 16px;
   border: 1px solid var(--v-pearl-faint);
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  animation: v-leg-card-in 0.25s var(--v-ease) both;
+}
+
+@keyframes v-leg-card-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.v-leg-card-adding {
+  border-style: dashed;
+  border-color: var(--v-champagne);
+  background: rgba(196, 167, 125, 0.05);
+}
+
+.v-leg-card-order {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--v-pearl-faint);
+  color: var(--v-pearl-dim);
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.v-leg-card-body {
+  flex: 1;
+  min-width: 0;
 }
 
 .v-leg-card-header {

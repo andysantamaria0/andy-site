@@ -62,48 +62,62 @@ export async function POST(request, { params }) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
-  const { destination, start_date, end_date, accommodation_notes } = await request.json();
+  try {
+    const { destination, start_date, end_date, accommodation_notes } = await request.json();
 
-  // Get current max leg_order
-  const { data: existing } = await supabase
-    .from('trip_legs')
-    .select('leg_order')
-    .eq('trip_id', tripId)
-    .order('leg_order', { ascending: false })
-    .limit(1);
+    // Get current max leg_order
+    const { data: existing, error: fetchErr } = await supabase
+      .from('trip_legs')
+      .select('leg_order')
+      .eq('trip_id', tripId)
+      .order('leg_order', { ascending: false })
+      .limit(1);
 
-  const nextOrder = (existing?.[0]?.leg_order || 0) + 1;
+    if (fetchErr) {
+      console.error('Legs fetch error:', fetchErr);
+      return NextResponse.json({ error: fetchErr.message }, { status: 500 });
+    }
 
-  const { data: leg, error } = await supabase
-    .from('trip_legs')
-    .insert({
-      trip_id: tripId,
-      destination: destination || 'New Destination',
-      start_date: start_date || null,
-      end_date: end_date || null,
-      leg_order: nextOrder,
-      accommodation_notes: accommodation_notes || null,
-    })
-    .select()
-    .single();
+    const nextOrder = (existing?.[0]?.leg_order || 0) + 1;
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    const { data: leg, error } = await supabase
+      .from('trip_legs')
+      .insert({
+        trip_id: tripId,
+        destination: destination || 'New Destination',
+        start_date: start_date || null,
+        end_date: end_date || null,
+        leg_order: nextOrder,
+        accommodation_notes: accommodation_notes || null,
+      })
+      .select()
+      .single();
 
-  // Auto-assign all current members to the new leg
-  const { data: members } = await supabase
-    .from('trip_members')
-    .select('id')
-    .eq('trip_id', tripId);
+    if (error) {
+      console.error('Legs insert error:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
 
-  if (members && members.length > 0) {
-    await supabase
-      .from('trip_leg_members')
-      .insert(members.map((m) => ({ leg_id: leg.id, member_id: m.id })));
+    // Auto-assign all current members to the new leg
+    const { data: members } = await supabase
+      .from('trip_members')
+      .select('id')
+      .eq('trip_id', tripId);
+
+    if (members && members.length > 0) {
+      const { error: memberErr } = await supabase
+        .from('trip_leg_members')
+        .insert(members.map((m) => ({ leg_id: leg.id, member_id: m.id })));
+      if (memberErr) console.error('Leg members insert error:', memberErr);
+    }
+
+    await recomputeDestination(supabase, tripId);
+
+    return NextResponse.json(leg, { status: 201 });
+  } catch (e) {
+    console.error('Legs POST unexpected error:', e);
+    return NextResponse.json({ error: e.message }, { status: 500 });
   }
-
-  await recomputeDestination(supabase, tripId);
-
-  return NextResponse.json(leg, { status: 201 });
 }
 
 export async function PUT(request, { params }) {
