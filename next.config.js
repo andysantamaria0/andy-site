@@ -14,6 +14,8 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
+              // TODO: add https://static.cloudflareinsights.com and https://vercel.live to script-src
+              // TODO: add https://lh3.googleusercontent.com to img-src (Google profile avatars)
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
