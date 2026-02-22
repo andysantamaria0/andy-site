@@ -16,11 +16,25 @@ export async function generateMetadata({ params }) {
     .eq('trip_code', tripCode)
     .single();
 
+  const title = trip ? `Join ${trip.name} — Vialoure` : 'Join Trip — Vialoure';
+  const description = trip?.destination
+    ? `You're invited to ${trip.name} in ${trip.destination}`
+    : 'You\'re invited to a trip on Vialoure';
+
   return {
-    title: trip ? `Join ${trip.name} — Vialoure` : 'Join Trip — Vialoure',
-    description: trip?.destination
-      ? `You're invited to ${trip.name} in ${trip.destination}`
-      : 'You\'re invited to a trip on Vialoure',
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      siteName: 'Vialoure',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+    },
   };
 }
 
