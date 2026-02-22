@@ -60,7 +60,7 @@ This is a fixed-price engagement. Payment schedule:
 
 **Work will not begin until the first payment is received.** Payments are non-refundable once the corresponding work has been performed.
 
-The Contractor engages David Shimel as a subcontractor for system architecture. Client's sole payment obligation is to Contractor; Contractor is solely responsible for compensating any subcontractors.
+The Contractor engages David Shimel as a subcontractor for system architecture (capped at 6 hours). Client's sole payment obligation is to Contractor; Contractor is solely responsible for compensating any subcontractors.
 
 ## 4. Timeline
 
@@ -69,6 +69,8 @@ The sprint is planned for **14 calendar days** beginning on a mutually agreed st
 Client delays — including but not limited to delayed feedback, unavailability for required decisions, or failure to provide required assets (GitHub repo access, Printify API documentation, business categories documentation) — will extend the timeline day-for-day at no additional cost to Client, but will not be deemed a breach by Contractor.
 
 Contractor will provide daily progress updates and share working builds throughout the sprint.
+
+**Contractor availability:** Contractor will be available **9:00 AM – 6:00 PM Pacific Time, Monday through Friday** during the sprint. Contractor will respond to Client communications within 2 hours during these working hours. Availability outside these hours is at Contractor's discretion.
 
 ## 5. Intellectual Property
 

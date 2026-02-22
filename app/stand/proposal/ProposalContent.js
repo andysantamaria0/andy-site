@@ -677,7 +677,7 @@ export default function ProposalContent() {
                 <div className="stand-investment-card-role">System Architecture</div>
               </div>
               <div className="stand-investment-card-amount">$2,000</div>
-              <div className="stand-investment-card-hours">5 hours &middot; capped</div>
+              <div className="stand-investment-card-hours">6 hours &middot; capped</div>
               <ul className="stand-investment-card-list">
                 <li>Supabase schema &amp; database design</li>
                 <li>Auth flows (COPPA-lite)</li>
