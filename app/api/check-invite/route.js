@@ -20,11 +20,20 @@ export async function POST(request) {
     process.env.SUPABASE_SERVICE_ROLE_KEY
   );
 
-  const { data } = await supabase
-    .from('trip_members')
-    .select('id')
-    .ilike('email', email)
-    .limit(1);
+  const [{ data: members }, { data: accessApproved }] = await Promise.all([
+    supabase
+      .from('trip_members')
+      .select('id')
+      .ilike('email', email)
+      .limit(1),
+    supabase
+      .from('access_requests')
+      .select('id')
+      .ilike('email', email)
+      .eq('status', 'approved')
+      .limit(1),
+  ]);
 
-  return NextResponse.json({ invited: data && data.length > 0 });
+  const invited = (members && members.length > 0) || (accessApproved && accessApproved.length > 0);
+  return NextResponse.json({ invited });
 }

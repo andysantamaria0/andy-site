@@ -40,6 +40,19 @@ export async function GET(request) {
           if (next.startsWith('/trips/join/')) {
             return NextResponse.redirect(`${origin}${next}`);
           }
+
+          // Check if user has an approved access request
+          const { data: accessApproved } = await service
+            .from('access_requests')
+            .select('id')
+            .ilike('email', user.email)
+            .eq('status', 'approved')
+            .limit(1);
+
+          if (accessApproved?.length > 0) {
+            return NextResponse.redirect(`${origin}${next}`);
+          }
+
           // Not invited — sign out and redirect
           await supabase.auth.signOut();
           return NextResponse.redirect(`${origin}/trips/not-invited`);
