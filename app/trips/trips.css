@@ -5109,6 +5109,29 @@ select.v-form-input {
   z-index: 1;
 }
 
+/* Timeline leg legend */
+.v-timeline-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-bottom: 12px;
+}
+
+.v-timeline-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  color: var(--v-pearl-dim);
+}
+
+.v-timeline-legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
 /* Leg Manager */
 .v-leg-manager {
   margin-bottom: 32px;
