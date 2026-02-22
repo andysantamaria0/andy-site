@@ -17,6 +17,7 @@ export default function SuggestionsPanel({ tripId, legs, members, isOwner }) {
   const [quickText, setQuickText] = useState('');
   const [quickLeg, setQuickLeg] = useState('');
   const [quickAdding, setQuickAdding] = useState(false);
+  const [quickError, setQuickError] = useState(null);
   const quickRef = useRef(null);
 
   const fetchSuggestions = useCallback(async () => {
@@ -68,6 +69,7 @@ export default function SuggestionsPanel({ tripId, legs, members, isOwner }) {
     e.preventDefault();
     if (!quickText.trim() || quickAdding) return;
     setQuickAdding(true);
+    setQuickError(null);
     try {
       const res = await fetch(`/api/trips/${tripId}/suggestions/quick`, {
         method: 'POST',
@@ -77,12 +79,15 @@ export default function SuggestionsPanel({ tripId, legs, members, isOwner }) {
           leg_id: quickLeg || undefined,
         }),
       });
+      const data = await res.json();
       if (res.ok) {
         setQuickText('');
         fetchSuggestions();
+      } else {
+        setQuickError(data.error || 'Failed to add suggestion');
       }
-    } catch (e) {
-      // ignore
+    } catch (err) {
+      setQuickError('Network error — try again');
     }
     setQuickAdding(false);
     quickRef.current?.focus();
@@ -143,7 +148,7 @@ export default function SuggestionsPanel({ tripId, legs, members, isOwner }) {
           className="v-form-input v-suggestion-quick-input"
           type="text"
           value={quickText}
-          onChange={(e) => setQuickText(e.target.value)}
+          onChange={(e) => { setQuickText(e.target.value); setQuickError(null); }}
           placeholder="Paste a link or type a suggestion..."
           disabled={quickAdding}
         />
@@ -164,9 +169,12 @@ export default function SuggestionsPanel({ tripId, legs, members, isOwner }) {
           className="v-btn v-btn-primary v-btn-sm"
           disabled={!quickText.trim() || quickAdding}
         >
-          {quickAdding ? '...' : 'Add'}
+          {quickAdding ? 'Reading link...' : 'Add'}
         </button>
       </form>
+      {quickError && (
+        <div className="v-error" style={{ marginBottom: 12, fontSize: '0.8rem' }}>{quickError}</div>
+      )}
 
       <div className="v-suggestion-filters">
         <div className="v-suggestion-status-tabs">
