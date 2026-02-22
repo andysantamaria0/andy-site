@@ -68,17 +68,24 @@ export async function POST(request, { params }) {
     .eq('id', tripId)
     .single();
 
-  const { data: members } = await supabase
-    .from('trip_members')
-    .select(`
-      *,
-      profiles:user_id (
-        display_name,
-        avatar_url,
-        email
-      )
-    `)
-    .eq('trip_id', tripId);
+  const [{ data: members }, { data: legs }] = await Promise.all([
+    supabase
+      .from('trip_members')
+      .select(`
+        *,
+        profiles:user_id (
+          display_name,
+          avatar_url,
+          email
+        )
+      `)
+      .eq('trip_id', tripId),
+    supabase
+      .from('trip_legs')
+      .select('id, destination, start_date, end_date, leg_order')
+      .eq('trip_id', tripId)
+      .order('leg_order', { ascending: true }),
+  ]);
 
   const memberContext = (members || []).map((m) => ({
     member_id: m.id,
@@ -94,6 +101,7 @@ export async function POST(request, { params }) {
     trip,
     memberContext,
     text: text.trim() || '(see attached screenshot)',
+    legs: legs || [],
   });
 
   // Build content blocks: images first, then text prompt

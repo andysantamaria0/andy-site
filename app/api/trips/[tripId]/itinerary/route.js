@@ -9,6 +9,7 @@ const TYPE_EMOJI = {
   train: '🚆',
   bus: '🚌',
   car: '🚗',
+  ferry: '⛴️',
   accommodation: '🏠',
   other: '📦',
 };
@@ -64,12 +65,13 @@ export async function GET(request, { params }) {
     return new NextResponse('Unauthorized', { status: 401 });
   }
 
-  // Fetch trip, members, events, logistics
+  // Fetch trip, members, events, logistics, legs
   const [
     { data: trip },
     { data: members },
     { data: events },
     { data: logistics },
+    { data: legs },
   ] = await Promise.all([
     supabase.from('trips').select('*').eq('id', tripId).single(),
     supabase
@@ -85,9 +87,14 @@ export async function GET(request, { params }) {
       .order('start_time', { ascending: true, nullsFirst: false }),
     supabase
       .from('logistics')
-      .select('*, profiles:user_id(display_name, avatar_url, email)')
+      .select('*, profiles:user_id(display_name, avatar_url, email), logistics_travelers(member_id)')
       .eq('trip_id', tripId)
       .order('start_time', { ascending: true, nullsFirst: false }),
+    supabase
+      .from('trip_legs')
+      .select('id, destination, start_date, end_date, leg_order')
+      .eq('trip_id', tripId)
+      .order('leg_order', { ascending: true }),
   ]);
 
   if (!trip) {
@@ -165,6 +172,19 @@ export async function GET(request, { params }) {
     </div>`;
   }).join('');
 
+  // Build leg lookup by date for section headers
+  const isMultiLeg = (legs || []).length > 1;
+  function getLegForDay(dayStr) {
+    if (!isMultiLeg) return null;
+    for (const leg of (legs || [])) {
+      if (leg.start_date && leg.end_date && dayStr >= leg.start_date && dayStr <= leg.end_date) {
+        return leg;
+      }
+    }
+    return null;
+  }
+  let lastLegId = null;
+
   // Build day-by-day HTML
   const daysHtml = days.map((day, i) => {
     const dayStr = format(day, 'yyyy-MM-dd');
@@ -197,19 +217,28 @@ export async function GET(request, { params }) {
     const logisticsHtml = dayLogistics.map((entry) => {
       const emoji = TYPE_EMOJI[entry.type] || TYPE_EMOJI.other;
       const time = formatLogisticsTime(entry.start_time);
-      const member = entry.user_id ? membersByUserId[entry.user_id] : null;
-      const memberName = member ? getMemberDisplayInfo(member).name : '';
       const details = entry.details || {};
       const detailParts = [];
       if (details.flight_number) detailParts.push(`Flight ${details.flight_number}`);
       if (details.carrier) detailParts.push(details.carrier);
       const detailStr = detailParts.length > 0 ? ` · ${escapeHtml(detailParts.join(' · '))}` : '';
 
+      // Show all travelers if available, otherwise fall back to single user
+      let travelerNames = '';
+      if (entry.logistics_travelers && entry.logistics_travelers.length > 0) {
+        travelerNames = entry.logistics_travelers
+          .map((lt) => { const m = membersById[lt.member_id]; return m ? getMemberDisplayInfo(m).name : ''; })
+          .filter(Boolean)
+          .join(', ');
+      } else if (entry.user_id && membersByUserId[entry.user_id]) {
+        travelerNames = getMemberDisplayInfo(membersByUserId[entry.user_id]).name;
+      }
+
       return `<div class="logistics-item">
         <span class="logistics-emoji">${emoji}</span>
         <span class="logistics-title">${escapeHtml(entry.title)}</span>
         ${time ? `<span class="logistics-time">${escapeHtml(time)}</span>` : ''}
-        ${memberName ? `<span class="logistics-person">${escapeHtml(memberName)}</span>` : ''}
+        ${travelerNames ? `<span class="logistics-person">${escapeHtml(travelerNames)}</span>` : ''}
         ${detailStr ? `<span class="logistics-detail">${detailStr}</span>` : ''}
       </div>`;
     }).join('');
@@ -236,7 +265,15 @@ export async function GET(request, { params }) {
 
     const hasContent = dayLogistics.length > 0 || dayEvents.length > 0 || arrivals.length > 0 || departures.length > 0;
 
-    return `<div class="day">
+    // Leg section header
+    const currentLeg = getLegForDay(dayStr);
+    let legHeaderHtml = '';
+    if (isMultiLeg && currentLeg && currentLeg.id !== lastLegId) {
+      lastLegId = currentLeg.id;
+      legHeaderHtml = `<div class="leg-header">${escapeHtml(currentLeg.destination)}</div>`;
+    }
+
+    return `${legHeaderHtml}<div class="day">
       <div class="day-header">
         <div class="day-label">
           <span class="day-name">${format(day, 'EEEE, MMMM d')}</span>
@@ -421,6 +458,18 @@ export async function GET(request, { params }) {
       color: #7B8FA8;
       margin-top: 2px;
       font-style: italic;
+    }
+    .leg-header {
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #C4A77D;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #C4A77D;
+    }
+    .leg-header:first-child {
+      margin-top: 0;
     }
     .free-day {
       color: #A0A8B4;

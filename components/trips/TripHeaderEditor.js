@@ -42,7 +42,8 @@ function resizeImage(file, maxWidth, quality) {
   });
 }
 
-export default function TripHeaderEditor({ trip }) {
+export default function TripHeaderEditor({ trip, legs = [] }) {
+  const isMultiLeg = legs.length > 1;
   const supabase = createClient();
   const router = useRouter();
   const fileInputRef = useRef(null);
@@ -109,6 +110,14 @@ export default function TripHeaderEditor({ trip }) {
 
       if (updateError) throw updateError;
 
+      // Sync single-leg destination with trip destination
+      if (!isMultiLeg && legs.length === 1) {
+        await supabase
+          .from('trip_legs')
+          .update({ destination: destination.trim() })
+          .eq('id', legs[0].id);
+      }
+
       setCoverFile(null);
       setRemoveCover(false);
       setSaving(false);
@@ -152,12 +161,21 @@ export default function TripHeaderEditor({ trip }) {
             placeholder="Trip name"
             style={{ fontSize: '1.25rem', fontWeight: 700 }}
           />
-          <input
-            className="v-form-input"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-            placeholder="Destination"
-          />
+          {isMultiLeg ? (
+            <div style={{ fontSize: '0.9rem', color: 'var(--v-pearl-dim)', padding: '6px 0' }}>
+              {destination}
+              <div style={{ fontSize: '0.75rem', fontStyle: 'italic', marginTop: 2 }}>
+                Managed via trip legs
+              </div>
+            </div>
+          ) : (
+            <input
+              className="v-form-input"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+              placeholder="Destination"
+            />
+          )}
           <textarea
             className="v-form-textarea"
             value={description}

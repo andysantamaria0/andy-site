@@ -8,11 +8,12 @@ const TYPE_EMOJI = {
   train: '🚆',
   bus: '🚌',
   car: '🚗',
+  ferry: '⛴️',
   accommodation: '🏠',
   other: '📦',
 };
 
-export default function LogisticsCard({ entry, member }) {
+export default function LogisticsCard({ entry, member, travelers = [] }) {
   const emoji = TYPE_EMOJI[entry.type] || TYPE_EMOJI.other;
   const details = entry.details || {};
   const profile = member?.profiles;
@@ -32,6 +33,7 @@ export default function LogisticsCard({ entry, member }) {
   }
 
   const time = getTimeDisplay();
+  const hasTravelers = travelers.length > 0;
 
   return (
     <div className="v-logistics-card">
@@ -47,7 +49,22 @@ export default function LogisticsCard({ entry, member }) {
           {member?.luggage_count > 0 && <span>{member.luggage_count} bag{member.luggage_count !== 1 ? 's' : ''}</span>}
         </div>
       </div>
-      {profile && (
+      {hasTravelers ? (
+        <div className="v-logistics-travelers">
+          {travelers.map((t, i) => (
+            <MemberAvatar
+              key={t.id || i}
+              member={{
+                display_name: t.display_name || t.name,
+                avatar_url: t.avatar_url || t.avatarUrl,
+                email: t.email,
+                color: t.color,
+              }}
+              size={24}
+            />
+          ))}
+        </div>
+      ) : profile ? (
         <div className="v-logistics-card-member">
           <MemberAvatar
             member={{
@@ -59,7 +76,7 @@ export default function LogisticsCard({ entry, member }) {
             size={24}
           />
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

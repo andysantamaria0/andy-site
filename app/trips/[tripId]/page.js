@@ -7,6 +7,7 @@ import TripDatesEditor from '../../../components/trips/TripDatesEditor';
 import FeaturedToggle from '../../../components/trips/FeaturedToggle';
 import TripCodeEditor from '../../../components/trips/TripCodeEditor';
 import HappeningNowInline from '../../../components/trips/HappeningNowInline';
+import LegManager from '../../../components/trips/LegManager';
 import { loadFeatures, isFeatureEnabled } from '../../../lib/features';
 import InviteLinkButton from '../../../components/trips/InviteLinkButton';
 import NotchReveal from '../../../components/NotchReveal';
@@ -36,8 +37,23 @@ export default async function TripOverviewPage({ params }) {
     .order('joined_at', { ascending: true });
 
   const { data: { user } } = await supabase.auth.getUser();
+  // Fetch trip legs with member assignments
+  const { data: legs } = await supabase
+    .from('trip_legs')
+    .select(`
+      *,
+      trip_leg_members (
+        id,
+        member_id,
+        staying_at
+      )
+    `)
+    .eq('trip_id', tripId)
+    .order('leg_order', { ascending: true });
+
   const myMembership = (members || []).find((m) => m.user_id === user?.id);
   const isOwner = myMembership?.role === 'owner';
+  const isMultiLeg = (legs || []).length > 1;
 
   const [featureMap, { data: profile }] = await Promise.all([
     loadFeatures(),
@@ -84,7 +100,7 @@ export default async function TripOverviewPage({ params }) {
         </div>
 
         <div className="v-overview-card">
-          <div className="v-overview-card-label">Destination</div>
+          <div className="v-overview-card-label">{isMultiLeg ? 'Route' : 'Destination'}</div>
           <div className="v-overview-card-value" style={{ fontSize: '1.125rem' }}>
             {trip.destination}
           </div>
@@ -126,46 +142,72 @@ export default async function TripOverviewPage({ params }) {
       {/* Happening Now */}
       {showHappeningNow && <HappeningNowInline />}
 
+      {/* Leg Manager (owner only, multi-leg or button to add) */}
+      {isOwner && (
+        <LegManager tripId={tripId} legs={legs || []} members={members || []} />
+      )}
+
       {/* Stay Timeline */}
-      <StayTimeline trip={trip} members={members} />
+      <StayTimeline trip={trip} members={members} legs={legs || []} />
 
       {/* Members */}
       <h2 className="v-section-title">Who&apos;s Going</h2>
       <div className="v-members-list">
         {(() => {
           const allMembers = members || [];
-          const hasAccommodations = allMembers.some((m) => m.staying_at);
-          if (!hasAccommodations) {
-            return allMembers.map((member) => {
-              const info = getMemberDisplayInfo(member);
-              return (
-                <div key={member.id} className="v-member-row">
-                  <MemberAvatar
-                    member={{
-                      display_name: info.name,
-                      avatar_url: info.avatarUrl,
-                      email: info.email,
-                      color: info.color,
-                    }}
-                  />
-                  <div className="v-member-info">
-                    <div className="v-member-name">{info.name}</div>
-                    <span className={`v-badge ${member.role === 'owner' ? 'v-badge-owner' : 'v-badge-member'}`}>
-                      {member.role}
-                    </span>
-                  </div>
-                  {member.stay_start && member.stay_end ? (
-                    <div className="v-member-dates">
-                      {formatDateRange(member.stay_start, member.stay_end)}
-                    </div>
-                  ) : (
-                    <div className="v-member-dates" style={{ fontStyle: 'italic', opacity: 0.5 }}>
-                      Dates not set
+          const allLegs = legs || [];
+
+          // Build a map of member_id -> list of leg destinations
+          const memberLegMap = {};
+          for (const leg of allLegs) {
+            for (const tlm of (leg.trip_leg_members || [])) {
+              if (!memberLegMap[tlm.member_id]) memberLegMap[tlm.member_id] = [];
+              memberLegMap[tlm.member_id].push(leg.destination);
+            }
+          }
+
+          function renderMemberRow(member) {
+            const info = getMemberDisplayInfo(member);
+            const memberLegs = memberLegMap[member.id] || [];
+            return (
+              <div key={member.id} className="v-member-row">
+                <MemberAvatar
+                  member={{
+                    display_name: info.name,
+                    avatar_url: info.avatarUrl,
+                    email: info.email,
+                    color: info.color,
+                  }}
+                />
+                <div className="v-member-info">
+                  <div className="v-member-name">{info.name}</div>
+                  <span className={`v-badge ${member.role === 'owner' ? 'v-badge-owner' : 'v-badge-member'}`}>
+                    {member.role}
+                  </span>
+                  {isMultiLeg && memberLegs.length > 0 && (
+                    <div className="v-leg-badges">
+                      {memberLegs.map((dest, i) => (
+                        <span key={i} className="v-leg-badge">{dest}</span>
+                      ))}
                     </div>
                   )}
                 </div>
-              );
-            });
+                {member.stay_start && member.stay_end ? (
+                  <div className="v-member-dates">
+                    {formatDateRange(member.stay_start, member.stay_end)}
+                  </div>
+                ) : (
+                  <div className="v-member-dates" style={{ fontStyle: 'italic', opacity: 0.5 }}>
+                    Dates not set
+                  </div>
+                )}
+              </div>
+            );
+          }
+
+          const hasAccommodations = allMembers.some((m) => m.staying_at);
+          if (!hasAccommodations) {
+            return allMembers.map(renderMemberRow);
           }
           const grouped = {};
           for (const member of allMembers) {
@@ -183,36 +225,7 @@ export default async function TripOverviewPage({ params }) {
               <div className="v-accommodation-group-label">
                 {key || 'Not specified'}
               </div>
-              {grouped[key].map((member) => {
-                const info = getMemberDisplayInfo(member);
-                return (
-                  <div key={member.id} className="v-member-row">
-                    <MemberAvatar
-                      member={{
-                        display_name: info.name,
-                        avatar_url: info.avatarUrl,
-                        email: info.email,
-                        color: info.color,
-                      }}
-                    />
-                    <div className="v-member-info">
-                      <div className="v-member-name">{info.name}</div>
-                      <span className={`v-badge ${member.role === 'owner' ? 'v-badge-owner' : 'v-badge-member'}`}>
-                        {member.role}
-                      </span>
-                    </div>
-                    {member.stay_start && member.stay_end ? (
-                      <div className="v-member-dates">
-                        {formatDateRange(member.stay_start, member.stay_end)}
-                      </div>
-                    ) : (
-                      <div className="v-member-dates" style={{ fontStyle: 'italic', opacity: 0.5 }}>
-                        Dates not set
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+              {grouped[key].map(renderMemberRow)}
             </div>
           ));
         })()}

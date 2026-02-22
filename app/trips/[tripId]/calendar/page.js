@@ -26,68 +26,85 @@ export default async function CalendarPage({ params }) {
     .eq('id', tripId)
     .single();
 
-  const { data: members } = await supabase
-    .from('trip_members')
-    .select(`
-      *,
-      profiles:user_id (
-        display_name,
-        avatar_url,
-        email
-      )
-    `)
-    .eq('trip_id', tripId)
-    .order('joined_at', { ascending: true });
-
-  const { data: events } = await supabase
-    .from('events')
-    .select(`
-      *,
-      event_attendees (
-        id,
-        member_id
-      ),
-      event_cost_splits (
-        id,
-        member_id,
-        amount,
-        percentage
-      ),
-      event_invites (
-        id,
-        name,
-        email,
-        phone
-      )
-    `)
-    .eq('trip_id', tripId)
-    .order('event_date', { ascending: true })
-    .order('start_time', { ascending: true, nullsFirst: false });
-
-  const { data: logistics } = await supabase
-    .from('logistics')
-    .select(`
-      *,
-      profiles:user_id (
-        display_name,
-        avatar_url,
-        email
-      )
-    `)
-    .eq('trip_id', tripId)
-    .order('start_time', { ascending: true, nullsFirst: false });
+  const [{ data: members }, { data: events }, { data: logistics }, { data: legs }] = await Promise.all([
+    supabase
+      .from('trip_members')
+      .select(`
+        *,
+        profiles:user_id (
+          display_name,
+          avatar_url,
+          email
+        )
+      `)
+      .eq('trip_id', tripId)
+      .order('joined_at', { ascending: true }),
+    supabase
+      .from('events')
+      .select(`
+        *,
+        event_attendees (
+          id,
+          member_id
+        ),
+        event_cost_splits (
+          id,
+          member_id,
+          amount,
+          percentage
+        ),
+        event_invites (
+          id,
+          name,
+          email,
+          phone
+        )
+      `)
+      .eq('trip_id', tripId)
+      .order('event_date', { ascending: true })
+      .order('start_time', { ascending: true, nullsFirst: false }),
+    supabase
+      .from('logistics')
+      .select(`
+        *,
+        profiles:user_id (
+          display_name,
+          avatar_url,
+          email
+        ),
+        logistics_travelers (
+          id,
+          member_id
+        )
+      `)
+      .eq('trip_id', tripId)
+      .order('start_time', { ascending: true, nullsFirst: false }),
+    supabase
+      .from('trip_legs')
+      .select(`
+        *,
+        trip_leg_members (
+          id,
+          member_id,
+          staying_at
+        )
+      `)
+      .eq('trip_id', tripId)
+      .order('leg_order', { ascending: true }),
+  ]);
 
   const membership = (members || []).find((m) => m.user_id === user?.id);
   const isOwner = membership?.role === 'owner';
 
   return (
     <div className="v-page">
-      <StayTimeline trip={trip} members={members} />
+      <StayTimeline trip={trip} members={members} legs={legs || []} />
       <CalendarViewToggle
         trip={trip}
         members={members || []}
         events={events || []}
         logistics={logistics || []}
+        legs={legs || []}
         isOwner={isOwner}
         tripId={tripId}
       />

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '../../lib/supabase/client';
 import { getNextColor } from '../../lib/utils/members';
 
-export default function AddMemberForm({ tripId, tripStart, tripEnd, existingMembers }) {
+export default function AddMemberForm({ tripId, tripStart, tripEnd, existingMembers, legs = [] }) {
   const supabase = createClient();
   const router = useRouter();
 
@@ -27,7 +27,7 @@ export default function AddMemberForm({ tripId, tripStart, tripEnd, existingMemb
 
     const color = getNextColor(existingMembers);
 
-    const { error: insertError } = await supabase
+    const { data: newMember, error: insertError } = await supabase
       .from('trip_members')
       .insert({
         trip_id: tripId,
@@ -39,13 +39,23 @@ export default function AddMemberForm({ tripId, tripStart, tripEnd, existingMemb
         stay_start: stayStart || null,
         stay_end: stayEnd || null,
         color,
-      });
+      })
+      .select('id')
+      .single();
 
     setSaving(false);
 
     if (insertError) {
       setError(insertError.message);
     } else {
+      // Auto-assign new member to all legs
+      if (newMember && legs.length > 0) {
+        const legAssignments = legs.map((leg) => ({
+          leg_id: leg.id,
+          member_id: newMember.id,
+        }));
+        await supabase.from('trip_leg_members').insert(legAssignments);
+      }
       // Send invite email if member has an email
       if (email.trim()) {
         fetch(`/api/trips/${tripId}/invite`, {

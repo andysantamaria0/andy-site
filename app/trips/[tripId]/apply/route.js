@@ -92,40 +92,75 @@ export async function POST(request, { params }) {
 
   // Add logistics entries
   if (logistics && logistics.length > 0) {
-    // Get members to match person names to user IDs
+    // Get members to match person names to user IDs and member IDs
     const { data: members } = await supabase
       .from('trip_members')
-      .select('user_id, display_name, email, profiles:user_id(display_name, email)')
+      .select('id, user_id, display_name, email, profiles:user_id(display_name, email)')
       .eq('trip_id', tripId);
 
-    for (const entry of logistics) {
-      // Try to match person to a member
-      const personName = (entry.person_name || '').toLowerCase().trim();
-      const matched = personName ? (members || []).find((m) => {
+    // Get trip legs for leg_destination matching
+    const { data: tripLegs } = await supabase
+      .from('trip_legs')
+      .select('id, destination')
+      .eq('trip_id', tripId);
+
+    function matchMember(personName) {
+      const nameLower = (personName || '').toLowerCase().trim();
+      if (!nameLower) return null;
+      return (members || []).find((m) => {
         const name = (m.profiles?.display_name || m.display_name || '').toLowerCase();
         const email = (m.profiles?.email || m.email || '').toLowerCase();
-        return name.includes(personName) || personName.includes(name) || email.includes(personName);
-      }) : null;
+        return name.includes(nameLower) || nameLower.includes(name) || email.includes(nameLower);
+      });
+    }
 
-      if (!matched || !matched.user_id) {
-        results.errors.push(`Could not match "${entry.person_name}" to a trip member for logistics "${entry.title}". Skipped.`);
+    function matchLeg(legDestination) {
+      if (!legDestination || !tripLegs) return null;
+      const destLower = legDestination.toLowerCase().trim();
+      return tripLegs.find((l) => l.destination.toLowerCase().includes(destLower) || destLower.includes(l.destination.toLowerCase()));
+    }
+
+    for (const entry of logistics) {
+      // Match all person_names (or fall back to person_name)
+      const personNames = entry.person_names || (entry.person_name ? [entry.person_name] : []);
+      const matchedMembers = personNames.map(matchMember).filter(Boolean);
+
+      // Use first matched person as primary user_id (backward compat)
+      const primaryMember = matchedMembers.find((m) => m.user_id) || matchedMembers[0];
+
+      if (!primaryMember || !primaryMember.user_id) {
+        results.errors.push(`Could not match "${personNames.join(', ')}" to a trip member for logistics "${entry.title}". Skipped.`);
         continue;
       }
 
-      const { error } = await supabase.from('logistics').insert({
+      // Match leg destination
+      const matchedLeg = matchLeg(entry.leg_destination);
+
+      const validTypes = ['flight', 'train', 'bus', 'car', 'ferry', 'accommodation', 'other'];
+      const type = validTypes.includes(entry.type) ? entry.type : 'other';
+
+      const { data: logisticsRow, error } = await supabase.from('logistics').insert({
         trip_id: tripId,
-        user_id: matched.user_id,
-        type: entry.type || 'other',
-        title: entry.title || `${entry.type || 'Item'} for ${entry.person_name}`,
+        user_id: primaryMember.user_id,
+        type,
+        title: entry.title || `${entry.type || 'Item'} for ${personNames[0] || 'unknown'}`,
         details: entry.details || {},
         start_time: entry.start_time || null,
         end_time: entry.end_time || null,
         notes: entry.notes || null,
-      });
+        leg_id: matchedLeg?.id || null,
+      }).select('id').single();
 
       if (error) {
         results.errors.push(`Failed to add logistics "${entry.title}": ${error.message}`);
       } else {
+        // Insert logistics_travelers for all matched members
+        const travelerRows = matchedMembers
+          .map((m) => ({ logistics_id: logisticsRow.id, member_id: m.id }))
+          .filter((r, i, arr) => arr.findIndex((x) => x.member_id === r.member_id) === i);
+        if (travelerRows.length > 0) {
+          await supabase.from('logistics_travelers').insert(travelerRows);
+        }
         results.logistics_added++;
       }
     }
@@ -138,6 +173,20 @@ export async function POST(request, { params }) {
       .from('trip_members')
       .select('id, user_id, display_name, email, profiles:user_id(display_name, email)')
       .eq('trip_id', tripId);
+
+    // Get trip legs for leg_destination matching (reuse if already fetched above)
+    let eventLegs = null;
+    const { data: fetchedEventLegs } = await supabase
+      .from('trip_legs')
+      .select('id, destination')
+      .eq('trip_id', tripId);
+    eventLegs = fetchedEventLegs;
+
+    function matchEventLeg(legDestination) {
+      if (!legDestination || !eventLegs) return null;
+      const destLower = legDestination.toLowerCase().trim();
+      return eventLegs.find((l) => l.destination.toLowerCase().includes(destLower) || destLower.includes(l.destination.toLowerCase()));
+    }
 
     for (const entry of events) {
       const validCategories = ['dinner_out', 'dinner_home', 'activity', 'outing', 'party', 'sightseeing', 'other'];
@@ -156,6 +205,8 @@ export async function POST(request, { params }) {
         }
       }
 
+      const matchedLeg = matchEventLeg(entry.leg_destination);
+
       const { data: newEvent, error: eventError } = await supabase
         .from('events')
         .insert({
@@ -169,6 +220,7 @@ export async function POST(request, { params }) {
           ...placeData,
           notes: entry.notes || null,
           created_by: user.id,
+          leg_id: matchedLeg?.id || null,
         })
         .select('id')
         .single();

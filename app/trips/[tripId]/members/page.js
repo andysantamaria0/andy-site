@@ -18,21 +18,36 @@ export default async function MembersPage({ params }) {
     .eq('id', tripId)
     .single();
 
-  const { data: members } = await supabase
-    .from('trip_members')
-    .select(`
-      *,
-      profiles:user_id (
-        display_name,
-        avatar_url,
-        email
-      )
-    `)
-    .eq('trip_id', tripId)
-    .order('joined_at', { ascending: true });
+  const [{ data: members }, { data: legs }] = await Promise.all([
+    supabase
+      .from('trip_members')
+      .select(`
+        *,
+        profiles:user_id (
+          display_name,
+          avatar_url,
+          email
+        )
+      `)
+      .eq('trip_id', tripId)
+      .order('joined_at', { ascending: true }),
+    supabase
+      .from('trip_legs')
+      .select(`
+        *,
+        trip_leg_members (
+          id,
+          member_id,
+          staying_at
+        )
+      `)
+      .eq('trip_id', tripId)
+      .order('leg_order', { ascending: true }),
+  ]);
 
   const myMembership = (members || []).find((m) => m.user_id === user.id);
   const isOwner = myMembership?.role === 'owner';
+  const isMultiLeg = (legs || []).length > 1;
 
   return (
     <div className="v-page">
@@ -56,6 +71,7 @@ export default async function MembersPage({ params }) {
           tripStart={trip?.start_date}
           tripEnd={trip?.end_date}
           existingMembers={members || []}
+          legs={legs || []}
         />
       )}
 
@@ -88,6 +104,8 @@ export default async function MembersPage({ params }) {
                     member={member}
                     tripStart={trip?.start_date}
                     tripEnd={trip?.end_date}
+                    legs={legs || []}
+                    tripId={tripId}
                   />
                 ))}
               </div>

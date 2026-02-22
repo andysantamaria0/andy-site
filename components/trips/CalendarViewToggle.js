@@ -18,8 +18,10 @@ function useIsMobile(breakpoint = 600) {
   return isMobile;
 }
 
-export default function CalendarViewToggle({ trip, members, events, logistics, isOwner, tripId }) {
+export default function CalendarViewToggle({ trip, members, events, logistics, legs = [], isOwner, tripId }) {
   const isMobile = useIsMobile();
+  const isMultiLeg = legs.length > 1;
+  const [selectedLegId, setSelectedLegId] = useState(null); // null = All
 
   const defaultView = useMemo(() => {
     if (trip.start_date && trip.end_date) {
@@ -43,8 +45,40 @@ export default function CalendarViewToggle({ trip, members, events, logistics, i
     }
   }, [isMobile, defaultView, userOverride]);
 
+  // Filter events and logistics by selected leg
+  const filteredEvents = useMemo(() => {
+    if (!selectedLegId) return events;
+    return events.filter((e) => e.leg_id === selectedLegId);
+  }, [events, selectedLegId]);
+
+  const filteredLogistics = useMemo(() => {
+    if (!selectedLegId) return logistics;
+    return logistics.filter((l) => l.leg_id === selectedLegId);
+  }, [logistics, selectedLegId]);
+
   return (
     <div>
+      {/* Leg filter tabs (multi-leg only) */}
+      {isMultiLeg && (
+        <div className="v-leg-filter-tabs">
+          <button
+            className={`v-leg-filter-tab ${!selectedLegId ? 'v-leg-filter-tab-active' : ''}`}
+            onClick={() => setSelectedLegId(null)}
+          >
+            All
+          </button>
+          {legs.map((leg) => (
+            <button
+              key={leg.id}
+              className={`v-leg-filter-tab ${selectedLegId === leg.id ? 'v-leg-filter-tab-active' : ''}`}
+              onClick={() => setSelectedLegId(leg.id)}
+            >
+              {leg.destination}
+            </button>
+          ))}
+        </div>
+      )}
+
       <div className="v-view-toggle">
         <button
           className={`v-view-toggle-btn ${view === 'list' ? 'v-view-toggle-btn-active' : ''}`}
@@ -81,24 +115,25 @@ export default function CalendarViewToggle({ trip, members, events, logistics, i
         <CalendarDayList
           trip={trip}
           members={members}
-          events={events}
-          logistics={logistics}
+          events={filteredEvents}
+          logistics={filteredLogistics}
+          legs={legs}
           isOwner={isOwner}
         />
       ) : view === 'week' ? (
         <CalendarWeekView
           trip={trip}
           members={members}
-          events={events}
-          logistics={logistics}
+          events={filteredEvents}
+          logistics={filteredLogistics}
           isOwner={isOwner}
         />
       ) : (
         <CalendarMonthGrid
           trip={trip}
           members={members}
-          events={events}
-          logistics={logistics}
+          events={filteredEvents}
+          logistics={filteredLogistics}
           isOwner={isOwner}
         />
       )}

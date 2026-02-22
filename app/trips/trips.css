@@ -5052,3 +5052,199 @@ select.v-form-input {
     padding: 16px 20px;
   }
 }
+
+/* =====================
+   Trip Legs & Multi-Person Logistics
+   ===================== */
+
+/* Timeline leg bands */
+.v-timeline-legs {
+  display: flex;
+  position: relative;
+  margin-bottom: 8px;
+  height: 24px;
+}
+
+.v-timeline-leg-band {
+  position: absolute;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--v-champagne);
+  background: rgba(196, 167, 125, 0.1);
+  border-radius: 4px;
+  border: 1px solid rgba(196, 167, 125, 0.25);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0 6px;
+}
+
+.v-timeline-leg-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(196, 167, 125, 0.3);
+  z-index: 1;
+}
+
+/* Leg Manager */
+.v-leg-manager {
+  margin-bottom: 32px;
+}
+
+.v-leg-manager-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.v-leg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.v-leg-card {
+  background: var(--v-surface);
+  border-radius: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--v-pearl-faint);
+}
+
+.v-leg-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.v-leg-card-destination {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--v-pearl);
+}
+
+.v-leg-card-dates {
+  font-size: 0.8rem;
+  color: var(--v-pearl-dim);
+  margin-top: 2px;
+}
+
+.v-leg-card-members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--v-pearl-faint);
+}
+
+.v-leg-member-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--v-pearl-dim);
+}
+
+.v-leg-member-toggle input[type="checkbox"] {
+  accent-color: var(--v-champagne);
+}
+
+.v-leg-member-name {
+  font-size: 0.8rem;
+}
+
+/* Leg badges on member cards */
+.v-leg-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.v-leg-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: rgba(196, 167, 125, 0.15);
+  color: var(--v-champagne);
+  border: 1px solid rgba(196, 167, 125, 0.25);
+}
+
+/* Multi-person logistics travelers (stacked avatars) */
+.v-logistics-travelers {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.v-logistics-travelers > * {
+  margin-left: -6px;
+  border: 2px solid var(--v-nuit);
+  border-radius: 50%;
+}
+
+.v-logistics-travelers > *:first-child {
+  margin-left: 0;
+}
+
+/* Leg checkboxes in admin member dates */
+.v-leg-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+
+/* Calendar leg filter tabs */
+.v-leg-filter-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.v-leg-filter-tab {
+  padding: 4px 12px;
+  border-radius: 16px;
+  border: 1px solid var(--v-pearl-faint);
+  background: transparent;
+  color: var(--v-pearl-dim);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--v-fast) var(--v-ease);
+  font-family: inherit;
+}
+
+.v-leg-filter-tab:hover {
+  border-color: var(--v-champagne);
+  color: var(--v-pearl);
+}
+
+.v-leg-filter-tab-active {
+  background: var(--v-champagne);
+  color: var(--v-nuit);
+  border-color: var(--v-champagne);
+  font-weight: 600;
+}
+
+/* Calendar leg section header */
+.v-calendar-leg-header {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--v-champagne);
+  padding: 12px 0 6px;
+  border-bottom: 1px solid rgba(196, 167, 125, 0.3);
+  margin-bottom: 8px;
+}

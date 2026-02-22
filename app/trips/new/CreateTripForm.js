@@ -47,18 +47,34 @@ export default function CreateTripForm() {
     }
 
     // Add creator as owner member
-    const { error: memberError } = await supabase.from('trip_members').insert({
+    const { data: member, error: memberError } = await supabase.from('trip_members').insert({
       trip_id: trip.id,
       user_id: user.id,
       role: 'owner',
       stay_start: start_date || null,
       stay_end: end_date || null,
-    });
+    }).select('id').single();
 
     if (memberError) {
       setError('Trip created but failed to add you as owner. Please try refreshing.');
       setLoading(false);
       return;
+    }
+
+    // Create default leg matching trip destination/dates
+    const { data: leg } = await supabase.from('trip_legs').insert({
+      trip_id: trip.id,
+      destination,
+      start_date: start_date || null,
+      end_date: end_date || null,
+      leg_order: 1,
+    }).select('id').single();
+
+    if (leg) {
+      await supabase.from('trip_leg_members').insert({
+        leg_id: leg.id,
+        member_id: member.id,
+      });
     }
 
     router.push(`/trips/${trip.id}`);

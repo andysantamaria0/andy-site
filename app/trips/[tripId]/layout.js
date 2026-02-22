@@ -86,6 +86,13 @@ export default async function TripLayout({ children, params }) {
     .eq('trip_id', tripId)
     .eq('status', 'pending');
 
+  // Fetch trip legs
+  const { data: tripLegs } = await supabase
+    .from('trip_legs')
+    .select('id, destination, start_date, end_date, leg_order')
+    .eq('trip_id', tripId)
+    .order('leg_order', { ascending: true });
+
   // Happening Now: fetch today's events, logistics, and members
   const today = new Date().toISOString().split('T')[0];
   const [{ data: hnEvents }, { data: hnLogistics }, { data: hnMembers }] = await Promise.all([
@@ -96,7 +103,7 @@ export default async function TripLayout({ children, params }) {
       .eq('event_date', today),
     supabase
       .from('logistics')
-      .select('id, type, title, details, start_time, end_time, profiles:user_id(display_name, avatar_url)')
+      .select('id, type, title, details, start_time, end_time, profiles:user_id(display_name, avatar_url), logistics_travelers(member_id)')
       .eq('trip_id', tripId)
       .gte('end_time', `${today}T00:00:00`)
       .lte('start_time', `${today}T23:59:59`),
@@ -133,7 +140,7 @@ export default async function TripLayout({ children, params }) {
       )}
       <div className="v-trip-header">
         {isOwner ? (
-          <TripHeaderEditor trip={trip} />
+          <TripHeaderEditor trip={trip} legs={tripLegs || []} />
         ) : (
           <>
             <div className="v-trip-header-top">

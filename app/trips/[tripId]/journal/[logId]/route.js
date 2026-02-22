@@ -92,6 +92,7 @@ export async function POST(request, { params }) {
     { data: messages },
     { data: photos },
     { data: members },
+    { data: legs },
   ] = await Promise.all([
     serviceSupabase.from('events').select('*').eq('trip_id', tripId).eq('event_date', logDate),
     serviceSupabase.from('logistics').select('*').eq('trip_id', tripId)
@@ -102,6 +103,10 @@ export async function POST(request, { params }) {
       .gte('uploaded_at', `${logDate}T00:00:00`).lte('uploaded_at', `${logDate}T23:59:59`),
     serviceSupabase.from('trip_members')
       .select('*, profiles:user_id(display_name, avatar_url, email)').eq('trip_id', tripId),
+    serviceSupabase.from('trip_legs')
+      .select('destination, start_date, end_date, leg_order')
+      .eq('trip_id', tripId)
+      .order('leg_order', { ascending: true }),
   ]);
 
   const arrivals = (members || []).filter((m) => m.stay_start === logDate);
@@ -117,6 +122,7 @@ export async function POST(request, { params }) {
     departures,
     members: members || [],
     date: logDate,
+    legs: legs || [],
   });
 
   try {
