@@ -36,27 +36,44 @@
 
 ## Day 1 — Architecture + Design System Foundation
 
-### David (System Architecture)
-- Set up Supabase project: schema, tables, RLS policies
-- Auth flow design (COPPA-lite: kid alias, no real names, parent email gating)
-- Deployment pipeline: Vercel project linked to stand-app repo, preview deploys on PR
-- PostHog integration: project setup, basic event tracking wired in
-- Printify API connection: test account, verify mockup generation flow works end-to-end
+### Session 1: Kickoff with Lauren + David (1 hour)
+**Label: PRODUCT ALIGNMENT**
+- [ ] Intros — David meets Lauren
+- [ ] Walk through the sprint plan and 13-day timeline
+- [ ] Confirm accounts and credentials are all shared (flag any missing)
+- [ ] Review Chris's existing codebase — anything we should preserve or reference?
+- [ ] Confirm standkids.com domain setup plan
 
-### Andy (Design System + Scaffold)
+### Session 2: Product Decisions with Lauren (1 hour)
+**Label: PRODUCT DECISIONS**
+- [ ] Review branching doc — sign off on categories + subcategories for both age groups
+- [ ] Review proposed Printify product list (8 products) — add or cut?
+- [ ] Decide parent gate flow: kid hands device to mom, or mom gets an email link?
+- [ ] Define the Stand Coach voice/tone — walk through examples, pick a direction
+- [ ] Quick pass on vibe/style options — how many brand kits? What are they called?
+
+### Session 3: Architecture Review with David (30 min)
+**Label: TECHNICAL SYNC**
+- [ ] Align on Supabase schema based on product decisions from Session 2
+- [ ] Auth flow design — how COPPA-lite works given the parent gate decision
+- [ ] Divide Day 1-2 work: David on infra, Andy on design system
+
+### Solo Work: Andy (rest of day)
+**Label: BUILD**
 - Initialize Next.js app with project structure
-- Design system foundations: typography, color tokens, spacing built on existing Stand brand (logo, palette, fonts)
+- Design system foundations: typography, color tokens, spacing built on existing Stand brand
 - Component library scaffolding: buttons, inputs, chips, cards
 - Two-pane layout scaffold (left: input, right: live build)
 - Mobile/iPad responsive foundation
 - Verify deployment pipeline works (push → Vercel preview)
 
-### Kickoff Call with Lauren (Day 1)
-- Walk through P0 product decisions
-- Confirm categories + subcategories
-- Align on coach voice/tone
-- Decide parent gate flow
-- Review first 3 days plan, flag any blockers
+### Solo Work: David (rest of day)
+**Label: BUILD**
+- Set up Supabase project: schema, tables, RLS policies
+- Auth flow design (COPPA-lite: kid alias, no real names, parent email gating)
+- Deployment pipeline: Vercel project linked to stand-app repo, preview deploys on PR
+- PostHog integration: project setup, basic event tracking wired in
+- Printify API connection: test account, verify mockup generation flow works end-to-end
 
 ---
 
