@@ -74,7 +74,7 @@ export default function AdminMemberDates({ member, tripStart, tripEnd, legs = []
   const changed = stayStart !== (member.stay_start || '') || stayEnd !== (member.stay_end || '') || stayingAt !== (member.staying_at || '');
 
   return (
-    <div className="v-admin-member-row">
+    <div className={`v-admin-member-row${isMultiLeg ? ' v-admin-member-row-multileg' : ''}`}>
       <div style={{ flex: 1 }}>
         <div className="v-member-name">
           {info.name}
@@ -90,20 +90,20 @@ export default function AdminMemberDates({ member, tripStart, tripEnd, legs = []
       </div>
 
       {isMultiLeg ? (
-        <div className="v-admin-dates">
-          <div className="v-leg-checkboxes">
+        <div className="v-leg-chips-section">
+          <div className="v-leg-chips">
             {legs.map((leg) => {
               const isAssigned = assignedLegIds.has(leg.id);
               return (
-                <label key={leg.id} className="v-leg-member-toggle" style={{ fontSize: '0.8rem' }}>
-                  <input
-                    type="checkbox"
-                    checked={isAssigned}
-                    onChange={() => toggleLeg(leg.id, isAssigned)}
-                    disabled={toggling}
-                  />
-                  <span>{leg.destination}</span>
-                </label>
+                <button
+                  key={leg.id}
+                  type="button"
+                  className={`v-leg-chip${isAssigned ? ' v-leg-chip-active' : ''}`}
+                  onClick={() => toggleLeg(leg.id, isAssigned)}
+                  disabled={toggling}
+                >
+                  {isAssigned ? '\u2713' : ''} {leg.destination}
+                </button>
               );
             })}
           </div>

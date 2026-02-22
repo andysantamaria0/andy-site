@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '../../lib/supabase/client';
 import { getNextColor } from '../../lib/utils/members';
@@ -10,6 +10,9 @@ export default function AddMemberForm({ tripId, tripStart, tripEnd, existingMemb
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState('search'); // 'search' | 'detail'
+  const [contacts, setContacts] = useState([]);
+  const [query, setQuery] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -17,6 +20,55 @@ export default function AddMemberForm({ tripId, tripStart, tripEnd, existingMemb
   const [stayEnd, setStayEnd] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
+  const searchRef = useRef(null);
+
+  useEffect(() => {
+    if (open) {
+      fetch('/api/contacts')
+        .then((r) => r.json())
+        .then((data) => { if (Array.isArray(data)) setContacts(data); })
+        .catch(() => {});
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (open && mode === 'search' && searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, [open, mode]);
+
+  function reset() {
+    setMode('search');
+    setQuery('');
+    setName('');
+    setEmail('');
+    setPhone('');
+    setStayStart('');
+    setStayEnd('');
+    setError(null);
+  }
+
+  function selectContact(contact) {
+    setName(contact.display_name);
+    setEmail(contact.email || '');
+    setPhone(contact.phone || '');
+    setMode('detail');
+  }
+
+  function selectNewName() {
+    setName(query.trim());
+    setMode('detail');
+  }
+
+  const filtered = query.trim()
+    ? contacts.filter((c) =>
+        c.display_name.toLowerCase().includes(query.trim().toLowerCase())
+      )
+    : contacts;
+
+  const exactMatch = query.trim() && contacts.some(
+    (c) => c.display_name.toLowerCase() === query.trim().toLowerCase()
+  );
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -62,15 +114,20 @@ export default function AddMemberForm({ tripId, tripStart, tripEnd, existingMemb
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email.trim(), name: name.trim() }),
-        }).catch(() => {
-          // Invite email is best-effort; don't block the flow
-        });
+        }).catch(() => {});
       }
-      setName('');
-      setEmail('');
-      setPhone('');
-      setStayStart('');
-      setStayEnd('');
+      // Save/update contact in background
+      fetch('/api/contacts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          display_name: name.trim(),
+          email: email.trim() || null,
+          phone: phone.trim() || null,
+        }),
+      }).catch(() => {});
+
+      reset();
       setOpen(false);
       router.refresh();
     }
@@ -80,7 +137,7 @@ export default function AddMemberForm({ tripId, tripStart, tripEnd, existingMemb
     return (
       <button
         className="v-btn v-btn-secondary"
-        onClick={() => setOpen(true)}
+        onClick={() => { reset(); setOpen(true); }}
         style={{ marginBottom: 16 }}
       >
         + Add Member
@@ -90,79 +147,152 @@ export default function AddMemberForm({ tripId, tripStart, tripEnd, existingMemb
 
   return (
     <div className="v-add-member-form" style={{ marginBottom: 16, padding: 16, background: 'var(--v-surface)', borderRadius: 12 }}>
-      <form onSubmit={handleSubmit}>
-        <div className="v-form-group">
-          <label className="v-form-label">Name *</label>
+      {mode === 'search' ? (
+        <div>
           <input
+            ref={searchRef}
             className="v-form-input"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="e.g. Sarah Miller"
-            required
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search or add someone..."
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && query.trim()) {
+                e.preventDefault();
+                if (filtered.length === 1) {
+                  selectContact(filtered[0]);
+                } else if (!exactMatch) {
+                  selectNewName();
+                }
+              }
+            }}
           />
-        </div>
 
-        <div className="v-form-row">
+          {query.trim() && filtered.length > 0 && (
+            <div className="v-contact-results">
+              {filtered.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  className="v-contact-row"
+                  onClick={() => selectContact(c)}
+                >
+                  <span className="v-contact-name">{c.display_name}</span>
+                  {c.email && <span className="v-contact-detail">{c.email}</span>}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {!query.trim() && contacts.length > 0 && (
+            <div className="v-contact-results">
+              {contacts.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  className="v-contact-row"
+                  onClick={() => selectContact(c)}
+                >
+                  <span className="v-contact-name">{c.display_name}</span>
+                  {c.email && <span className="v-contact-detail">{c.email}</span>}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {query.trim() && !exactMatch && (
+            <button
+              type="button"
+              className="v-contact-row v-contact-new"
+              onClick={selectNewName}
+            >
+              Add <strong>{query.trim()}</strong> as new contact
+            </button>
+          )}
+
+          <div style={{ display: 'flex', gap: 12, marginTop: 12 }}>
+            <button className="v-btn v-btn-secondary" type="button" onClick={() => { reset(); setOpen(false); }}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit}>
           <div className="v-form-group">
-            <label className="v-form-label">Email</label>
+            <label className="v-form-label">Name *</label>
             <input
               className="v-form-input"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="sarah@example.com"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="e.g. Sarah Miller"
+              required
             />
           </div>
-          <div className="v-form-group">
-            <label className="v-form-label">Phone</label>
-            <input
-              className="v-form-input"
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="+1 555-1234"
-            />
-          </div>
-        </div>
 
-        <div className="v-form-row">
-          <div className="v-form-group">
-            <label className="v-form-label">Arrival</label>
-            <input
-              className="v-form-input"
-              type="date"
-              value={stayStart}
-              min={tripStart || undefined}
-              max={tripEnd || undefined}
-              onChange={(e) => setStayStart(e.target.value)}
-            />
+          <div className="v-form-row">
+            <div className="v-form-group">
+              <label className="v-form-label">Email</label>
+              <input
+                className="v-form-input"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="sarah@example.com"
+              />
+            </div>
+            <div className="v-form-group">
+              <label className="v-form-label">Phone</label>
+              <input
+                className="v-form-input"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="+1 555-1234"
+              />
+            </div>
           </div>
-          <div className="v-form-group">
-            <label className="v-form-label">Departure</label>
-            <input
-              className="v-form-input"
-              type="date"
-              value={stayEnd}
-              min={stayStart || tripStart || undefined}
-              max={tripEnd || undefined}
-              onChange={(e) => setStayEnd(e.target.value)}
-            />
+
+          <div className="v-form-row">
+            <div className="v-form-group">
+              <label className="v-form-label">Arrival</label>
+              <input
+                className="v-form-input"
+                type="date"
+                value={stayStart}
+                min={tripStart || undefined}
+                max={tripEnd || undefined}
+                onChange={(e) => setStayStart(e.target.value)}
+              />
+            </div>
+            <div className="v-form-group">
+              <label className="v-form-label">Departure</label>
+              <input
+                className="v-form-input"
+                type="date"
+                value={stayEnd}
+                min={stayStart || tripStart || undefined}
+                max={tripEnd || undefined}
+                onChange={(e) => setStayEnd(e.target.value)}
+              />
+            </div>
           </div>
-        </div>
 
-        {error && (
-          <div className="v-error" style={{ marginBottom: 12 }}>{error}</div>
-        )}
+          {error && (
+            <div className="v-error" style={{ marginBottom: 12 }}>{error}</div>
+          )}
 
-        <div style={{ display: 'flex', gap: 12 }}>
-          <button className="v-btn v-btn-primary" type="submit" disabled={saving || !name.trim()}>
-            {saving ? 'Adding...' : 'Add Member'}
-          </button>
-          <button className="v-btn v-btn-secondary" type="button" onClick={() => setOpen(false)}>
-            Cancel
-          </button>
-        </div>
-      </form>
+          <div style={{ display: 'flex', gap: 12 }}>
+            <button className="v-btn v-btn-primary" type="submit" disabled={saving || !name.trim()}>
+              {saving ? 'Adding...' : 'Add Member'}
+            </button>
+            <button className="v-btn v-btn-secondary" type="button" onClick={() => setMode('search')}>
+              Back
+            </button>
+            <button className="v-btn v-btn-secondary" type="button" onClick={() => { reset(); setOpen(false); }}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      )}
     </div>
   );
 }

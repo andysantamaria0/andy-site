@@ -834,6 +834,7 @@ select.v-form-input {
   border: 1px solid var(--v-pearl-faint);
   border-radius: 2px;
   padding: 20px;
+  overflow: hidden;
 }
 
 .v-timeline-dates {
@@ -5057,11 +5058,27 @@ select.v-form-input {
    Trip Legs & Multi-Person Logistics
    ===================== */
 
-/* Timeline leg bands */
-.v-timeline-legs {
+/* Timeline leg bands — aligned with track area */
+.v-timeline-legs-row {
   display: flex;
-  position: relative;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 8px;
+}
+
+.v-timeline-legs-spacer {
+  width: 100px;
+  flex-shrink: 0;
+}
+
+.v-timeline-legs-spacer-end {
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.v-timeline-legs {
+  flex: 1;
+  position: relative;
   height: 24px;
 }
 
@@ -5233,7 +5250,57 @@ select.v-form-input {
   margin-left: 0;
 }
 
-/* Leg checkboxes in admin member dates */
+/* Leg chips in admin member dates (multi-leg mode) */
+.v-leg-chips-section {
+  margin-top: 6px;
+}
+
+.v-leg-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.v-leg-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 99px;
+  border: 1px solid var(--v-pearl-faint);
+  background: transparent;
+  color: var(--v-pearl-dim);
+  cursor: pointer;
+  transition: all var(--v-fast) var(--v-ease);
+  white-space: nowrap;
+}
+
+.v-leg-chip:hover {
+  border-color: var(--v-champagne);
+  color: var(--v-champagne);
+}
+
+.v-leg-chip-active {
+  background: rgba(196, 167, 125, 0.15);
+  border-color: rgba(196, 167, 125, 0.4);
+  color: var(--v-champagne);
+}
+
+.v-leg-chip:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Multi-leg member row — column layout */
+.v-admin-member-row-multileg {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+/* Legacy — keep for backward compat */
 .v-leg-checkboxes {
   display: flex;
   flex-wrap: wrap;
@@ -5271,6 +5338,63 @@ select.v-form-input {
   color: var(--v-nuit);
   border-color: var(--v-champagne);
   font-weight: 600;
+}
+
+/* ---- Contact search (Add Member) ---- */
+
+.v-contact-results {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 8px;
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 8px;
+  background: var(--v-nuit);
+}
+
+.v-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--v-pearl-faint);
+  color: var(--v-pearl);
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--v-fast) var(--v-ease);
+}
+
+.v-contact-row:last-child {
+  border-bottom: none;
+}
+
+.v-contact-row:hover {
+  background: rgba(196, 167, 125, 0.08);
+}
+
+.v-contact-name {
+  font-weight: 500;
+}
+
+.v-contact-detail {
+  font-size: 0.75rem;
+  color: var(--v-pearl-dim);
+}
+
+.v-contact-new {
+  font-size: 0.8125rem;
+  color: var(--v-champagne);
+  margin-top: 6px;
+  padding: 8px 12px;
+  border: 1px dashed rgba(196, 167, 125, 0.3);
+  border-radius: 8px;
+}
+
+.v-contact-new:hover {
+  background: rgba(196, 167, 125, 0.06);
 }
 
 /* Calendar leg section header */

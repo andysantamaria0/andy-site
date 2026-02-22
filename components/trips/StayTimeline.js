@@ -1,4 +1,4 @@
-import { differenceInDays, parseISO, format } from 'date-fns';
+import { differenceInDays, parseISO, format, min as dateMin, max as dateMax } from 'date-fns';
 import { getMemberDisplayInfo } from '../../lib/utils/members';
 
 const MEMBER_COLORS = ['#4A35D7', '#FF7D73', '#DFB288', '#2D8659', '#4285F4', '#E040FB', '#FF6D00', '#00BFA5'];
@@ -15,7 +15,21 @@ export default function StayTimeline({ trip, members, legs = [] }) {
   }
   if (isNaN(tripStart) || isNaN(tripEnd)) return null;
 
-  const totalDays = differenceInDays(tripEnd, tripStart);
+  // Expand the timeline range to include all leg dates
+  let rangeStart = tripStart;
+  let rangeEnd = tripEnd;
+  for (const leg of legs) {
+    if (leg.start_date) {
+      const s = parseISO(leg.start_date);
+      if (!isNaN(s)) rangeStart = dateMin([rangeStart, s]);
+    }
+    if (leg.end_date) {
+      const e = parseISO(leg.end_date);
+      if (!isNaN(e)) rangeEnd = dateMax([rangeEnd, e]);
+    }
+  }
+
+  const totalDays = differenceInDays(rangeEnd, rangeStart);
 
   if (totalDays <= 0) return null;
 
@@ -50,7 +64,7 @@ export default function StayTimeline({ trip, members, legs = [] }) {
   const legBands = isMultiLeg ? legs.filter((l) => l.start_date && l.end_date).map((leg) => {
     const legStart = parseISO(leg.start_date);
     const legEnd = parseISO(leg.end_date);
-    const leftPct = Math.max(0, (differenceInDays(legStart, tripStart) / totalDays) * 100);
+    const leftPct = Math.max(0, (differenceInDays(legStart, rangeStart) / totalDays) * 100);
     const widthPct = Math.min(100 - leftPct, (differenceInDays(legEnd, legStart) / totalDays) * 100);
     return { ...leg, leftPct, widthPct };
   }) : [];
@@ -61,26 +75,30 @@ export default function StayTimeline({ trip, members, legs = [] }) {
       <div className="v-timeline">
         {/* Leg destination bands (multi-leg only) */}
         {isMultiLeg && legBands.length > 0 && (
-          <div className="v-timeline-legs">
-            {legBands.map((band) => (
-              <div
-                key={band.id}
-                className="v-timeline-leg-band"
-                style={{
-                  left: `${band.leftPct}%`,
-                  width: `${band.widthPct}%`,
-                }}
-              >
-                {band.destination}
-              </div>
-            ))}
+          <div className="v-timeline-legs-row">
+            <div className="v-timeline-legs-spacer" />
+            <div className="v-timeline-legs">
+              {legBands.map((band) => (
+                <div
+                  key={band.id}
+                  className="v-timeline-leg-band"
+                  style={{
+                    left: `${band.leftPct}%`,
+                    width: `${band.widthPct}%`,
+                  }}
+                >
+                  {band.destination}
+                </div>
+              ))}
+            </div>
+            <div className="v-timeline-legs-spacer-end" />
           </div>
         )}
 
         {/* Date labels */}
         <div className="v-timeline-dates">
-          <span>{format(tripStart, 'MMM d')}</span>
-          <span>{format(tripEnd, 'MMM d')}</span>
+          <span>{format(rangeStart, 'MMM d')}</span>
+          <span>{format(rangeEnd, 'MMM d')}</span>
         </div>
 
         {/* Track for full trip */}
@@ -99,7 +117,7 @@ export default function StayTimeline({ trip, members, legs = [] }) {
             const memberStart = parseISO(member.stay_start);
             const memberEnd = parseISO(member.stay_end);
 
-            const leftPct = Math.max(0, (differenceInDays(memberStart, tripStart) / totalDays) * 100);
+            const leftPct = Math.max(0, (differenceInDays(memberStart, rangeStart) / totalDays) * 100);
             const widthPct = Math.min(100 - leftPct, (differenceInDays(memberEnd, memberStart) / totalDays) * 100);
             const color = member.color || MEMBER_COLORS[i % MEMBER_COLORS.length];
 
