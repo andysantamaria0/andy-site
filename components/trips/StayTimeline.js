@@ -1,3 +1,4 @@
+import React from 'react';
 import { differenceInDays, parseISO, format, min as dateMin, max as dateMax } from 'date-fns';
 import { getMemberDisplayInfo } from '../../lib/utils/members';
 
@@ -60,13 +61,13 @@ export default function StayTimeline({ trip, members, legs = [] }) {
 
   const isMultiLeg = legs.length > 1;
 
-  // Compute leg band positions
+  // Compute leg band flex weights (proportional to duration)
   const legBands = isMultiLeg ? legs.filter((l) => l.start_date && l.end_date).map((leg) => {
     const legStart = parseISO(leg.start_date);
     const legEnd = parseISO(leg.end_date);
+    const days = Math.max(1, differenceInDays(legEnd, legStart)); // min 1 day for 0-day legs
     const leftPct = Math.max(0, (differenceInDays(legStart, rangeStart) / totalDays) * 100);
-    const widthPct = Math.min(100 - leftPct, (differenceInDays(legEnd, legStart) / totalDays) * 100);
-    return { ...leg, leftPct, widthPct };
+    return { ...leg, days, leftPct };
   }) : [];
 
   return (
@@ -78,18 +79,24 @@ export default function StayTimeline({ trip, members, legs = [] }) {
           <div className="v-timeline-legs-row">
             <div className="v-timeline-legs-spacer" />
             <div className="v-timeline-legs">
-              {legBands.map((band) => (
-                <div
-                  key={band.id}
-                  className="v-timeline-leg-band"
-                  style={{
-                    left: `${band.leftPct}%`,
-                    width: `${band.widthPct}%`,
-                  }}
-                >
-                  {band.destination}
-                </div>
-              ))}
+              {legBands.map((band, i) => {
+                // Compute gap before this band (for legs that don't start right after previous)
+                const prevEnd = i > 0 ? legBands[i - 1].days + differenceInDays(parseISO(legBands[i - 1].start_date), rangeStart) : 0;
+                const thisStart = differenceInDays(parseISO(band.start_date), rangeStart);
+                const gapDays = Math.max(0, thisStart - prevEnd);
+                return (
+                  <React.Fragment key={band.id}>
+                    {gapDays > 0 && <div style={{ flex: gapDays }} />}
+                    <div
+                      className="v-timeline-leg-band"
+                      style={{ flex: band.days }}
+                      title={band.destination}
+                    >
+                      {band.destination}
+                    </div>
+                  </React.Fragment>
+                );
+              })}
             </div>
             <div className="v-timeline-legs-spacer-end" />
           </div>
