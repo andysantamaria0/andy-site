@@ -6,8 +6,18 @@ Decisions that need Lauren's sign-off. Update status as decisions are made.
 
 ## P0 — Need before we start building
 
-- [ ] **Final business categories + subcategories** — sign off on the Alex/Petra doc. The 6 categories are set (Sports, Toys & Games, Fashion & Style, Cats & Dogs, Beauty & Design, Cooking + Other) but specific products per category need confirmation.
-- [ ] **Printify product catalog** — which ~10-15 products to curate per category (t-shirts, mugs, stickers, tote bags, etc.)
+- [ ] **Final business categories + subcategories** — sign off on the Alex/Petra branching doc (stand-platform-branching.xlsx). The 6 categories are set (Sports, Toys & Games, Fashion & Style, Cats & Dogs, Beauty & Design, Cooking + Other). Subcategories and products are mapped per age group (8-12 and 12-15). Near finalized — review with Lauren.
+- [ ] **Printify product catalog** — the branching doc already maps which products use Printify. Proposed starting set for the pilot (review with Lauren):
+  1. T-Shirts (Fashion → Clothing) — both age groups
+  2. Sweatshirts (Fashion → Clothing) — both age groups
+  3. Posters & Artwork (Beauty → Home Decor)
+  4. Backpacks (Fashion → Bags)
+  5. Decorated Makeup Bags (Beauty → Makeup)
+  6. Dog Bandanas (Cats & Dogs → Dogs)
+  7. Hair Bows & Scrunchies (Sports → Dance & Gym / Fashion → Accessories)
+  8. Dance Bags (Sports → Dance & Gym)
+
+  Other Printify products in the doc (golf balls, polos, sneakers/crocs, candles, tie-dyed washcloths, cat collar charms) are more niche — add if Lauren wants them.
 - [ ] **Coach voice/tone** — how does the Stand Coach talk to kids? Hype-y? Chill? Encouraging teacher? Sets the copy tone for the entire onboarding.
 - [ ] **Parent gate flow** — does the kid hand the device to mom, or does mom get an email link? Very different builds.
 
