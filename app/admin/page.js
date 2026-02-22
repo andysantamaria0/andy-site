@@ -1,4 +1,5 @@
 import { createClient } from '../../lib/supabase/server';
+import { createClient as createServiceClient } from '@supabase/supabase-js';
 import FeatureList from './FeatureList';
 import AccessRequestList from './AccessRequestList';
 
@@ -12,11 +13,15 @@ const CATEGORY_LABELS = {
 
 export default async function AdminPage() {
   const supabase = await createClient();
+  const service = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
 
   const [{ data: features }, { data: permissions }, { data: accessRequests }] = await Promise.all([
     supabase.from('features').select('*').order('category').order('label'),
     supabase.from('feature_role_permissions').select('*'),
-    supabase.from('access_requests').select('*').eq('status', 'pending').order('created_at', { ascending: false }),
+    service.from('access_requests').select('*').eq('status', 'pending').order('created_at', { ascending: false }),
   ]);
 
   // Group features by category
