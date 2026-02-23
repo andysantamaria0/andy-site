@@ -113,15 +113,6 @@ export default function StayTimeline({ trip, members, legs = [] }) {
 
         {/* Track for full trip */}
         <div className="v-timeline-track" style={isMultiLeg ? { position: 'relative' } : undefined}>
-          {/* Leg boundary dividers */}
-          {isMultiLeg && legData.slice(1).map((leg) => (
-            <div
-              key={`divider-${leg.id}`}
-              className="v-timeline-leg-divider"
-              style={{ left: `${leg.leftPct}%` }}
-            />
-          ))}
-
           {membersWithDates.map((member, i) => {
             const info = getMemberDisplayInfo(member);
             const memberStart = parseISO(member.stay_start);

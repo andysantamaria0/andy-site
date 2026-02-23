@@ -4,6 +4,32 @@ import { NextResponse } from 'next/server';
 
 const anthropic = new Anthropic();
 const URL_REGEX = /^https?:\/\//i;
+const MAPS_SHORT_RE = /^https?:\/\/maps\.app\.goo\.gl\//i;
+const MAPS_PLACE_RE = /\/maps\/place\/([^/@]+)/;
+
+// Follow redirects on short URLs (e.g. maps.app.goo.gl) to get the real URL
+async function resolveRedirects(url) {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+    const res = await fetch(url, {
+      signal: controller.signal,
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      redirect: 'follow',
+    });
+    clearTimeout(timeout);
+    return res.url || url;
+  } catch {
+    return url;
+  }
+}
+
+// Extract place name from Google Maps URL path: /maps/place/Place+Name/
+function extractMapsPlaceName(url) {
+  const match = url.match(MAPS_PLACE_RE);
+  if (!match) return null;
+  return decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
 
 async function fetchPageText(url) {
   try {
@@ -100,7 +126,7 @@ export async function POST(request, { params }) {
       .insert({
         trip_id: tripId,
         leg_id: leg_id || null,
-        suggestion_type: 'logistics',
+        suggestion_type: 'event',
         title: input,
         payload: {},
         source: 'manual',
@@ -113,43 +139,60 @@ export async function POST(request, { params }) {
     return NextResponse.json(data, { status: 201 });
   }
 
-  // URL: fetch the page and use AI to extract structured data
+  // Resolve short-URL redirects (e.g. maps.app.goo.gl → full google.com/maps URL)
+  let resolvedUrl = input;
+  if (MAPS_SHORT_RE.test(input)) {
+    resolvedUrl = await resolveRedirects(input);
+  }
+
+  // Extract place name from Google Maps URLs
+  const mapsPlaceName = extractMapsPlaceName(resolvedUrl);
+
+  // Fetch page content
   const page = await fetchPageText(input);
 
-  let title = input;
+  let title = mapsPlaceName || input;
   let subtitle = null;
-  let suggestionType = 'logistics';
+  let suggestionType = 'event';
   let priceAmount = null;
   let priceCurrency = null;
   let priceNote = null;
   let payload = {};
 
-  if (page && (page.title || page.meta || page.text)) {
+  // Build context for the AI — include place name from URL if page content is sparse
+  const hasPageContent = page && (page.title || page.meta || page.text);
+  const pageIsGeneric = !page?.title || /^google maps$/i.test(page?.title?.trim());
+
+  const extraContext = mapsPlaceName
+    ? `\nPLACE NAME (from URL): ${mapsPlaceName}`
+    : '';
+
+  if (hasPageContent || mapsPlaceName) {
     try {
       const message = await anthropic.messages.create({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 512,
         messages: [{
           role: 'user',
-          content: `Extract structured information from this travel listing page. The URL is: ${input}
-
-PAGE TITLE: ${page.title}
-
-META TAGS:
-${page.meta}
-
-PAGE TEXT (truncated):
-${page.text}
+          content: `Extract structured information from this travel-related link. The URL is: ${resolvedUrl}
+${extraContext}
+${!pageIsGeneric ? `\nPAGE TITLE: ${page?.title || ''}` : ''}
+${!pageIsGeneric && page?.meta ? `\nMETA TAGS:\n${page.meta}` : ''}
+${!pageIsGeneric && page?.text ? `\nPAGE TEXT (truncated):\n${page.text}` : ''}
 
 Respond with ONLY valid JSON:
 {
-  "title": "short, clean name of the property/restaurant/activity (NOT the full page title)",
+  "title": "short, clean name of the place/property/restaurant/activity (NOT the full page title or URL)",
   "subtitle": "brief description — location, key features, capacity, etc (1 line max)",
-  "type": "logistics|event|expense — use logistics for accommodation/transport, event for restaurants/activities",
+  "type": "event|logistics|expense — classify as:
+    event = restaurants, bars, cafes, attractions, tours, activities, museums, shows, beaches, parks, landmarks, things to do
+    logistics = hotels, apartments, villas, flights, ferries, trains, car rentals, airports, transit
+    expense = shopping, tickets with a clear price, fees
+    When in doubt, use event.",
   "price_amount": 123.45 or null,
   "price_currency": "USD" or "EUR" etc, or null,
   "price_note": "per night" or "per person" or "total" etc, or null,
-  "accommodation_type": "villa|apartment|hotel|hostel|other" or null,
+  "accommodation_type": "villa|apartment|hotel|hostel|other" or null (only if logistics/accommodation),
   "dates": "any check-in/check-out or event dates mentioned, or null",
   "location": "city/area if mentioned, or null"
 }`
@@ -160,9 +203,9 @@ Respond with ONLY valid JSON:
       const jsonMatch = responseText.match(/\{[\s\S]*\}/);
       const parsed = JSON.parse(jsonMatch ? jsonMatch[0] : responseText);
 
-      title = parsed.title || page.title || input;
+      title = parsed.title || mapsPlaceName || page?.title || input;
       subtitle = parsed.subtitle || null;
-      suggestionType = parsed.type || 'logistics';
+      suggestionType = parsed.type || 'event';
       priceAmount = parsed.price_amount || null;
       priceCurrency = parsed.price_currency || null;
       priceNote = parsed.price_note || null;
@@ -172,8 +215,8 @@ Respond with ONLY valid JSON:
         location: parsed.location,
       };
     } catch {
-      // AI failed — fall back to page title
-      title = page.title || input;
+      // AI failed — fall back to place name or page title
+      title = mapsPlaceName || page?.title || input;
     }
   }
 
