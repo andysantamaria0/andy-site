@@ -3,6 +3,8 @@ import { createClient as createServiceClient } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 import { formatDateRange } from '../../../../lib/utils/dates';
 import Link from 'next/link';
+import { captureEvent } from '../../../../lib/utils/posthog';
+import { notifyOwner } from '../../../../lib/utils/notifyOwner';
 
 export async function generateMetadata({ params }) {
   const { tripCode } = await params;
@@ -110,6 +112,8 @@ export default async function JoinTripPage({ params }) {
         .from('trip_members')
         .update({ user_id: user.id })
         .eq('id', emailMembership.id);
+      captureEvent(user.id, 'trip_joined', { tripId: trip.id, tripName: trip.name, method: 'auto_claim' });
+      notifyOwner(`Vialoure: ${user.email} joined ${trip.name}`);
       redirect(`/trips/${trip.id}?onboard=1`);
     }
 

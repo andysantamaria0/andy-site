@@ -4,6 +4,7 @@ import { createClient } from '../../lib/supabase/server';
 import SignOutButton from './SignOutButton';
 import HeaderAvatar from './HeaderAvatar';
 import { Toaster } from 'react-hot-toast';
+import PostHogProvider from '../../components/trips/PostHogProvider';
 
 export const metadata = {
   title: 'Vialoure — Trip Planning',
@@ -16,7 +17,7 @@ export default async function TripsLayout({ children }) {
 
   // Login page renders without the header chrome
   if (!user) {
-    return <>{children}</>;
+    return <PostHogProvider>{children}</PostHogProvider>;
   }
 
   // Fetch profile for display name/avatar/role
@@ -27,6 +28,7 @@ export default async function TripsLayout({ children }) {
     .single();
 
   return (
+    <PostHogProvider userId={user.id} userEmail={user.email}>
     <div className="v-layout">
       <header className="v-header">
         <div className="v-header-brand">
@@ -61,5 +63,6 @@ export default async function TripsLayout({ children }) {
         }}
       />
     </div>
+    </PostHogProvider>
   );
 }

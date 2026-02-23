@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '../../lib/supabase/client';
+import posthog from 'posthog-js';
 
 export default function ClaimForm({ membershipId, tripId }) {
   const supabase = createClient();
@@ -49,6 +50,12 @@ export default function ClaimForm({ membershipId, tripId }) {
       setError(updateError.message);
     } else {
       setClaimed(true);
+      try { posthog.capture('trip_joined', { tripId, method: 'claim_form' }); } catch (_) {}
+      fetch('/api/notify-claim', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tripId }),
+      }).catch(() => {});
     }
   }
 

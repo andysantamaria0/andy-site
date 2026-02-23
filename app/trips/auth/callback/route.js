@@ -1,6 +1,8 @@
 import { createClient } from '../../../../lib/supabase/server';
 import { createClient as createServiceClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
+import { captureEvent } from '../../../../lib/utils/posthog';
+import { notifyOwner } from '../../../../lib/utils/notifyOwner';
 
 export async function GET(request) {
   const { searchParams, origin } = new URL(request.url);
@@ -15,6 +17,14 @@ export async function GET(request) {
     if (!error) {
       const { data: { user } } = await supabase.auth.getUser();
       if (user?.email) {
+        captureEvent(user.id, 'auth_completed', { email: user.email });
+
+        // Notify owner if this is a new signup (created in last 60s)
+        const createdAt = new Date(user.created_at);
+        const isNewSignup = Date.now() - createdAt.getTime() < 60_000;
+        if (isNewSignup) {
+          notifyOwner(`Vialoure: New signup — ${user.email}`);
+        }
         // Check invite status using service role (bypasses RLS)
         const service = createServiceClient(
           process.env.NEXT_PUBLIC_SUPABASE_URL,
