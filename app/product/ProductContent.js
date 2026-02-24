@@ -1,8 +1,14 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import Link from 'next/link';
 import NotchReveal from '../../components/NotchReveal';
+
+const INTRO_LINES = [
+  'I\u2019m obsessed with those early stages where you\u2019re constantly in search of the Promise Delivery, the moment when the user gets what they came for.',
+  'With 12 years of doing this, from Square to the frontier of AI engineering, the chaos almost feels natural now.',
+  'I partner with founders when it\u2019s early (AKA messy). Together, we work to will their vision into existence.',
+  'Like the user, the founder has flashes of moments where what they imagined is now in their hands. I\u2019ll help with that part too.',
+];
 
 const SECTIONS = [
   { id: 'about', number: 'I', label: 'About' },
@@ -49,6 +55,19 @@ export default function ProductContent() {
   const [openSections, setOpenSections] = useState({ about: true });
   const navRef = useRef(null);
   const isScrollingRef = useRef(false);
+  const [activeLine, setActiveLine] = useState(-1);
+
+  // Stagger the typewriter lines
+  const lineBaseDelay = 0.5;
+  const lineStep = 0.35;
+  const sigDelay = lineBaseDelay + INTRO_LINES.length * lineStep + 0.3;
+
+  useEffect(() => {
+    const timers = INTRO_LINES.map((_, i) =>
+      setTimeout(() => setActiveLine(i), (lineBaseDelay + i * lineStep) * 1000)
+    );
+    return () => timers.forEach(clearTimeout);
+  }, []);
 
   const toggleSection = useCallback((id) => {
     setOpenSections(prev => ({ ...prev, [id]: !prev[id] }));
@@ -126,9 +145,22 @@ export default function ProductContent() {
           <h1 className="prod-name">Andy Santamaria</h1>
           <p className="prod-title">Product Leader &middot; Product Engineer</p>
           <div className="prod-rule" />
-          <p className="prod-intro">
-            I&apos;m obsessed with those early stages where you&apos;re constantly in search of the <em>Promise Delivery</em>, the moment when the user gets what they came for. With 12 years of doing this, from Square to the frontier of AI engineering, the chaos <em>almost</em> feels natural now. I partner with founders when it&apos;s early (AKA messy). Together, we work to will their vision into existence. Like the user, the founder has flashes of moments where what they imagined is now in their hands. I&apos;ll help with that part too.
-          </p>
+          <div className="prod-card">
+            <div className="prod-card-body">
+              {INTRO_LINES.map((line, i) => (
+                <p
+                  key={i}
+                  className="prod-card-line"
+                  style={{ animationDelay: `${lineBaseDelay + i * lineStep}s` }}
+                >
+                  {line}{i === activeLine && <span className="prod-card-cursor" />}
+                </p>
+              ))}
+            </div>
+            <div className="prod-card-sig" style={{ animationDelay: `${sigDelay}s` }}>
+              &mdash;Andy
+            </div>
+          </div>
         </header>
 
         {/* Section 1: Background */}
