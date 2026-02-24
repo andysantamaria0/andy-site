@@ -127,7 +127,7 @@ export default function ProductContent() {
           <p className="prod-title">Product Leader &middot; Product Engineer</p>
           <div className="prod-rule" />
           <p className="prod-intro">
-            I build products for early-stage startups. Design, code, product thinking, deployment &mdash; end to end. 12 years of doing this, from Square to the frontier of AI engineering. I partner with founders at the earliest, messiest stages and turn the vision into something real.
+            I&apos;m obsessed with those early stages where you&apos;re constantly in search of the <em>Promise Delivery</em>, the moment when the user gets what they came for. With 12 years of doing this, from Square to the frontier of AI engineering, the chaos <em>almost</em> feels natural now. I partner with founders when it&apos;s early (AKA messy). Together, we work to will their vision into existence. Like the user, the founder has flashes of moments where what they imagined is now in their hands. I&apos;ll help with that part too.
           </p>
         </header>
 
