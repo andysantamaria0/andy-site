@@ -1,6 +1,7 @@
 import './globals.css';
 import './trips/trips.css';
 import './stand/stand.css';
+import './product/product.css';
 import './system-design/system-design.css';
 
 export const viewport = {

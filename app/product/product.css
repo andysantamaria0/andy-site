@@ -1,0 +1,654 @@
+/* ============================================
+   Product — Consulting Pitch Page
+   Uses Vialoure Grand Tour design system
+   ============================================ */
+
+.prod {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 20% 25%, rgba(196, 167, 125, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 75%, rgba(194, 59, 34, 0.04) 0%, transparent 55%),
+    var(--v-nuit, var(--bg));
+  color: var(--v-pearl, var(--text));
+}
+
+.prod-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 80px 24px 120px;
+}
+
+/* ---- Tab Navigation ---- */
+
+.prod-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--v-nuit, var(--bg));
+  border-bottom: 1px solid var(--v-pearl-faint, var(--border));
+  overflow: hidden;
+}
+
+.prod-nav::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 48px;
+  background: linear-gradient(to right, transparent, var(--v-nuit, var(--bg)));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.prod-nav-inner {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0 48px 0 max(24px, calc((100vw - 720px) / 2 + 24px));
+}
+
+.prod-nav-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.prod-nav-tab {
+  flex-shrink: 0;
+  padding: 12px 10px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--v-pearl-dim, var(--text-dim));
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.prod-nav-tab:hover {
+  color: var(--v-pearl, var(--text));
+}
+
+.prod-nav-tab-active {
+  color: var(--v-champagne, var(--accent));
+  border-bottom-color: var(--v-champagne, var(--accent));
+}
+
+.prod-nav-tab-num {
+  font-family: 'Special Elite', cursive;
+  margin-right: 5px;
+  font-size: 0.7rem;
+}
+
+/* ---- Header ---- */
+
+.prod-header {
+  margin-bottom: 64px;
+}
+
+.prod-dateline {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--v-champagne, var(--accent));
+  margin-bottom: 32px;
+  opacity: 0.7;
+}
+
+.prod-name {
+  font-family: 'Fraunces', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  color: var(--v-pearl, var(--text));
+}
+
+.prod-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  color: var(--v-champagne, var(--accent));
+  margin-bottom: 32px;
+}
+
+.prod-rule {
+  width: 48px;
+  height: 2px;
+  background-color: var(--v-cinnabar, var(--coral));
+  margin-bottom: 40px;
+}
+
+.prod-intro {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.21rem;
+  line-height: 1.75;
+  color: var(--v-pearl-dim, var(--text-muted));
+  max-width: 600px;
+}
+
+/* ---- Collapsible Sections ---- */
+
+.prod-section {
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--v-pearl-faint, var(--border));
+}
+
+.prod-section:last-of-type {
+  border-bottom: none;
+}
+
+.prod-section-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 20px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--v-pearl, var(--text));
+  text-align: left;
+  transition: color 0.2s ease;
+}
+
+.prod-section-toggle:hover {
+  color: var(--v-champagne, var(--accent));
+}
+
+.prod-section-label {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.8rem;
+  color: var(--v-cinnabar, var(--coral));
+  min-width: 24px;
+}
+
+.prod-section-heading {
+  font-family: 'Fraunces', serif;
+  font-size: 1.375rem;
+  font-weight: 600;
+  flex: 1;
+}
+
+.prod-section-chevron {
+  width: 16px;
+  height: 16px;
+  color: var(--v-pearl-dim, var(--text-dim));
+  transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1);
+  flex-shrink: 0;
+}
+
+.prod-section-open .prod-section-chevron {
+  transform: rotate(180deg);
+}
+
+.prod-section-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.prod-section-open .prod-section-body {
+  grid-template-rows: 1fr;
+}
+
+.prod-section-inner {
+  overflow: hidden;
+}
+
+.prod-section-content {
+  padding-bottom: 32px;
+}
+
+.prod-section-content p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.155rem;
+  line-height: 1.75;
+  color: var(--v-pearl-dim, var(--text-muted));
+  margin-bottom: 16px;
+}
+
+.prod-section-content p:last-child {
+  margin-bottom: 0;
+}
+
+.prod-section-content a {
+  color: var(--v-champagne, var(--accent));
+  text-decoration: none;
+  border-bottom: 1px solid rgba(196, 167, 125, 0.3);
+  transition: border-color 0.2s ease;
+}
+
+.prod-section-content a:hover {
+  border-bottom-color: var(--v-champagne, var(--accent));
+}
+
+.prod-section-content strong {
+  color: var(--v-pearl, var(--text));
+  font-weight: 600;
+}
+
+/* ---- Projects ---- */
+
+.prod-project {
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--v-pearl-faint, var(--border));
+}
+
+.prod-project:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.prod-project-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--v-pearl, var(--text));
+  margin-bottom: 4px;
+}
+
+.prod-project-tag {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--v-cinnabar, var(--coral));
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+
+.prod-project-body {
+  margin-bottom: 16px;
+}
+
+.prod-project-body p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: var(--v-pearl-dim, var(--text-muted));
+  margin-bottom: 12px;
+}
+
+.prod-project-body p:last-child {
+  margin-bottom: 0;
+}
+
+.prod-project-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.prod-stack-item {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--v-mistral, var(--text-dim));
+  padding: 4px 10px;
+  border: 1px solid var(--v-pearl-faint, var(--border));
+  border-radius: 2px;
+}
+
+/* ---- Links ---- */
+
+.prod-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--v-champagne, var(--accent));
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  padding: 6px 0;
+  margin-right: 24px;
+  transition: color 0.2s ease;
+}
+
+.prod-link:hover {
+  color: var(--v-pearl, var(--text));
+}
+
+.prod-link-arrow {
+  transition: transform 0.2s ease;
+}
+
+.prod-link:hover .prod-link-arrow {
+  transform: translateX(3px);
+}
+
+/* ---- Term highlights ---- */
+
+.prod-term {
+  color: var(--v-champagne, var(--accent));
+  font-style: italic;
+}
+
+/* ---- Phases ---- */
+
+.prod-phases {
+  margin-top: 24px;
+}
+
+.prod-phase {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--v-pearl-faint, var(--border));
+}
+
+.prod-phase:last-child {
+  border-bottom: none;
+}
+
+.prod-phase-num {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.875rem;
+  color: var(--v-cinnabar, var(--coral));
+  min-width: 20px;
+  padding-top: 2px;
+  opacity: 0.8;
+}
+
+.prod-phase-content {
+  flex: 1;
+}
+
+.prod-phase-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--v-pearl, var(--text));
+  margin-bottom: 4px;
+}
+
+.prod-phase-content p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--v-pearl-dim, var(--text-muted));
+  margin-bottom: 0;
+}
+
+/* ---- Team ---- */
+
+.prod-team-member {
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--v-pearl-faint, var(--border));
+}
+
+.prod-team-member:last-of-type {
+  border-bottom: none;
+}
+
+.prod-team-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--v-pearl, var(--text));
+  margin-bottom: 2px;
+}
+
+.prod-team-name a {
+  color: var(--v-pearl, var(--text));
+  text-decoration: none;
+  border-bottom: 1px solid rgba(196, 167, 125, 0.3);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.prod-team-name a:hover {
+  color: var(--v-champagne, var(--accent));
+  border-bottom-color: var(--v-champagne, var(--accent));
+}
+
+.prod-team-role {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--v-champagne, var(--accent));
+  margin-bottom: 12px;
+  opacity: 0.8;
+}
+
+.prod-team-member p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: var(--v-pearl-dim, var(--text-muted));
+}
+
+/* ---- Collective Talent ---- */
+
+.prod-collective {
+  margin-top: 8px;
+  padding: 28px 24px;
+  border-radius: 2px;
+  background: var(--v-surface, #0F1D30);
+  border: 1px solid var(--v-pearl-faint, var(--border));
+}
+
+.prod-collective-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--v-cinnabar, var(--coral));
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+
+.prod-collective-intro {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--v-pearl-dim, var(--text-muted));
+  margin-bottom: 24px;
+}
+
+.prod-collective-member {
+  padding-top: 20px;
+  border-top: 1px solid var(--v-pearl-faint, var(--border));
+}
+
+.prod-collective-member-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.prod-collective-member-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--v-pearl, var(--text));
+}
+
+.prod-collective-member-name a {
+  color: var(--v-pearl, var(--text));
+  text-decoration: none;
+  border-bottom: 1px solid rgba(196, 167, 125, 0.3);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.prod-collective-member-name a:hover {
+  color: var(--v-champagne, var(--accent));
+  border-bottom-color: var(--v-champagne, var(--accent));
+}
+
+.prod-collective-member-role {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--v-mistral, var(--text-dim));
+}
+
+.prod-collective-member p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--v-pearl-dim, var(--text-muted));
+}
+
+/* ---- Writing ---- */
+
+.prod-writing-list {
+  margin: 16px 0 20px;
+}
+
+.prod-writing-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--v-pearl-faint, var(--border));
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.prod-writing-item:first-child {
+  border-top: 1px solid var(--v-pearl-faint, var(--border));
+}
+
+.prod-writing-title {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.05rem;
+  color: var(--v-pearl, var(--text));
+  transition: color 0.2s ease;
+}
+
+.prod-writing-item:hover .prod-writing-title {
+  color: var(--v-champagne, var(--accent));
+}
+
+.prod-writing-date {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  color: var(--v-mistral, var(--text-dim));
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  margin-left: 16px;
+}
+
+/* ---- CTA ---- */
+
+.prod-cta {
+  margin: 32px 0;
+}
+
+.prod-cta-btn {
+  display: inline-block;
+  padding: 14px 32px;
+  border-radius: 2px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--v-pearl, var(--text));
+  background: var(--v-royal, #4A35D7);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.prod-cta-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(74, 53, 215, 0.3);
+}
+
+/* ---- References ---- */
+
+.prod-refs {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--v-pearl-faint, var(--border));
+}
+
+.prod-refs-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--v-mistral, var(--text-dim));
+  margin-bottom: 8px;
+}
+
+.prod-refs p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(240, 237, 230, 0.35);
+  font-style: italic;
+}
+
+/* ---- Footer ---- */
+
+.prod-footer {
+  margin-top: 80px;
+  padding-top: 32px;
+  border-top: 1px solid var(--v-pearl-faint, var(--border));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prod-footer-mark {
+  color: var(--v-champagne, var(--accent));
+  opacity: 0.3;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 600px) {
+  .prod-container {
+    padding: 48px 20px 80px;
+  }
+
+  .prod-name {
+    font-size: 2rem;
+  }
+
+  .prod-intro {
+    font-size: 1.05rem;
+  }
+
+  .prod-section-heading {
+    font-size: 1.125rem;
+  }
+
+  .prod-section-content p,
+  .prod-project-body p {
+    font-size: 1rem;
+  }
+
+  .prod-writing-item {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .prod-writing-date {
+    margin-left: 0;
+  }
+}
