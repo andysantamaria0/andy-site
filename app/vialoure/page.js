@@ -222,45 +222,112 @@ function FlightsMockup() {
   );
 }
 
-function WhatsAppMockup() {
+function SmartPasteMockup() {
   return (
-    <div className="v-mock v-mock-wa">
-      <div className="v-mock-wa-bar">
-        <div className="v-mock-wa-bar-avatar">🏖</div>
-        <div>
-          <div className="v-mock-wa-bar-name">Nice Summer 2026</div>
-          <div className="v-mock-wa-bar-members">Sarah, James, Alex, Mia, Dan, Vialoure</div>
+    <div className="v-mock v-mock-paste">
+      <div className="v-mock-bar">
+        <span className="v-mock-bar-title">Smart Paste</span>
+        <span className="v-mock-bar-sub">Summer in Nice</span>
+      </div>
+      <div className="v-mock-paste-body">
+        {/* Input zone */}
+        <div className="v-mock-paste-input">
+          <div className="v-mock-paste-text">
+            Booking Confirmation — British Airways{'\n'}
+            Passenger: Sarah Williams{'\n'}
+            BA 341 LHR→NCE 15 Jun, 08:20→11:35{'\n'}
+            Confirmation: XKRM42
+          </div>
+          <div className="v-mock-paste-hint">Pasted from clipboard</div>
+        </div>
+        {/* Parsed results */}
+        <div className="v-mock-paste-results">
+          <div className="v-mock-paste-result-header">
+            <span className="v-mock-paste-check">✓</span>
+            <span>1 flight, 1 member update extracted</span>
+          </div>
+          <div className="v-mock-paste-item">
+            <span className="v-mock-paste-badge v-mock-paste-badge-flight">Flight</span>
+            <div className="v-mock-paste-item-info">
+              <div className="v-mock-paste-item-title">BA 341 · LHR → NCE</div>
+              <div className="v-mock-paste-item-meta">Sarah Williams · Jun 15, 08:20</div>
+            </div>
+          </div>
+          <div className="v-mock-paste-item">
+            <span className="v-mock-paste-badge v-mock-paste-badge-member">Member</span>
+            <div className="v-mock-paste-item-info">
+              <div className="v-mock-paste-item-title">Sarah Williams</div>
+              <div className="v-mock-paste-item-meta">Arrives Jun 15 · <span className="v-mock-paste-matched">Matched</span></div>
+            </div>
+          </div>
+          <div className="v-mock-paste-actions">
+            <span className="v-mock-paste-btn-apply">Apply Now</span>
+            <span className="v-mock-paste-btn-suggest">Save as Suggestions</span>
+          </div>
         </div>
       </div>
-      <div className="v-mock-wa-body">
-        <div className="v-mock-wa-msg v-mock-wa-msg-other">
-          <span className="v-mock-wa-sender">Sarah</span>
-          <div className="v-mock-wa-text">Just arrived at the villa!! The view is insane 😍</div>
-          <div className="v-mock-wa-time">3:42 PM</div>
-        </div>
-        <div className="v-mock-wa-msg v-mock-wa-msg-photo">
-          <span className="v-mock-wa-sender">Sarah</span>
-          <div className="v-mock-wa-photo-placeholder">
-            <div className="v-mock-wa-photo-gradient" />
-            <span className="v-mock-wa-photo-icon">📷</span>
-            <span className="v-mock-wa-photo-label">Sunset from the terrace</span>
+    </div>
+  );
+}
+
+function ExpensesMockup() {
+  return (
+    <div className="v-mock v-mock-expenses">
+      <div className="v-mock-bar">
+        <span className="v-mock-bar-title">Expenses</span>
+        <span className="v-mock-bar-sub">Summer in Nice</span>
+      </div>
+      <div className="v-mock-expenses-body">
+        {/* Summary row */}
+        <div className="v-mock-expenses-summary">
+          <div className="v-mock-expenses-total">
+            <div className="v-mock-expenses-total-label">Total</div>
+            <div className="v-mock-expenses-total-amount">€1,847</div>
           </div>
-          <div className="v-mock-wa-time">3:43 PM</div>
+          <div className="v-mock-expenses-per-person">
+            <div className="v-mock-expenses-pp-label">Per person</div>
+            <div className="v-mock-expenses-pp-amount">€307</div>
+          </div>
         </div>
-        <div className="v-mock-wa-msg v-mock-wa-msg-other">
-          <span className="v-mock-wa-sender">James</span>
-          <div className="v-mock-wa-text">We found the best pizza place near the port. Booking for everyone tomorrow?</div>
-          <div className="v-mock-wa-time">6:18 PM</div>
+        {/* Running tab */}
+        <div className="v-mock-expenses-list">
+          <div className="v-mock-expenses-row">
+            <span className="v-mock-expenses-emoji">🍽️</span>
+            <div className="v-mock-expenses-row-info">
+              <div className="v-mock-expenses-row-title">Le Plongeoir dinner</div>
+              <div className="v-mock-expenses-row-meta">Jun 17 · Paid by James</div>
+            </div>
+            <div className="v-mock-expenses-row-amount">€294</div>
+          </div>
+          <div className="v-mock-expenses-row">
+            <span className="v-mock-expenses-emoji">🚕</span>
+            <div className="v-mock-expenses-row-info">
+              <div className="v-mock-expenses-row-title">Airport transfer</div>
+              <div className="v-mock-expenses-row-meta">Jun 15 · Paid by Alex</div>
+            </div>
+            <div className="v-mock-expenses-row-amount">€65</div>
+          </div>
+          <div className="v-mock-expenses-row">
+            <span className="v-mock-expenses-emoji">🛒</span>
+            <div className="v-mock-expenses-row-info">
+              <div className="v-mock-expenses-row-title">Groceries &amp; wine</div>
+              <div className="v-mock-expenses-row-meta">Jun 16 · Paid by Sarah</div>
+            </div>
+            <div className="v-mock-expenses-row-amount">€112</div>
+          </div>
         </div>
-        <div className="v-mock-wa-msg v-mock-wa-msg-other">
-          <span className="v-mock-wa-sender">Mia</span>
-          <div className="v-mock-wa-text">Yes! Also Dan&apos;s flight got moved to 10:05 AM tomorrow fyi</div>
-          <div className="v-mock-wa-time">6:22 PM</div>
-        </div>
-        <div className="v-mock-wa-msg v-mock-wa-msg-concierge">
-          <span className="v-mock-wa-sender">Vialoure</span>
-          <div className="v-mock-wa-text">Got it — updated Dan&apos;s flight to IB 3042 departing 10:05 AM. I&apos;ve saved Sarah&apos;s terrace photo to the trip album. 📸</div>
-          <div className="v-mock-wa-time">6:22 PM</div>
+        {/* Settlement */}
+        <div className="v-mock-expenses-settle">
+          <div className="v-mock-expenses-settle-title">Settle up</div>
+          <div className="v-mock-expenses-settle-row">
+            <span>Mia → James</span>
+            <span className="v-mock-expenses-settle-amount">€45.20</span>
+          </div>
+          <div className="v-mock-expenses-settle-row">
+            <span>Dan → Sarah</span>
+            <span className="v-mock-expenses-settle-amount">€38.50</span>
+          </div>
+          <div className="v-mock-expenses-settle-links">Venmo · Cash App · Zelle</div>
         </div>
       </div>
     </div>
@@ -426,9 +493,52 @@ export default async function LandingPage() {
         </section>
       )}
 
+      {/* How It Works */}
+      <section className="v-landing-how">
+        <h2 className="v-landing-how-title">How it works</h2>
+        <div className="v-landing-how-steps">
+          <div className="v-landing-how-step">
+            <div className="v-landing-how-num">1</div>
+            <h3 className="v-landing-how-heading">Create a trip</h3>
+            <p className="v-landing-how-body">Name it, set the dates, add the destination.</p>
+          </div>
+          <div className="v-landing-how-step">
+            <div className="v-landing-how-num">2</div>
+            <h3 className="v-landing-how-heading">Invite your friends</h3>
+            <p className="v-landing-how-body">Share a link. They join and add their travel dates.</p>
+          </div>
+          <div className="v-landing-how-step">
+            <div className="v-landing-how-num">3</div>
+            <h3 className="v-landing-how-heading">Forward your bookings</h3>
+            <p className="v-landing-how-body">Paste a confirmation, drop a screenshot, forward an email. The concierge reads it all.</p>
+          </div>
+          <div className="v-landing-how-step">
+            <div className="v-landing-how-num">4</div>
+            <h3 className="v-landing-how-heading">Everything organizes itself</h3>
+            <p className="v-landing-how-body">Flights, hotels, events, expenses — extracted and sorted automatically.</p>
+          </div>
+        </div>
+      </section>
+
       {/* Features — Visual Showcase */}
       <section className="v-landing-showcase">
+        {/* 1. Smart Paste */}
         <div className="v-landing-showcase-row">
+          <div className="v-landing-showcase-text">
+            <h3 className="v-landing-showcase-heading">Paste anything, it just works</h3>
+            <p className="v-landing-showcase-body">
+              Drop in a booking confirmation, screenshot an Airbnb, forward a flight email. The concierge reads it instantly — extracts flights, hotels, dates, and travellers. One paste replaces twenty minutes of typing.
+            </p>
+          </div>
+          <div className="v-landing-showcase-visual">
+            <SmartPasteMockup />
+          </div>
+        </div>
+
+        <NotchReveal />
+
+        {/* 2. Calendar */}
+        <div className="v-landing-showcase-row v-landing-showcase-row-reverse">
           <div className="v-landing-showcase-text">
             <h3 className="v-landing-showcase-heading">The whole trip, at a glance</h3>
             <p className="v-landing-showcase-body">
@@ -442,11 +552,12 @@ export default async function LandingPage() {
 
         <NotchReveal />
 
+        {/* 3. Concierge + Inbox */}
         <div className="v-landing-showcase-wide">
           <div className="v-landing-showcase-wide-text">
             <h3 className="v-landing-showcase-heading">Your concierge, every channel</h3>
             <p className="v-landing-showcase-body">
-              Text a question, forward a flight confirmation, drop in an Airbnb link, leave a voice note. The concierge reads everything, extracts every detail, and answers instantly.
+              Text a question, forward a flight confirmation, drop in an Airbnb link, leave a voice note — or just mention it in the WhatsApp group. The concierge reads everything, extracts every detail, and answers instantly.
             </p>
           </div>
           <div className="v-landing-showcase-pair">
@@ -457,6 +568,22 @@ export default async function LandingPage() {
 
         <NotchReveal />
 
+        {/* 4. Expenses & Settlements */}
+        <div className="v-landing-showcase-row">
+          <div className="v-landing-showcase-text">
+            <h3 className="v-landing-showcase-heading">Split everything, settle once</h3>
+            <p className="v-landing-showcase-body">
+              Track every expense as it happens — dinners, taxis, groceries, tickets. At the end of the trip, one tap shows who owes whom. Settle up over Venmo, Cash App, or Zelle.
+            </p>
+          </div>
+          <div className="v-landing-showcase-visual">
+            <ExpensesMockup />
+          </div>
+        </div>
+
+        <NotchReveal />
+
+        {/* 5. Live Flights */}
         <div className="v-landing-showcase-row v-landing-showcase-row-reverse">
           <div className="v-landing-showcase-text">
             <h3 className="v-landing-showcase-heading">Live flights, happening now</h3>
@@ -471,23 +598,10 @@ export default async function LandingPage() {
 
         <NotchReveal />
 
+        {/* 6. Travel Log */}
         <div className="v-landing-showcase-row">
           <div className="v-landing-showcase-text">
-            <h3 className="v-landing-showcase-heading">Add it to the group chat <span className="v-coming-soon">Coming Soon</span></h3>
-            <p className="v-landing-showcase-body">
-              Drop Vialoure into your WhatsApp group. It reads the chatter, pulls photos everyone shares, catches flight changes mentioned in passing. No extra app to open — your group chat becomes the interface.
-            </p>
-          </div>
-          <div className="v-landing-showcase-visual">
-            <WhatsAppMockup />
-          </div>
-        </div>
-
-        <NotchReveal />
-
-        <div className="v-landing-showcase-row v-landing-showcase-row-reverse">
-          <div className="v-landing-showcase-text">
-            <h3 className="v-landing-showcase-heading">Every morning, a travel log <span className="v-coming-soon">Coming Soon</span></h3>
+            <h3 className="v-landing-showcase-heading">Every morning, a travel log</h3>
             <p className="v-landing-showcase-body">
               At 7 AM, the concierge writes up yesterday — where you went, what you ate, the best photos from the group. A proper travel journal, written for you, every single day.
             </p>

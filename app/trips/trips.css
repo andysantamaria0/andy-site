@@ -2612,6 +2612,59 @@ select.v-form-input {
   padding: 12px 28px;
 }
 
+/* ---- How It Works ---- */
+
+.v-landing-how {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 60px 32px;
+  text-align: center;
+}
+
+.v-landing-how-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--v-champagne);
+  margin: 0 0 40px 0;
+}
+
+.v-landing-how-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.v-landing-how-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.v-landing-how-num {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  color: var(--v-champagne);
+  margin-bottom: 12px;
+}
+
+.v-landing-how-heading {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--v-pearl);
+  margin: 0 0 8px 0;
+}
+
+.v-landing-how-body {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.9rem;
+  color: var(--v-pearl-dim);
+  margin: 0;
+  line-height: 1.5;
+}
+
 /* Features — Visual Showcase */
 .v-landing-showcase {
   max-width: 1080px;
@@ -3067,6 +3120,258 @@ select.v-form-input {
   color: var(--v-champagne);
 }
 
+/* ---- Smart Paste Mockup ---- */
+
+.v-mock-paste-body {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 12px;
+}
+
+.v-mock-paste-input {
+  background-color: var(--v-nuit);
+  border: 1px solid var(--v-pearl-faint);
+  border-radius: 2px;
+  padding: 12px;
+}
+
+.v-mock-paste-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  color: var(--v-pearl-dim);
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
+.v-mock-paste-hint {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5625rem;
+  color: var(--v-champagne);
+  font-style: italic;
+  margin-top: 8px;
+}
+
+.v-mock-paste-results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.v-mock-paste-result-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--v-pearl);
+}
+
+.v-mock-paste-check {
+  color: var(--v-champagne);
+  font-weight: 700;
+}
+
+.v-mock-paste-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--v-nuit);
+  padding: 8px;
+  border-left: 2px solid var(--v-pearl-faint);
+  border-radius: 2px;
+}
+
+.v-mock-paste-badge {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.v-mock-paste-badge-flight {
+  background-color: var(--v-royal);
+  color: #fff;
+}
+
+.v-mock-paste-badge-member {
+  background-color: var(--v-champagne);
+  color: var(--v-nuit);
+}
+
+.v-mock-paste-item-info {
+  min-width: 0;
+}
+
+.v-mock-paste-item-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--v-pearl);
+}
+
+.v-mock-paste-item-meta {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.625rem;
+  color: var(--v-pearl-dim);
+}
+
+.v-mock-paste-matched {
+  color: var(--v-champagne);
+  font-size: 0.5625rem;
+}
+
+.v-mock-paste-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.v-mock-paste-btn-apply {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.625rem;
+  font-weight: 600;
+  background-color: var(--v-royal);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 2px;
+}
+
+.v-mock-paste-btn-suggest {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--v-pearl-dim);
+  border: 1px solid var(--v-pearl-faint);
+  padding: 4px 12px;
+  border-radius: 2px;
+}
+
+/* ---- Expenses Mockup ---- */
+
+.v-mock-expenses-body {
+  padding: 16px;
+}
+
+.v-mock-expenses-summary {
+  display: flex;
+  gap: 32px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--v-pearl-faint);
+  margin-bottom: 12px;
+}
+
+.v-mock-expenses-total-label,
+.v-mock-expenses-pp-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--v-pearl-dim);
+  margin-bottom: 2px;
+}
+
+.v-mock-expenses-total-amount {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--v-pearl);
+}
+
+.v-mock-expenses-pp-amount {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  color: var(--v-champagne);
+}
+
+.v-mock-expenses-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.v-mock-expenses-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--v-pearl-faint);
+}
+
+.v-mock-expenses-emoji {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.v-mock-expenses-row-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.v-mock-expenses-row-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--v-pearl);
+}
+
+.v-mock-expenses-row-meta {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.625rem;
+  color: var(--v-pearl-dim);
+}
+
+.v-mock-expenses-row-amount {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--v-pearl);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.v-mock-expenses-settle {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(196, 167, 125, 0.25);
+}
+
+.v-mock-expenses-settle-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--v-champagne);
+  margin-bottom: 8px;
+}
+
+.v-mock-expenses-settle-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  color: var(--v-pearl-dim);
+  padding: 3px 0;
+}
+
+.v-mock-expenses-settle-amount {
+  color: var(--v-champagne);
+  font-weight: 700;
+}
+
+.v-mock-expenses-settle-links {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.5625rem;
+  color: var(--v-pearl-dim);
+  letter-spacing: 0.04em;
+  margin-top: 8px;
+}
+
 /* ---- WhatsApp Group Mockup ---- */
 
 .v-mock-wa {
@@ -3406,6 +3711,20 @@ select.v-form-input {
 
   .v-mock-cal-event-icon {
     display: none;
+  }
+
+  .v-landing-how {
+    padding: 40px 20px;
+  }
+
+  .v-landing-how-title {
+    font-size: 1.35rem;
+    margin-bottom: 28px;
+  }
+
+  .v-landing-how-steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
   }
 }
 
