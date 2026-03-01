@@ -6048,3 +6048,45 @@ select.v-form-input {
   outline: none;
   border-color: var(--v-royal);
 }
+
+/* ── Per-member leg date overrides ── */
+
+.v-leg-member-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.v-leg-member-dates-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 4px;
+}
+
+.v-leg-member-dates {
+  font-size: 0.7rem;
+  color: var(--v-pearl-dim);
+  font-style: italic;
+}
+
+.v-leg-member-date-editor {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0 2px 28px;
+  flex-wrap: wrap;
+}
+
+.v-leg-member-date-editor .v-form-input {
+  padding: 3px 6px;
+  font-size: 0.75rem;
+  max-width: 140px;
+}
+
+.v-leg-chip-dates {
+  font-size: 0.65rem;
+  color: var(--v-pearl-dim);
+  margin-top: 2px;
+  white-space: nowrap;
+}

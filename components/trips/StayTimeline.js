@@ -78,13 +78,16 @@ export default function StayTimeline({ trip, members, legs = [] }) {
     return { ...leg, legStart, legEnd, leftPct, widthPct, color: LEG_COLORS[i % LEG_COLORS.length] };
   }) : [];
 
-  // Build assigned-legs lookup for multi-leg mode
+  // Build assigned-legs lookup for multi-leg mode, with per-member date overrides
   const assignedLegs = {};
   if (isMultiLeg) {
     for (const leg of legs) {
       for (const tlm of (leg.trip_leg_members || [])) {
-        if (!assignedLegs[tlm.member_id]) assignedLegs[tlm.member_id] = new Set();
-        assignedLegs[tlm.member_id].add(leg.id);
+        if (!assignedLegs[tlm.member_id]) assignedLegs[tlm.member_id] = {};
+        assignedLegs[tlm.member_id][leg.id] = {
+          stay_start: tlm.stay_start || null,
+          stay_end: tlm.stay_end || null,
+        };
       }
     }
   }
@@ -121,7 +124,7 @@ export default function StayTimeline({ trip, members, legs = [] }) {
             const leftPct = Math.max(0, (differenceInDays(memberStart, rangeStart) / totalDays) * 100);
             const widthPct = Math.min(100 - leftPct, (differenceInDays(memberEnd, memberStart) / totalDays) * 100);
             const baseColor = member.color || MEMBER_COLORS[i % MEMBER_COLORS.length];
-            const memberLegIds = assignedLegs[member.id] || new Set();
+            const memberLegOverrides = assignedLegs[member.id] || {};
 
             return (
               <div key={member.id} className="v-timeline-row">
@@ -141,9 +144,12 @@ export default function StayTimeline({ trip, members, legs = [] }) {
                       />
                       {/* Colored segments for each assigned leg */}
                       {legData.map((leg) => {
-                        if (!memberLegIds.has(leg.id)) return null;
-                        const segStart = dateMax([memberStart, leg.legStart]);
-                        const segEnd = dateMin([memberEnd, leg.legEnd]);
+                        const overrides = memberLegOverrides[leg.id];
+                        if (!overrides) return null;
+                        const effectiveStart = overrides.stay_start ? parseISO(overrides.stay_start) : leg.legStart;
+                        const effectiveEnd = overrides.stay_end ? parseISO(overrides.stay_end) : leg.legEnd;
+                        const segStart = dateMax([memberStart, effectiveStart]);
+                        const segEnd = dateMin([memberEnd, effectiveEnd]);
                         if (differenceInDays(segEnd, segStart) < 0) return null;
                         const segLeftPct = Math.max(0, (differenceInDays(segStart, rangeStart) / totalDays) * 100);
                         const segWidthPct = Math.max(0.5, Math.min(100 - segLeftPct, (differenceInDays(segEnd, segStart) / totalDays) * 100));

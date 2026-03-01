@@ -41,7 +41,9 @@ export async function GET(request, { params }) {
       trip_leg_members (
         id,
         member_id,
-        staying_at
+        staying_at,
+        stay_start,
+        stay_end
       )
     `)
     .eq('trip_id', tripId)
