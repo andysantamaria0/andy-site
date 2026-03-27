@@ -21,8 +21,14 @@ class Orb {
     this.time = Math.random() * 1000;
     this.dpr = window.devicePixelRatio || 1;
 
-    this.resize();
-    window.addEventListener('resize', () => this.resize());
+    // Set a safe default; actual sizing happens on first draw frame
+    this.w = 400;
+    this.h = 400;
+    this.canvas.width = 400 * this.dpr;
+    this.canvas.height = 400 * this.dpr;
+    this.ctx.scale(this.dpr, this.dpr);
+    this._needsResize = true;
+    window.addEventListener('resize', () => { this._needsResize = true; });
 
     this.audio = { volume: 0, bass: 0, mid: 0, high: 0, spikiness: 0 };
     this.display = { volume: 0, bass: 0, mid: 0, high: 0, spikiness: 0 };
@@ -49,12 +55,15 @@ class Orb {
 
   resize() {
     const rect = this.canvas.getBoundingClientRect();
-    const size = Math.round(rect.width) || 400;
+    const size = Math.round(rect.width);
+    if (size < 10) return; // layout not ready yet
+    if (size === this.w) { this._needsResize = false; return; }
     this.canvas.width = size * this.dpr;
     this.canvas.height = size * this.dpr;
     this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
     this.w = size;
     this.h = size;
+    this._needsResize = false;
   }
 
   setSpeaking(s) { this.speaking = s; }
@@ -69,9 +78,10 @@ class Orb {
   }
 
   draw() {
+    if (this._needsResize) this.resize();
     const { ctx, w, h } = this;
     const cx = w / 2;
-    const cy = h / 2 + 5; // nudge down slightly for visual center
+    const cy = h / 2 + 5 * (w / 400); // nudge down slightly for visual center
 
     ctx.clearRect(0, 0, w, h);
 

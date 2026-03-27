@@ -24,7 +24,10 @@ let timeDomainData = null;
 let currentSpeakingOrb = null;
 
 function initAudio() {
-  if (audioContext) return;
+  if (audioContext) {
+    if (audioContext.state === 'suspended') audioContext.resume();
+    return;
+  }
   audioContext = new (window.AudioContext || window.webkitAudioContext)();
   analyserNode = audioContext.createAnalyser();
   analyserNode.fftSize = 256;
@@ -35,6 +38,7 @@ function initAudio() {
   gainNode.gain.value = 1.0;
   gainNode.connect(analyserNode);
   analyserNode.connect(audioContext.destination);
+  if (audioContext.state === 'suspended') audioContext.resume();
   analyzeAudio();
 }
 
