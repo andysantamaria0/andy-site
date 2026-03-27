@@ -21,11 +21,8 @@ class Orb {
     this.time = Math.random() * 1000;
     this.dpr = window.devicePixelRatio || 1;
 
-    this.canvas.width = 400 * this.dpr;
-    this.canvas.height = 400 * this.dpr;
-    this.ctx.scale(this.dpr, this.dpr);
-    this.w = 400;
-    this.h = 400;
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
 
     this.audio = { volume: 0, bass: 0, mid: 0, high: 0, spikiness: 0 };
     this.display = { volume: 0, bass: 0, mid: 0, high: 0, spikiness: 0 };
@@ -48,6 +45,16 @@ class Orb {
         freqBand: Math.random(),
       });
     }
+  }
+
+  resize() {
+    const rect = this.canvas.getBoundingClientRect();
+    const size = Math.round(rect.width) || 400;
+    this.canvas.width = size * this.dpr;
+    this.canvas.height = size * this.dpr;
+    this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    this.w = size;
+    this.h = size;
   }
 
   setSpeaking(s) { this.speaking = s; }
@@ -110,7 +117,7 @@ class Orb {
     const vibY = si > 0.1 ? (Math.random() - 0.5) * vibAmt * si : 0;
 
     // Heart scale — pumps with bass like a heartbeat
-    const baseScale = 3.8;
+    const baseScale = 3.8 * (w / 400);
     const breathe = Math.sin(this.time * 1.5) * 0.1;
     const bassPump = bass * 0.5 * si;
     const volSwell = vol * 0.3 * si;
@@ -118,7 +125,8 @@ class Orb {
     const scale = baseScale + breathe + bassPump + volSwell + heatExpand;
 
     // === Ambient heat glow ===
-    const glowSize = 120 + heat * 60 + vol * 40 * si;
+    const sF = w / 400; // scale factor for effects
+    const glowSize = (120 + heat * 60 + vol * 40 * si) * sF;
     const ambAlpha = 0.02 + heat * 0.06 + vol * 0.04 * si;
     const ambGrad = ctx.createRadialGradient(cx + vibX, cy + vibY, 0, cx + vibX, cy + vibY, glowSize);
     ambGrad.addColorStop(0, `hsla(${currentHue}, 80%, 55%, ${ambAlpha * 2})`);
@@ -132,9 +140,9 @@ class Orb {
 
     // === Outer glow rings ===
     for (let i = 4; i > 0; i--) {
-      const ringSize = 80 + i * (15 + vol * 20 * si + heat * 12);
+      const ringSize = (80 + i * (15 + vol * 20 * si + heat * 12)) * sF;
       const alpha = (0.02 + vol * 0.05 * si + heat * 0.04) * (1 - i / 5);
-      const grad = ctx.createRadialGradient(cx + vibX, cy + vibY, 30, cx + vibX, cy + vibY, ringSize);
+      const grad = ctx.createRadialGradient(cx + vibX, cy + vibY, 30 * sF, cx + vibX, cy + vibY, ringSize);
       grad.addColorStop(0, `hsla(${currentHue}, 70%, 55%, ${alpha * 2})`);
       grad.addColorStop(0.5, `hsla(${currentHue + 15}, 60%, 45%, ${alpha})`);
       grad.addColorStop(1, `hsla(${currentHue}, 40%, 30%, 0)`);

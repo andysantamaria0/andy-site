@@ -173,3 +173,64 @@ body {
   min-height: 1.2em;
   transition: color 0.3s;
 }
+
+/* ----- Mobile ----- */
+
+@media (max-width: 600px) {
+  body {
+    height: 100dvh;
+    align-items: flex-start;
+    padding-top: env(safe-area-inset-top);
+  }
+
+  #app {
+    padding: 1rem 0.5rem;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stage {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .character {
+    flex-direction: row;
+    gap: 0.75rem;
+  }
+
+  .orb-container {
+    width: 140px;
+    height: 140px;
+  }
+
+  .orb {
+    width: 140px;
+    height: 140px;
+  }
+
+  .name {
+    font-size: 0.75rem;
+  }
+
+  .center-column {
+    order: -1;
+    gap: 0.75rem;
+    padding: 0;
+  }
+
+  .title {
+    font-size: 0.65rem;
+  }
+
+  .status {
+    font-size: 0.65rem;
+  }
+
+  .btn-pause {
+    font-size: 0.6rem;
+    padding: 0.4rem 1rem;
+  }
+}

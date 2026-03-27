@@ -292,7 +292,8 @@ async function startConversation(firstCharacter) {
     currentCharacter = otherCharacter;
   }
 
-  statusEl.textContent = '';
+  statusEl.textContent = 'It\'s over.';
+  document.getElementById('pause-btn').classList.add('hidden');
   state.running = false;
 }
 
