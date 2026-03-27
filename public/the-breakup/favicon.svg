@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="left" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6E8CF7"/>
+      <stop offset="100%" stop-color="#4A5FC1"/>
+    </linearGradient>
+    <linearGradient id="right" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F76E6E"/>
+      <stop offset="100%" stop-color="#C14A5F"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Left half of broken heart -->
+  <path d="M32 56 L6 30 C6 18, 18 10, 28 10 C32 10, 32 16, 32 20 L32 28 L28 32 L32 38" fill="url(#left)" filter="url(#glow)"/>
+  <!-- Right half of broken heart -->
+  <path d="M32 56 L58 30 C58 18, 46 10, 36 10 C32 10, 32 16, 32 20 L32 28 L36 32 L32 38" fill="url(#right)" filter="url(#glow)" transform="translate(4, -2)"/>
+</svg>
