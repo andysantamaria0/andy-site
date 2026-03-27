@@ -1,0 +1,175 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #060610;
+  color: #eee;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Subtle film grain overlay */
+.bg-noise {
+  position: fixed;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 100;
+}
+
+#app {
+  width: 100%;
+  max-width: 1100px;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.stage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ----- Characters ----- */
+
+.character {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  cursor: pointer;
+  transition: opacity 0.6s ease;
+  opacity: 0.35;
+  position: relative;
+}
+
+.character.active {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.character:hover {
+  opacity: 0.7;
+}
+
+.character.active:hover {
+  opacity: 1;
+}
+
+.character.disabled {
+  pointer-events: none;
+  opacity: 0.1;
+  transition: opacity 1s ease;
+}
+
+.character.speaking {
+  opacity: 1;
+}
+
+/* ----- Orbs ----- */
+
+.orb-container {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.orb {
+  width: 300px;
+  height: 300px;
+}
+
+/* ----- Names ----- */
+
+.name {
+  font-size: 0.85rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #444;
+  transition: color 0.6s ease, text-shadow 0.6s ease;
+}
+
+.character.active .name {
+  color: #888;
+}
+
+.character.speaking .name {
+  color: #ccc;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+/* ----- Center Column ----- */
+
+.center-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  min-width: 120px;
+  padding: 0 1rem;
+}
+
+.title {
+  font-size: 0.75rem;
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #333;
+  transition: opacity 0.6s;
+}
+
+.started .title {
+  opacity: 0.3;
+}
+
+/* ----- Pause Button ----- */
+
+.btn-pause {
+  background: transparent;
+  color: #555;
+  border: 1px solid #222;
+  padding: 0.5rem 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.btn-pause:hover {
+  color: #ccc;
+  border-color: #555;
+}
+
+.btn-pause.hidden {
+  display: none;
+}
+
+/* ----- Status ----- */
+
+.status {
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: #444;
+  text-align: center;
+  min-height: 1.2em;
+  transition: color 0.3s;
+}

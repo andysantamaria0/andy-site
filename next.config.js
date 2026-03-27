@@ -18,7 +18,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https://*.supabase.co https://maps.googleapis.com https://maps.gstatic.com https://lh3.googleusercontent.com",
-              "connect-src 'self' https://*.supabase.co https://maps.googleapis.com wss://*.supabase.co https://us.i.posthog.com https://us-assets.i.posthog.com",
+              "connect-src 'self' https://*.supabase.co https://maps.googleapis.com wss://*.supabase.co https://us.i.posthog.com https://us-assets.i.posthog.com https://api.anthropic.com https://api.elevenlabs.io",
               "media-src 'self' https://*.supabase.co",
               "frame-src https://www.openstreetmap.org",
               "frame-ancestors 'none'",
@@ -54,6 +54,10 @@ const nextConfig = {
       {
         source: '/vialoure-grand-tour-v2',
         destination: '/vialoure-grand-tour-v2.html',
+      },
+      {
+        source: '/the-breakup',
+        destination: '/the-breakup.html',
       },
     ];
   },

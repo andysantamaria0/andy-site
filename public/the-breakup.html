@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Breakup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/the-breakup/styles.css">
+</head>
+<body>
+  <div class="bg-noise"></div>
+
+  <div id="app">
+    <div class="stage">
+      <div class="character" id="character-a" data-character="a">
+        <div class="orb-container">
+          <canvas class="orb" id="orb-a" width="400" height="400"></canvas>
+        </div>
+        <div class="name" id="name-a">Gio</div>
+      </div>
+
+      <div class="center-column">
+        <h1 class="title">The Breakup</h1>
+        <div id="status" class="status">Click on Gio or Jo to start.</div>
+        <button id="pause-btn" class="btn-pause hidden">Pause</button>
+      </div>
+
+      <div class="character" id="character-b" data-character="b">
+        <div class="orb-container">
+          <canvas class="orb" id="orb-b" width="400" height="400"></canvas>
+        </div>
+        <div class="name" id="name-b">Jo</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/the-breakup/config.js"></script>
+  <script src="/the-breakup/orbs.js"></script>
+  <script src="/the-breakup/app.js"></script>
+</body>
+</html>
