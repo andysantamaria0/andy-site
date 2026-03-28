@@ -78,9 +78,37 @@ function analyzeAudio() {
   requestAnimationFrame(analyzeAudio);
 }
 
+// ----- Dramatic Arc -----
+
+function getPhaseDirective(turn, totalTurns) {
+  const pct = turn / totalTurns;
+
+  if (pct < 0.25) {
+    return `\n\n[TONE: This is the beginning of the conversation. You're cautious, guarded. Keep it surface-level — logistics, small talk, testing the waters. There's tension underneath but neither of you is ready to go there yet. Short responses. Careful words.]`;
+  }
+  if (pct < 0.5) {
+    return `\n\n[TONE: The surface is cracking. Old wounds are starting to come up — things you've been holding back. You're getting more honest, more pointed. The polite veneer is slipping. You're starting to say what you actually mean. Responses can be a bit longer — 2-3 sentences.]`;
+  }
+  if (pct < 0.75) {
+    return `\n\n[TONE: This is a full argument now. You're both saying things that hurt. Raw honesty. The gloves are off. Bring up the real grievances — the things that actually ended this relationship. Be specific. Be cutting. Don't hold back. This is the heat of it. 2-4 sentences.]`;
+  }
+  if (pct < 0.85) {
+    return `\n\n[TONE: CLIMAX. Say the thing you can't take back. The deepest cut. The hardest truth. This is the moment the relationship truly dies — not with a whimper but with something devastating and honest. One or two sentences, maximum. Make them count.]`;
+  }
+  // Denouement
+  return `\n\n[TONE: It's over. The fight has burned out. You're both exhausted. Whatever you say now is quiet, resigned, maybe a little broken. No more arguing. This is goodbye. One sentence. Maybe just a few words.]`;
+}
+
+function getPauseDuration(turn, totalTurns) {
+  const pct = turn / totalTurns;
+  if (pct < 0.75) return 300;      // quick back-and-forth
+  if (pct < 0.85) return 600;      // slight pause after climax hits
+  return 2500;                      // long, heavy silences in the denouement
+}
+
 // ----- Dialogue Generation (via server proxy) -----
 
-async function generateDialogue(character, { wrapUp = false } = {}) {
+async function generateDialogue(character, { turn = 0, totalTurns = 22 } = {}) {
   const charConfig = CONFIG.characters[character];
   const otherChar = character === 'a' ? 'b' : 'a';
   const otherName = CONFIG.characters[otherChar].name;
@@ -101,9 +129,7 @@ async function generateDialogue(character, { wrapUp = false } = {}) {
 
   let system = `${CONFIG.sharedContext}\n\n${charConfig.systemPrompt}\n\nYou are speaking with ${otherName}. Respond in character. Do not include your name as a prefix — just speak naturally. Do NOT include stage directions, action descriptions, or asterisk notations like *pauses* or *sighs*. Only output the words you would actually say out loud.`;
 
-  if (wrapUp) {
-    system += `\n\nIMPORTANT: This conversation is ending NOW. Say your final words. This is the last thing you will say to this person — make it count. Be definitive. The breakup is final. One sentence, maybe two. Then it's over.`;
-  }
+  system += getPhaseDirective(turn, totalTurns);
 
   const response = await fetch('/api/breakup/dialogue', {
     method: 'POST',
@@ -114,7 +140,7 @@ async function generateDialogue(character, { wrapUp = false } = {}) {
   if (!response.ok) {
     if (response.status === 529) {
       await new Promise(r => setTimeout(r, 2000));
-      return generateDialogue(character, { wrapUp });
+      return generateDialogue(character, { turn, totalTurns });
     }
     const err = await response.text();
     throw new Error(`Dialogue error: ${response.status} — ${err}`);
@@ -218,19 +244,18 @@ async function startConversation(firstCharacter) {
   document.getElementById('pause-btn').classList.remove('hidden');
 
   let currentCharacter = firstCharacter;
-  const maxTurns = 30;
-  const conversationDurationMs = 3 * 60 * 1000;
+  const totalTurns = 22;
+  const maxDurationMs = 5 * 60 * 1000; // safety net
   const startTime = Date.now();
   let prefetchedText = null;
   let prefetchedCharacter = null;
 
-  for (let turn = 0; turn < maxTurns; turn++) {
+  for (let turn = 0; turn < totalTurns; turn++) {
     await waitWhilePaused();
 
-    const elapsed = Date.now() - startTime;
-    const timeLeft = conversationDurationMs - elapsed;
-    const isLastTurn = timeLeft <= 20000;
+    if (Date.now() - startTime > maxDurationMs) break;
 
+    const isLastTurn = turn === totalTurns - 1;
     const otherCharacter = currentCharacter === 'a' ? 'b' : 'a';
     const charEl = currentCharacter === 'a' ? characterAEl : characterBEl;
     const otherEl = currentCharacter === 'a' ? characterBEl : characterAEl;
@@ -239,22 +264,17 @@ async function startConversation(firstCharacter) {
     charEl.classList.add('speaking');
     otherEl.classList.add('disabled');
 
-    if (timeLeft <= 0) break;
-
     try {
       let text;
-      if (isLastTurn) {
-        prefetchedText = null;
-        text = await generateDialogue(currentCharacter, { wrapUp: true });
-      } else if (prefetchedText && prefetchedCharacter === currentCharacter) {
+      if (prefetchedText && prefetchedCharacter === currentCharacter) {
         text = prefetchedText;
         prefetchedText = null;
         prefetchedCharacter = null;
       } else {
-        text = await generateDialogue(currentCharacter);
+        text = await generateDialogue(currentCharacter, { turn, totalTurns });
       }
 
-      console.log(`[${CONFIG.characters[currentCharacter].name}]:`, text);
+      console.log(`[Turn ${turn}/${totalTurns}] [${CONFIG.characters[currentCharacter].name}]:`, text);
       state.conversationHistory.push({ role: currentCharacter, content: text });
 
       orb.setSpeaking(true);
@@ -269,8 +289,9 @@ async function startConversation(firstCharacter) {
         break;
       }
 
+      // Prefetch the next turn's dialogue while current one speaks
       const speakPromise = speakText(text, currentCharacter);
-      const prefetchPromise = generateDialogue(otherCharacter).catch(err => {
+      const prefetchPromise = generateDialogue(otherCharacter, { turn: turn + 1, totalTurns }).catch(err => {
         console.warn('Prefetch failed:', err);
         return null;
       });
@@ -280,7 +301,9 @@ async function startConversation(firstCharacter) {
       prefetchedText = await prefetchPromise;
       prefetchedCharacter = otherCharacter;
 
-      await new Promise(r => setTimeout(r, 300));
+      // Pause between turns — longer silences in the denouement
+      const pause = getPauseDuration(turn, totalTurns);
+      await new Promise(r => setTimeout(r, pause));
 
     } catch (err) {
       console.error('Error:', err);
