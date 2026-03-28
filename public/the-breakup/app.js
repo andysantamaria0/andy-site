@@ -175,9 +175,7 @@ async function speakText(text, character) {
       voiceId: CONFIG.characters[character].voiceId,
       modelId: CONFIG.tts.modelId,
       voiceSettings: {
-        stability: CONFIG.tts.stability,
-        similarity_boost: CONFIG.tts.similarityBoost,
-        style: CONFIG.tts.style,
+        ...CONFIG.characters[character].voiceSettings,
         speed: CONFIG.characters[character].speed || 1.0,
       },
     }),
