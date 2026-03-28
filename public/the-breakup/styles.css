@@ -5,7 +5,7 @@
 }
 
 body {
-  background: #060610;
+  background: radial-gradient(ellipse at 50% 50%, #120a1a 0%, #08060e 60%, #050408 100%);
   color: #eee;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   height: 100vh;
