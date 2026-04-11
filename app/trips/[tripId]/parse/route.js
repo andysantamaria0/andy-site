@@ -4,6 +4,8 @@ import { checkFeature } from '../../../../lib/features';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 
+export const maxDuration = 60;
+
 const anthropic = new Anthropic();
 
 export async function POST(request, { params }) {

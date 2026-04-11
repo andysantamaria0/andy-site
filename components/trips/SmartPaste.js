@@ -4,6 +4,46 @@ import { useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+const MAX_IMAGE_DIM = 1568; // Claude vision max useful resolution
+const MAX_IMAGE_BYTES = 3 * 1024 * 1024; // 3 MB after resize
+
+function resizeImage(file) {
+  return new Promise((resolve) => {
+    // Skip small files
+    if (file.size <= MAX_IMAGE_BYTES) {
+      resolve(file);
+      return;
+    }
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let { width, height } = img;
+      if (width <= MAX_IMAGE_DIM && height <= MAX_IMAGE_DIM && file.size <= MAX_IMAGE_BYTES) {
+        resolve(file);
+        return;
+      }
+      const scale = Math.min(MAX_IMAGE_DIM / width, MAX_IMAGE_DIM / height, 1);
+      width = Math.round(width * scale);
+      height = Math.round(height * scale);
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+      canvas.toBlob(
+        (blob) => resolve(new File([blob], file.name, { type: 'image/jpeg' })),
+        'image/jpeg',
+        0.85
+      );
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve(file);
+    };
+    img.src = url;
+  });
+}
 
 export default function SmartPaste({ tripId, legs = [] }) {
   const router = useRouter();
@@ -19,11 +59,12 @@ export default function SmartPaste({ tripId, legs = [] }) {
   const [mode, setMode] = useState('apply'); // 'apply' | 'suggest'
   const [itemLegs, setItemLegs] = useState({}); // index → leg_id for suggest mode
 
-  const addImages = useCallback((files) => {
+  const addImages = useCallback(async (files) => {
     const newImages = [];
     for (const file of files) {
       if (IMAGE_TYPES.includes(file.type)) {
-        newImages.push({ file, preview: URL.createObjectURL(file) });
+        const resized = await resizeImage(file);
+        newImages.push({ file: resized, preview: URL.createObjectURL(resized) });
       }
     }
     if (newImages.length > 0) {
