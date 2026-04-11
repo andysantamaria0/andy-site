@@ -1,6 +1,7 @@
 import { createClient } from '../../../../lib/supabase/server';
 import { redirect } from 'next/navigation';
 import ConciergeHero from '../../../../components/trips/ConciergeHero';
+import ConciergeChat from '../../../../components/trips/ConciergeChat';
 import SmartPaste from '../../../../components/trips/SmartPaste';
 import SuggestionsPanel from '../../../../components/trips/SuggestionsPanel';
 import InboxItem from '../../../../components/trips/InboxItem';
@@ -65,6 +66,10 @@ export default async function ConciergePage({ params }) {
   return (
     <div className="v-page">
       <ConciergeHero tripCode={trip?.trip_code} />
+
+      <div style={{ marginTop: 24 }}>
+        <ConciergeChat tripId={tripId} />
+      </div>
 
       {showSmartPaste && (
         <div style={{ marginTop: 24 }}>

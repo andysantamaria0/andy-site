@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import { buildParsePrompt } from '../../../../../lib/utils/parsePrompt';
 import { validateTwilioSignature } from '../../../../../lib/utils/twilioAuth';
 import { createRateLimit } from '../../../../../lib/utils/rateLimit';
+import { generateSpeech, uploadAudioAndGetUrl } from '../../../../../lib/utils/elevenlabs';
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 
@@ -116,6 +117,54 @@ export async function POST(request) {
       parseError = e.message || 'Failed to parse voice transcription';
     }
 
+    // Generate a conversational voice reply
+    let replyText = null;
+    let replyAudioUrl = null;
+    try {
+      const senderName = existing.sender_member_id
+        ? (members || []).find((m) => m.id === existing.sender_member_id)?.profiles?.display_name || 'there'
+        : 'there';
+
+      const replyPrompt = parsedData
+        ? `You are the Vialoure concierge for the trip "${trip.name}" to ${trip.destination}. A trip member named ${senderName} just left a voice note saying: "${TranscriptionText}". You extracted this data: ${JSON.stringify(parsedData.summary || parsedData)}. Give a brief, warm spoken acknowledgment (1-2 sentences) confirming what you understood and that it's been noted. Speak naturally as if leaving a voice message back.`
+        : `You are the Vialoure concierge for the trip "${trip.name}" to ${trip.destination}. A trip member named ${senderName} just left a voice note saying: "${TranscriptionText}". You couldn't extract structured data from it. Give a brief, warm spoken reply (1-2 sentences) acknowledging their message and asking them to clarify if needed. Speak naturally as if leaving a voice message back.`;
+
+      const replyMsg = await anthropic.messages.create({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 256,
+        messages: [{ role: 'user', content: replyPrompt }],
+      });
+
+      replyText = replyMsg.content?.[0]?.text || null;
+
+      if (replyText) {
+        const audioBuffer = await generateSpeech(replyText);
+        replyAudioUrl = await uploadAudioAndGetUrl(supabase, audioBuffer, `voice-reply-${CallSid}.mp3`);
+
+        // Call the user back with the audio reply
+        if (from && replyAudioUrl) {
+          const sid = process.env.TWILIO_ACCOUNT_SID;
+          const token = process.env.TWILIO_AUTH_TOKEN;
+          const twilioFrom = process.env.TWILIO_PHONE_NUMBER;
+          const twiml = `<Response><Play>${replyAudioUrl}</Play></Response>`;
+
+          await fetch(
+            `https://api.twilio.com/2010-04-01/Accounts/${sid}/Calls.json`,
+            {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Basic ' + Buffer.from(`${sid}:${token}`).toString('base64'),
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body: new URLSearchParams({ From: twilioFrom, To: from, Twiml: twiml }).toString(),
+            }
+          );
+        }
+      }
+    } catch (voiceReplyErr) {
+      console.error('Voice reply generation/delivery failed:', voiceReplyErr);
+    }
+
     // Update the existing record with parsed data
     await supabase
       .from('inbound_emails')
@@ -123,6 +172,7 @@ export async function POST(request) {
         text_body: TranscriptionText,
         parsed_data: parsedData,
         parse_error: parseError,
+        reply_sent: !!replyAudioUrl,
       })
       .eq('id', existing.id);
 
