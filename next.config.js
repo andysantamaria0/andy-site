@@ -59,6 +59,10 @@ const nextConfig = {
         source: '/the-breakup',
         destination: '/the-breakup.html',
       },
+      {
+        source: '/brown-glove-overview',
+        destination: '/brown-glove-overview.html',
+      },
     ];
   },
 };

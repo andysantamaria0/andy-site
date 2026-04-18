@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brown Glove — Prototype & Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --black: #0E0E0E;
+    --black-2: #161412;
+    --black-3: #1F1C18;
+    --brass: #B08D57;
+    --brass-2: #8A6D3F;
+    --brass-3: #6B5430;
+    --walnut: #3D2817;
+    --red: #B12A27;
+    --cream: #F2E8D5;
+    --cream-2: #D9CFBD;
+    --ice: #A8C5B0;
+    --display: "Italiana", serif;
+    --body: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+    --sub: "Jost", "Futura", "Avenir", sans-serif;
+    --mono: "JetBrains Mono", "IBM Plex Mono", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ---------- GRAIN / NOISE OVERLAY ---------- */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: overlay;
+  }
+
+  /* ---------- LAYOUT ---------- */
+  .shell {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+  }
+  nav.sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    border-right: 1px solid var(--brass-2);
+    padding: 32px 24px;
+    background: var(--black);
+    overflow-y: auto;
+  }
+  .brand-lockup {
+    font-family: var(--display);
+    font-size: 28px;
+    letter-spacing: 0.22em;
+    color: var(--brass);
+    text-align: center;
+    line-height: 1.05;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--brass-2);
+  }
+  .brand-sub {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--cream-2);
+    text-align: center;
+    margin-top: 8px;
+    letter-spacing: 0.04em;
+  }
+  .nav-group { margin-top: 28px; }
+  .nav-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--brass-2);
+    margin-bottom: 8px;
+    padding: 0 4px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-family: var(--sub);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--cream);
+    border-left: 2px solid transparent;
+    transition: all 180ms ease;
+  }
+  .nav-item:hover { color: var(--brass); }
+  .nav-item.active {
+    color: var(--brass);
+    border-left-color: var(--brass);
+    background: var(--black-2);
+  }
+  .nav-dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--brass-2);
+  }
+
+  main.stage {
+    padding: 64px 48px 120px;
+    max-width: 1400px;
+  }
+  section.view { display: none; animation: fadeIn 400ms ease; }
+  section.view.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .view-header { margin-bottom: 56px; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--brass-2);
+  }
+  h1.display {
+    font-family: var(--display);
+    font-size: 64px;
+    letter-spacing: 0.08em;
+    font-weight: 400;
+    color: var(--cream);
+    margin-top: 8px;
+    line-height: 1;
+  }
+  .lede {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--cream-2);
+    margin-top: 16px;
+    max-width: 600px;
+  }
+
+  /* ---------- HAIRLINES ---------- */
+  .hairline { height: 1px; background: var(--brass-2); width: 100%; }
+  .hairline.soft { background: var(--brass-3); opacity: 0.6; }
+
+  /* ---------- BRAND VIEW ---------- */
+  .brand-hero {
+    position: relative;
+    padding: 80px 40px;
+    text-align: center;
+    border: 1px solid var(--brass-2);
+    overflow: hidden;
+    background: var(--black);
+  }
+  .brand-hero .sunburst {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0.14;
+    pointer-events: none;
+  }
+  .sunburst svg { animation: spin 80s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .mega-wordmark {
+    font-family: var(--display);
+    font-size: clamp(60px, 12vw, 160px);
+    letter-spacing: 0.14em;
+    color: var(--brass);
+    line-height: 1;
+    position: relative;
+  }
+  .brand-tag {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--cream-2);
+    margin-top: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  .grid { display: grid; gap: 24px; }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-7 { grid-template-columns: repeat(7, 1fr); }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: 36px;
+    letter-spacing: 0.08em;
+    color: var(--brass);
+    margin: 72px 0 8px;
+  }
+  .section-note {
+    font-family: var(--sub);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--cream-2);
+    margin-bottom: 28px;
+    max-width: 640px;
+  }
+
+  /* Palette swatches */
+  .swatch {
+    border: 1px solid var(--brass-3);
+    overflow: hidden;
+    background: var(--black-2);
+  }
+  .swatch-color { height: 120px; }
+  .swatch-meta {
+    padding: 12px 14px;
+    border-top: 1px solid var(--brass-3);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--cream);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .swatch-name {
+    font-family: var(--sub);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+
+  /* Type specimens */
+  .type-card {
+    border: 1px solid var(--brass-3);
+    padding: 32px;
+    background: var(--black-2);
+  }
+  .type-sample { color: var(--cream); margin-bottom: 20px; }
+  .type-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    margin-top: 12px;
+  }
+
+  /* Component gallery */
+  .component-card {
+    border: 1px solid var(--brass-3);
+    padding: 28px;
+    background: var(--black-2);
+  }
+  .comp-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  /* ---------- BUTTONS ---------- */
+  .btn {
+    font-family: var(--sub);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 160ms ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-brass {
+    background: var(--brass);
+    color: var(--black);
+  }
+  .btn-brass:hover { background: #c29d65; }
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--brass);
+    color: var(--cream);
+  }
+  .btn-ghost:hover { background: rgba(176, 141, 87, 0.08); }
+  .btn-dark {
+    background: var(--black);
+    color: var(--cream);
+    border: 1px solid var(--brass-3);
+  }
+  .btn-danger {
+    background: var(--red);
+    color: var(--cream);
+  }
+  .btn-block { width: 100%; }
+  .btn-lg { padding: 20px 40px; font-size: 14px; }
+  .btn-sm { padding: 10px 18px; font-size: 11px; letter-spacing: 0.18em; }
+
+  /* Inputs */
+  .input {
+    width: 100%;
+    background: var(--black);
+    border: 1px solid var(--brass-3);
+    border-bottom: 1px solid var(--brass);
+    border-radius: 4px;
+    color: var(--cream);
+    font-family: var(--body);
+    font-size: 16px;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 160ms;
+  }
+  .input:focus { border-color: var(--brass); }
+  .input-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--brass-2);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* Status pills */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+  .pill-ice { color: var(--ice); border-color: var(--ice); background: rgba(168, 197, 176, 0.06); }
+  .pill-red { color: var(--red); border-color: var(--red); background: rgba(177, 42, 39, 0.08); }
+  .pill-brass { color: var(--brass); border-color: var(--brass-2); background: rgba(176, 141, 87, 0.06); }
+  .pill-dim { color: var(--cream-2); border-color: var(--brass-3); }
+  .pill-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  /* Cards & telemetry tiles */
+  .tile {
+    border: 1px solid var(--brass-3);
+    padding: 18px 20px;
+    background: var(--black);
+    border-radius: 4px;
+  }
+  .tile-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+  }
+  .tile-value {
+    font-family: var(--display);
+    font-size: 32px;
+    color: var(--cream);
+    margin-top: 8px;
+  }
+  .tile-sub {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--cream-2);
+    margin-top: 4px;
+  }
+
+  /* Icon grid */
+  .icon-cell {
+    border: 1px solid var(--brass-3);
+    padding: 18px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    background: var(--black-2);
+  }
+  .icon-cell svg { width: 36px; height: 36px; stroke: var(--brass); fill: none; stroke-width: 1.4; }
+  .icon-cell-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    color: var(--cream-2); text-transform: uppercase;
+  }
+
+  /* ---------- DEVICE FRAMES ---------- */
+  .stage-row {
+    display: flex; gap: 48px; flex-wrap: wrap; justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .device-block { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+  .device-caption {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .phone {
+    width: 360px;
+    height: 740px;
+    border-radius: 44px;
+    background: #000;
+    padding: 12px;
+    border: 1px solid var(--brass-3);
+    position: relative;
+  }
+  .phone::before {
+    content: "";
+    position: absolute; top: 14px; left: 50%;
+    transform: translateX(-50%);
+    width: 100px; height: 24px;
+    background: #000; border-radius: 14px;
+    z-index: 5;
+  }
+  .phone-screen {
+    width: 100%; height: 100%;
+    border-radius: 32px;
+    overflow: hidden;
+    background: var(--black);
+    position: relative;
+  }
+  .screen {
+    position: absolute; inset: 0;
+    padding: 46px 24px 28px;
+    background: var(--black);
+    display: flex; flex-direction: column;
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
+    transition: opacity 280ms ease, transform 280ms ease;
+    overflow-y: auto;
+  }
+  .screen.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    z-index: 2;
+  }
+  .screen::-webkit-scrollbar { width: 0; }
+
+  .top-chrome {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .back-btn {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--brass);
+    background: none; border: none; cursor: pointer;
+    text-transform: uppercase;
+  }
+
+  /* Customer welcome */
+  .cust-welcome { text-align: center; padding-top: 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .cust-loc {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+  }
+  .cust-mark {
+    font-family: var(--display);
+    font-size: 44px;
+    letter-spacing: 0.18em;
+    color: var(--brass);
+    line-height: 1.1;
+    margin-top: 40px;
+    position: relative;
+  }
+  .cust-mark .line { display: block; }
+  .cust-tag {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--cream-2);
+    margin-top: 18px;
+    letter-spacing: 0.04em;
+  }
+  .price-plate {
+    border-top: 1px solid var(--brass-2);
+    border-bottom: 1px solid var(--brass-2);
+    padding: 22px 0;
+    margin: 48px 12px 32px;
+  }
+  .price-value {
+    font-family: var(--display);
+    font-size: 56px;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .price-unit {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .sun-bg {
+    position: absolute; inset: 0;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding-top: 80px;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+  .sun-bg svg { animation: spin 120s linear infinite; }
+
+  /* Payment screen */
+  .pay-row {
+    border: 1px solid var(--brass-3);
+    padding: 18px 20px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer;
+    transition: all 160ms;
+    background: var(--black-2);
+  }
+  .pay-row:hover { border-color: var(--brass); }
+  .pay-label {
+    font-family: var(--sub);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: var(--cream);
+    text-transform: uppercase;
+  }
+  .pay-hint {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+  }
+
+  /* Processing */
+  .processing {
+    flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 32px;
+  }
+  .spinner {
+    width: 80px; height: 80px; border-radius: 50%;
+    border: 1px solid var(--brass-3);
+    border-top-color: var(--brass);
+    animation: spin 1.2s linear infinite;
+  }
+  .processing-text {
+    font-family: var(--body);
+    font-style: italic;
+    color: var(--cream-2);
+    font-size: 18px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Success / Code reveal */
+  .code-reveal { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+  .code-instruction {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--cream-2);
+    text-align: center;
+  }
+  .code-display {
+    font-family: var(--mono);
+    font-size: 56px;
+    letter-spacing: 0.18em;
+    font-weight: 500;
+    color: var(--brass);
+    text-align: center;
+    padding: 32px 0;
+    border-top: 1px solid var(--brass-2);
+    border-bottom: 1px solid var(--brass-2);
+    background: var(--black-2);
+  }
+  .code-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--brass-2);
+    text-align: center;
+  }
+  .receipt-link {
+    font-family: var(--sub);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--brass);
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: auto;
+    padding-top: 24px;
+    text-decoration: none;
+    border-top: 1px solid var(--brass-3);
+  }
+
+  /* Attendant login */
+  .attendant-title {
+    font-family: var(--display);
+    font-size: 36px;
+    color: var(--brass);
+    letter-spacing: 0.1em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .attendant-sub {
+    font-family: var(--body);
+    font-style: italic;
+    color: var(--cream-2);
+    font-size: 15px;
+    margin-bottom: 36px;
+  }
+
+  /* Attendant home */
+  .shift-header {
+    border-bottom: 1px solid var(--brass-2);
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+  }
+  .shift-greeting {
+    font-family: var(--display);
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    color: var(--cream);
+  }
+  .shift-line {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+  .mini-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .mini-tile {
+    border: 1px solid var(--brass-3);
+    padding: 14px;
+    background: var(--black-2);
+    border-radius: 4px;
+  }
+  .mini-tile .v {
+    font-family: var(--display);
+    font-size: 26px;
+    color: var(--cream);
+  }
+  .mini-tile .l {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .action-list { display: flex; flex-direction: column; gap: 8px; }
+  .action-row {
+    border: 1px solid var(--brass-3);
+    background: var(--black-2);
+    padding: 14px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer;
+    transition: border-color 160ms;
+    border-radius: 4px;
+  }
+  .action-row:hover { border-color: var(--brass); }
+  .action-row-label {
+    font-family: var(--sub);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--cream);
+  }
+  .action-row-hint {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--brass);
+    text-transform: uppercase;
+  }
+  .chev { color: var(--brass); font-family: var(--mono); }
+
+  /* Number pad for code verify */
+  .numpad-code {
+    font-family: var(--mono);
+    font-size: 40px;
+    letter-spacing: 0.22em;
+    color: var(--cream);
+    text-align: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--brass-2);
+    border-bottom: 1px solid var(--brass-2);
+    margin-bottom: 24px;
+    min-height: 82px;
+  }
+  .numpad-code .placeholder { color: var(--brass-3); }
+  .numpad {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  }
+  .numkey {
+    border: 1px solid var(--brass-3);
+    background: var(--black-2);
+    color: var(--cream);
+    font-family: var(--display);
+    font-size: 26px;
+    padding: 14px 0;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 160ms;
+  }
+  .numkey:hover { border-color: var(--brass); }
+  .numkey.action {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    color: var(--brass); text-transform: uppercase;
+  }
+
+  /* Checklist */
+  .checklist { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .check-item {
+    border: 1px solid var(--brass-3);
+    background: var(--black-2);
+    padding: 14px 16px;
+    border-radius: 4px;
+    display: flex; align-items: center; gap: 14px;
+    cursor: pointer;
+    transition: all 200ms;
+  }
+  .check-item.done { border-color: var(--ice); opacity: 0.75; }
+  .check-box {
+    width: 22px; height: 22px;
+    border: 1px solid var(--brass);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 200ms;
+  }
+  .check-item.done .check-box {
+    background: var(--ice);
+    border-color: var(--ice);
+  }
+  .check-item.done .check-box::after {
+    content: "";
+    width: 10px; height: 6px;
+    border-left: 1.5px solid var(--black);
+    border-bottom: 1.5px solid var(--black);
+    transform: rotate(-45deg) translate(1px, -1px);
+  }
+  .check-label {
+    font-family: var(--sub);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--cream);
+  }
+  .check-item.done .check-label { text-decoration: line-through; color: var(--cream-2); }
+
+  .progress-bar {
+    height: 2px;
+    background: var(--brass-3);
+    margin: 16px 0 20px;
+    position: relative;
+  }
+  .progress-bar::after {
+    content: "";
+    position: absolute; left: 0; top: 0;
+    height: 100%;
+    background: var(--brass);
+    width: var(--p, 0%);
+    transition: width 300ms;
+  }
+
+  /* Issue categories */
+  .issue-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .issue-tile {
+    border: 1px solid var(--brass-3);
+    background: var(--black-2);
+    padding: 20px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 160ms;
+  }
+  .issue-tile:hover { border-color: var(--brass); }
+  .issue-tile.danger { border-color: var(--red); color: var(--red); }
+  .issue-tile .t {
+    font-family: var(--sub);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: var(--cream);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .issue-tile.danger .t { color: var(--red); }
+  .issue-tile svg { width: 28px; height: 28px; stroke: var(--brass); fill: none; stroke-width: 1.4; }
+  .issue-tile.danger svg { stroke: var(--red); }
+
+  /* Tray swap */
+  .fill-bar {
+    height: 180px;
+    width: 60px;
+    border: 1px solid var(--brass-2);
+    margin: 0 auto 20px;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--black-2);
+  }
+  .fill-bar-level {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, var(--walnut), #2a1b10);
+    border-top: 1px solid var(--brass);
+  }
+  .fill-bar-level.warn { background: linear-gradient(180deg, var(--red), #6b1a18); }
+
+  .step-list { display: flex; flex-direction: column; gap: 6px; }
+  .step-row {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--brass-3);
+  }
+  .step-num {
+    font-family: var(--display);
+    font-size: 22px;
+    color: var(--brass);
+    width: 28px; flex-shrink: 0;
+  }
+  .step-text {
+    font-family: var(--body);
+    font-size: 15px;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+
+  /* Unit status tiles */
+  .status-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+
+  /* ---------- DESKTOP ADMIN FRAME ---------- */
+  .desktop {
+    width: 100%;
+    max-width: 1180px;
+    border: 1px solid var(--brass-3);
+    border-radius: 8px;
+    background: var(--black);
+    overflow: hidden;
+  }
+  .desktop-chrome {
+    background: var(--black-2);
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--brass-3);
+    display: flex; gap: 8px; align-items: center;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+  .desktop-url {
+    flex: 1;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--brass-2);
+    letter-spacing: 0.1em;
+  }
+  .admin-layout { display: grid; grid-template-columns: 240px 1fr; min-height: 640px; }
+  .admin-nav {
+    border-right: 1px solid var(--brass-3);
+    padding: 24px 0;
+    background: var(--black);
+  }
+  .admin-brand {
+    padding: 0 24px 20px;
+    border-bottom: 1px solid var(--brass-3);
+  }
+  .admin-brand .mark {
+    font-family: var(--display);
+    font-size: 22px;
+    letter-spacing: 0.18em;
+    color: var(--brass);
+  }
+  .admin-brand .sub {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.26em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .admin-nav-item {
+    padding: 12px 24px;
+    font-family: var(--sub);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--cream-2);
+    text-transform: uppercase;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all 160ms;
+  }
+  .admin-nav-item.active { color: var(--brass); border-left-color: var(--brass); background: var(--black-2); }
+  .admin-nav-item:hover { color: var(--brass); }
+
+  .admin-main { padding: 32px 36px; }
+  .admin-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--brass-3);
+    margin-bottom: 28px;
+  }
+  .admin-title {
+    font-family: var(--display);
+    font-size: 36px;
+    letter-spacing: 0.08em;
+    color: var(--cream);
+    line-height: 1;
+  }
+  .admin-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.26em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+  .kpi-tile {
+    border: 1px solid var(--brass-3);
+    padding: 20px;
+    background: var(--black-2);
+    border-radius: 4px;
+  }
+  .kpi-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.24em;
+    color: var(--brass-2); text-transform: uppercase;
+  }
+  .kpi-value {
+    font-family: var(--display); font-size: 40px;
+    color: var(--cream); margin-top: 10px; line-height: 1;
+  }
+  .kpi-delta {
+    font-family: var(--sub); font-size: 12px;
+    color: var(--ice); margin-top: 6px;
+    letter-spacing: 0.08em;
+  }
+
+  .panel {
+    border: 1px solid var(--brass-3);
+    background: var(--black-2);
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  .panel-h {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--brass-3);
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.26em; color: var(--brass-2); text-transform: uppercase;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .unit-row {
+    display: grid;
+    grid-template-columns: 40px 1.4fr 1fr 0.8fr 1fr 80px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--brass-3);
+    align-items: center;
+    font-family: var(--sub);
+    font-size: 13px;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+  }
+  .unit-row:last-child { border-bottom: none; }
+  .unit-row .muted { color: var(--cream-2); font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; }
+  .bullet {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--ice);
+  }
+  .bullet.occ { background: var(--red); }
+  .bullet.off { background: var(--brass-3); }
+
+  /* Session log timeline */
+  .log-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 80px 80px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--brass-3);
+    font-family: var(--mono); font-size: 11px;
+    color: var(--cream-2); letter-spacing: 0.14em;
+    align-items: center;
+  }
+  .log-row:last-child { border-bottom: none; }
+  .log-row .time { color: var(--brass); }
+  .log-row .amt { color: var(--cream); text-align: right; }
+
+  .cols-2 { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; }
+
+  /* ---------- UTILITIES ---------- */
+  .mt-0 { margin-top: 0; }
+  .mt-1 { margin-top: 8px; } .mt-2 { margin-top: 16px; } .mt-3 { margin-top: 24px; } .mt-4 { margin-top: 32px; }
+  .mb-2 { margin-bottom: 16px; } .mb-3 { margin-bottom: 24px; }
+  .text-center { text-align: center; }
+  .row { display: flex; gap: 12px; align-items: center; }
+  .flex1 { flex: 1; }
+  .divider-titled {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.24em;
+    color: var(--brass-2); text-transform: uppercase;
+    margin: 28px 0 12px;
+  }
+  .divider-titled::before, .divider-titled::after {
+    content: ""; flex: 1; height: 1px; background: var(--brass-3);
+  }
+
+  @media (max-width: 900px) {
+    .shell { grid-template-columns: 1fr; }
+    nav.sidebar { position: static; height: auto; }
+    main.stage { padding: 32px 20px 80px; }
+    .grid-2, .grid-3, .grid-4, .grid-7, .kpi-row, .cols-2 { grid-template-columns: 1fr !important; }
+    .phone { transform: scale(0.9); transform-origin: top center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- ============================================================== -->
+  <!-- SIDEBAR NAV                                                     -->
+  <!-- ============================================================== -->
+  <nav class="sidebar">
+    <div class="brand-lockup">BROWN<br/>GLOVE</div>
+    <div class="brand-sub">A finer convenience.</div>
+
+    <div class="nav-group">
+      <div class="nav-label">Brand</div>
+      <div class="nav-item active" data-view="brand"><span class="nav-dot"></span>Identity</div>
+      <div class="nav-item" data-view="system"><span class="nav-dot"></span>Design System</div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Customer</div>
+      <div class="nav-item" data-view="customer"><span class="nav-dot"></span>QR &middot; Pay &middot; Code</div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Attendant</div>
+      <div class="nav-item" data-view="attendant"><span class="nav-dot"></span>Shift App</div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Operator</div>
+      <div class="nav-item" data-view="admin"><span class="nav-dot"></span>Admin Console</div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Notes</div>
+      <div class="nav-item" data-view="stack"><span class="nav-dot"></span>Tech &amp; Next Steps</div>
+    </div>
+  </nav>
+
+  <!-- ============================================================== -->
+  <!-- MAIN STAGE                                                      -->
+  <!-- ============================================================== -->
+  <main class="stage">
+
+    <!-- ============== BRAND IDENTITY ============== -->
+    <section class="view active" data-view="brand">
+      <header class="view-header">
+        <div class="eyebrow">I · Brand Identity</div>
+        <h1 class="display">The House System</h1>
+        <p class="lede">Art Deco bathhouse. Warmth over grandeur. The Chrysler Building as structure; Soho House as tone. The inversion joke, delivered with a straight face.</p>
+      </header>
+
+      <div class="brand-hero">
+        <div class="sunburst" aria-hidden="true">
+          <svg width="900" height="900" viewBox="-300 -300 600 600">
+            <g stroke="#B08D57" stroke-width="0.6" fill="none">
+              <circle r="210"/><circle r="170"/><circle r="120"/>
+              <g>
+                <!-- 36 rays -->
+                <g id="rays"></g>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="mega-wordmark">BROWN GLOVE</div>
+        <div class="brand-tag">A finer convenience.</div>
+      </div>
+
+      <!-- TAGLINES -->
+      <div class="section-title">Taglines</div>
+      <div class="section-note">Primary is locked. Reserves are held for sub-brand extensions (receipts, memberships, retail). Never wink too hard.</div>
+      <div class="grid grid-2">
+        <div class="component-card">
+          <div class="comp-label">Primary</div>
+          <div style="font-family: var(--body); font-style: italic; font-size: 28px; color: var(--cream);">A finer convenience.</div>
+        </div>
+        <div class="component-card">
+          <div class="comp-label">Reserve</div>
+          <div style="font-family: var(--body); font-style: italic; font-size: 20px; color: var(--cream-2); line-height: 1.7;">
+            Relief, refined.<br/>
+            The dignified stop.<br/>
+            Public, but private.
+          </div>
+        </div>
+      </div>
+
+      <!-- PALETTE -->
+      <div class="section-title">Palette</div>
+      <div class="section-note">Matte black and polished brass are the anchors. Walnut, enamel red, ice green, and cream are the accents. No gray — dividers are always brass.</div>
+      <div class="grid grid-7">
+        <div class="swatch"><div class="swatch-color" style="background: #0E0E0E; border-bottom: 1px solid var(--brass-3);"></div><div class="swatch-meta"><span class="swatch-name">Black</span><span>#0E0E0E</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #B08D57;"></div><div class="swatch-meta"><span class="swatch-name">Brass</span><span>#B08D57</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #8A6D3F;"></div><div class="swatch-meta"><span class="swatch-name">Brass Dk</span><span>#8A6D3F</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #3D2817;"></div><div class="swatch-meta"><span class="swatch-name">Walnut</span><span>#3D2817</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #B12A27;"></div><div class="swatch-meta"><span class="swatch-name">Enamel</span><span>#B12A27</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #F2E8D5;"></div><div class="swatch-meta"><span class="swatch-name">Cream</span><span>#F2E8D5</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #A8C5B0;"></div><div class="swatch-meta"><span class="swatch-name">Ice</span><span>#A8C5B0</span></div></div>
+      </div>
+
+      <!-- TYPE -->
+      <div class="section-title">Type</div>
+      <div class="section-note">Italiana for display. Cormorant Garamond for editorial body. Jost (Futura-adjacent) for utility subheads. JetBrains Mono for timestamps, codes, receipts.</div>
+      <div class="grid grid-2">
+        <div class="type-card">
+          <div class="type-sample" style="font-family: var(--display); font-size: 64px; letter-spacing: 0.08em; line-height: 1;">Brown&nbsp;Glove</div>
+          <div class="hairline soft"></div>
+          <div class="type-meta">Italiana · Display · 64/64 · Tracking 0.08em</div>
+        </div>
+        <div class="type-card">
+          <div class="type-sample" style="font-family: var(--body); font-size: 22px; font-style: italic;">A finer convenience — presented to those who know the difference between a restroom and a retreat.</div>
+          <div class="hairline soft"></div>
+          <div class="type-meta">Cormorant Garamond · Italic 400 · 22/30</div>
+        </div>
+        <div class="type-card">
+          <div class="type-sample" style="font-family: var(--sub); font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase;">Enter code to proceed</div>
+          <div class="hairline soft"></div>
+          <div class="type-meta">Jost · Medium 500 · 14 · Tracking 0.22em · All caps</div>
+        </div>
+        <div class="type-card">
+          <div class="type-sample" style="font-family: var(--mono); font-size: 32px; letter-spacing: 0.2em;">482 · 079</div>
+          <div class="hairline soft"></div>
+          <div class="type-meta">JetBrains Mono · 500 · 32/40 · Tabular</div>
+        </div>
+      </div>
+
+      <!-- VOICE -->
+      <div class="section-title">Voice</div>
+      <div class="section-note">Understated, slightly arch, never winks too hard. The humor is in the gap between the subject matter and the dignity.</div>
+      <div class="grid grid-2">
+        <div class="component-card">
+          <div class="comp-label">Yes</div>
+          <div style="font-family: var(--body); font-size: 18px; font-style: italic; color: var(--cream); line-height: 1.6;">
+            "Good evening. That'll be ten dollars."<br/>
+            "A mint on your way out?"<br/>
+            "We'll be just a moment — freshening up."
+          </div>
+        </div>
+        <div class="component-card">
+          <div class="comp-label">No</div>
+          <div style="font-family: var(--body); font-size: 18px; font-style: italic; color: var(--cream-2); line-height: 1.6; text-decoration: line-through; text-decoration-color: var(--red);">
+            "Drop the kids off at the pool."<br/>
+            "Going number two? No problem!"<br/>
+            "Let 'er rip, champ."
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== DESIGN SYSTEM ============== -->
+    <section class="view" data-view="system">
+      <header class="view-header">
+        <div class="eyebrow">II · Design System</div>
+        <h1 class="display">Atoms &amp; Ornaments</h1>
+        <p class="lede">One radius (4px). One border weight (1px). Dividers are brass hairlines, never gray. No drop shadows — depth is negative space and a brass edge.</p>
+      </header>
+
+      <div class="section-title">Buttons</div>
+      <div class="grid grid-2">
+        <div class="component-card">
+          <div class="comp-label">Primary &middot; Brass</div>
+          <div class="row mt-2">
+            <button class="btn btn-brass btn-lg">Pay $10</button>
+            <button class="btn btn-brass">Continue</button>
+            <button class="btn btn-brass btn-sm">Verify</button>
+          </div>
+          <div class="comp-label mt-4">Ghost &middot; Brass border</div>
+          <div class="row mt-2">
+            <button class="btn btn-ghost btn-lg">Receipt by email</button>
+            <button class="btn btn-ghost">Cancel</button>
+          </div>
+          <div class="comp-label mt-4">Danger &middot; Enamel</div>
+          <div class="row mt-2">
+            <button class="btn btn-danger">Flag Emergency</button>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="comp-label">Inputs</div>
+          <div style="margin-top: 16px;">
+            <div class="input-label">Email</div>
+            <input class="input" value="james@browngloveny.com" />
+          </div>
+          <div style="margin-top: 16px;">
+            <div class="input-label">4-Digit PIN</div>
+            <input class="input" type="password" value="••••" />
+          </div>
+          <div style="margin-top: 16px;">
+            <div class="input-label">Unit Code (Customer)</div>
+            <input class="input" value="482 · 079" style="font-family: var(--mono); letter-spacing: 0.2em;" />
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">Status Pills</div>
+      <div class="component-card">
+        <div class="row" style="flex-wrap: wrap; gap: 10px;">
+          <span class="pill pill-ice"><span class="pill-dot"></span>Vacant</span>
+          <span class="pill pill-red"><span class="pill-dot"></span>Occupied</span>
+          <span class="pill pill-brass"><span class="pill-dot"></span>Cleaning</span>
+          <span class="pill pill-dim"><span class="pill-dot"></span>Off Shift</span>
+          <span class="pill pill-red"><span class="pill-dot"></span>Tray 92%</span>
+          <span class="pill pill-ice"><span class="pill-dot"></span>Supplies OK</span>
+        </div>
+      </div>
+
+      <div class="section-title">Telemetry Tiles</div>
+      <div class="grid grid-4">
+        <div class="tile"><div class="tile-label">Occupancy</div><div class="tile-value">Vacant</div><div class="tile-sub">Last used 6 min ago</div></div>
+        <div class="tile"><div class="tile-label">Water</div><div class="tile-value">78%</div><div class="tile-sub">3.2 gal remaining</div></div>
+        <div class="tile"><div class="tile-label">Tray Fill</div><div class="tile-value">42%</div><div class="tile-sub">Swap in ~4 hours</div></div>
+        <div class="tile"><div class="tile-label">Today</div><div class="tile-value">$540</div><div class="tile-sub">54 sessions</div></div>
+      </div>
+
+      <div class="section-title">Iconography</div>
+      <div class="section-note">Single-weight geometric linework in brass. Sunburst for brand, seat/tray/fan for telemetry, gloved hand for attendant actions.</div>
+      <div class="grid grid-7">
+        <div class="icon-cell">
+          <svg viewBox="-20 -20 40 40"><g><circle r="3"/><g id="sb"></g></g></svg>
+          <div class="icon-cell-label">Sunburst</div>
+        </div>
+        <div class="icon-cell">
+          <svg viewBox="0 0 40 40"><path d="M8 14h24M10 14v12a6 6 0 0 0 6 6h8a6 6 0 0 0 6-6V14"/></svg>
+          <div class="icon-cell-label">Seat</div>
+        </div>
+        <div class="icon-cell">
+          <svg viewBox="0 0 40 40"><rect x="8" y="12" width="24" height="18" rx="1"/><path d="M14 12v-3h12v3"/></svg>
+          <div class="icon-cell-label">Tray</div>
+        </div>
+        <div class="icon-cell">
+          <svg viewBox="0 0 40 40"><path d="M14 28V14c0-2 2-4 4-4h1c1 0 2 1 2 2v10"/><path d="M21 22v-6c0-1 1-2 2-2s2 1 2 2v6"/><path d="M25 22v-4c0-1 1-2 2-2s2 1 2 2v8a4 4 0 0 1-4 4h-4c-3 0-5-2-5-5"/></svg>
+          <div class="icon-cell-label">Gloved Hand</div>
+        </div>
+        <div class="icon-cell">
+          <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="4"/><path d="M20 6c-2 4-2 8 0 10 2-2 2-6 0-10zM20 34c2-4 2-8 0-10-2 2-2 6 0 10zM6 20c4-2 8-2 10 0-2 2-6 2-10 0zM34 20c-4-2-8-2-10 0 2 2 6 2 10 0z"/></svg>
+          <div class="icon-cell-label">Fan</div>
+        </div>
+        <div class="icon-cell">
+          <svg viewBox="0 0 40 40"><path d="M20 6l4 10h10l-8 6 3 10-9-6-9 6 3-10-8-6h10z"/></svg>
+          <div class="icon-cell-label">Diamond</div>
+        </div>
+        <div class="icon-cell">
+          <svg viewBox="0 0 40 40"><path d="M10 14h20v16H10z"/><path d="M14 14V10a6 6 0 0 1 12 0v4"/></svg>
+          <div class="icon-cell-label">Lock</div>
+        </div>
+      </div>
+
+      <div class="section-title">Motion</div>
+      <div class="grid grid-3">
+        <div class="component-card">
+          <div class="comp-label">Transitions</div>
+          <div style="font-family: var(--body); font-size: 16px; color: var(--cream); margin-top: 12px; line-height: 1.7;">
+            280ms ease. Slow &amp; mechanical, like an elevator door closing. No bounce, no springs.
+          </div>
+        </div>
+        <div class="component-card">
+          <div class="comp-label">Reveals</div>
+          <div style="font-family: var(--body); font-size: 16px; color: var(--cream); margin-top: 12px; line-height: 1.7;">
+            Elements slide in from the edge, never pop. Fade + 6px Y-offset.
+          </div>
+        </div>
+        <div class="component-card">
+          <div class="comp-label">Ambient</div>
+          <div style="font-family: var(--body); font-size: 16px; color: var(--cream); margin-top: 12px; line-height: 1.7;">
+            Sunburst rotates 120s/revolution. Invisible unless you linger.
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">Spacing &amp; Grid</div>
+      <div class="component-card">
+        <div style="font-family: var(--mono); font-size: 13px; color: var(--cream); letter-spacing: 0.08em; line-height: 2;">
+          BASE UNIT &nbsp;— 4px<br/>
+          SCALE &nbsp;— 4 · 8 · 12 · 16 · 20 · 24 · 32 · 48 · 64 · 96<br/>
+          RADIUS &nbsp;— 4px · always<br/>
+          BORDER &nbsp;— 1px · brass (#8A6D3F at rest, #B08D57 active)<br/>
+          SHADOWS &nbsp;— none · depth via hairline + negative space
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== CUSTOMER ============== -->
+    <section class="view" data-view="customer">
+      <header class="view-header">
+        <div class="eyebrow">III · Customer Surface</div>
+        <h1 class="display">Scan. Pay. Proceed.</h1>
+        <p class="lede">The QR sticker on the kiosk is the entrance. Total time from scan to unlock code: under 15 seconds on Apple Pay. The whole surface is one flow — welcome, pay, code.</p>
+      </header>
+
+      <div class="stage-row">
+        <div class="device-block">
+          <div class="phone">
+            <div class="phone-screen" data-app="customer">
+
+              <!-- Welcome -->
+              <div class="screen active" data-screen="welcome">
+                <div class="sun-bg"><svg width="440" height="440" viewBox="-120 -120 240 240"><g stroke="#B08D57" stroke-width="0.5" fill="none"><circle r="100"/><circle r="70"/><g id="cust-rays"></g></g></svg></div>
+                <div class="top-chrome">
+                  <span>Unit 001</span>
+                  <span>Central Park W</span>
+                </div>
+                <div class="cust-welcome">
+                  <div>
+                    <div class="cust-mark">
+                      <span class="line">BROWN</span>
+                      <span class="line">GLOVE</span>
+                    </div>
+                    <div class="cust-tag">A finer convenience.</div>
+                  </div>
+                  <div>
+                    <div class="price-plate text-center">
+                      <div class="price-value">$10</div>
+                      <div class="price-unit">Per visit</div>
+                    </div>
+                    <button class="btn btn-brass btn-lg btn-block" onclick="custGo('payment')">Pay &amp; Enter</button>
+                    <div class="mt-2 text-center" style="font-family: var(--mono); font-size: 9px; letter-spacing: 0.22em; color: var(--brass-2); text-transform: uppercase;">Apple Pay · Google Pay · Card</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Payment -->
+              <div class="screen" data-screen="payment">
+                <div class="top-chrome">
+                  <button class="back-btn" onclick="custGo('welcome')">&larr; Back</button>
+                  <span>Secure Payment</span>
+                </div>
+                <div style="font-family: var(--display); font-size: 28px; color: var(--cream); letter-spacing: 0.08em; margin-top: 12px;">Ten dollars.</div>
+                <div style="font-family: var(--body); font-style: italic; color: var(--cream-2); font-size: 15px; margin-top: 4px;">Choose how you'd like to pay.</div>
+                <div class="hairline mt-3 mb-3"></div>
+
+                <div class="pay-row" onclick="custGo('processing')">
+                  <div class="pay-label">Apple Pay</div>
+                  <div class="pay-hint">Face ID</div>
+                </div>
+                <div class="pay-row" onclick="custGo('processing')">
+                  <div class="pay-label">Google Pay</div>
+                  <div class="pay-hint">Tap</div>
+                </div>
+                <div class="pay-row" onclick="custGo('processing')">
+                  <div class="pay-label">Card</div>
+                  <div class="pay-hint">Manual</div>
+                </div>
+
+                <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid var(--brass-3);">
+                  <div style="display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; color: var(--cream-2); text-transform: uppercase;">
+                    <span>Brown Glove · Unit 001</span>
+                    <span>$10.00</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Processing -->
+              <div class="screen" data-screen="processing">
+                <div class="top-chrome">
+                  <span></span><span>Processing</span>
+                </div>
+                <div class="processing">
+                  <div class="spinner"></div>
+                  <div class="processing-text">One moment please…</div>
+                </div>
+              </div>
+
+              <!-- Code Reveal -->
+              <div class="screen" data-screen="code">
+                <div class="top-chrome">
+                  <span>Paid · $10.00</span>
+                  <span id="cust-timer">Valid 14:59</span>
+                </div>
+                <div class="code-reveal">
+                  <div style="font-family: var(--display); font-size: 32px; color: var(--brass); letter-spacing: 0.08em; text-align: center; line-height: 1.1;">Thank you.</div>
+                  <div class="code-instruction">Please present this code to the attendant.</div>
+                  <div class="code-display" id="cust-code">482 · 079</div>
+                  <div class="code-meta">Unit 001 · Central Park W</div>
+                  <button class="btn btn-ghost btn-block mt-3" onclick="custGo('welcome')">Done</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="device-caption">Customer · Post-QR-scan</div>
+        </div>
+
+        <!-- Flow legend -->
+        <div style="flex: 1; min-width: 300px; padding-top: 20px;">
+          <div class="divider-titled">The Flow</div>
+          <div class="step-list">
+            <div class="step-row"><div class="step-num">I</div><div class="step-text"><strong style="color: var(--brass);">Scan.</strong> QR sticker on the kiosk opens <span style="font-family: var(--mono); color: var(--brass);">bg.nyc/u/001</span>. No app, no account.</div></div>
+            <div class="step-row"><div class="step-num">II</div><div class="step-text"><strong style="color: var(--brass);">Pay.</strong> Apple Pay / Google Pay by default. Stripe handles it.</div></div>
+            <div class="step-row"><div class="step-num">III</div><div class="step-text"><strong style="color: var(--brass);">Code.</strong> 6-digit code issued. Session logs to Supabase. Attendant verifies, opens the door.</div></div>
+            <div class="step-row"><div class="step-num">IV</div><div class="step-text"><strong style="color: var(--brass);">Receipt.</strong> Email on tap. Cream stock printed on exit for those who want the object.</div></div>
+          </div>
+
+          <div class="divider-titled">Edge cases</div>
+          <div class="step-list">
+            <div class="step-row"><div class="step-text" style="color: var(--cream-2); font-style: italic;">Payment fails — card retry, fall back to attendant-swiped card.</div></div>
+            <div class="step-row"><div class="step-text" style="color: var(--cream-2); font-style: italic;">Code expires (15 min) — refund prompt on the attendant side.</div></div>
+            <div class="step-row"><div class="step-text" style="color: var(--cream-2); font-style: italic;">Customer already paid — session restored from email / phone.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== ATTENDANT ============== -->
+    <section class="view" data-view="attendant">
+      <header class="view-header">
+        <div class="eyebrow">IV · Attendant Surface</div>
+        <h1 class="display">The Hand in the Glove.</h1>
+        <p class="lede">Most of the product lives here. Clock in, verify codes, run the after-use ritual, swap trays, flag issues. Should feel like a concierge's pocket-book, not a work order app.</p>
+      </header>
+
+      <div class="stage-row">
+        <!-- Phone 1 — Home + Verify -->
+        <div class="device-block">
+          <div class="phone">
+            <div class="phone-screen" data-app="attendant-a">
+
+              <!-- Login -->
+              <div class="screen active" data-screen="login">
+                <div class="top-chrome"><span>Brown Glove</span><span>Attendant</span></div>
+                <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                  <div class="attendant-title">Good evening.</div>
+                  <div class="attendant-sub">Please sign in to begin your shift.</div>
+                  <div style="margin-bottom: 16px;">
+                    <div class="input-label">Email</div>
+                    <input class="input" value="james@browngloveny.com" />
+                  </div>
+                  <div style="margin-bottom: 32px;">
+                    <div class="input-label">PIN</div>
+                    <input class="input" type="password" value="••••" />
+                  </div>
+                  <button class="btn btn-brass btn-lg btn-block" onclick="attAGo('home')">Clock In</button>
+                </div>
+              </div>
+
+              <!-- Home -->
+              <div class="screen" data-screen="home">
+                <div class="top-chrome"><span>On Shift · 4h 22m</span><span style="color: var(--ice);">Unit 001</span></div>
+                <div class="shift-header">
+                  <div class="shift-greeting">Evening, James.</div>
+                  <div class="shift-line">Central Park W · Shift ends 11:00 PM</div>
+                </div>
+
+                <div class="mini-tiles">
+                  <div class="mini-tile"><div class="v">$47</div><div class="l">Tips</div></div>
+                  <div class="mini-tile"><div class="v">18</div><div class="l">Cleans</div></div>
+                  <div class="mini-tile"><div class="v">$180</div><div class="l">Base Pay</div></div>
+                  <div class="mini-tile"><div class="v">54</div><div class="l">Sessions</div></div>
+                </div>
+
+                <div class="comp-label mt-2">Current</div>
+                <div class="action-list mt-2">
+                  <div class="action-row" onclick="attAGo('verify')">
+                    <div>
+                      <div class="action-row-label">Verify customer code</div>
+                      <div style="font-family: var(--body); font-style: italic; font-size: 13px; color: var(--cream-2); margin-top: 2px;">Guest is waiting.</div>
+                    </div>
+                    <span class="chev">&rarr;</span>
+                  </div>
+                  <div class="action-row" onclick="attAGo('status')">
+                    <div><div class="action-row-label">Unit telemetry</div></div>
+                    <span class="pill pill-ice" style="padding: 2px 8px; font-size: 9px;"><span class="pill-dot"></span>OK</span>
+                  </div>
+                </div>
+
+                <div class="comp-label mt-4">End of visit</div>
+                <div class="action-list mt-2">
+                  <div class="action-row" onclick="attBGo('checklist')"><div><div class="action-row-label">After-use cleaning</div></div><span class="chev">&rarr;</span></div>
+                  <div class="action-row" onclick="attBGo('tray')"><div><div class="action-row-label">Swap waste tray</div></div><span class="pill pill-red" style="padding: 2px 8px; font-size: 9px;"><span class="pill-dot"></span>92%</span></div>
+                  <div class="action-row" onclick="attBGo('issues')"><div><div class="action-row-label">Flag an issue</div></div><span class="chev">&rarr;</span></div>
+                </div>
+
+                <div style="margin-top: auto; padding-top: 20px;">
+                  <button class="btn btn-ghost btn-block btn-sm" onclick="attAGo('login')">End Shift</button>
+                </div>
+              </div>
+
+              <!-- Verify code (numpad) -->
+              <div class="screen" data-screen="verify">
+                <div class="top-chrome"><button class="back-btn" onclick="attAGo('home')">&larr; Back</button><span>Verify</span></div>
+                <div style="font-family: var(--display); font-size: 28px; color: var(--cream); letter-spacing: 0.08em; margin-top: 8px;">Customer code</div>
+                <div style="font-family: var(--body); font-style: italic; color: var(--cream-2); font-size: 14px;">Type the six digits the guest is showing.</div>
+                <div class="numpad-code mt-3" id="verify-disp"><span class="placeholder">— — — · — — —</span></div>
+                <div class="numpad">
+                  <button class="numkey" onclick="numKey('1')">1</button>
+                  <button class="numkey" onclick="numKey('2')">2</button>
+                  <button class="numkey" onclick="numKey('3')">3</button>
+                  <button class="numkey" onclick="numKey('4')">4</button>
+                  <button class="numkey" onclick="numKey('5')">5</button>
+                  <button class="numkey" onclick="numKey('6')">6</button>
+                  <button class="numkey" onclick="numKey('7')">7</button>
+                  <button class="numkey" onclick="numKey('8')">8</button>
+                  <button class="numkey" onclick="numKey('9')">9</button>
+                  <button class="numkey action" onclick="numClear()">Clear</button>
+                  <button class="numkey" onclick="numKey('0')">0</button>
+                  <button class="numkey action" onclick="numSubmit()">Open</button>
+                </div>
+              </div>
+
+              <!-- Unit Status -->
+              <div class="screen" data-screen="status">
+                <div class="top-chrome"><button class="back-btn" onclick="attAGo('home')">&larr; Back</button><span>Unit 001 Live</span></div>
+                <div style="font-family: var(--display); font-size: 26px; color: var(--cream); letter-spacing: 0.08em;">Telemetry</div>
+                <div style="font-family: var(--mono); font-size: 10px; color: var(--brass-2); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 16px;">Updated 2 seconds ago</div>
+                <div class="status-grid">
+                  <div class="tile"><div class="tile-label">Door</div><div class="tile-value" style="font-size: 22px;">Locked</div></div>
+                  <div class="tile"><div class="tile-label">Occupancy</div><div class="tile-value" style="font-size: 22px; color: var(--ice);">Vacant</div></div>
+                  <div class="tile"><div class="tile-label">Water</div><div class="tile-value" style="font-size: 22px;">78%</div></div>
+                  <div class="tile"><div class="tile-label">Soap</div><div class="tile-value" style="font-size: 22px;">64%</div></div>
+                  <div class="tile"><div class="tile-label">Paper</div><div class="tile-value" style="font-size: 22px;">High</div></div>
+                  <div class="tile"><div class="tile-label">Tray</div><div class="tile-value" style="font-size: 22px; color: var(--red);">92%</div></div>
+                  <div class="tile"><div class="tile-label">HVAC</div><div class="tile-value" style="font-size: 22px;">72&deg;F</div></div>
+                  <div class="tile"><div class="tile-label">Speaker</div><div class="tile-value" style="font-size: 22px;">On · 30%</div></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="device-caption">Attendant · Shift &amp; Verify</div>
+        </div>
+
+        <!-- Phone 2 — Cleaning / Tray / Issues -->
+        <div class="device-block">
+          <div class="phone">
+            <div class="phone-screen" data-app="attendant-b">
+
+              <!-- Checklist -->
+              <div class="screen active" data-screen="checklist">
+                <div class="top-chrome"><button class="back-btn" onclick="attBGo('home')">&larr; Home</button><span>After-Use · <span id="clean-count">0/6</span></span></div>
+                <div style="font-family: var(--display); font-size: 28px; color: var(--cream); letter-spacing: 0.08em;">Cleaning Ritual</div>
+                <div style="font-family: var(--body); font-style: italic; color: var(--cream-2); font-size: 14px; margin-bottom: 4px;">Go in order. Unit cannot re-open until the final tap.</div>
+                <div class="progress-bar" id="clean-bar" style="--p: 0%;"></div>
+                <div class="checklist" id="clean-list">
+                  <div class="check-item" data-i="1" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">Wipe seat &amp; rim with Brown Glove solution</div></div>
+                  <div class="check-item" data-i="2" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">Refresh floor · microfiber + spray</div></div>
+                  <div class="check-item" data-i="3" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">Replace hand towel &amp; check soap</div></div>
+                  <div class="check-item" data-i="4" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">Spray aromatic mist · neroli/cedar</div></div>
+                  <div class="check-item" data-i="5" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">Visual check · mirror, fixtures, flowers</div></div>
+                  <div class="check-item" data-i="6" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">Mark unit ready &amp; unlock</div></div>
+                </div>
+                <button class="btn btn-brass btn-block mt-3" onclick="attBGo('home')">Mark Clean &amp; Unlock</button>
+              </div>
+
+              <!-- Home placeholder -->
+              <div class="screen" data-screen="home">
+                <div class="top-chrome"><span>Attendant</span><span>Home</span></div>
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center; font-family: var(--body); font-style: italic; color: var(--cream-2); text-align: center; padding: 0 30px;">Return to the Shift screen on the left device.</div>
+                <div class="action-list">
+                  <div class="action-row" onclick="attBGo('checklist')"><div class="action-row-label">After-use cleaning</div><span class="chev">&rarr;</span></div>
+                  <div class="action-row" onclick="attBGo('tray')"><div class="action-row-label">Swap waste tray</div><span class="chev">&rarr;</span></div>
+                  <div class="action-row" onclick="attBGo('issues')"><div class="action-row-label">Flag an issue</div><span class="chev">&rarr;</span></div>
+                </div>
+              </div>
+
+              <!-- Tray Swap -->
+              <div class="screen" data-screen="tray">
+                <div class="top-chrome"><button class="back-btn" onclick="attBGo('home')">&larr; Back</button><span>Tray Swap</span></div>
+                <div style="font-family: var(--display); font-size: 28px; color: var(--cream); letter-spacing: 0.08em;">Tray at 92%</div>
+                <div style="font-family: var(--body); font-style: italic; color: var(--cream-2); font-size: 14px; margin-bottom: 12px;">Swap recommended now. Log the chain of custody.</div>
+                <div class="fill-bar"><div class="fill-bar-level warn" style="height: 92%;"></div></div>
+                <div class="step-list">
+                  <div class="step-row"><div class="step-num">I</div><div class="step-text">Unlock service drawer with keycard</div></div>
+                  <div class="step-row"><div class="step-num">II</div><div class="step-text">Slide out sealed tray · confirm odor-lock engaged</div></div>
+                  <div class="step-row"><div class="step-num">III</div><div class="step-text">Scan QR on replacement tray</div></div>
+                  <div class="step-row"><div class="step-num">IV</div><div class="step-text">Confirm seating click · close drawer</div></div>
+                </div>
+                <button class="btn btn-brass btn-block mt-3">Scan Replacement</button>
+              </div>
+
+              <!-- Issues -->
+              <div class="screen" data-screen="issues">
+                <div class="top-chrome"><button class="back-btn" onclick="attBGo('home')">&larr; Back</button><span>Flag</span></div>
+                <div style="font-family: var(--display); font-size: 28px; color: var(--cream); letter-spacing: 0.08em;">What's going on?</div>
+                <div style="font-family: var(--body); font-style: italic; color: var(--cream-2); font-size: 14px; margin-bottom: 16px;">Routes to dispatch. ETA in under 90 seconds.</div>
+                <div class="issue-grid">
+                  <div class="issue-tile"><svg viewBox="0 0 40 40"><path d="M8 20h24M20 8v24"/></svg><div class="t">Out of supply</div></div>
+                  <div class="issue-tile"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="12"/><path d="M14 20l4 4 8-8"/></svg><div class="t">Customer concern</div></div>
+                  <div class="issue-tile"><svg viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24"/><path d="M14 14l12 12M26 14l-12 12"/></svg><div class="t">Maintenance</div></div>
+                  <div class="issue-tile danger"><svg viewBox="0 0 40 40"><path d="M20 4l16 28H4z"/><path d="M20 16v8M20 28v1"/></svg><div class="t">Emergency</div></div>
+                </div>
+                <button class="btn btn-ghost btn-block mt-3" onclick="attBGo('home')">Cancel</button>
+              </div>
+
+            </div>
+          </div>
+          <div class="device-caption">Attendant · Service Rituals</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== ADMIN ============== -->
+    <section class="view" data-view="admin">
+      <header class="view-header">
+        <div class="eyebrow">V · Operator Console</div>
+        <h1 class="display">The House Ledger.</h1>
+        <p class="lede">One screen, live. Network KPIs, every unit's status, session log, attendant roster. Desktop-primary. The back-office should feel like the concierge's stand, not a SaaS dashboard.</p>
+      </header>
+
+      <div class="desktop">
+        <div class="desktop-chrome">
+          <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+          <div class="desktop-url">admin.browngloveny.com</div>
+        </div>
+        <div class="admin-layout">
+          <aside class="admin-nav">
+            <div class="admin-brand">
+              <div class="mark">BROWN GLOVE</div>
+              <div class="sub">Operator Console · NYC</div>
+            </div>
+            <div class="admin-nav-item active">Network</div>
+            <div class="admin-nav-item">Units</div>
+            <div class="admin-nav-item">Sessions</div>
+            <div class="admin-nav-item">Attendants</div>
+            <div class="admin-nav-item">Revenue</div>
+            <div class="admin-nav-item">Partnerships</div>
+            <div class="admin-nav-item">Settings</div>
+          </aside>
+
+          <div class="admin-main">
+            <div class="admin-header">
+              <div>
+                <div class="admin-title">Network</div>
+                <div class="admin-sub">Thursday · 18 April 2026 · 7:42 PM</div>
+              </div>
+              <div class="row">
+                <span class="pill pill-ice"><span class="pill-dot"></span>All Units Online</span>
+                <button class="btn btn-ghost btn-sm">Export CSV</button>
+              </div>
+            </div>
+
+            <div class="kpi-row">
+              <div class="kpi-tile"><div class="kpi-label">Today</div><div class="kpi-value">$540</div><div class="kpi-delta">&uarr; 12% vs yesterday</div></div>
+              <div class="kpi-tile"><div class="kpi-label">Sessions</div><div class="kpi-value">54</div><div class="kpi-delta">5 in last hour</div></div>
+              <div class="kpi-tile"><div class="kpi-label">Avg Cycle</div><div class="kpi-value">14:08</div><div class="kpi-delta" style="color: var(--cream-2);">Target 15:00</div></div>
+              <div class="kpi-tile"><div class="kpi-label">Uptime</div><div class="kpi-value">99.4%</div><div class="kpi-delta">30-day</div></div>
+            </div>
+
+            <div class="cols-2">
+              <div class="panel">
+                <div class="panel-h"><span>Units</span><span>4 active</span></div>
+                <div class="unit-row">
+                  <span class="bullet"></span>
+                  <span>Unit 001 <span class="muted">· Central Park W</span></span>
+                  <span>James Oyelaran</span>
+                  <span class="muted">Vacant</span>
+                  <span class="muted">Tray 92%</span>
+                  <span style="text-align: right;"><span class="pill pill-ice" style="padding: 2px 8px; font-size: 9px;"><span class="pill-dot"></span>OK</span></span>
+                </div>
+                <div class="unit-row">
+                  <span class="bullet occ"></span>
+                  <span>Unit 002 <span class="muted">· Bryant Park</span></span>
+                  <span>Marisol Chen</span>
+                  <span class="muted">Occupied</span>
+                  <span class="muted">Tray 48%</span>
+                  <span style="text-align: right;"><span class="pill pill-red" style="padding: 2px 8px; font-size: 9px;"><span class="pill-dot"></span>In Use</span></span>
+                </div>
+                <div class="unit-row">
+                  <span class="bullet"></span>
+                  <span>Unit 003 <span class="muted">· Madison Sq</span></span>
+                  <span>Theo Park</span>
+                  <span class="muted">Vacant</span>
+                  <span class="muted">Tray 22%</span>
+                  <span style="text-align: right;"><span class="pill pill-ice" style="padding: 2px 8px; font-size: 9px;"><span class="pill-dot"></span>OK</span></span>
+                </div>
+                <div class="unit-row">
+                  <span class="bullet off"></span>
+                  <span>Unit 004 <span class="muted">· Washington Sq</span></span>
+                  <span class="muted">— unassigned —</span>
+                  <span class="muted">Offline</span>
+                  <span class="muted">—</span>
+                  <span style="text-align: right;"><span class="pill pill-dim" style="padding: 2px 8px; font-size: 9px;"><span class="pill-dot"></span>Off</span></span>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel-h"><span>Recent Sessions · Unit 001</span><span>Live</span></div>
+                <div class="log-row"><span class="time">7:38 PM</span><span>Card · Apple Pay</span><span class="muted">12:40</span><span class="amt">$10.00</span></div>
+                <div class="log-row"><span class="time">7:22 PM</span><span>Card · Visa 4242</span><span class="muted">09:55</span><span class="amt">$10.00</span></div>
+                <div class="log-row"><span class="time">7:08 PM</span><span>Card · Google Pay</span><span class="muted">15:20</span><span class="amt">$10.00</span></div>
+                <div class="log-row"><span class="time">6:49 PM</span><span>Card · Apple Pay</span><span class="muted">11:02</span><span class="amt">$10.00</span></div>
+                <div class="log-row"><span class="time">6:31 PM</span><span>Card · Amex 1004</span><span class="muted">13:48</span><span class="amt">$10.00</span></div>
+                <div class="log-row"><span class="time">6:14 PM</span><span>Membership · Unltd</span><span class="muted">10:21</span><span class="amt" style="color: var(--brass);">— incl.</span></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-h"><span>Throughput · Last 24h</span><span>54 sessions · $540</span></div>
+              <div style="padding: 20px 24px;">
+                <svg viewBox="0 0 720 140" style="width: 100%; height: 140px;">
+                  <g stroke="#6B5430" stroke-width="1" opacity="0.6">
+                    <line x1="0" y1="35" x2="720" y2="35"/>
+                    <line x1="0" y1="70" x2="720" y2="70"/>
+                    <line x1="0" y1="105" x2="720" y2="105"/>
+                  </g>
+                  <polyline
+                    points="0,120 30,118 60,115 90,108 120,96 150,88 180,80 210,70 240,58 270,48 300,42 330,38 360,34 390,40 420,46 450,58 480,70 510,80 540,74 570,60 600,50 630,58 660,72 690,90 720,112"
+                    fill="none" stroke="#B08D57" stroke-width="1.5"/>
+                  <g font-family="JetBrains Mono" font-size="9" fill="#8A6D3F" letter-spacing="1.5">
+                    <text x="0" y="138">00</text>
+                    <text x="180" y="138">06</text>
+                    <text x="360" y="138">12</text>
+                    <text x="540" y="138">18</text>
+                    <text x="700" y="138">24</text>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== STACK ============== -->
+    <section class="view" data-view="stack">
+      <header class="view-header">
+        <div class="eyebrow">VI · Build Plan</div>
+        <h1 class="display">From Prototype to Product.</h1>
+        <p class="lede">This page is a single HTML file. The real thing ships as Next.js + Supabase + Stripe, deployed on Vercel. Here's the plan when you green-light it.</p>
+      </header>
+
+      <div class="grid grid-2">
+        <div class="component-card">
+          <div class="comp-label">Stack</div>
+          <div style="font-family: var(--body); font-size: 17px; color: var(--cream); line-height: 1.9;">
+            <strong style="color: var(--brass);">Frontend —</strong> Next.js 16 (App Router), Tailwind, React 19<br/>
+            <strong style="color: var(--brass);">DB —</strong> Supabase (Postgres, Realtime, Auth)<br/>
+            <strong style="color: var(--brass);">Payments —</strong> Stripe Checkout w/ Apple/Google Pay<br/>
+            <strong style="color: var(--brass);">Hosting —</strong> Vercel (browngloveny.com)<br/>
+            <strong style="color: var(--brass);">Email —</strong> Resend (receipts)<br/>
+            <strong style="color: var(--brass);">Mobile —</strong> PWA first; Expo/React Native port if needed
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="comp-label">Schema (first cut)</div>
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--cream); line-height: 1.9; letter-spacing: 0.04em;">
+            units · (id, slug, location, is_active)<br/>
+            sessions · (id, unit_id, code, status, paid_at, expires_at)<br/>
+            payments · (id, session_id, stripe_pi, amount, method)<br/>
+            attendants · (id, email, name)<br/>
+            shifts · (id, attendant_id, unit_id, start, end, tips)<br/>
+            cleanings · (id, session_id, attendant_id, checklist_json)<br/>
+            tray_swaps · (id, unit_id, attendant_id, tray_qr)<br/>
+            issues · (id, unit_id, attendant_id, category, body)
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">Build Order</div>
+      <div class="step-list">
+        <div class="step-row"><div class="step-num">I</div><div class="step-text"><strong style="color: var(--brass);">Scaffold.</strong> Next.js + Tailwind + design tokens locked to this palette/type system. Reusable <code style="color: var(--brass);">&lt;Button&gt; &lt;Pill&gt; &lt;Tile&gt;</code> components.</div></div>
+        <div class="step-row"><div class="step-num">II</div><div class="step-text"><strong style="color: var(--brass);">Customer flow end-to-end.</strong> <code style="color: var(--brass);">/u/[slug]</code> → Stripe Checkout → success page with 6-digit code → Supabase session row.</div></div>
+        <div class="step-row"><div class="step-num">III</div><div class="step-text"><strong style="color: var(--brass);">Attendant app.</strong> Supabase Auth, shift + verify + checklist + tray-swap + issues. PWA manifest for home-screen install.</div></div>
+        <div class="step-row"><div class="step-num">IV</div><div class="step-text"><strong style="color: var(--brass);">Admin console.</strong> Live units list, session log, KPIs. Restrict by role.</div></div>
+        <div class="step-row"><div class="step-num">V</div><div class="step-text"><strong style="color: var(--brass);">QR sticker.</strong> Printable design for Unit 001 — brass wordmark, sunburst, URL beneath in JetBrains Mono.</div></div>
+        <div class="step-row"><div class="step-num">VI</div><div class="step-text"><strong style="color: var(--brass);">Deploy.</strong> Vercel · browngloveny.com + app subdomain · admin subdomain · Stripe webhook · Supabase RLS.</div></div>
+      </div>
+
+      <div class="section-title">What I Need From You</div>
+      <div class="component-card">
+        <div style="font-family: var(--body); font-size: 17px; color: var(--cream); line-height: 1.9;">
+          <strong style="color: var(--brass);">1.</strong> Sign-off on the visual system above.<br/>
+          <strong style="color: var(--brass);">2.</strong> Stripe account created · test keys first, live keys at launch.<br/>
+          <strong style="color: var(--brass);">3.</strong> New Supabase project · DB URL + service role key.<br/>
+          <strong style="color: var(--brass);">4.</strong> Domain confirmed · browngloveny.com or alternative.<br/>
+          <strong style="color: var(--brass);">5.</strong> Unit 001 location + attendant name for seeding.
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  // ---------------------- SUNBURST RAYS ----------------------
+  (function buildRays() {
+    // Large brand sunburst
+    const big = document.querySelector('#rays');
+    if (big) {
+      const frag = [];
+      for (let i = 0; i < 36; i++) {
+        const a = (i * 10) * Math.PI / 180;
+        const x1 = Math.cos(a) * 120, y1 = Math.sin(a) * 120;
+        const x2 = Math.cos(a) * 250, y2 = Math.sin(a) * 250;
+        frag.push(`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`);
+      }
+      big.innerHTML = frag.join('');
+    }
+    // Customer welcome
+    const small = document.querySelector('#cust-rays');
+    if (small) {
+      const frag = [];
+      for (let i = 0; i < 24; i++) {
+        const a = (i * 15) * Math.PI / 180;
+        const x1 = Math.cos(a) * 60, y1 = Math.sin(a) * 60;
+        const x2 = Math.cos(a) * 110, y2 = Math.sin(a) * 110;
+        frag.push(`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`);
+      }
+      small.innerHTML = frag.join('');
+    }
+    // Icon sunburst
+    const sb = document.querySelector('#sb');
+    if (sb) {
+      const frag = [];
+      for (let i = 0; i < 12; i++) {
+        const a = (i * 30) * Math.PI / 180;
+        const x1 = Math.cos(a) * 6, y1 = Math.sin(a) * 6;
+        const x2 = Math.cos(a) * 16, y2 = Math.sin(a) * 16;
+        frag.push(`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`);
+      }
+      sb.innerHTML = frag.join('');
+    }
+  })();
+
+  // ---------------------- SIDEBAR NAV ----------------------
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const v = item.dataset.view;
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      item.classList.add('active');
+      document.querySelectorAll('section.view').forEach(s => s.classList.remove('active'));
+      document.querySelector(`section.view[data-view="${v}"]`).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // ---------------------- CUSTOMER FLOW ----------------------
+  function showScreen(app, id) {
+    const scope = document.querySelector(`[data-app="${app}"]`);
+    if (!scope) return;
+    scope.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = scope.querySelector(`.screen[data-screen="${id}"]`);
+    if (target) target.classList.add('active');
+  }
+  function custGo(id) {
+    if (id === 'processing') {
+      showScreen('customer', 'processing');
+      setTimeout(() => {
+        const code = Math.floor(100 + Math.random() * 900) + ' · ' + Math.floor(100 + Math.random() * 900);
+        document.getElementById('cust-code').textContent = code;
+        showScreen('customer', 'code');
+        startCustTimer();
+      }, 1600);
+      return;
+    }
+    showScreen('customer', id);
+  }
+  let custTimerId = null;
+  function startCustTimer() {
+    let t = 15 * 60;
+    const el = document.getElementById('cust-timer');
+    if (custTimerId) clearInterval(custTimerId);
+    custTimerId = setInterval(() => {
+      t -= 1;
+      if (t < 0) { clearInterval(custTimerId); el.textContent = 'Expired'; return; }
+      const m = String(Math.floor(t / 60)).padStart(2, '0');
+      const s = String(t % 60).padStart(2, '0');
+      el.textContent = `Valid ${m}:${s}`;
+    }, 1000);
+  }
+
+  // ---------------------- ATTENDANT A (Shift/Verify) ----------------------
+  function attAGo(id) { showScreen('attendant-a', id); if (id === 'verify') { verifyBuf = ''; renderVerify(); } }
+  let verifyBuf = '';
+  function numKey(n) {
+    if (verifyBuf.length >= 6) return;
+    verifyBuf += n;
+    renderVerify();
+  }
+  function numClear() { verifyBuf = ''; renderVerify(); }
+  function numSubmit() {
+    if (verifyBuf.length === 6) {
+      alert('Door unlocked.');
+      attAGo('home');
+    }
+  }
+  function renderVerify() {
+    const el = document.getElementById('verify-disp');
+    if (!el) return;
+    if (verifyBuf.length === 0) {
+      el.innerHTML = '<span class="placeholder">— — — · — — —</span>';
+      return;
+    }
+    const padded = verifyBuf.padEnd(6, '•');
+    el.textContent = padded.slice(0, 3).split('').join(' ') + ' · ' + padded.slice(3).split('').join(' ');
+  }
+
+  // ---------------------- ATTENDANT B (Rituals) ----------------------
+  function attBGo(id) { showScreen('attendant-b', id); }
+  function toggleCheck(el) {
+    el.classList.toggle('done');
+    const all = document.querySelectorAll('#clean-list .check-item');
+    const done = document.querySelectorAll('#clean-list .check-item.done').length;
+    document.getElementById('clean-count').textContent = `${done}/${all.length}`;
+    document.getElementById('clean-bar').style.setProperty('--p', `${(done / all.length) * 100}%`);
+  }
+
+  // Expose
+  window.custGo = custGo;
+  window.attAGo = attAGo;
+  window.attBGo = attBGo;
+  window.numKey = numKey;
+  window.numClear = numClear;
+  window.numSubmit = numSubmit;
+  window.toggleCheck = toggleCheck;
+</script>
+
+</body>
+</html>
