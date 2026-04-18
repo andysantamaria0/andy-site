@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brown Glove — Investor Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --black: #0E0E0E;
+    --black-2: #161412;
+    --black-3: #1F1C18;
+    --brass: #B08D57;
+    --brass-2: #8A6D3F;
+    --brass-3: #6B5430;
+    --walnut: #3D2817;
+    --red: #B12A27;
+    --cream: #F2E8D5;
+    --cream-2: #D9CFBD;
+    --ice: #A8C5B0;
+    --display: "Italiana", serif;
+    --body: "Cormorant Garamond", Georgia, serif;
+    --sub: "Jost", "Futura", sans-serif;
+    --mono: "JetBrains Mono", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; overflow: hidden; }
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: overlay;
+  }
+
+  /* ---------- DECK FRAME ---------- */
+  .deck { position: fixed; inset: 0; overflow: hidden; }
+  .slides {
+    display: flex;
+    height: 100vh;
+    transition: transform 520ms cubic-bezier(0.22, 0.8, 0.36, 1);
+    will-change: transform;
+  }
+  section.slide {
+    flex: 0 0 100vw;
+    width: 100vw;
+    height: 100vh;
+    padding: clamp(40px, 7vh, 80px) clamp(40px, 8vw, 120px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ---------- SLIDE CHROME ---------- */
+  .slide-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--brass-3);
+  }
+  .slide-head .mark {
+    font-family: var(--display);
+    letter-spacing: 0.24em;
+    color: var(--brass);
+    font-size: 12px;
+  }
+  .slide-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--brass-3);
+    text-transform: uppercase;
+    padding-top: 20px;
+    border-top: 1px solid var(--brass-3);
+    margin-top: auto;
+  }
+  .slide-foot .tag {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--cream-2);
+    text-transform: none;
+  }
+  .slide-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(24px, 5vh, 64px) 0;
+    position: relative;
+  }
+
+  /* ---------- CHROME NAV ---------- */
+  .deck-chrome {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    z-index: 20;
+    background: rgba(14, 14, 14, 0.7);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--brass-3);
+    border-radius: 999px;
+    padding: 8px 14px;
+  }
+  .deck-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--brass);
+    font-family: var(--mono);
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background 160ms;
+    letter-spacing: 0.1em;
+  }
+  .deck-btn:hover { background: rgba(176, 141, 87, 0.1); }
+  .deck-btn:disabled { opacity: 0.25; cursor: default; }
+  .deck-counter {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.26em;
+    color: var(--cream-2);
+    padding: 0 6px;
+  }
+
+  /* ---------- TYPE SCALE ---------- */
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  h1.display {
+    font-family: var(--display);
+    font-size: clamp(56px, 8vw, 120px);
+    letter-spacing: 0.08em;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1;
+    margin: 0;
+  }
+  h1.display .brass { color: var(--brass); }
+  .subtitle {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: clamp(22px, 2.4vw, 32px);
+    color: var(--cream-2);
+    margin-top: 24px;
+    max-width: 760px;
+    line-height: 1.35;
+  }
+  .body-lg {
+    font-family: var(--body);
+    font-size: clamp(20px, 1.8vw, 26px);
+    color: var(--cream);
+    line-height: 1.55;
+    max-width: 900px;
+  }
+  .body-lg em { color: var(--brass); font-style: italic; }
+
+  /* ---------- LAYOUT HELPERS ---------- */
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+  .row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+  /* ---------- CARD ---------- */
+  .card {
+    border: 1px solid var(--brass-3);
+    padding: 28px 32px;
+    background: var(--black-2);
+    border-radius: 4px;
+  }
+  .card-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    color: var(--brass);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-family: var(--display);
+    font-size: 30px;
+    letter-spacing: 0.06em;
+    color: var(--cream);
+    line-height: 1.05;
+    margin-bottom: 10px;
+  }
+  .card-body {
+    font-family: var(--body);
+    font-size: 18px;
+    color: var(--cream-2);
+    line-height: 1.5;
+  }
+
+  /* ---------- NUMBERED LIST ---------- */
+  .num-list { display: flex; flex-direction: column; gap: 12px; }
+  .num-row {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--brass-3);
+  }
+  .num-row .n {
+    font-family: var(--display);
+    font-size: 36px;
+    color: var(--brass);
+    letter-spacing: 0.04em;
+  }
+  .num-row .t {
+    font-family: var(--body);
+    font-size: 20px;
+    color: var(--cream);
+    line-height: 1.45;
+  }
+
+  /* ---------- TABLE ---------- */
+  table.deck-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+  }
+  table.deck-table th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--brass-2);
+  }
+  table.deck-table td {
+    font-family: var(--body);
+    font-size: 17px;
+    color: var(--cream);
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--brass-3);
+  }
+  table.deck-table tr.us td {
+    color: var(--brass);
+    font-family: var(--display);
+    letter-spacing: 0.04em;
+    font-size: 20px;
+    background: rgba(176, 141, 87, 0.04);
+  }
+  table.deck-table td.num {
+    font-family: var(--mono);
+    text-align: right;
+  }
+
+  /* ---------- STATS ---------- */
+  .stat-value {
+    font-family: var(--display);
+    font-size: clamp(60px, 8vw, 120px);
+    color: var(--brass);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    margin-top: 14px;
+  }
+
+  /* ---------- SUNBURST ---------- */
+  .sunburst-bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+  .sunburst-bg svg { animation: spin 120s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- KIOSK SVG ---------- */
+  .kiosk-render {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .kiosk-svg { width: 100%; max-width: 380px; height: auto; }
+
+  /* ---------- SPEC LIST ---------- */
+  .spec-list { display: flex; flex-direction: column; gap: 2px; }
+  .spec-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--brass-3);
+    font-family: var(--body);
+    font-size: 17px;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+  .spec-row .k {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+
+  /* ---------- QUOTE CARD (money quote) ---------- */
+  .money-quote {
+    border-top: 1px solid var(--brass-2);
+    border-bottom: 1px solid var(--brass-2);
+    padding: 40px 40px;
+    background: var(--black-2);
+    font-family: var(--body);
+    font-size: clamp(22px, 2.2vw, 30px);
+    line-height: 1.5;
+    color: var(--cream);
+    font-style: italic;
+    position: relative;
+  }
+  .money-quote .brass { color: var(--brass); font-style: normal; font-family: var(--display); letter-spacing: 0.04em; }
+  .money-quote::before, .money-quote::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: var(--brass-3);
+  }
+  .money-quote::before { top: 6px; }
+  .money-quote::after { bottom: 6px; }
+
+  /* ---------- VERTICAL STACK REVENUE STACK ---------- */
+  .stack { display: flex; flex-direction: column; gap: 10px; }
+  .stack-layer {
+    border: 1px solid var(--brass-3);
+    background: var(--black-2);
+    border-radius: 4px;
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 20px;
+    align-items: center;
+  }
+  .stack-n {
+    font-family: var(--display);
+    font-size: 28px;
+    color: var(--brass);
+    letter-spacing: 0.04em;
+  }
+  .stack-t {
+    font-family: var(--sub);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--cream);
+    letter-spacing: 0.06em;
+  }
+  .stack-d {
+    font-family: var(--body);
+    font-size: 15px;
+    color: var(--cream-2);
+    font-style: italic;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .stack-amt {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--brass);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  /* ---------- HAIRLINES ---------- */
+  .hairline { height: 1px; background: var(--brass-2); }
+  .hairline-soft { height: 1px; background: var(--brass-3); }
+
+  /* ---------- LARGE TYPOGRAPHIC COVER ---------- */
+  .cover-mark {
+    font-family: var(--display);
+    font-size: clamp(80px, 14vw, 220px);
+    letter-spacing: 0.16em;
+    color: var(--brass);
+    line-height: 1;
+    text-align: center;
+  }
+  .cover-tag {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: clamp(24px, 2.6vw, 38px);
+    color: var(--cream-2);
+    margin-top: 32px;
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+  .cover-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    color: var(--brass-2);
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  @media (max-width: 900px) {
+    .row-2, .row-3, .row-4 { grid-template-columns: 1fr; gap: 20px; }
+    .spec-row { grid-template-columns: 120px 1fr; }
+    section.slide { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+  <div class="slides" id="slides">
+
+    <!-- ======= 1 · COVER ======= -->
+    <section class="slide">
+      <div class="sunburst-bg">
+        <svg width="900" height="900" viewBox="-260 -260 520 520">
+          <g stroke="#B08D57" stroke-width="0.5" fill="none">
+            <circle r="220"/><circle r="170"/><circle r="120"/>
+            <g id="cover-rays"></g>
+          </g>
+        </svg>
+      </div>
+      <div class="slide-head"><span>MMXXVI · Investor Brief</span><span class="mark">BG</span></div>
+      <div class="slide-body" style="justify-content: center; align-items: center;">
+        <div class="cover-mark">BROWN GLOVE</div>
+        <div class="cover-tag">A finer convenience.</div>
+        <div class="cover-meta">New York · First Unit 2026</div>
+      </div>
+      <div class="slide-foot"><span>01 · Cover</span><span class="tag">Brown Glove · MMXXVI</span></div>
+    </section>
+
+    <!-- ======= 2 · THE JOKE / THE HOOK ======= -->
+    <section class="slide">
+      <div class="slide-head"><span>02 · The Hook</span><span class="mark">BROWN GLOVE</span></div>
+      <div class="slide-body">
+        <div class="eyebrow">I</div>
+        <h1 class="display">White glove.<br/><span class="brass">Applied to the brownest job.</span></h1>
+        <p class="subtitle">A consumer hospitality brand for the one piece of premium infrastructure that doesn't exist yet in dense urban public space.</p>
+        <p class="body-lg" style="margin-top: 36px;">
+          Not a smart-city startup. Not a public-works pitch. <em>The Soho House of public infrastructure</em> — starting with the restroom, because that's where the current experience is worst and the margin on better is highest.
+        </p>
+      </div>
+      <div class="slide-foot"><span>02 / 12</span><span class="tag">A finer convenience.</span></div>
+    </section>
+
+    <!-- ======= 3 · THE THESIS ======= -->
+    <section class="slide">
+      <div class="slide-head"><span>03 · The Thesis</span><span class="mark">BROWN GLOVE</span></div>
+      <div class="slide-body">
+        <div class="eyebrow">II</div>
+        <h1 class="display">Premium public<br/>infrastructure lives<br/>in a <span class="brass">design vacuum.</span></h1>
+        <div class="row-2" style="margin-top: 56px;">
+          <div class="card">
+            <div class="card-label">Gross but functional</div>
+            <div class="card-title">Port-a-Johns. Subway toilets.</div>
+            <div class="card-body">Ubiquitous. Cheap. Nobody pays to use one on purpose. The default experience is "hold it or find a café."</div>
+          </div>
+          <div class="card">
+            <div class="card-label">Beautiful but rare</div>
+            <div class="card-title">Bryant Park. Japan. European pay toilets.</div>
+            <div class="card-body">Architecturally serious. Operationally attended. But one-offs — no network, no brand, no replicable playbook.</div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot"><span>03 / 12</span><span class="tag">Brown Glove lives in the gap.</span></div>
+    </section>
+
+    <!-- ======= 4 · THE CATEGORY ======= -->
+    <section class="slide">
+      <div class="slide-head"><span>04 · The Category</span><span class="mark">BROWN GLOVE</span></div>
+      <div class="slide-body">
+        <div class="eyebrow">III · Competitive map</div>
+        <h1 class="display" style="font-size: clamp(44px, 5.8vw, 80px);">Three players.<br/><span class="brass">None compete with this positioning.</span></h1>
+        <table class="deck-table" style="margin-top: 44px;">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Model</th>
+              <th>Who Pays</th>
+              <th>Positioning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>JCDecaux / Sanisette</td>
+              <td>Ad-subsidized, unattended</td>
+              <td>Free to user</td>
+              <td class="num">Street furniture</td>
+            </tr>
+            <tr>
+              <td>Throne Labs ($15M Series B)</td>
+              <td>B2B to cities &amp; transit</td>
+              <td>Free to user</td>
+              <td class="num">Smart-city infra</td>
+            </tr>
+            <tr>
+              <td>Porta-potty rental</td>
+              <td>Event &amp; construction</td>
+              <td>Organizer pays</td>
+              <td class="num">Utility</td>
+            </tr>
+            <tr class="us">
+              <td>Brown Glove</td>
+              <td>Attended premium, urban</td>
+              <td>Consumer · $10</td>
+              <td class="num">Hospitality brand</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="body-lg" style="margin-top: 32px; font-style: italic; color: var(--cream-2);">
+          We don't compete with Throne. We position around them. Comparables are Equinox, Soho House, Bryant Park — not JCDecaux.
+        </p>
+      </div>
+      <div class="slide-foot"><span>04 / 12</span><span class="tag">A finer convenience.</span></div>
+    </section>
+
+    <!-- ======= 5 · WHAT'S NOVEL ======= -->
+    <section class="slide">
+      <div class="slide-head"><span>05 · What's Novel</span><span class="mark">BROWN GLOVE</span></div>
+      <div class="slide-body">
+        <div class="eyebrow">IV</div>
+        <h1 class="display" style="font-size: clamp(48px, 6vw, 96px);">Three things nobody else<br/>in the category does.</h1>
+        <div class="row-3" style="margin-top: 56px;">
+          <div class="card">
+            <div class="card-label">I · The Attendant</div>
+            <div class="card-title">Humans in the loop.</div>
+            <div class="card-body">Solves the SF-style vandalism / drug-use failure mode that every unattended pay toilet hits. Enables the $10 price point. This is the product differentiation.</div>
+          </div>
+          <div class="card">
+            <div class="card-label">II · Consumer Pays</div>
+            <div class="card-title">Not public works.</div>
+            <div class="card-body">Throne sells to cities. JCDecaux sells to advertisers. Brown Glove sells to the person who just left Le Bernardin and doesn't want to hunt for a Starbucks.</div>
+          </div>
+          <div class="card">
+            <div class="card-label">III · The Brand</div>
+            <div class="card-title">Zero brand players.</div>
+            <div class="card-body">Genuine whitespace. The entire category is engineering-led or budget-led. Nobody has brought a lifestyle lens to it. Equinox in 1991 was the same bet.</div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot"><span>05 / 12</span><span class="tag">Equinox, not public works.</span></div>
+    </section>
+
+    <!-- ======= 6 · THE UNIT ======= -->
+    <section class="slide">
+      <div class="slide-head"><span>06 · The Unit</span><span class="mark">BROWN GLOVE</span></div>
+      <div class="slide-body">
+        <div class="row-2" style="gap: 64px; align-items: center;">
+          <div class="kiosk-render">
+            <svg class="kiosk-svg" viewBox="0 0 300 420" fill="none">
+              <!-- Plinth -->
+              <rect x="20" y="380" width="260" height="16" fill="#3D2817" stroke="#B08D57" stroke-width="0.5"/>
+              <!-- Ziggurat body -->
+              <rect x="40" y="90" width="220" height="290" fill="#161412" stroke="#B08D57" stroke-width="0.5"/>
+              <!-- Stepped roofs -->
+              <rect x="50" y="70" width="200" height="22" fill="#161412" stroke="#B08D57" stroke-width="0.5"/>
+              <rect x="65" y="48" width="170" height="24" fill="#161412" stroke="#B08D57" stroke-width="0.5"/>
+              <rect x="85" y="22" width="130" height="26" fill="#161412" stroke="#B08D57" stroke-width="0.5"/>
+              <!-- Crown signage -->
+              <text x="150" y="40" text-anchor="middle" font-family="Italiana" font-size="9" fill="#B08D57" letter-spacing="1.5">BROWN</text>
+              <text x="150" y="44" text-anchor="middle" font-family="Italiana" font-size="9" fill="#B08D57" letter-spacing="1.5" dy="4">GLOVE</text>
+              <!-- Fluted pilasters -->
+              <g stroke="#8A6D3F" stroke-width="0.4">
+                <line x1="55" y1="120" x2="55" y2="360"/>
+                <line x1="65" y1="120" x2="65" y2="360"/>
+                <line x1="75" y1="120" x2="75" y2="360"/>
+                <line x1="225" y1="120" x2="225" y2="360"/>
+                <line x1="235" y1="120" x2="235" y2="360"/>
+                <line x1="245" y1="120" x2="245" y2="360"/>
+              </g>
+              <!-- Plaque -->
+              <rect x="115" y="100" width="70" height="14" fill="#0E0E0E" stroke="#B08D57" stroke-width="0.4"/>
+              <text x="150" y="110" text-anchor="middle" font-family="Italiana" font-size="6" fill="#B08D57" letter-spacing="2">CENTRAL PARK</text>
+              <!-- Door -->
+              <rect x="95" y="140" width="110" height="220" fill="#3D2817" stroke="#B08D57" stroke-width="0.6"/>
+              <!-- Door sunburst -->
+              <g stroke="#B08D57" stroke-width="0.4" fill="none">
+                <circle cx="150" cy="250" r="32"/>
+                <circle cx="150" cy="250" r="20"/>
+                <g id="door-rays-svg"></g>
+                <line x1="150" y1="250" x2="150" y2="340" stroke-width="1.5"/>
+              </g>
+              <!-- Payment panel -->
+              <rect x="215" y="180" width="30" height="50" fill="#0E0E0E" stroke="#B08D57" stroke-width="0.4"/>
+              <rect x="220" y="198" width="20" height="6" fill="#A8C5B0"/>
+              <!-- Lamp posts -->
+              <g stroke="#B08D57" stroke-width="0.5" fill="none">
+                <line x1="30" y1="200" x2="30" y2="380"/>
+                <circle cx="30" cy="195" r="5" fill="#F2E8D5" opacity="0.5"/>
+                <line x1="270" y1="200" x2="270" y2="380"/>
+                <circle cx="270" cy="195" r="5" fill="#F2E8D5" opacity="0.5"/>
+              </g>
+              <!-- Boxwood planters -->
+              <rect x="35" y="368" width="36" height="12" fill="#3D2817" stroke="#B08D57" stroke-width="0.3"/>
+              <rect x="229" y="368" width="36" height="12" fill="#3D2817" stroke="#B08D57" stroke-width="0.3"/>
+            </svg>
+          </div>
+          <div>
+            <div class="eyebrow">V · Spec</div>
+            <h1 class="display" style="font-size: clamp(40px, 5vw, 72px);">Art Deco bathhouse.<br/><span class="brass">Small footprint.</span></h1>
+            <div class="spec-list" style="margin-top: 32px;">
+              <div class="spec-row"><div class="k">Form</div><div>Vertical stepped ziggurat. 8′ × 10′ × 12′.</div></div>
+              <div class="spec-row"><div class="k">Materials</div><div>Matte black lacquer · unlacquered brass · fluted walnut door · travertine plinth</div></div>
+              <div class="spec-row"><div class="k">Door</div><div>Solid, opaque, privacy non-negotiable. Brass sunburst inlay.</div></div>
+              <div class="spec-row"><div class="k">Service</div><div>Sealed waste tray, swapped by attendant. Odor-locked.</div></div>
+              <div class="spec-row"><div class="k">Attendant</div><div>Uniformed. Cream linen tunic, brass buttons, white gloves, peaked cap.</div></div>
+              <div class="spec-row"><div class="k">Capex</div><div>~$120K per unit. Between Throne ($40–80K) and Portland Loo ($150–200K).</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot"><span>06 / 12</span><span class="tag">Chrysler Building meets Soho House.</span></div>
+    </section>
+
+    <!-- ======= 7 · THE MARKET ======= -->
+    <section class="slide">
+      <div class="slide-head"><span>07 · The Market</span><span class="mark">BROWN GLOVE</span></div>
+      <div class="slide-body">
+        <div class="eyebrow">VI · Manhattan</div>
+        <h1 class="display" style="font-size: clamp(44px, 5.6vw, 80px);">A biological base rate<br/>meets <span class="brass">the densest footfall on Earth.</span></h1>
+        <div class="row-4" style="margin-top: 56px;">
+          <div>
+            <div class="stat-value">3.94M</div>
+            <div class="stat-label">Manhattan weekday population</div>
+          </div>
+          <div>
+            <div class="stat-value">2.4M</div>
+            <div class="stat-label">BMs per day in Manhattan</div>
+          </div>
+          <div>
+            <div class="stat-value">125–200K</div>
+            <div class="stat-label">Addressable public-market daily</div>
+          </div>
+          <div>
+            <div class="stat-value">55</div>
+            <div class="stat-label">Realistic sessions / unit / day</div>
+          </div>
+        </div>
+        <p class="body-lg" style="margin-top: 48px; color: var(--cream-2); font-style: italic;">
+          Launch priority: Midtown West · Flatiron · SoHo · Financial District · Washington Square. Central Park is a halo location, not unit #1 — parks permitting is the slowest path in the city.
+        </p>
+      </div>
+      <div class="slide-foot"><span>07 / 12</span><span class="tag">A finer convenience.</span></div>
+    </section>
+
+    <!-- ======= 8 · REVENUE STACK ======= -->
+    <section class="slide">
+      <div class="slide-head"><span>08 · Revenue Stack</span><span class="mark">BROWN GLOVE</span></div>
+      <div class="slide-body">
+        <div class="eyebrow">VII</div>
+        <h1 class="display" style="font-size: clamp(44px, 5.8vw, 84px);">Five layers.<br/><span class="brass">Not optional — additive.</span></h1>
+        <div class="stack" style="margin-top: 40px; max-width: 960px;">
+          <div class="stack-layer">
+            <div class="stack-n">I</div>
+            <div>
+              <div class="stack-t">Use Fees</div>
+              <div class="stack-d">$10 per visit. Equinox-day-pass logic — competing with "buying a coffee to use theirs."</div>
+            </div>
+            <div class="stack-amt">$16.5K / unit / mo</div>
+          </div>
+          <div class="stack-layer">
+            <div class="stack-n">II</div>
+            <div>
+              <div class="stack-t">Advertising</div>
+              <div class="stack-d">Digital displays, mirror surrounds, product integration. Captive audience, premium CPMs.</div>
+            </div>
+            <div class="stack-amt">$6–8K / unit / mo</div>
+          </div>
+          <div class="stack-layer">
+            <div class="stack-n">III</div>
+            <div>
+              <div class="stack-t">Sponsorship</div>
+              <div class="stack-d">Category-exclusive amenity partners (Aesop · soap across the network). $200K/category/yr.</div>
+            </div>
+            <div class="stack-amt">$1.0–1.2M / year</div>
+          </div>
+          <div class="stack-layer">
+            <div class="stack-n">IV</div>
+            <div>
+              <div class="stack-t">Memberships</div>
+              <div class="stack-d">Brown Glove Unlimited. $40/mo for residents &amp; commuters. Predictable LTV.</div>
+            </div>
+            <div class="stack-amt">Gross margin driver</div>
+          </div>
+          <div class="stack-layer">
+            <div class="stack-n">V</div>
+            <div>
+              <div class="stack-t">B2B Partnerships</div>
+              <div class="stack-d">BIDs, office towers, luxury retail clusters. Tenant-amenity fixed fees.</div>
+            </div>
+            <div class="stack-amt">Launch-path anchor</div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot"><span>08 / 12</span><span class="tag">A finer convenience.</span></div>
+    </section>
+
+    <!-- ======= 9 · THE AD MATH ======= -->
+    <section class="slide">
+      <div class="slide-head"><span>09 · The Ad Layer</span><span class="mark">BROWN GLOVE</span></div>
+      <div class="slide-body">
+        <div class="row-2" style="align-items: center;">
+          <div>
+            <div class="eyebrow">VIII · Why the math is unusually strong</div>
+            <div class="stat-value" style="font-size: clamp(100px, 14vw, 180px);">300×</div>
+            <div class="stat-label" style="font-size: 13px; margin-top: 20px; max-width: 420px; line-height: 1.8;">
+              Dwell time per viewer.<br/>
+              10 minutes inside Brown Glove vs. ~2 seconds for a billboard.
+            </div>
+          </div>
+          <div>
+            <div class="eyebrow">CPM benchmarks</div>
+            <table class="deck-table" style="margin-top: 8px;">
+              <tbody>
+                <tr><td>Standard DOOH</td><td class="num">$5–15</td></tr>
+                <tr><td>Premium DOOH</td><td class="num">$30–80</td></tr>
+                <tr><td>Captive (gym, elevator)</td><td class="num">$50–150</td></tr>
+                <tr><td>Ultra-premium (Soho House screens)</td><td class="num">$200–400</td></tr>
+                <tr class="us"><td>Brown Glove target</td><td class="num">$75–150</td></tr>
+              </tbody>
+            </table>
+            <p class="body-lg" style="margin-top: 28px; font-size: 17px; font-style: italic; color: var(--cream-2); line-height: 1.5;">
+              Aesop yes. Mountain Dew no. Curate ruthlessly — editorial fit &amp; category exclusivity are the premium.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot"><span>09 / 12</span><span class="tag">The New Yorker ads model.</span></div>
+    </section>
+
+    <!-- ======= 10 · UNIT ECONOMICS ======= -->
+    <section class="slide">
+      <div class="slide-head"><span>10 · Unit Economics</span><span class="mark">BROWN GLOVE</span></div>
+      <div class="slide-body">
+        <div class="eyebrow">IX · Per unit · per month · realistic "full" case</div>
+        <h1 class="display" style="font-size: clamp(40px, 5vw, 72px);">Each unit is<br/>a profit engine<br/>only <span class="brass">at the ad layer.</span></h1>
+        <div class="row-2" style="margin-top: 40px; gap: 48px;">
+          <table class="deck-table">
+            <thead>
+              <tr><th>Line</th><th style="text-align: right;">$ / unit / mo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Use fees (55 × $10 × 30)</td><td class="num">$16,500</td></tr>
+              <tr><td>Ads &amp; sponsorship (allocated)</td><td class="num">$11,000</td></tr>
+              <tr><td><strong>Total revenue</strong></td><td class="num"><strong>$27,500</strong></td></tr>
+              <tr><td>Opex (attendant, utilities, svc)</td><td class="num">($20,000)</td></tr>
+              <tr class="us"><td>Contribution margin</td><td class="num">$7,500</td></tr>
+            </tbody>
+          </table>
+          <div>
+            <div class="card-label" style="margin-bottom: 20px;">The three levers</div>
+            <div class="num-list">
+              <div class="num-row"><div class="n">I</div><div class="t"><strong style="color: var(--brass);">$15 in premium zones.</strong> Times Square, Fashion Week. Elasticity is there.</div></div>
+              <div class="num-row"><div class="n">II</div><div class="t"><strong style="color: var(--brass);">Clustered placement.</strong> Two kiosks 50 feet apart share one attendant — halves the biggest opex line.</div></div>
+              <div class="num-row"><div class="n">III</div><div class="t"><strong style="color: var(--brass);">Non-use revenue.</strong> Advertising &amp; sponsorship aren't optional — they are the business.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot"><span>10 / 12</span><span class="tag">A finer convenience.</span></div>
+    </section>
+
+    <!-- ======= 11 · NETWORK MODEL / DECK HEADLINE ======= -->
+    <section class="slide">
+      <div class="slide-head"><span>11 · Network Model</span><span class="mark">BROWN GLOVE</span></div>
+      <div class="slide-body">
+        <div class="eyebrow">X · The 20-unit thesis</div>
+        <div class="row-4" style="margin-bottom: 40px;">
+          <div><div class="stat-value" style="font-size: clamp(48px, 5.4vw, 80px);">$6.6M</div><div class="stat-label">Revenue / yr · 20 units</div></div>
+          <div><div class="stat-value" style="font-size: clamp(48px, 5.4vw, 80px);">$1.8M</div><div class="stat-label">Contribution margin</div></div>
+          <div><div class="stat-value" style="font-size: clamp(48px, 5.4vw, 80px);">30–40</div><div class="stat-label">Units for operating leverage</div></div>
+          <div><div class="stat-value" style="font-size: clamp(48px, 5.4vw, 80px);">$3–5M</div><div class="stat-label">Target EBITDA · Year 3</div></div>
+        </div>
+
+        <div class="money-quote">
+          <span class="brass">A 20-unit Brown Glove network</span> in Manhattan's highest-traffic zones generates <span class="brass">$5–9M in annual revenue</span> at $10/use, with ~$2–4M in annual contribution margin before corporate overhead. Adding sponsorship, membership, and B2B layers pushes annual revenue toward <span class="brass">$10–12M</span> and EBITDA toward <span class="brass">$3–5M</span> within three years of full deployment.
+        </div>
+      </div>
+      <div class="slide-foot"><span>11 / 12</span><span class="tag">A finer convenience.</span></div>
+    </section>
+
+    <!-- ======= 12 · THE ASK / CLOSING ======= -->
+    <section class="slide">
+      <div class="slide-head"><span>12 · What We're Doing Now</span><span class="mark">BROWN GLOVE</span></div>
+      <div class="slide-body">
+        <div class="row-2" style="align-items: flex-start; gap: 64px;">
+          <div>
+            <div class="eyebrow">XI · Status</div>
+            <h1 class="display" style="font-size: clamp(44px, 5.2vw, 76px);">Unit 001 is ready.<br/><span class="brass">We're picking the corner.</span></h1>
+            <p class="body-lg" style="margin-top: 32px;">
+              Brand, design system, customer app, attendant app, and operator console are built. The first kiosk is fabricated. We are finalizing the pilot location now — a BID partnership in Midtown West or Flatiron is the likeliest first block.
+            </p>
+          </div>
+          <div>
+            <div class="eyebrow">The window</div>
+            <div class="num-list">
+              <div class="num-row"><div class="n">I</div><div class="t">18–24 month lead on any premium/attended competitor.</div></div>
+              <div class="num-row"><div class="n">II</div><div class="t">Throne has the hardware. We have the brand, the service, and the audience.</div></div>
+              <div class="num-row"><div class="n">III</div><div class="t">Defensive moat: editorial capability &amp; hospitality DNA. Infrastructure players can't replicate these easily.</div></div>
+            </div>
+            <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--brass-2);">
+              <div class="eyebrow">Conversation</div>
+              <div style="font-family: var(--display); font-size: clamp(28px, 3vw, 40px); color: var(--brass); letter-spacing: 0.06em; margin-top: 8px;">andy@browngloveny.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot"><span>12 / 12</span><span class="tag">A finer convenience.</span></div>
+    </section>
+
+  </div>
+
+  <!-- Nav chrome -->
+  <div class="deck-chrome">
+    <button class="deck-btn" id="prev" aria-label="Previous">←</button>
+    <div class="deck-counter" id="counter">01 / 12</div>
+    <button class="deck-btn" id="next" aria-label="Next">→</button>
+  </div>
+</div>
+
+<script>
+  // Build sunburst rays
+  (function () {
+    const cover = document.querySelector('#cover-rays');
+    if (cover) {
+      const frag = [];
+      for (let i = 0; i < 48; i++) {
+        const a = (i * (360 / 48)) * Math.PI / 180;
+        const x1 = Math.cos(a) * 140, y1 = Math.sin(a) * 140;
+        const x2 = Math.cos(a) * 260, y2 = Math.sin(a) * 260;
+        frag.push(`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`);
+      }
+      cover.innerHTML = frag.join('');
+    }
+
+    const door = document.querySelector('#door-rays-svg');
+    if (door) {
+      const frag = [];
+      for (let i = 0; i < 16; i++) {
+        const a = (i * (360 / 16)) * Math.PI / 180;
+        const x1 = 150 + Math.cos(a) * 8, y1 = 250 + Math.sin(a) * 8;
+        const x2 = 150 + Math.cos(a) * 30, y2 = 250 + Math.sin(a) * 30;
+        frag.push(`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`);
+      }
+      door.innerHTML = frag.join('');
+    }
+  })();
+
+  // Slide navigation
+  const slidesEl = document.getElementById('slides');
+  const slides = slidesEl.querySelectorAll('section.slide');
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const total = slides.length;
+  let i = 0;
+
+  const pad = (n) => String(n).padStart(2, '0');
+  const render = () => {
+    slidesEl.style.transform = `translateX(-${i * 100}vw)`;
+    counter.textContent = `${pad(i + 1)} / ${pad(total)}`;
+    prevBtn.disabled = i === 0;
+    nextBtn.disabled = i === total - 1;
+    if (location.hash !== `#${i + 1}`) history.replaceState(null, '', `#${i + 1}`);
+  };
+  const go = (n) => { i = Math.max(0, Math.min(total - 1, n)); render(); };
+
+  prevBtn.addEventListener('click', () => go(i - 1));
+  nextBtn.addEventListener('click', () => go(i + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(i + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(i - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); go(0); }
+    else if (e.key === 'End') { e.preventDefault(); go(total - 1); }
+  });
+
+  // Touch swipe
+  let sx = 0;
+  window.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; }, { passive: true });
+  window.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 60) go(i + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
+  // Deep-link via hash
+  const fromHash = () => {
+    const n = parseInt(location.hash.replace('#', ''), 10);
+    if (!isNaN(n) && n >= 1 && n <= total) go(n - 1);
+  };
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+  render();
+</script>
+
+</body>
+</html>

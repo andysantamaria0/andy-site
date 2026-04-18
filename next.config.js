@@ -63,6 +63,10 @@ const nextConfig = {
         source: '/brown-glove-overview',
         destination: '/brown-glove-overview.html',
       },
+      {
+        source: '/brown-glove-deck',
+        destination: '/brown-glove-deck.html',
+      },
     ];
   },
 };
