@@ -1,0 +1,292 @@
+/* ============================================
+   Landing — andysantamaria.com front door
+   All classes use the home- prefix
+   ============================================ */
+
+.home {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.home-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 96px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+/* ---- Utility layer: typewriter stamps ---- */
+
+.home-eyebrow,
+.home-section-title {
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ---- Masthead ---- */
+
+.home-masthead {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.home-name {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.5rem, 9vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.home-role {
+  font-size: 0.9375rem;
+  color: var(--text-dim);
+  letter-spacing: 0.01em;
+}
+
+/* ---- Intro ---- */
+
+.home-intro {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1875rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.62;
+  color: var(--text-muted);
+  max-width: 42ch;
+}
+
+/* ---- Horizon ---- */
+
+.home-horizon {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Clips the settle animation without trapping the caption inside the frame. */
+.home-horizon-frame {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  line-height: 0;
+}
+
+.home-horizon img {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  object-position: center 62%;
+  filter: saturate(0.9);
+  animation: home-settle 1400ms cubic-bezier(.2, 0, 0, 1) both;
+  animation-delay: 340ms;
+}
+
+.home-horizon figcaption {
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  line-height: 1.6;
+}
+
+/* ---- Sections ---- */
+
+.home-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.home-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 4px 20px;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.home-row:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.home-row-label {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.home-row-note {
+  grid-column: 1 / -1;
+  font-size: 0.875rem;
+  color: var(--text-dim);
+  line-height: 1.55;
+  max-width: 46ch;
+}
+
+.home-row-meta {
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+  transition: color 200ms ease;
+}
+
+.home-row:hover .home-row-label,
+.home-row:focus-visible .home-row-label {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+.home-row:hover .home-row-meta,
+.home-row:focus-visible .home-row-meta {
+  color: var(--accent);
+}
+
+/* ---- Writing tail link ---- */
+
+.home-more {
+  align-self: flex-start;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 200ms ease, border-color 200ms ease;
+}
+
+.home-more:hover,
+.home-more:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent-border);
+}
+
+/* ---- Footer ---- */
+
+.home-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.home-contact {
+  font-family: 'Fraunces', serif;
+  font-size: 1.0625rem;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-border);
+  transition: color 200ms ease, border-color 200ms ease;
+}
+
+.home-contact:hover,
+.home-contact:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.home-mark {
+  color: var(--accent);
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+/* ---- Focus ---- */
+
+.home a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* ---- Load sequence ---- */
+
+@keyframes home-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes home-settle {
+  from { transform: scale(1.05); }
+  to   { transform: scale(1); }
+}
+
+.home-masthead,
+.home-intro,
+.home-horizon,
+.home-section,
+.home-footer {
+  animation: home-rise 700ms cubic-bezier(.2, 0, 0, 1) both;
+}
+
+.home-masthead { animation-delay: 60ms; }
+.home-intro    { animation-delay: 180ms; }
+.home-horizon  { animation-delay: 300ms; }
+.home-section:nth-of-type(1) { animation-delay: 420ms; }
+.home-section:nth-of-type(2) { animation-delay: 500ms; }
+.home-footer   { animation-delay: 580ms; }
+
+@media (max-width: 600px) {
+  .home-inner {
+    padding: 64px 20px 64px;
+    gap: 44px;
+  }
+
+  .home-intro {
+    font-size: 1.0625rem;
+  }
+
+  .home-horizon img {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Stack the row so a long title never squeezes the date beside it. */
+  .home-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-masthead,
+  .home-intro,
+  .home-horizon,
+  .home-section,
+  .home-footer,
+  .home-horizon img {
+    animation: none;
+  }
+
+  .home-row-label,
+  .home-row-meta,
+  .home-contact,
+  .home-more {
+    transition: none;
+  }
+
+  .home-row:hover .home-row-label,
+  .home-row:focus-visible .home-row-label {
+    transform: none;
+  }
+}

@@ -1,0 +1,131 @@
+/* ============================================
+   Stand — password gate
+   ============================================ */
+
+.unlock {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+}
+
+.unlock-card {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.unlock-mark {
+  width: 26px;
+  height: 11px;
+  color: var(--accent);
+}
+
+.unlock-title {
+  font-family: 'Fraunces', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.unlock-note {
+  font-size: 0.9375rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.unlock-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.unlock-label {
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.unlock-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  color: var(--text);
+  background-color: transparent;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  transition: border-color 200ms ease;
+}
+
+.unlock-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.unlock-error {
+  font-size: 0.8125rem;
+  color: var(--coral);
+}
+
+.unlock-btn {
+  margin-top: 6px;
+  padding: 12px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background-color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+}
+
+.unlock-btn:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.unlock-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.unlock-back {
+  margin-top: 6px;
+  font-size: 0.8125rem;
+  color: var(--text-faint);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.unlock-back:hover {
+  color: var(--accent);
+}
+
+.unlock a:focus-visible,
+.unlock button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unlock-input,
+  .unlock-btn,
+  .unlock-back {
+    transition: none;
+  }
+}
