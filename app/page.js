@@ -115,8 +115,8 @@ export default function Home() {
         </section>
 
         <footer className="home-footer">
-          <a className="home-contact" href="mailto:andysantamaria0@gmail.com">
-            andysantamaria0@gmail.com
+          <a className="home-contact" href="mailto:andyjsantamaria@gmail.com">
+            Get in touch
           </a>
           <svg viewBox="0 0 120 48" width="22" height="9" className="home-mark" aria-hidden="true">
             <path d="M0 48 L60 0 L120 48 Z" fill="currentColor" />
