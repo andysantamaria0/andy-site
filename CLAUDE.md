@@ -6,10 +6,9 @@
 
 The Supabase CLI may be linked to a *different* project (`kpydatxnzibtzakurcwr`). Do NOT use `supabase db push` blindly — it will run migrations on the wrong database.
 
-**To run migrations on production**, connect directly:
-```
-postgresql://postgres.fbnnicarsnzipzbvszrx:romXof-gekma7-zawwoc@aws-1-us-east-1.pooler.supabase.com:5432/postgres
-```
+**To run migrations on production**, connect directly with the pooler
+connection string. It is NOT stored in this repo (the repo is public) — pull
+it from the Supabase dashboard (Project Settings → Database) or `vercel env pull`.
 
 After running DDL, reload the PostgREST schema cache:
 ```sql

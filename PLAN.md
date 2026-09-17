@@ -3,8 +3,9 @@
 ## Completed
 
 ### Landing Page
-- Travel-focused landing page at root `/` with hero, card stack visual, featured trip showcase
-- "Sign in with Google" CTA, redirects to `/trips` after auth
+- Vialoure's public page lives at `/vialoure` (hero, phone mockup, featured trip, Request Access CTA)
+- The root `/` is Andy's personal landing, not Vialoure's — see `docs/superpowers/specs/2026-09-17-landing-cleanup-design.md`
+- Sign-in lives at `/trips/login`; invite links go to `/trips/join/[tripCode]`
 
 ### Trip Claim Flow
 - Google sign-in auto-matches email to manual trip members

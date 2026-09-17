@@ -1,28 +1,5 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
-import { STAND_COOKIE, STAND_UNLOCK_PATH, standToken } from './lib/standAuth';
-
-/**
- * Everything under /stand — pages, case-study screenshots, and the raw design
- * system HTML in public/stand — sits behind a shared password.
- */
-async function standGate(request) {
-  const { pathname } = request.nextUrl;
-
-  // The unlock screen itself has to stay reachable.
-  if (pathname === STAND_UNLOCK_PATH) return NextResponse.next();
-
-  // standToken() is null when STAND_PASSWORD is unset — deny rather than allow.
-  const expected = await standToken();
-  const token = request.cookies.get(STAND_COOKIE)?.value;
-  if (expected && token === expected) return NextResponse.next();
-
-  const url = request.nextUrl.clone();
-  url.pathname = STAND_UNLOCK_PATH;
-  url.search = '';
-  url.searchParams.set('next', pathname);
-  return NextResponse.redirect(url);
-}
 
 /**
  * /trips is the Vialoure app — Supabase session required, with a few public
@@ -82,12 +59,9 @@ async function tripsSession(request) {
 }
 
 export async function middleware(request) {
-  if (request.nextUrl.pathname.startsWith('/stand')) {
-    return standGate(request);
-  }
   return tripsSession(request);
 }
 
 export const config = {
-  matcher: ['/trips/:path*', '/stand', '/stand/:path*'],
+  matcher: ['/trips/:path*'],
 };

@@ -1,29 +1,28 @@
 import './globals.css';
-import './trips/trips.css';
-import './stand/stand.css';
-import './product/product.css';
-import './system-design/system-design.css';
+
+const TITLE = 'Andy Santamaria — Product Leader & AI Engineer';
+const DESCRIPTION =
+  'Product leader and AI engineer in New York. Twelve years at early-stage startups, from Square to the frontier of AI engineering.';
 
 export const viewport = {
   themeColor: '#0A1628',
 };
 
 export const metadata = {
-  title: 'Andy Santamaria',
-  description: 'Startup Co-Founder, Reading, Writing, Some Backgammon. Based in NYC.',
-  appleWebApp: { capable: true, title: 'Vialoure', statusBarStyle: 'black-translucent' },
-  manifest: '/manifest.webmanifest',
+  metadataBase: new URL('https://andysantamaria.com'),
+  title: TITLE,
+  description: DESCRIPTION,
   openGraph: {
-    title: 'Andy Santamaria',
-    description: 'Startup Co-Founder, Reading, Writing, Some Backgammon. Based in NYC.',
+    title: TITLE,
+    description: DESCRIPTION,
     url: 'https://andysantamaria.com',
     siteName: 'Andy Santamaria',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Andy Santamaria',
-    description: 'Startup Co-Founder, Reading, Writing, Some Backgammon. Based in NYC.',
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 
