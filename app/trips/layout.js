@@ -6,9 +6,17 @@ import HeaderAvatar from './HeaderAvatar';
 import { Toaster } from 'react-hot-toast';
 import PostHogProvider from '../../components/trips/PostHogProvider';
 
+const TITLE = 'Vialoure — Trip Planning';
+const DESCRIPTION = 'Plan trips with friends. Shared calendars, expenses, and logistics.';
+
 export const metadata = {
-  title: 'Vialoure — Trip Planning',
-  description: 'Plan trips with friends. Shared calendars, expenses, and logistics.',
+  title: TITLE,
+  description: DESCRIPTION,
+  // The app carries its own identity; the root domain is Andy's.
+  openGraph: { title: TITLE, description: DESCRIPTION, siteName: 'Vialoure', type: 'website' },
+  twitter: { card: 'summary_large_image', title: TITLE, description: DESCRIPTION },
+  manifest: '/vialoure.webmanifest',
+  appleWebApp: { capable: true, title: 'Vialoure', statusBarStyle: 'black-translucent' },
 };
 
 export default async function TripsLayout({ children }) {
