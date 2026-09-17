@@ -1,28 +1,12 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
-import { STAND_COOKIE, STAND_UNLOCK_PATH, standToken } from './lib/standAuth';
 
-/**
- * Everything under /stand — pages, case-study screenshots, and the raw design
- * system HTML in public/stand — sits behind a shared password.
- */
-async function standGate(request) {
-  const { pathname } = request.nextUrl;
-
-  // The unlock screen itself has to stay reachable.
-  if (pathname === STAND_UNLOCK_PATH) return NextResponse.next();
-
-  // standToken() is null when STAND_PASSWORD is unset — deny rather than allow.
-  const expected = await standToken();
-  const token = request.cookies.get(STAND_COOKIE)?.value;
-  if (expected && token === expected) return NextResponse.next();
-
-  const url = request.nextUrl.clone();
-  url.pathname = STAND_UNLOCK_PATH;
-  url.search = '';
-  url.searchParams.set('next', pathname);
-  return NextResponse.redirect(url);
-}
+// Entry points an invited person needs before they have a session.
+const PUBLIC_TRIPS_PREFIXES = ['/trips/login', '/trips/auth', '/trips/join', '/trips/not-invited'];
+// The app's icon/OG files, fetched cookie-less by link unfurlers and the PWA
+// installer. Exact match, so /trips/icon<anything> still routes to [tripId]
+// and gets the redirect.
+const PUBLIC_TRIPS_EXACT = ['/trips/icon', '/trips/apple-icon', '/trips/opengraph-image'];
 
 /**
  * /trips is the Vialoure app — Supabase session required, with a few public
@@ -57,15 +41,12 @@ async function tripsSession(request) {
 
   const { pathname } = request.nextUrl;
 
-  // If accessing /trips/* (but not login or auth callback) without a session, redirect to login
-  if (
-    pathname.startsWith('/trips') &&
-    !pathname.startsWith('/trips/login') &&
-    !pathname.startsWith('/trips/auth') &&
-    !pathname.startsWith('/trips/join') &&
-    !pathname.startsWith('/trips/not-invited') &&
-    !user
-  ) {
+  // If accessing /trips/* without a session, redirect to login — except the
+  // public entry points and the app's icon/OG files.
+  const isPublic =
+    PUBLIC_TRIPS_EXACT.includes(pathname) ||
+    PUBLIC_TRIPS_PREFIXES.some((prefix) => pathname.startsWith(prefix));
+  if (pathname.startsWith('/trips') && !isPublic && !user) {
     const url = request.nextUrl.clone();
     url.pathname = '/trips/login';
     return NextResponse.redirect(url);
@@ -82,12 +63,9 @@ async function tripsSession(request) {
 }
 
 export async function middleware(request) {
-  if (request.nextUrl.pathname.startsWith('/stand')) {
-    return standGate(request);
-  }
   return tripsSession(request);
 }
 
 export const config = {
-  matcher: ['/trips/:path*', '/stand', '/stand/:path*'],
+  matcher: ['/trips/:path*'],
 };

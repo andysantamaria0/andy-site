@@ -18,60 +18,20 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https://*.supabase.co https://maps.googleapis.com https://maps.gstatic.com https://lh3.googleusercontent.com",
-              "connect-src 'self' https://*.supabase.co https://maps.googleapis.com wss://*.supabase.co https://us.i.posthog.com https://us-assets.i.posthog.com https://api.anthropic.com https://api.elevenlabs.io",
+              "connect-src 'self' https://*.supabase.co https://maps.googleapis.com wss://*.supabase.co https://us.i.posthog.com https://us-assets.i.posthog.com",
               "media-src 'self' https://*.supabase.co",
-              // 'self' is required for /stand/design to frame its own HTML files.
-              "frame-src 'self' https://www.openstreetmap.org",
+              "frame-src https://www.openstreetmap.org",
               "frame-ancestors 'none'",
-            ].join('; '),
-          },
-        ],
-      },
-      {
-        source: '/stand/design/:path*.html',
-        headers: [
-          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: blob:",
-              "frame-ancestors 'self'",
             ].join('; '),
           },
         ],
       },
     ];
   },
-  async rewrites() {
+  async redirects() {
     return [
-      {
-        source: '/vialoure-design-options',
-        destination: '/vialoure-design-options.html',
-      },
-      {
-        source: '/vialoure-grand-tour-v2',
-        destination: '/vialoure-grand-tour-v2.html',
-      },
-      {
-        source: '/the-breakup',
-        destination: '/the-breakup.html',
-      },
-      {
-        source: '/brown-glove-overview',
-        destination: '/brown-glove-overview.html',
-      },
-      {
-        source: '/brown-glove-deck',
-        destination: '/brown-glove-deck.html',
-      },
-      {
-        source: '/brown-glove-waitlist',
-        destination: '/brown-glove-waitlist.html',
-      },
+      // The consulting page folded into the landing.
+      { source: '/product', destination: '/', permanent: true },
     ];
   },
 };

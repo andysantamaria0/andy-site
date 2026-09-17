@@ -1,3 +1,4 @@
+import '../trips/trips.css';
 import Link from 'next/link';
 import { createClient } from '../../lib/supabase/server';
 import { formatDateRange, tripDuration } from '../../lib/utils/dates';
