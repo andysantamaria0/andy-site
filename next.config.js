@@ -20,7 +20,7 @@ const nextConfig = {
               "img-src 'self' data: blob: https://*.supabase.co https://maps.googleapis.com https://maps.gstatic.com https://lh3.googleusercontent.com",
               "connect-src 'self' https://*.supabase.co https://maps.googleapis.com wss://*.supabase.co https://us.i.posthog.com https://us-assets.i.posthog.com",
               "media-src 'self' https://*.supabase.co",
-              "frame-src 'self' https://www.openstreetmap.org",
+              "frame-src https://www.openstreetmap.org",
               "frame-ancestors 'none'",
             ].join('; '),
           },

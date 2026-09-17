@@ -8,12 +8,10 @@
   --bg: #0A1628;
   --text: #F0EDE6;
   --accent: #C4A77D;
-  --coral: #C23B22;
   --text-dim: rgba(240, 237, 230, 0.6);
   --text-faint: rgba(240, 237, 230, 0.5);
   --text-muted: rgba(240, 237, 230, 0.8);
   --border: rgba(240, 237, 230, 0.1);
-  --arrow: rgba(240, 237, 230, 0.3);
   --accent-border: rgba(196, 167, 125, 0.3);
 }
 
@@ -21,14 +19,13 @@
   :root {
     --bg: #F0EDE6;
     --text: #0A1628;
-    --accent: #8A6930;
-    --coral: #A83020;
-    --text-dim: rgba(10, 22, 40, 0.6);
-    --text-faint: rgba(10, 22, 40, 0.5);
+    /* Alphas tuned so the 11-12px metas clear 4.5:1 on cream. */
+    --accent: #7F6029;
+    --text-dim: rgba(10, 22, 40, 0.68);
+    --text-faint: rgba(10, 22, 40, 0.62);
     --text-muted: rgba(10, 22, 40, 0.8);
     --border: rgba(10, 22, 40, 0.12);
-    --arrow: rgba(10, 22, 40, 0.3);
-    --accent-border: rgba(138, 105, 48, 0.3);
+    --accent-border: rgba(127, 96, 41, 0.3);
   }
 }
 

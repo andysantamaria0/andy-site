@@ -38,7 +38,7 @@ Twelve years at early-stage startups, from Square to the frontier of AI
 engineering. Head of Product at Stand, where kids start real businesses.
                                                  intro (Fraunces italic); "Stand" links to https://standkids.com
 
-[ San Miguel de Allende — 21:9 photo, pre-cropped WebP ]
+[ San Miguel de Allende — 16:9 WebP, shown in a 21:9 frame on desktop ]
 
 BUILT                                            section title
   Canon Society ................................ canonsociety.com
@@ -90,27 +90,45 @@ Pages and everything only they used:
   `Product leader and AI engineer in New York. Twelve years at early-stage
   startups, from Square to the frontier of AI engineering.` Remove
   `appleWebApp` and `manifest`. Keep `themeColor #0A1628` (it is the landing
-  background too). `app/page.js` metadata matches.
+  background too). `app/page.js` drops its own metadata export and inherits
+  the root layout's.
 - New root `app/icon.js` and `app/apple-icon.js`: navy square, cream Fraunces
   "A". New root `app/opengraph-image.js`: navy card, "Andy Santamaria",
-  "Product Leader · AI Engineer", "New York City".
+  "Product Leader · AI Engineer", "New York City". Drawing code in
+  `lib/brand/andy.js`, which fetches Fraunces 700 / DM Sans 400 / Special
+  Elite 400 as TTF from fonts.googleapis.com when these prerendered routes
+  render at build time (Satori ships only Noto Sans, and passing `fonts`
+  replaces it). Each fetch has an 8s timeout and `ok` checks; on failure it
+  logs a warning and the mark renders in Noto Sans rather than failing the
+  build.
 - Vialoure's existing icon/apple-icon/OG generators move to
   `app/trips/{icon,apple-icon,opengraph-image}.js` and `app/vialoure/{icon,apple-icon,opengraph-image}.js`
-  (shared drawing code in `lib/vialoureBrand.js`). `app/manifest.js` becomes
-  static `public/vialoure.webmanifest`; `app/trips/layout.js` metadata sets
-  `manifest: '/vialoure.webmanifest'` and the `appleWebApp` block.
-- `app/robots.js` (allow `/`, disallow `/trips/`, `/admin/`, `/api/`; sitemap URL) and
-  `app/sitemap.js` (`/`, `/vialoure`).
-- `middleware.js` exempts `/trips/{icon,apple-icon,opengraph-image}` from the
-  session redirect, otherwise link unfurlers fetching the OG image without
-  cookies would be bounced to the login page. The `/trips` layout also gets its
-  own `openGraph`/`twitter` blocks so shared `/trips` links unfurl as Vialoure.
+  (shared drawing code in `lib/brand/vialoure.js`); `/admin` gets the
+  Vialoure icon/apple-icon too since it is titled "Admin — Vialoure".
+  `app/manifest.js` becomes static `public/vialoure.webmanifest`;
+  `app/trips/layout.js` metadata sets `manifest: '/vialoure.webmanifest'`
+  and the `appleWebApp` block.
+- `app/robots.js` (allow `/`, disallow `/admin/` and `/api/`; sitemap URL) and
+  `app/sitemap.js` (`/`, `/vialoure`). `/trips` is NOT disallowed — that would
+  stop robots-honouring unfurlers (X, LinkedIn) fetching the OG image for
+  shared invite links; instead the `/trips` layout sets
+  `robots: { index: false, follow: false }`.
+- `middleware.js` exempts exactly `/trips/{icon,apple-icon,opengraph-image}`
+  (exact match, not prefix) from the session redirect, otherwise link
+  unfurlers fetching the OG image without cookies would be bounced to the
+  login page. The `/trips` layout also gets its own `openGraph`/`twitter`
+  blocks so shared `/trips` links unfurl as Vialoure.
+- `frame-src` loses `'self'` (it existed only for the deleted `/stand/design`
+  iframes); `--coral` and `--arrow` tokens are dropped (no consumers left);
+  light-mode `--accent`, `--text-dim`, `--text-faint` darkened slightly so the
+  11-12px metas clear WCAG AA 4.5:1 on cream.
 
 ## 4. Hygiene
 
 - `app/layout.js` imports only `globals.css`. `trips.css` is imported by
-  `app/trips/layout.js` (already) and `app/vialoure/page.js` (needs it for
-  `.v-phone*` and `.v-notch*`).
+  `app/trips/layout.js` (already), `app/vialoure/page.js` (needs it for
+  `.v-phone*` and `.v-notch*`) and `app/admin/layout.js` (needs its `--v-*`
+  tokens and `.v-header*` / `.v-layout`).
 - Hero: `public/san-miguel-sunset.webp`, pre-cropped to 16:9 (1498x843,
   118 KB) so the mobile frame fits exactly and the desktop 21:9 frame crops it
   with the same `object-position` as before; explicit `width`/`height` and
@@ -137,8 +155,9 @@ Pages and everything only they used:
 
 ## 6. Delivery
 
-Branch `worktree-landing-cleanup` in a git worktree; one PR to `main`. Andy
-merges; Vercel deploys from `main`. Not merged or deployed by Claude.
+Branch `worktree-landing-cleanup` in a git worktree (`.claude/worktrees/` is
+added to `.gitignore` for this); one PR to `main`. Andy merges; Vercel deploys
+from `main`. Not merged or deployed by Claude.
 
 After merge (Andy): remove `STAND_PASSWORD` from Vercel env; rotate the
 Supabase DB password that was committed in `CLAUDE.md` (public repo, since

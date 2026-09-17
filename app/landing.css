@@ -62,6 +62,7 @@
   line-height: 1.62;
   color: var(--text-muted);
   max-width: 42ch;
+  text-wrap: pretty;
 }
 
 .home-intro a {
@@ -155,6 +156,7 @@
   color: var(--text-dim);
   line-height: 1.55;
   max-width: 46ch;
+  text-wrap: pretty;
 }
 
 .home-row-meta {
@@ -285,7 +287,7 @@
     aspect-ratio: 16 / 9;
   }
 
-  /* Stack the row so a long title never squeezes the date beside it. */
+  /* Stack the row so a long title never squeezes the meta beside it. */
   .home-row {
     grid-template-columns: 1fr;
     gap: 6px;

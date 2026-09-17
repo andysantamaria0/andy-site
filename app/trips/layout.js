@@ -17,6 +17,8 @@ export const metadata = {
   twitter: { card: 'summary_large_image', title: TITLE, description: DESCRIPTION },
   manifest: '/vialoure.webmanifest',
   appleWebApp: { capable: true, title: 'Vialoure', statusBarStyle: 'black-translucent' },
+  // Invite-only app: keep every /trips page out of search results.
+  robots: { index: false, follow: false },
 };
 
 export default async function TripsLayout({ children }) {
