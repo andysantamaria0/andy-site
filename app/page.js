@@ -7,18 +7,21 @@ const BUILT = [
   {
     href: 'https://canonsociety.com',
     label: 'Canon Society',
+    mark: '/marks/canon-society.svg',
     meta: 'canonsociety.com',
     note: 'A book club. An unserious society, devoutly amateur, in the matter of the canon.',
   },
   {
     href: 'https://themailgaze.co',
     label: 'MailGaze',
+    mark: '/marks/mailgaze.svg',
     meta: 'themailgaze.co',
     note: 'Real letters, on paper, once a month, from writers you choose and never meet.',
   },
   {
     href: '/vialoure',
     label: 'Vialoure',
+    mark: '/marks/vialoure.svg',
     meta: 'Invite only',
     note: 'A private concierge for travelling with friends. Designed and built end to end — AI concierge, flight tracking, shared expenses.',
     internal: true,
@@ -26,12 +29,14 @@ const BUILT = [
   {
     href: 'https://whatwaterbottleshouldiget.com',
     label: 'What Water Bottle Should I Get',
+    mark: '/marks/water-bottle.png',
     meta: 'whatwaterbottleshouldiget.com',
     note: 'For Faye Orlove. 145 bottles, a quiz, and a pipeline so she can add the next one herself.',
   },
   {
     href: 'https://naomishaus.com',
     label: 'Naomi’s Lighthaus',
+    mark: '/marks/naomis-lighthaus.png',
     meta: 'naomishaus.com',
     note: 'For Naomi Brooks. The site for her creative and production studio.',
   },
@@ -73,13 +78,18 @@ export default function Home() {
         <section className="home-section">
           <h2 className="home-section-title">Built</h2>
           <div className="home-rows">
-            {BUILT.map(({ href, label, meta, note, internal }) => (
+            {BUILT.map(({ href, label, mark, meta, note, internal }) => (
               <a
                 key={href}
                 className="home-row"
                 href={href}
                 {...(internal ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
               >
+                <span
+                  className="home-row-mark"
+                  style={{ '--mark': `url(${mark})` }}
+                  aria-hidden="true"
+                />
                 <span className="home-row-label">{label}</span>
                 <span className="home-row-meta">{meta}</span>
                 <span className="home-row-note">{note}</span>
