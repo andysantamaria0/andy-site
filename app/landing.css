@@ -64,6 +64,19 @@
   max-width: 42ch;
 }
 
+.home-intro a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-border);
+  transition: color 200ms ease, border-color 200ms ease;
+}
+
+.home-intro a:hover,
+.home-intro a:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
 /* ---- Horizon ---- */
 
 .home-horizon {
@@ -80,7 +93,9 @@
 }
 
 .home-horizon img {
+  display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 21 / 9;
   object-fit: cover;
   object-position: center 62%;
@@ -163,7 +178,39 @@
   color: var(--accent);
 }
 
-/* ---- Writing tail link ---- */
+/* ---- Consulting ---- */
+
+.home-consulting {
+  gap: 14px;
+}
+
+.home-consulting-text {
+  font-family: 'Fraunces', serif;
+  font-size: 1.0625rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.62;
+  color: var(--text-muted);
+  max-width: 46ch;
+}
+
+.home-contact {
+  align-self: flex-start;
+  font-family: 'Fraunces', serif;
+  font-size: 1.0625rem;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-border);
+  transition: color 200ms ease, border-color 200ms ease;
+}
+
+.home-contact:hover,
+.home-contact:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ---- Tail link ---- */
 
 .home-more {
   align-self: flex-start;
@@ -186,31 +233,8 @@
 .home-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
   padding-top: 28px;
   border-top: 1px solid var(--border);
-}
-
-.home-contact {
-  font-family: 'Fraunces', serif;
-  font-size: 1.0625rem;
-  color: var(--text);
-  text-decoration: none;
-  border-bottom: 1px solid var(--accent-border);
-  transition: color 200ms ease, border-color 200ms ease;
-}
-
-.home-contact:hover,
-.home-contact:focus-visible {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
-
-.home-mark {
-  color: var(--accent);
-  opacity: 0.55;
-  flex-shrink: 0;
 }
 
 /* ---- Focus ---- */
@@ -281,7 +305,8 @@
   .home-row-label,
   .home-row-meta,
   .home-contact,
-  .home-more {
+  .home-more,
+  .home-intro a {
     transition: none;
   }
 
