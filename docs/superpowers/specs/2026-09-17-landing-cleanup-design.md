@@ -99,20 +99,27 @@ Pages and everything only they used:
   (shared drawing code in `lib/vialoureBrand.js`). `app/manifest.js` becomes
   static `public/vialoure.webmanifest`; `app/trips/layout.js` metadata sets
   `manifest: '/vialoure.webmanifest'` and the `appleWebApp` block.
-- `app/robots.js` (allow all, sitemap URL) and `app/sitemap.js` (`/`, `/vialoure`).
+- `app/robots.js` (allow `/`, disallow `/trips/`, `/admin/`, `/api/`; sitemap URL) and
+  `app/sitemap.js` (`/`, `/vialoure`).
+- `middleware.js` exempts `/trips/{icon,apple-icon,opengraph-image}` from the
+  session redirect, otherwise link unfurlers fetching the OG image without
+  cookies would be bounced to the login page. The `/trips` layout also gets its
+  own `openGraph`/`twitter` blocks so shared `/trips` links unfurl as Vialoure.
 
 ## 4. Hygiene
 
 - `app/layout.js` imports only `globals.css`. `trips.css` is imported by
   `app/trips/layout.js` (already) and `app/vialoure/page.js` (needs it for
   `.v-phone*` and `.v-notch*`).
-- Hero: `public/san-miguel-sunset.webp` (or `.jpg` if no WebP encoder is
-  available), pre-cropped to 21:9 at ~1600px wide, target < 200 KB, with
-  explicit `width`/`height` and `fetchpriority="high"`. The original PNG stays
+- Hero: `public/san-miguel-sunset.webp`, pre-cropped to 16:9 (1498x843,
+  118 KB) so the mobile frame fits exactly and the desktop 21:9 frame crops it
+  with the same `object-position` as before; explicit `width`/`height` and
+  `fetchpriority="high"`. The original PNG stays
   in `public/` because the Vialoure featured trip's `cover_image_url` points
   at it.
-- Google Fonts link trimmed to families/weights used by the landing and
-  `trips.css` (checked by grep before trimming).
+- Google Fonts link left as-is: `trips.css` uses all four families (DM Sans,
+  Fraunces, Crimson Pro, Special Elite), and browsers only download the faces a
+  page actually renders, so the shared `<link>` costs the landing one CSS request.
 
 ## 5. Verification
 
