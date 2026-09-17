@@ -129,13 +129,25 @@
 
 .home-row {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 36px 1fr auto;
   align-items: baseline;
-  gap: 4px 20px;
+  gap: 4px 16px;
   padding: 18px 0;
   border-top: 1px solid var(--border);
   color: var(--text);
   text-decoration: none;
+}
+
+/* Each project's mark as a one-ink silhouette: the row's currentColor painted
+   through the mark's alpha, so it follows the label to accent on hover. */
+.home-row-mark {
+  width: 36px;
+  height: 32px;
+  align-self: center;
+  background-color: currentColor;
+  -webkit-mask: var(--mark) center / contain no-repeat;
+  mask: var(--mark) center / contain no-repeat;
+  transition: color 200ms ease;
 }
 
 .home-row:last-child {
@@ -151,7 +163,7 @@
 }
 
 .home-row-note {
-  grid-column: 1 / -1;
+  grid-column: 2 / -1;
   font-size: 0.875rem;
   color: var(--text-dim);
   line-height: 1.55;
@@ -162,7 +174,7 @@
 .home-row-meta {
   font-family: 'Special Elite', 'Courier New', monospace;
   font-size: 0.6875rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-faint);
   white-space: nowrap;
@@ -176,7 +188,9 @@
 }
 
 .home-row:hover .home-row-meta,
-.home-row:focus-visible .home-row-meta {
+.home-row:focus-visible .home-row-meta,
+.home-row:hover .home-row-mark,
+.home-row:focus-visible .home-row-mark {
   color: var(--accent);
 }
 
@@ -287,10 +301,15 @@
     aspect-ratio: 16 / 9;
   }
 
-  /* Stack the row so a long title never squeezes the meta beside it. */
+  /* Stack the row so a long title never squeezes the meta beside it; the
+     mark keeps its column and the text stacks beside it. */
   .home-row {
-    grid-template-columns: 1fr;
-    gap: 6px;
+    grid-template-columns: 36px 1fr;
+    gap: 6px 16px;
+  }
+
+  .home-row-meta {
+    grid-column: 2;
   }
 }
 
@@ -306,6 +325,7 @@
 
   .home-row-label,
   .home-row-meta,
+  .home-row-mark,
   .home-contact,
   .home-more,
   .home-intro a {
