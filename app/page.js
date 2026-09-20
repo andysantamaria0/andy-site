@@ -16,7 +16,7 @@ const BUILT = [
     label: 'MailGaze',
     mark: '/marks/mailgaze.svg',
     meta: 'themailgaze.co',
-    note: 'Real letters, on paper, once a month, from writers you choose and never meet.',
+    note: 'Gaze into the minds of interesting people around the globe through a modern mail service.',
   },
   {
     href: '/vialoure',
