@@ -103,9 +103,14 @@ export default function Home() {
             Open to consulting. I partner with founders when it&rsquo;s early &mdash; which
             is to say, messy &mdash; and we build the thing together.
           </p>
-          <a className="home-contact" href={`mailto:${EMAIL}`}>
-            Get in touch &rarr;
-          </a>
+          <div className="home-consulting-links">
+            <a className="home-contact" href="/consulting">
+              How I work &rarr;
+            </a>
+            <a className="home-contact" href={`mailto:${EMAIL}`}>
+              Get in touch &rarr;
+            </a>
+          </div>
         </section>
 
         <footer className="home-footer">

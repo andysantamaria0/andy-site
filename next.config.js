@@ -30,8 +30,8 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // The consulting page folded into the landing.
-      { source: '/product', destination: '/', permanent: true },
+      // /product was the old consulting page; it lives at /consulting now.
+      { source: '/product', destination: '/consulting', permanent: true },
     ];
   },
 };

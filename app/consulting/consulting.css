@@ -1,0 +1,294 @@
+/* ============================================
+   Consulting — /consulting
+   Page two of the landing's document: same column, type and rules.
+   All classes use the cons- prefix.
+   ============================================ */
+
+.cons {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.cons-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 96px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+/* ---- Masthead ---- */
+
+.cons-masthead {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cons-back {
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  align-self: flex-start;
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms ease;
+}
+
+.cons-back:hover,
+.cons-back:focus-visible {
+  border-bottom-color: var(--accent-border);
+}
+
+.cons-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.25rem, 8vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.cons-role {
+  font-size: 0.9375rem;
+  color: var(--text-dim);
+  letter-spacing: 0.01em;
+}
+
+/* ---- Lede ---- */
+
+.cons-lede {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1875rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.62;
+  color: var(--text-muted);
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+/* ---- Sections ---- */
+
+.cons-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cons-section-title {
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.cons-body {
+  font-size: 0.9375rem;
+  color: var(--text-dim);
+  line-height: 1.62;
+  max-width: 52ch;
+  text-wrap: pretty;
+}
+
+.cons-body a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-border);
+  transition: color 200ms ease, border-color 200ms ease;
+}
+
+.cons-body a:hover,
+.cons-body a:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ---- Steps ---- */
+
+.cons-steps {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.cons-step {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 4px 16px;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+}
+
+.cons-step:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.cons-step-num {
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  padding-top: 0.35em;
+}
+
+.cons-step-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cons-step-label {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.cons-step-body {
+  font-size: 0.875rem;
+  color: var(--text-dim);
+  line-height: 1.55;
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+/* ---- Track record ---- */
+
+.cons-track {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.cons-track-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 4px 20px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+
+.cons-track-row:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.cons-track-role {
+  font-family: 'Fraunces', serif;
+  font-size: 1.0625rem;
+  font-weight: 500;
+}
+
+.cons-track-where {
+  grid-column: 1 / -1;
+  font-size: 0.875rem;
+  color: var(--text-dim);
+}
+
+.cons-track-when {
+  grid-row: 1;
+  grid-column: 2;
+  font-family: 'Special Elite', 'Courier New', monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+/* ---- Footer ---- */
+
+.cons-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.cons-contact {
+  align-self: flex-start;
+  font-family: 'Fraunces', serif;
+  font-size: 1.0625rem;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-border);
+  transition: color 200ms ease, border-color 200ms ease;
+}
+
+.cons-contact:hover,
+.cons-contact:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ---- Focus ---- */
+
+.cons a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* ---- Load sequence (matches the landing's rise) ---- */
+
+@keyframes cons-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.cons-masthead,
+.cons-lede,
+.cons-section,
+.cons-footer {
+  animation: cons-rise 700ms cubic-bezier(.2, 0, 0, 1) both;
+}
+
+.cons-masthead { animation-delay: 60ms; }
+.cons-lede     { animation-delay: 180ms; }
+.cons-section:nth-of-type(1) { animation-delay: 300ms; }
+.cons-section:nth-of-type(2) { animation-delay: 380ms; }
+.cons-section:nth-of-type(3) { animation-delay: 460ms; }
+.cons-footer   { animation-delay: 540ms; }
+
+@media (max-width: 600px) {
+  .cons-inner {
+    padding: 64px 20px 64px;
+    gap: 44px;
+  }
+
+  .cons-lede {
+    font-size: 1.0625rem;
+  }
+
+  /* Stack the row so a long role never squeezes the note beside it. */
+  .cons-track-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .cons-track-when {
+    grid-row: auto;
+    grid-column: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cons-masthead,
+  .cons-lede,
+  .cons-section,
+  .cons-footer {
+    animation: none;
+  }
+
+  .cons-back,
+  .cons-body a,
+  .cons-contact {
+    transition: none;
+  }
+}

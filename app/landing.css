@@ -210,6 +210,13 @@
   max-width: 46ch;
 }
 
+.home-consulting-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 24px;
+}
+
 .home-contact {
   align-self: flex-start;
   font-family: 'Fraunces', serif;
