@@ -1,0 +1,23 @@
+-- Close access_requests, flagged by Supabase's linter as rls_disabled_in_public.
+-- Alert dated 2026-09-19 against project fbnnicarsnzipzbvszrx.
+--
+-- The table is reachable through PostgREST using nothing but the anon key, which
+-- ships in the browser bundle of andysantamaria.com. That means anyone could
+-- read, edit or delete every row, and the table holds email addresses and
+-- invite state.
+--
+-- Enabling RLS with no policies denies anon and authenticated outright. It is
+-- safe for the app: every caller that touches this table authenticates with
+-- SUPABASE_SERVICE_ROLE_KEY, and the service role bypasses RLS.
+--
+--   app/api/request-access/route.js         service role
+--   app/api/check-invite/route.js           service role
+--   app/admin/page.js                       service role
+--   app/admin/api/access-requests/route.js  service role
+--   app/trips/auth/callback/route.js        service role
+--
+-- Deliberately NOT included: public.brown_glove_waitlist, which is also missing
+-- RLS. Andy asked on 2026-09-22 that Brown Glove be left alone, so that table
+-- keeps its current behaviour and stays flagged by the linter.
+
+alter table public.access_requests enable row level security;
