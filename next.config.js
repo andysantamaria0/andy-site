@@ -3,7 +3,8 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/(.*)',
+        // Pip supplies its own CSP and voice permissions from its upstream app.
+        source: '/((?!pip(?:/|$)).*)',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Frame-Options', value: 'DENY' },
@@ -27,6 +28,11 @@ const nextConfig = {
         ],
       },
     ];
+  },
+  async rewrites() {
+    const origin = process.env.PIP_UPSTREAM_ORIGIN;
+    if (!origin) return [];
+    return [{ source: '/pip/:path*', destination: `${origin}/pip/:path*` }];
   },
   async redirects() {
     return [
