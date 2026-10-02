@@ -32,7 +32,10 @@ const nextConfig = {
   async rewrites() {
     const origin = process.env.PIP_UPSTREAM_ORIGIN;
     if (!origin) return [];
-    return [{ source: '/pip/:path*', destination: `${origin}/pip/:path*` }];
+    return [
+      { source: '/pip', destination: `${origin}/pip` },
+      { source: '/pip/:path*', destination: `${origin}/pip/:path*` },
+    ];
   },
   async redirects() {
     return [
