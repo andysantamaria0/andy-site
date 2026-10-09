@@ -1,0 +1,33 @@
+.v-watch {
+  min-height: 100vh;
+  background: #0b1828;
+  color: #f2eee5;
+  padding: 56px 24px 72px;
+}
+
+.v-watch-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.v-watch a { color: #d0b37c; text-underline-offset: 4px; }
+.v-watch a:hover { color: #f2eee5; }
+.v-watch a:focus-visible, .v-watch video:focus-visible { outline: 2px solid #d0b37c; outline-offset: 5px; }
+.v-watch-back { font-size: 0.875rem; }
+.v-watch-eyebrow { color: #d0b37c; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+.v-watch h1 { color: inherit; font: 500 clamp(2.25rem, 6vw, 3.5rem)/1.12 'Fraunces', Georgia, serif; letter-spacing: -0.025em; }
+.v-watch-intro { margin-top: 12px; color: #b9c2cb; line-height: 1.6; }
+.v-watch figure { width: 100%; margin: 0; }
+.v-watch-player { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; border: 1px solid #506073; border-radius: 4px; }
+.v-watch figcaption { margin-top: 12px; color: #b9c2cb; font-size: 0.8125rem; line-height: 1.6; }
+.v-watch-summary { max-width: 65ch; color: #b9c2cb; line-height: 1.7; }
+.v-watch-more { font-size: 0.9375rem; }
+
+@media (max-width: 600px) {
+  .v-watch { padding: 32px 20px 48px; }
+  .v-watch-inner { gap: 24px; }
+}

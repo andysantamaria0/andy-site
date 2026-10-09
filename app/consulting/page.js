@@ -39,8 +39,15 @@ const STEPS = [
 ];
 
 const TRACK = [
-  { role: 'Head of Product', where: 'Stand, where kids start real businesses', current: true },
-  { role: 'Founder in Residence', where: 'Fractal Tech NYC, an AI engineering accelerator' },
+  {
+    role: 'Interim Head of Product',
+    where: 'Stand, where kids start real businesses',
+  },
+  {
+    role: 'Advisor',
+    where: 'Fractal Tech NYC, an AI engineering accelerator',
+    detail: 'Mentored early-career engineers on product engineering and designed and shipped the products behind the accelerator’s hiring pipeline. Built Job Detective Jr., an automated job aggregator, and The Hiring Spa, an AI matching app that connected engineers with roles based on their work and priorities. Helped place engineers directly with founders outside the traditional interview loop.',
+  },
   { role: 'Product', where: 'Square, payments at scale' },
 ];
 
@@ -91,11 +98,11 @@ export default function Consulting() {
         <section className="cons-section">
           <h2 className="cons-section-title">Track record</h2>
           <ul className="cons-track">
-            {TRACK.map(({ role, where, current }) => (
+            {TRACK.map(({ role, where, detail }) => (
               <li key={where} className="cons-track-row">
                 <span className="cons-track-role">{role}</span>
                 <span className="cons-track-where">{where}</span>
-                {current ? <span className="cons-track-when">now</span> : null}
+                {detail ? <p className="cons-track-detail cons-body">{detail}</p> : null}
               </li>
             ))}
           </ul>

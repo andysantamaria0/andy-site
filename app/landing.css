@@ -86,7 +86,7 @@
   gap: 10px;
 }
 
-/* Clips the settle animation without trapping the caption inside the frame. */
+/* Clips the settle animation. */
 .home-horizon-frame {
   overflow: hidden;
   border: 1px solid var(--border);
@@ -103,15 +103,6 @@
   filter: saturate(0.9);
   animation: home-settle 1400ms cubic-bezier(.2, 0, 0, 1) both;
   animation-delay: 340ms;
-}
-
-.home-horizon figcaption {
-  font-family: 'Special Elite', 'Courier New', monospace;
-  font-size: 0.6875rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  line-height: 1.6;
 }
 
 /* ---- Sections ---- */
@@ -196,6 +187,19 @@
 
 /* ---- Consulting ---- */
 
+.home-walkthrough {
+  align-self: flex-start;
+  margin: -6px 0 18px 52px;
+  font-size: 0.8125rem;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.home-walkthrough:hover {
+  color: var(--text);
+}
+
 .home-consulting {
   gap: 14px;
 }
@@ -233,33 +237,6 @@
   border-bottom-color: var(--accent);
 }
 
-/* ---- Tail link ---- */
-
-.home-more {
-  align-self: flex-start;
-  font-size: 0.8125rem;
-  letter-spacing: 0.04em;
-  color: var(--text-dim);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color 200ms ease, border-color 200ms ease;
-}
-
-.home-more:hover,
-.home-more:focus-visible {
-  color: var(--accent);
-  border-bottom-color: var(--accent-border);
-}
-
-/* ---- Footer ---- */
-
-.home-footer {
-  display: flex;
-  align-items: center;
-  padding-top: 28px;
-  border-top: 1px solid var(--border);
-}
-
 /* ---- Focus ---- */
 
 .home a:focus-visible {
@@ -282,8 +259,7 @@
 .home-masthead,
 .home-intro,
 .home-horizon,
-.home-section,
-.home-footer {
+.home-section {
   animation: home-rise 700ms cubic-bezier(.2, 0, 0, 1) both;
 }
 
@@ -292,7 +268,6 @@
 .home-horizon  { animation-delay: 300ms; }
 .home-section:nth-of-type(1) { animation-delay: 420ms; }
 .home-section:nth-of-type(2) { animation-delay: 500ms; }
-.home-footer   { animation-delay: 580ms; }
 
 @media (max-width: 600px) {
   .home-inner {
@@ -325,7 +300,6 @@
   .home-intro,
   .home-horizon,
   .home-section,
-  .home-footer,
   .home-horizon img {
     animation: none;
   }
@@ -334,7 +308,6 @@
   .home-row-meta,
   .home-row-mark,
   .home-contact,
-  .home-more,
   .home-intro a {
     transition: none;
   }
