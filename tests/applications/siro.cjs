@@ -5,7 +5,7 @@ const fs=require('node:fs');
 
 // Read-only against the live desk. The save interaction is intercepted below.
 (async()=>{
- const {passwordHash}=await import('../../lib/applications/core.mjs');
+ const {passwordHash,packet,hash,blockers}=await import('../../lib/applications/core.mjs');
  const accessFile=process.env.DESK_ACCESS_FILE||'/Users/andrewsantamaria/Library/Application Support/Application Desk/access.txt';
  const password=fs.readFileSync(accessFile,'utf8').split('\n').find(l=>/^Password\s*:/i.test(l))?.replace(/^Password\s*:\s*/i,'').trim();
  if(!password)throw Error('Workspace password is not available in the access file');
@@ -33,7 +33,7 @@ const fs=require('node:fs');
   const j=before.data.jobs.find(j=>j.id==='siro-senior-pm');
   await expect(office).toHaveValue(j.officeCommitment||'');await expect(visa).toHaveValue(j.sponsorship||'');
   await expect(page.locator('details')).not.toHaveAttribute('open','');
-  await page.getByRole('button',{name:'Review application details →'}).click();
+  await page.getByRole('button',{name:'Review complete application →'}).click();
   const dialog=page.getByRole('dialog');await expect(dialog).toBeVisible();
   await expect(dialog.getByText('NYC office: Tuesday–Thursday',{exact:true})).toBeVisible();
   await expect(dialog.getByText('U.S. visa sponsorship',{exact:true})).toBeVisible();
@@ -55,6 +55,28 @@ const fs=require('node:fs');
   expect(saved.officeCommitment).toBe('no');expect(saved.sponsorship).toBe('other');expect(saved.answer).toBe(j.answer);
   await page.unroute('**/api/applications/state');await page.reload();
   await page.locator('button.job').filter({has:page.getByText('Siro',{exact:true})}).click();await expect(office).toHaveValue(j.officeCommitment||'');await expect(visa).toHaveValue(j.sponsorship||'');
+  // Test final approval UX against an intercepted package; never queue a real application.
+  const previewData=structuredClone(before.data),previewJob=previewData.jobs.find(x=>x.id===j.id);
+  previewData.profile.linkedin='https://www.linkedin.com/in/test-candidate';previewData.paused=false;
+  Object.assign(previewJob,{officeCommitment:'yes',sponsorship:'none',schemaHash:'a'.repeat(64),verifiedAt:new Date().toISOString()});
+  const proposed=packet(previewData,previewJob);expect(blockers(previewData,previewJob)).toEqual([]);let approvalIntercepted=false;
+  await page.route('**/api/applications/state',async route=>{
+   if(route.request().method()!=='POST')return route.continue();
+   const input=route.request().postDataJSON();
+   if(input.action==='review')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({packet:proposed,packageHash:hash(proposed),blockers:[],supported:true})});
+   if(input.action==='approve'){
+    expect(input.jobId).toBe(j.id);expect(input.packageHash).toBe(hash(proposed));approvalIntercepted=true;previewJob.status='approved';
+    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({version:before.version,data:previewData})});
+   }
+   throw Error('Unexpected write during simulated approval');
+  });
+  await page.getByRole('button',{name:'Review complete application →'}).click();
+  await expect(page.getByRole('heading',{name:'Final application review'})).toBeVisible();
+  await expect(page.getByRole('dialog').getByText('No visa requirements',{exact:true})).toBeVisible();
+  await page.getByRole('checkbox',{name:'I reviewed the original CV and every answer and authorize this submission.'}).check();
+  await page.getByRole('button',{name:'Approve & submit',exact:true}).click();await expect(page.getByRole('status')).toContainText('Application approved and queued.');expect(approvalIntercepted).toBe(true);
+  await page.unroute('**/api/applications/state');await page.reload();
+  await page.locator('button.job').filter({has:page.getByText('Siro',{exact:true})}).click();
   await page.getByRole('heading',{name:'Application answers',exact:true}).scrollIntoViewIfNeeded();
   await page.screenshot({path:'/private/tmp/pip-film-work/siro-desk-desktop.png'});
   await page.setViewportSize({width:390,height:844});await office.scrollIntoViewIfNeeded();await page.screenshot({path:'/private/tmp/pip-film-work/siro-desk-mobile.png'});
@@ -62,6 +84,6 @@ const fs=require('node:fs');
   const after=await (await ctx.request.get(base+'/api/applications/state')).json();expect(after.version).toBe(before.version);expect(after.data).toEqual(before.data);
   await page.getByRole('button',{name:'Sign out',exact:true}).click();await expect(page.locator('#password')).toBeVisible();expect((await ctx.request.get(base+'/api/applications/state')).status()).toBe(401);
   expect(errors).toEqual([]);
-  console.log('PASS: private desk restored; Siro uses real form fields; intro excluded; original CV bytes verified; save controls tested without persisting; no approval; CSRF; mobile; logout; workspace data unchanged.');
+  console.log('PASS: private desk restored; Siro uses real form fields; intro excluded; original CV bytes verified; save controls tested without persisting; simulated approval without queueing; CSRF; mobile; logout; workspace data unchanged.');
  }finally{await browser?.close();if(server)server.kill('SIGTERM');}
 })().catch(e=>{console.error(e.message);process.exitCode=1});

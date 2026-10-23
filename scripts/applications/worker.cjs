@@ -3,6 +3,12 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
 const {chromium}=require('playwright');
 const ID='browser-company-model-behavior';
 const DEST='https://jobs.ashbyhq.com/The%20Browser%20Company/7225dea4-ae91-46bf-9ecc-8bb7bbeb3914/application';
+const SIRO_ID='siro-senior-pm';
+const SIRO_DEST='https://jobs.ashbyhq.com/siro/89967d63-9647-4d6a-9ef1-8c07e7e0da7b/application';
+const VERSION='2026-10-23-siro-1';
+const OFFICE='I understand that Siro is in-office in NY (Flatiron) on Tues, Wed, and Thurs and can commit to being in-person.';
+const SPONSORSHIP='Do you require visa sponsorship to work in the U.S.?';
+const VISA_CHOICES=['I require H1B sponsorship or transfer','I require another visa (TN, OPT, etc.)','No visa requirements'];
 const canonical=v=>Array.isArray(v)?v.map(canonical):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,canonical(v[k])])):v;
 const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
 async function schema(page){await page.getByRole('button',{name:'Submit Application',exact:true}).waitFor({timeout:30000});const text=(await page.locator('body').innerText()).replace(/\s+/g,' ').trim();const controls=await page.locator('input,textarea,select').evaluateAll(es=>es.filter(e=>e.type!=='hidden'&&e.name!=='g-recaptcha-response').map(e=>({type:e.type,required:e.required,labels:[...(e.labels||[])].map(l=>l.innerText.trim()),options:e.options?[...e.options].map(o=>o.text):[]})));return sha(JSON.stringify({text,controls}));}
@@ -18,28 +24,78 @@ async function fill(page,pdf,p){
  for(const [label,key]of [['Full Name','name'],['Email','email'],['Phone','phone'],['How many years of professional experience do you have?','years'],['Share a link or video to something you’ve built with AI. In 2-3 sentences, tell us why you built it and what you learned.','answer'],['LinkedIn','linkedin'],['Github','github'],['Portfolio','portfolio']]){if(await page.getByLabel(label,{exact:true}).inputValue()!==(p.fields[key]||''))throw Error('Form values differ from the approved package.');}
  const files=await page.getByLabel('Resume',{exact:true}).evaluate(e=>[...e.files].map(f=>({name:f.name,size:f.size})));if(files.length!==1||files[0].name!=='CV_A_Santamaria_A.pdf'||files[0].size!==pdf.length)throw Error('Original CV attachment did not persist.');
 }
-async function main(){const configPath=process.env.APPLICATION_WORKER_CONFIG;if(!configPath)throw Error('Missing worker configuration');const cfg=JSON.parse(fs.readFileSync(configPath,'utf8'));if(cfg.origin!=='https://andysantamaria.com'&&!cfg.test)throw Error('Unexpected workspace origin');
- const api=async(action,extra={})=>{const r=await fetch(cfg.origin+'/api/applications/worker',{method:'POST',headers:{Authorization:'Bearer '+cfg.token,'Content-Type':'application/json'},body:JSON.stringify({action,jobId:ID,...extra})});const d=await r.json();if(!r.ok)throw Error(d.error||'Worker request failed');return d;};
- await api('heartbeat');await api('recover');const r=await fetch(cfg.origin+'/api/applications/worker',{headers:{Authorization:'Bearer '+cfg.token}});if(!r.ok)throw Error('Unable to load queue');const state=await r.json(),j=state.jobs.find(j=>j.id===ID);if(!j||state.paused||['submitted','uncertain','submitting'].includes(j.status))return;
- if(j.status!=='approved'&&j.verifiedAt&&Date.now()-Date.parse(j.verifiedAt)<6*3600000)return;
- const browser=await chromium.launch({channel:'chrome',headless:true});let attempt=null;
- try{const page=await browser.newPage({viewport:{width:1280,height:1000}});await page.goto(DEST,{waitUntil:'domcontentloaded',timeout:45000});const observed=await schema(page);
-  if(j.status!=='approved'){await api('verify',{schemaHash:observed});return;}
-  const claim=await api('claim');if(!claim.claimed)return;attempt=claim.attempt;const p=claim.approval.packet;
-  if(claim.approval.hash!==sha(JSON.stringify(canonical(p)))||p.destination!==DEST||p.jobId!==ID||observed!==p.schemaHash||Date.parse(claim.approval.expiresAt)<Date.now())throw Error('The form or approved package changed. Review again.');
-  const pdfResponse=await fetch(cfg.origin+'/api/applications/resume',{headers:{Authorization:'Bearer '+cfg.token}});if(!pdfResponse.ok)throw Error('Unable to load original CV');const pdf=Buffer.from(await pdfResponse.arrayBuffer());if(sha(pdf)!==p.resume.sha256)throw Error('Original CV checksum mismatch');
-  await fill(page,pdf,p);
+async function fillSiro(page,pdf,p){
+ const f=p.fields;
+ if(!['Yes','No'].includes(f.officeCommitment)||!VISA_CHOICES.includes(f.sponsorship))throw Error('Siro application choices require review.');
+ // Use the actual resume field, never Ashby's optional resume-autofill upload.
+ await page.getByLabel('Resume',{exact:true}).setInputFiles({name:'CV_A_Santamaria_A.pdf',mimeType:'application/pdf',buffer:pdf});
+ for(const [label,key]of [['Name','name'],['Email','email'],['LinkedIn URL','linkedin']])await page.getByLabel(label,{exact:true}).fill(f[key]);
+ const office=page.getByText(OFFICE,{exact:true}).locator('..');
+ await office.getByRole('button',{name:f.officeCommitment,exact:true}).click();
+ const visa=page.getByText(SPONSORSHIP,{exact:true}).locator('..');
+ await visa.getByRole('radio',{name:f.sponsorship,exact:true}).check();
+ for(const [label,key]of [['Name','name'],['Email','email'],['LinkedIn URL','linkedin']])if(await page.getByLabel(label,{exact:true}).inputValue()!==f[key])throw Error('Siro form values differ from the approved package.');
+ if(await office.getByRole('button',{name:f.officeCommitment,exact:true}).getAttribute('aria-pressed')!=='true'||await office.locator('button[aria-pressed="true"]').count()!==1)throw Error('Siro office answer did not persist.');
+ if(!await visa.getByRole('radio',{name:f.sponsorship,exact:true}).isChecked()||await visa.locator('input[type="radio"]:checked').count()!==1)throw Error('Siro sponsorship answer did not persist.');
+ const files=await page.getByLabel('Resume',{exact:true}).evaluate(e=>[...e.files].map(f=>({name:f.name,size:f.size})));
+ if(files.length!==1||files[0].name!=='CV_A_Santamaria_A.pdf'||files[0].size!==pdf.length)throw Error('Original CV attachment did not persist.');
+}
+const ADAPTERS=[{id:ID,destination:DEST,fill},{id:SIRO_ID,destination:SIRO_DEST,fill:fillSiro}];
+function validateApproval(approval,adapter,observed){
+ const p=approval?.packet,expires=Date.parse(approval?.expiresAt);
+ if(!p||approval.hash!==sha(JSON.stringify(canonical(p)))||p.destination!==adapter.destination||p.jobId!==adapter.id||observed!==p.schemaHash||!Number.isFinite(expires)||expires<=Date.now())throw Error('The form or approved package changed. Review again.');
+ return p;
+}
+async function executeApproved({page,adapter,observed,api,loadCV,recordReceipt}){
+ let attempt;
+ try{
+  const claim=await api('claim');if(!claim.claimed)return 'not-claimed';
+  attempt=claim.attempt;if(typeof attempt!=='string'||!attempt)throw Error('Invalid application attempt.');
+  const p=validateApproval(claim.approval,adapter,observed);
+  const pdf=await loadCV();if(sha(pdf)!==p.resume.sha256)throw Error('Original CV checksum mismatch');
+  await adapter.fill(page,pdf,p);
   // A visible challenge needs human participation; never solve or bypass it.
   for(const frame of await page.locator('iframe[title*="challenge"]').all())if(await frame.isVisible())throw Error('CAPTCHA requires your participation.');
   if(await page.locator('input:invalid,textarea:invalid,select:invalid').count())throw Error('An application field requires review.');
+  // The server rechecks approval, expiry, pause state and attempt ownership.
   await api('begin-submit',{attempt});
   await page.getByRole('button',{name:'Submit Application',exact:true}).click();
   await page.getByText(/Thank you for applying|application has been (submitted|received)|application was (submitted|received)/i).first().waitFor({timeout:30000});
   const confirmation=(await page.locator('body').innerText()).slice(0,1500);
-  if(cfg.receiptsDir){fs.mkdirSync(cfg.receiptsDir,{recursive:true,mode:0o700});await page.screenshot({path:path.join(cfg.receiptsDir,attempt+'.png'),fullPage:true});}
-  await api('result',{attempt,status:'submitted',confirmation});console.log('Approved application submitted; receipt recorded.');
- }catch(error){if(attempt){try{await api('result',{attempt,status:'failed',issue:error.message});}catch{console.error('Attempt requires reconciliation; no retry performed.');}}else console.error('Form inspection unavailable; nothing sent.');}
- finally{await browser.close();}
+  // A local screenshot failure must not hide a confirmed employer receipt.
+  if(recordReceipt)try{await recordReceipt(page,attempt);}catch{console.error('Local receipt image unavailable; recording employer confirmation.');}
+  await api('result',{attempt,status:'submitted',confirmation});
+  console.log('Approved application submitted; receipt recorded.');return 'submitted';
+ }catch(error){
+  if(attempt){try{await api('result',{attempt,status:'failed',issue:error.message});}catch{console.error('Attempt requires reconciliation; no retry performed.');}}
+  else console.error('Approved package unavailable; nothing sent.');
+  return 'stopped';
+ }
+}
+async function main(){
+ const configPath=process.env.APPLICATION_WORKER_CONFIG;if(!configPath)throw Error('Missing worker configuration');
+ const cfg=JSON.parse(fs.readFileSync(configPath,'utf8'));if(cfg.origin!=='https://andysantamaria.com'&&!cfg.test)throw Error('Unexpected workspace origin');
+ const api=async(action,extra={})=>{const r=await fetch(cfg.origin+'/api/applications/worker',{method:'POST',headers:{Authorization:'Bearer '+cfg.token,'Content-Type':'application/json'},body:JSON.stringify({action,...extra})});const d=await r.json();if(!r.ok)throw Error(d.error||'Worker request failed');return d;};
+ await api('heartbeat',{version:VERSION});
+ for(const adapter of ADAPTERS)await api('recover',{jobId:adapter.id});
+ const r=await fetch(cfg.origin+'/api/applications/worker',{headers:{Authorization:'Bearer '+cfg.token}});if(!r.ok)throw Error('Unable to load queue');const state=await r.json();
+ if(state.paused)return;
+ const pending=ADAPTERS.filter(a=>{const j=state.jobs.find(j=>j.id===a.id);return j&&j.apply===a.destination&&!['submitted','uncertain','submitting'].includes(j.status)&&(j.status==='approved'||!j.schemaHash||!j.verifiedAt||Date.now()-Date.parse(j.verifiedAt)>=6*3600000);});
+ if(!pending.length)return;
+ const browser=await chromium.launch({channel:'chrome',headless:true});
+ try{for(const adapter of pending){
+  const j=state.jobs.find(j=>j.id===adapter.id),page=await browser.newPage({viewport:{width:1280,height:1000}});
+  try{
+   await page.goto(adapter.destination,{waitUntil:'domcontentloaded',timeout:45000});
+   if(page.url()!==adapter.destination)throw Error('Application destination changed.');
+   const observed=await schema(page),jobApi=(action,extra={})=>api(action,{jobId:adapter.id,...extra});
+   if(j.status!=='approved'){await jobApi('verify',{schemaHash:observed});continue;}
+   await executeApproved({page,adapter,observed,api:jobApi,loadCV:async()=>{
+    const r=await fetch(cfg.origin+'/api/applications/resume',{headers:{Authorization:'Bearer '+cfg.token}});if(!r.ok)throw Error('Unable to load original CV');return Buffer.from(await r.arrayBuffer());
+   },recordReceipt:cfg.receiptsDir?async(page,attempt)=>{fs.mkdirSync(cfg.receiptsDir,{recursive:true,mode:0o700});await page.screenshot({path:path.join(cfg.receiptsDir,attempt+'.png'),fullPage:true});}:null});
+  }catch{console.error('Form inspection unavailable; nothing sent.');}
+  finally{await page.close();}
+ }}finally{await browser.close();}
 }
 if(require.main===module)main().catch(()=>{console.error('Worker unavailable; no new submission attempted.');process.exitCode=1;});
-module.exports={schema,fill};
+module.exports={schema,fill,fillSiro,ADAPTERS,OFFICE,SPONSORSHIP,VISA_CHOICES,validateApproval,executeApproved,VERSION};

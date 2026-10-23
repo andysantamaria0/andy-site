@@ -1,5 +1,5 @@
 import {owner,sameOrigin,json,read,write,body} from '../../../../lib/applications/server';
-import {blockers,packet,hash,cleanProfile,cleanSiroAnswers,SIRO_JOB_ID,invalidate,log} from '../../../../lib/applications/core.mjs';
+import {blockers,packet,hash,cleanProfile,cleanSiroAnswers,SIRO_JOB_ID,supported,invalidate,log} from '../../../../lib/applications/core.mjs';
 export const dynamic='force-dynamic';
 export async function GET(){if(!await owner())return json({error:'Sign in required'},401);try{const row=await read();const worker=await read('worker');return json({...row,worker:worker.data});}catch{return json({error:'Workspace unavailable'},503);}}
 export async function POST(request){
@@ -14,9 +14,9 @@ export async function POST(request){
   if(['approved','submitting','submitted','uncertain'].includes(j.status))throw Error('Application is already approved or attempted.');if(data.paused)throw Error('Resume the queue before approving.');
   const missing=blockers(data,j);if(missing.length)return json({error:missing.join(' ')},422);
   const proposed=packet(data,j);if(input.packageHash!==hash(proposed))throw Error('Application changed. Review it again.');
-  j.approval={hash:hash(proposed),packet:proposed,at:new Date().toISOString(),expiresAt:new Date(Date.now()+86400000).toISOString()};j.status='approved';log(data,`${j.company}: exact application approved for submission.`);
+  j.approval={hash:hash(proposed),packet:proposed,at:new Date().toISOString(),expiresAt:new Date(Date.now()+86400000).toISOString()};j.status='approved';j.issue=null;log(data,`${j.company}: exact application approved for submission.`);
  }else if(input.action==='cancel'){if(j.status!=='approved')throw Error('Only queued approvals can be cancelled.');j.status='draft';j.approval=null;log(data,`${j.company}: queued approval cancelled.`);}
- else if(input.action==='review'){return json({packet:packet(data,j),packageHash:hash(packet(data,j)),blockers:blockers(data,j)});}
+ else if(input.action==='review'){return json({packet:packet(data,j),packageHash:hash(packet(data,j)),blockers:blockers(data,j),supported:supported(j)});}
  else throw Error('Unknown action');
  const version=await write(row);return json({version,data});
  }catch(error){return json({error:error.message==='Unable to save workspace'?'Save failed; please retry.':error.message},400);}

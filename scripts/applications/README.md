@@ -20,7 +20,7 @@ Rotate the session key to invalidate all browser sessions. Rotate the worker key
 
 `scripts/applications/worker.cjs` runs on a signed-in Mac with Node, Google Chrome and Playwright 1.58.2. `APPLICATION_WORKER_CONFIG` points to a mode-0600 JSON file containing `origin`, `token` (worker key), and `receiptsDir`. Install its runtime outside the public site, in a mode-0700 directory. A launchd job invokes it every 60 seconds. The Mac must be awake, connected and signed in; the website/database remain hosted independently.
 
-Only The Browser Company Model Behavior/Product application is currently supported, with New York City location selection. Other opportunities are preparation records, and cannot be approved for automatic execution. The worker inspects the public form, fingerprints its fields, then accepts only a fresh, immutable, user-approved packet. It checks the original PDF hash and field values, records an attempt before clicking Submit, and records employer confirmation afterward. CAS database writes prevent competing claims. Edits invalidate queued approvals; approvals expire after 24 hours. A changed form, CAPTCHA, interrupted attempt or ambiguous receipt stops execution. An uncertain submission is never retried automatically; inspect the employer receipt before manually reconciling it.
+Siro Senior Product Manager and The Browser Company Model Behavior/Product applications are supported. The Browser Company form uses New York City location selection. Other opportunities remain preparation records and cannot be approved for automatic execution. The worker inspects the public form, fingerprints its fields, then accepts only a fresh, immutable, user-approved packet. It checks the original PDF hash and field values, records an attempt before clicking Submit, and records employer confirmation afterward. CAS database writes prevent competing claims. Edits invalidate queued approvals; approvals expire after 24 hours. A changed form, CAPTCHA, interrupted attempt or ambiguous receipt stops execution. An uncertain submission is never retried automatically; inspect the employer receipt before manually reconciling it.
 
 No automatic tailoring, optional demographic answers, outreach, follow-ups, or mailbox monitoring are included. Employer replies go to the email the user approved in the application.
 
@@ -33,6 +33,7 @@ The installed replacement disables the old `com.andysantamaria.job-digest` launc
 ## Validation
 
 - `node --test tests/applications/core.test.mjs`
+- `node tests/applications/siro-adapter.cjs` (all office/visa combinations and the approval-to-confirmation sequence against a local form; zero employer requests)
 - `node tests/applications/adapter.cjs` (Chrome fixture; no employer request or submission)
 - `node tests/applications/browser.cjs` against a running workspace. `DESK_TEST_URL` selects the host; `DESK_TEST_CONFIG` is a private JSON file with `password`. The test requires the original PDF at the owner's Downloads path, checks anonymous rejection, CSRF, original file bytes, incomplete-approval rejection, persistence and logout. It saves the same profile once; run before real approvals exist.
 - `npm run build` (use `-- --webpack` only if an isolated local worktree symlinks node_modules outside its root)
@@ -41,6 +42,8 @@ Production verification must check the exact custom domain, authenticated state 
 
 ### Siro preparation
 
-Siro’s inspected form requests name, email, LinkedIn, the unchanged original CV, NYC Tuesday–Thursday office commitment, and one of three visa-sponsorship choices. Its optional introduction remains a private preparation draft and is excluded from the application packet. Answers are never inferred from the shared profile’s yes/no visa field. Siro has no automatic submission adapter; review cannot approve or queue it.
+Siro’s inspected form requests name, email, LinkedIn, the unchanged original CV, NYC Tuesday–Thursday office commitment, and one of three visa-sponsorship choices. Its optional introduction remains a private preparation draft and is excluded from the application packet. Answers are never inferred from the shared profile’s yes/no visa field. After all answers are saved and the Mac worker has freshly inspected the form, review can approve one exact Siro application. The worker rechecks the form, approval, expiry and unchanged CV before filling and submitting. The UI refreshes queued/submitting status every ten seconds.
 
 Run `node --test tests/applications/core.test.mjs` for packet and approval checks. `node tests/applications/siro.cjs` starts a local production server after `npm run build`; pass a site URL to check a deployed desk. It reads the existing local access file (`DESK_ACCESS_FILE` can override the path), verifies authentication and the original CV, and intercepts its save interaction so no candidate answers are changed.
+
+When changing submission support, deploy the matching site and copy the reviewed `worker.cjs` to the installed Mac runtime. Confirm its heartbeat version and fresh form fingerprint on the custom domain. Keep existing credentials and research schedules unchanged.
