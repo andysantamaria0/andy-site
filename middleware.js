@@ -41,6 +41,19 @@ async function tripsSession(request) {
 
   const { pathname } = request.nextUrl;
 
+  if (pathname.startsWith('/admin/') || pathname === '/admin') {
+    // Existing admin APIs return their own JSON authorization errors.
+    if (pathname.startsWith('/admin/api/')) return supabaseResponse;
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/admin-login';
+      url.search = '';
+      url.searchParams.set('next', pathname);
+      return NextResponse.redirect(url);
+    }
+    return supabaseResponse;
+  }
+
   // If accessing /trips/* without a session, redirect to login — except the
   // public entry points and the app's icon/OG files.
   const isPublic =
@@ -67,5 +80,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/trips/:path*'],
+  matcher: ['/trips/:path*', '/admin/:path*', '/admin-login'],
 };

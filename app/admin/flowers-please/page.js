@@ -8,7 +8,7 @@ const when = value => new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', ti
 const seconds = value => `${Math.floor(value / 60)}m ${Math.round(value % 60)}s`;
 
 export default async function ViewingActivity() {
-  if (!await isOwner()) redirect('/trips/login');
+  if (!await isOwner()) redirect('/admin-login?next=%2Fadmin%2Fflowers-please');
   const data = await report();
   const sessions = data.sessions.filter(s => !s.test), unlocks = data.unlocks.filter(s => !s.test);
   return <main className="fp-activity">

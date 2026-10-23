@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 import SignOutButton from '../trips/SignOutButton';
 
 export const metadata = {
-  title: 'Admin — Vialoure',
+  title: 'Site admin — Andrew Santamaria',
   description: 'Super admin dashboard',
 };
 
@@ -15,7 +15,7 @@ export default async function AdminLayout({ children }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) redirect('/trips/login');
+  if (!user) redirect('/admin-login');
 
   // Use service role to bypass RLS for role check
   const serviceClient = createServiceClient(
@@ -28,13 +28,13 @@ export default async function AdminLayout({ children }) {
     .eq('email', user.email)
     .single();
 
-  if (profile?.role !== 'super_admin') redirect('/trips');
+  if (profile?.role !== 'super_admin') redirect('/admin-login?error=not-authorized');
 
   return (
     <div className="v-layout">
       <header className="v-header">
         <div className="v-header-brand">
-          <Link href="/admin" className="v-header-logo">Vialoure</Link>
+          <Link href="/admin" className="v-header-logo">Andy Santamaria</Link>
           <span className="v-header-tagline">Admin</span>
         </div>
         <div className="v-header-user">
@@ -43,7 +43,7 @@ export default async function AdminLayout({ children }) {
             <img src={profile.avatar_url} alt="" className="v-header-avatar" />
           )}
           <span className="v-header-name">{profile?.display_name || user.email}</span>
-          <SignOutButton />
+          <SignOutButton returnTo="/admin-login" />
         </div>
       </header>
       {children}

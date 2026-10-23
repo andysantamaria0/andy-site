@@ -27,7 +27,7 @@ const nextConfig = {
           },
         ],
       },
-      ...['/flowers-pls/:path*', '/flowers-please/:path*', '/api/flowers-watch/:path*', '/admin/flowers-please/:path*'].map(source => ({
+      ...['/flowers-pls/:path*', '/flowers-please/:path*', '/api/flowers-watch/:path*', '/admin/:path*', '/admin-login', '/api/admin-auth/:path*'].map(source => ({
         source,
         headers: [
           { key: 'X-Robots-Tag', value: 'noindex, nofollow, nosnippet' },
