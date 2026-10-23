@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { hashPassword, checkPassword, signToken, readToken, validRecipient, mergeRanges, summarizePlayback } from '../../lib/flowers-watch/core.mjs';
+import { hashPassword, checkPassword, signToken, readToken, validRecipient, mergeRanges, summarizePlayback, recordedDuration } from '../../lib/flowers-watch/core.mjs';
 
 test('passwords are salted and checked without storing plaintext', async () => {
   const a = await hashPassword('example-pass'), b = await hashPassword('example-pass');
@@ -38,4 +38,11 @@ test('watch coverage merges repeats but does not count skipped footage', () => {
   const complete = summarizePlayback({ playedRanges: [[0, 70], [60, 95]], activeSeconds: 100 }, 100);
   assert.equal(complete.uniqueSeconds, 95); assert.equal(complete.completed, true);
   assert.equal(summarizePlayback(null, 100).started, false);
+});
+
+test('publishing a longer edit does not reduce historical completion percentages', () => {
+  const oldEvent = { duration: 100, playedRanges: [[0, 95]] };
+  assert.equal(summarizePlayback(oldEvent, recordedDuration(oldEvent, {}, 150)).percent, 95);
+  assert.equal(recordedDuration(null, { duration: 100 }, 150), 100);
+  assert.equal(recordedDuration(null, {}, 150), 150);
 });

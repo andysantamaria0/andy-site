@@ -15,6 +15,7 @@ const read = async key => { const { data, error } = await store.download('flower
  const browser = await chromium.launch({ channel: 'chrome', headless: true });
  const result = { base, errors: [], events: [], checks: [] };
  try {
+  const activeConfig = await read('access.json');
   const context = await browser.newContext({ viewport: { width: 1440, height: 1080 } });
   const page = await context.newPage(); page.setDefaultTimeout(20000);
   page.on('pageerror', e => result.errors.push(e.message));
@@ -51,7 +52,7 @@ const read = async key => { const { data, error } = await store.download('flower
   assert.match(await page.locator('video').getAttribute('controlslist'), /nodownload/);
   assert.equal((await page.content()).includes(process.env.SUPABASE_SERVICE_ROLE_KEY), false);
   const videoInfo = await page.evaluate(() => { const v = document.querySelector('video'); return { width: v.videoWidth, height: v.videoHeight, duration: v.duration, captions: v.textTracks[0]?.cues?.length }; });
-  assert.equal(videoInfo.width, 1920); assert.ok(videoInfo.duration > 250 && videoInfo.duration < 275); assert.ok(videoInfo.captions > 50);
+  assert.equal(videoInfo.width, 1920); assert.ok(Math.abs(videoInfo.duration - activeConfig.media.duration) < 0.2); assert.ok(videoInfo.captions > 50);
   await page.evaluate(async () => { const v = document.querySelector('video'); v.muted = true; await v.play(); });
   await page.waitForTimeout(3500);
   await page.getByRole('button', { name: 'Architecture', exact: true }).click();
@@ -88,9 +89,9 @@ const read = async key => { const { data, error } = await store.download('flower
   const { data: link, error: linkError } = await service.auth.admin.generateLink({ type: 'magiclink', email });
   if (linkError) throw linkError;
   const anon = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
-  const privateAttempt = await anon.storage.from('private-showcases').download('flowers-please/media/narration-2/film.mp4');
+  const privateAttempt = await anon.storage.from('private-showcases').download('flowers-please/' + activeConfig.media.video);
   assert.ok(privateAttempt.error && !privateAttempt.data);
-  const publicAttempt = await fetch(process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/private-showcases/flowers-please/media/narration-2/film.mp4');
+  const publicAttempt = await fetch(process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/private-showcases/flowers-please/' + activeConfig.media.video);
   assert.ok(publicAttempt.status >= 400);
   result.checks.push('Private storage rejects anonymous and public-object access', 'Signed HttpOnly cookie', 'No service credential in rendered page');
   const { data: login, error: loginError } = await anon.auth.verifyOtp({ token_hash: link.properties.hashed_token, type: 'magiclink' });

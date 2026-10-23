@@ -38,13 +38,14 @@ if (previousError) {
   const detail = typeof response?.json === 'function' ? await response.clone().json().catch(() => ({})) : previousError;
   if (!(detail.code === 'NoSuchKey' || detail.message === 'Object not found' || String(previousError.statusCode) === '404')) throw previousError;
 }
-for (const item of input.recipients) {
+for (const item of input.recipients || []) {
   if (!item.label || !item.password || item.password.length > 256) throw new Error('Invalid recipient input');
   const existing = config.recipients.find(r => r.label === item.label);
   const replacement = { id: existing?.id || randomUUID(), label: item.label, active: true, test: !!item.test, version: (existing?.version || 0) + 1, ...await hashPassword(item.password.trim()) };
   if (existing) Object.assign(existing, replacement); else config.recipients.push(replacement);
 }
-const revision = 'narration-2';
+const revision = input.mediaRevision || 'narration-2';
+if (!/^[a-z0-9-]{1,60}$/.test(revision)) throw new Error('Invalid media revision');
 for (const [source, name, type] of [['pip-flowers-please-final.mp4', 'film.mp4', 'video/mp4'], ['pip-flowers-please-final.vtt', 'captions.vtt', 'text/vtt'], ['poster-final.jpg', 'poster.jpg', 'image/jpeg']]) {
   const data = await fs.readFile(path.join(mediaDirectory, source));
   const { error } = await store.upload(`${prefix}/media/${revision}/${name}`, data, { contentType: type, cacheControl: '0', upsert: true });
@@ -52,7 +53,13 @@ for (const [source, name, type] of [['pip-flowers-please-final.mp4', 'film.mp4',
   console.log(`Uploaded private ${name} (${data.length} bytes)`);
 }
 const timeline = JSON.parse(await fs.readFile(path.join(mediaDirectory, 'timeline-final.json'), 'utf8'));
-config.media = { video: `media/${revision}/film.mp4`, captions: `media/${revision}/captions.vtt`, poster: `media/${revision}/poster.jpg`, duration: timeline.reduce((sum, s) => sum + s.duration, 0), chapters: timeline.map(({ id, title, start }) => ({ id, title, start })) };
+// Media-only updates preserve any access changes made while the upload ran.
+if (!(input.recipients || []).length && previous) {
+  const { data: latest, error: latestError } = await store.download(`${prefix}/access.json`);
+  if (latestError) throw latestError;
+  Object.assign(config, JSON.parse(await latest.text()));
+}
+config.media = { revision, video: `media/${revision}/film.mp4`, captions: `media/${revision}/captions.vtt`, poster: `media/${revision}/poster.jpg`, duration: timeline.reduce((sum, s) => sum + s.duration, 0), chapters: timeline.map(({ id, title, start }) => ({ id, title, start })) };
 const { error } = await store.upload(`${prefix}/access.json`, JSON.stringify(config), { contentType: 'application/json', cacheControl: '0', upsert: true });
 if (error) throw error;
 console.log(JSON.stringify({ privateBucket: bucket, recipients: config.recipients.map(({ label, active, test }) => ({ label, active, test })), duration: config.media.duration }));

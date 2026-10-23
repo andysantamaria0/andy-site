@@ -14,7 +14,7 @@ export async function POST(request) {
     const body = JSON.parse(raw);
     const view = readToken(body.token, access.config.secret, 'view');
     if (!view || view.recipientId !== access.recipient.id || view.version !== access.recipient.version || !/^[a-f0-9-]{36}$/i.test(view.id)) return NextResponse.json({ error: 'Invalid viewing session' }, { status: 403, headers: PRIVATE_HEADERS });
-    const event = sanitizeEvent(body, access.config.media.duration);
+    const event = sanitizeEvent(body, Number.isFinite(view.duration) ? view.duration : access.config.media.duration);
     if (!event) return NextResponse.json({ error: 'Invalid event' }, { status: 400, headers: PRIVATE_HEADERS });
     await writeJSON(`events/${view.id}/${String(event.seq).padStart(6, '0')}.json`, event);
     return NextResponse.json({ ok: true }, { headers: PRIVATE_HEADERS });
