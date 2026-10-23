@@ -5,7 +5,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 ROOT=Path(__file__).resolve().parent
 def request(config,body=None):
-    req=urllib.request.Request(config['origin']+'/api/applications/worker',data=json.dumps(body).encode() if body else None,headers={'Authorization':'Bearer '+config['token'],'Content-Type':'application/json'})
+    req=urllib.request.Request(config['origin']+'/api/applications/worker',data=json.dumps(body).encode() if body else None,headers={'Authorization':'Bearer '+config['token'],'Content-Type':'application/json','User-Agent':'ApplicationDeskResearch/1.0 (+https://andysantamaria.com/applications)'})
     with urllib.request.urlopen(req,timeout=45) as r:return json.loads(r.read())
 def main():
     config=json.loads(Path(os.environ['APPLICATION_WORKER_CONFIG']).read_text())
