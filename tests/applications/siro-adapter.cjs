@@ -1,11 +1,12 @@
 const {chromium,expect}=require('@playwright/test');
 const assert=require('node:assert/strict');
 const {createHash}=require('node:crypto');
-const {fillSiro,schema,ADAPTERS,OFFICE,SPONSORSHIP,VISA_CHOICES,executeApproved}=require('../../scripts/applications/worker.cjs');
+const fs=require('node:fs');
+const {fillSiro,schema,ADAPTERS,OFFICE,SPONSORSHIP,VISA_CHOICES,executeApproved,submissionOutcome,captureEvidence}=require('../../scripts/applications/worker.cjs');
 const adapter=ADAPTERS.find(a=>a.id==='siro-senior-pm');
 const sha=b=>createHash('sha256').update(b).digest('hex');
 const pdf=Buffer.from('fixture PDF bytes; never sent to an employer');
-function fixture(){return `<form onsubmit="event.preventDefault();window.sent=(window.sent||0)+1;window.received={name:document.querySelector('#name').value,email:document.querySelector('#email').value,linkedin:document.querySelector('#linkedin').value,office:document.querySelector('button[aria-pressed=true]').textContent,visa:document.querySelector('input[type=radio]:checked').value};document.body.innerHTML='<h1>Thank you for applying</h1>'">
+function fixture(){return `<form onsubmit="event.preventDefault();window.sent=(window.sent||0)+1;window.received={name:document.querySelector('#name').value,email:document.querySelector('#email').value,linkedin:document.querySelector('#linkedin').value,office:document.querySelector('button[aria-pressed=true]').textContent,visa:document.querySelector('input[type=radio]:checked').value};document.body.innerHTML='<div class=ashby-application-form-success-container><h1>Success</h1><p>Your application was successfully submitted. We will contact you if there are next steps.</p></div>'">
  <label>Autofill from resume<input type="file" id="autofill"></label>
  <label for="name">Name</label><input id="name" required>
  <label for="email">Email</label><input id="email" type="email" required>
@@ -27,14 +28,15 @@ function fixture(){return `<form onsubmit="event.preventDefault();window.sent=(w
    assert.equal(await page.locator('input[type=radio]:checked').inputValue(),sponsorship);
    assert.equal(await page.evaluate(()=>window.sent||0),0);
   }
-  const run=async({change=()=>{},claimed=true,denyBegin=false,receiptFails=false}={})=>{
+  const run=async({change=()=>{},claimed=true,denyBegin=false,receiptFails=false,noReceipt=false}={})=>{
    await page.setContent(fixture());await page.evaluate(()=>{window.sent=0;window.received=null});
+   if(noReceipt)await page.locator('form').evaluate(form=>form.onsubmit=e=>{e.preventDefault();window.sent=(window.sent||0)+1;document.body.innerHTML='<p>Pending employer response</p>';});
    const observed=await schema(page),p={jobId:adapter.id,destination:adapter.destination,schemaHash:observed,resume:{sha256:sha(pdf)},fields:{...fields}};
    const approval={packet:p,hash:hash(p),expiresAt:new Date(Date.now()+60000).toISOString()};let cv=pdf,cvLoads=0;
    change(approval);if(approval.corruptCV)cv=Buffer.from('changed');
-   const calls=[],api=async(action,data={})=>{calls.push({action,...data});if(action==='claim')return {claimed,attempt:'fixture-attempt',approval};if(action==='begin-submit'&&denyBegin)throw Error('Submission not authorized');return {ok:true};};
-   const status=await executeApproved({page,adapter,observed,api,loadCV:async()=>{cvLoads++;return cv;},recordReceipt:receiptFails?async()=>{throw Error('Disk unavailable')}:null});
-   return {status,calls,cvLoads,sent:await page.evaluate(()=>window.sent||0),received:await page.evaluate(()=>window.received)};
+   let evidence;const calls=[],api=async(action,data={})=>{calls.push({action,...data});if(action==='claim')return {claimed,attempt:'fixture-attempt',approval};if(action==='begin-submit'&&denyBegin)throw Error('Submission not authorized');return {ok:true};};
+   const status=await executeApproved({page,adapter,observed,api,loadCV:async()=>{cvLoads++;return cv;},recordReceipt:receiptFails?async()=>{throw Error('Disk unavailable')}:null,confirmationTimeout:noReceipt?100:30000,recordFailure:async(page,attempt,error)=>{evidence={attempt,text:await page.locator('body').innerText(),error:error.message};}});
+   return {status,calls,cvLoads,evidence,sent:await page.evaluate(()=>window.sent||0),received:await page.evaluate(()=>window.received)};
   };
   let r=await run();assert.equal(r.status,'submitted');assert.equal(r.sent,1);assert.deepEqual(r.calls.map(c=>c.action),['claim','begin-submit','result']);assert.equal(r.calls.at(-1).status,'submitted');assert.deepEqual(r.received,{name:fields.name,email:fields.email,linkedin:fields.linkedin,office:fields.officeCommitment,visa:fields.sponsorship});
   r=await run({claimed:false});assert.equal(r.sent,0);assert.equal(r.cvLoads,0);assert.deepEqual(r.calls.map(c=>c.action),['claim']);
@@ -44,7 +46,21 @@ function fixture(){return `<form onsubmit="event.preventDefault();window.sent=(w
   r=await run({change:a=>{a.corruptCV=true}});assert.equal(r.sent,0);assert(!r.calls.some(c=>c.action==='begin-submit'));assert.match(r.calls.at(-1).issue,/checksum/);
   r=await run({denyBegin:true});assert.equal(r.sent,0);assert.equal(r.calls.at(-1).status,'failed');
   r=await run({receiptFails:true});assert.equal(r.status,'submitted');assert.equal(r.sent,1);assert.equal(r.calls.at(-1).status,'submitted');
+  r=await run({noReceipt:true});assert.equal(r.sent,1);assert.equal(r.status,'stopped');assert.equal(r.calls.at(-1).status,'failed');assert.match(r.calls.at(-1).issue,/will not submit again automatically/);assert(!r.calls.at(-1).issue.includes('Timeout'));assert.equal(r.evidence.text,'Pending employer response');
+  const evidenceDir=fs.mkdtempSync('/private/tmp/siro-receipt-test-');await captureEvidence(page,evidenceDir,'fixture','needs-review',Error('Test error'));
+  assert.equal(JSON.parse(fs.readFileSync(evidenceDir+'/fixture-needs-review.json')).text,'Pending employer response');assert.equal(fs.statSync(evidenceDir+'/fixture-needs-review.json').mode&0o777,0o600);assert.equal(fs.statSync(evidenceDir+'/fixture-needs-review.png').mode&0o777,0o600);
+  // Custom organization success copy must work without guessed phrases.
+  await page.setContent('<div class="ashby-application-form-success-container" role="status">Success — we look forward to meeting you.</div>');
+  assert.equal((await submissionOutcome(page,200)).kind,'submitted');
+  await page.setContent('<div class="ashby-application-form-failure-container" role="alert">We could not submit your application.</div>');
+  assert.equal((await submissionOutcome(page,200)).kind,'rejected');
+  await page.setContent('<div class="ashby-application-form-blocked-application-container">Application limit reached.</div>');
+  assert.equal((await submissionOutcome(page,200)).kind,'rejected');
+  await page.setContent('<p>Thank you for applying is an example, not a receipt.</p>');
+  await assert.rejects(()=>submissionOutcome(page,100));
+  await page.setContent('<div hidden class="ashby-application-form-success-container">Success</div><div class="ashby-application-form-failure-container">We could not submit your application.</div>');
+  assert.equal((await submissionOutcome(page,200)).kind,'rejected');
   assert.equal(requests,0);
-  console.log('PASS: all six Siro choice combinations; exact approved fields and original CV; no autofill; approval claim and final authorization; expired/tampered/changed-form/CV rejection; one submit and employer receipt; no network requests.');
+  console.log('PASS: all six Siro choice combinations; exact approved fields and original CV; no autofill; approval claim and final authorization; expired/tampered/changed-form/CV rejection; one submit and employer receipt; actual Ashby default/custom success and rejected states; no network requests.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1});

@@ -47,3 +47,7 @@ Siro’s inspected form requests name, email, LinkedIn, the unchanged original C
 Run `node --test tests/applications/core.test.mjs` for packet and approval checks. `node tests/applications/siro.cjs` starts a local production server after `npm run build`; pass a site URL to check a deployed desk. It reads the existing local access file (`DESK_ACCESS_FILE` can override the path), verifies authentication and the original CV, and intercepts its save interaction so no candidate answers are changed.
 
 When changing submission support, deploy the matching site and copy the reviewed `worker.cjs` to the installed Mac runtime. Confirm its heartbeat version and fresh form fingerprint on the custom domain. Keep existing credentials and research schedules unchanged.
+
+### Employer confirmation and diagnostics
+
+Ashby’s default confirmation is “Your application was successfully submitted,” and employers can customize that text. Use its dedicated success/failure/blocked outcome containers instead of guessing a sentence. On success and on a failed confirmation check, save the page text and screenshot under the private receipts directory with mode-0600 files. A missing confirmation after Submit remains uncertain and is never retried automatically. Fixing the detector does not retroactively prove that an earlier application was received.

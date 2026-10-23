@@ -5,7 +5,7 @@ const ID='browser-company-model-behavior';
 const DEST='https://jobs.ashbyhq.com/The%20Browser%20Company/7225dea4-ae91-46bf-9ecc-8bb7bbeb3914/application';
 const SIRO_ID='siro-senior-pm';
 const SIRO_DEST='https://jobs.ashbyhq.com/siro/89967d63-9647-4d6a-9ef1-8c07e7e0da7b/application';
-const VERSION='2026-10-23-siro-1';
+const VERSION='2026-10-23-siro-2';
 const OFFICE='I understand that Siro is in-office in NY (Flatiron) on Tues, Wed, and Thurs and can commit to being in-person.';
 const SPONSORSHIP='Do you require visa sponsorship to work in the U.S.?';
 const VISA_CHOICES=['I require H1B sponsorship or transfer','I require another visa (TN, OPT, etc.)','No visa requirements'];
@@ -46,8 +46,27 @@ function validateApproval(approval,adapter,observed){
  if(!p||approval.hash!==sha(JSON.stringify(canonical(p)))||p.destination!==adapter.destination||p.jobId!==adapter.id||observed!==p.schemaHash||!Number.isFinite(expires)||expires<=Date.now())throw Error('The form or approved package changed. Review again.');
  return p;
 }
-async function executeApproved({page,adapter,observed,api,loadCV,recordReceipt}){
- let attempt;
+async function submissionOutcome(page,timeout=30000){
+ // Ashby renders a dedicated outcome container. Its success text is customizable;
+ // the default includes "was successfully submitted", not "was submitted".
+ const handle=await page.waitForFunction(()=>{
+  for(const [selector,kind]of [['.ashby-application-form-success-container','submitted'],['.ashby-application-form-failure-container','rejected'],['.ashby-application-form-blocked-application-container','rejected']]){
+   const el=document.querySelector(selector);
+   if(el&&el.getClientRects().length&&getComputedStyle(el).visibility!=='hidden')return {kind,text:el.innerText.trim()};
+  }
+  return false;
+ },null,{timeout});
+ const result=await handle.jsonValue();await handle.dispose();return result;
+}
+async function captureEvidence(page,dir,attempt,phase,error){
+ fs.mkdirSync(dir,{recursive:true,mode:0o700});
+ const base=path.join(dir,attempt+'-'+phase);
+ const record={at:new Date().toISOString(),phase,url:page.url(),text:(await page.locator('body').innerText()).slice(0,30000),error:error?.message||null};
+ fs.writeFileSync(base+'.json',JSON.stringify(record,null,2),{mode:0o600});
+ await page.screenshot({path:base+'.png',fullPage:true});fs.chmodSync(base+'.png',0o600);
+}
+async function executeApproved({page,adapter,observed,api,loadCV,recordReceipt,recordFailure,confirmationTimeout=30000}){
+ let attempt,submitStarted=false;
  try{
   const claim=await api('claim');if(!claim.claimed)return 'not-claimed';
   attempt=claim.attempt;if(typeof attempt!=='string'||!attempt)throw Error('Invalid application attempt.');
@@ -58,16 +77,19 @@ async function executeApproved({page,adapter,observed,api,loadCV,recordReceipt})
   for(const frame of await page.locator('iframe[title*="challenge"]').all())if(await frame.isVisible())throw Error('CAPTCHA requires your participation.');
   if(await page.locator('input:invalid,textarea:invalid,select:invalid').count())throw Error('An application field requires review.');
   // The server rechecks approval, expiry, pause state and attempt ownership.
-  await api('begin-submit',{attempt});
+  await api('begin-submit',{attempt});submitStarted=true;
   await page.getByRole('button',{name:'Submit Application',exact:true}).click();
-  await page.getByText(/Thank you for applying|application has been (submitted|received)|application was (submitted|received)/i).first().waitFor({timeout:30000});
-  const confirmation=(await page.locator('body').innerText()).slice(0,1500);
+  const outcome=await submissionOutcome(page,confirmationTimeout);
+  if(outcome.kind!=='submitted')throw Error('The employer form reported: '+outcome.text.slice(0,1000));
+  const confirmation=outcome.text.slice(0,1500);
   // A local screenshot failure must not hide a confirmed employer receipt.
   if(recordReceipt)try{await recordReceipt(page,attempt);}catch{console.error('Local receipt image unavailable; recording employer confirmation.');}
   await api('result',{attempt,status:'submitted',confirmation});
   console.log('Approved application submitted; receipt recorded.');return 'submitted';
  }catch(error){
-  if(attempt){try{await api('result',{attempt,status:'failed',issue:error.message});}catch{console.error('Attempt requires reconciliation; no retry performed.');}}
+  if(attempt&&recordFailure)try{await recordFailure(page,attempt,error);}catch{console.error('Could not save the browser evidence; manual verification is required.');}
+  const issue=submitStarted?(error.message.startsWith('The employer form reported:')?error.message:'Submit was clicked, but the employer confirmation could not be captured. Check the saved browser evidence and your email before any retry. The agent will not submit again automatically.'):(error.message.startsWith('locator.')?'The agent could not complete the employer form. Review the saved browser evidence before trying again.':error.message);
+  if(attempt){try{await api('result',{attempt,status:'failed',issue});}catch{console.error('Attempt requires reconciliation; no retry performed.');}}
   else console.error('Approved package unavailable; nothing sent.');
   return 'stopped';
  }
@@ -92,10 +114,10 @@ async function main(){
    if(j.status!=='approved'){await jobApi('verify',{schemaHash:observed});continue;}
    await executeApproved({page,adapter,observed,api:jobApi,loadCV:async()=>{
     const r=await fetch(cfg.origin+'/api/applications/resume',{headers:{Authorization:'Bearer '+cfg.token}});if(!r.ok)throw Error('Unable to load original CV');return Buffer.from(await r.arrayBuffer());
-   },recordReceipt:cfg.receiptsDir?async(page,attempt)=>{fs.mkdirSync(cfg.receiptsDir,{recursive:true,mode:0o700});await page.screenshot({path:path.join(cfg.receiptsDir,attempt+'.png'),fullPage:true});}:null});
+   },recordReceipt:cfg.receiptsDir?(page,attempt)=>captureEvidence(page,cfg.receiptsDir,attempt,'confirmed'):null,recordFailure:cfg.receiptsDir?(page,attempt,error)=>captureEvidence(page,cfg.receiptsDir,attempt,'needs-review',error):null});
   }catch{console.error('Form inspection unavailable; nothing sent.');}
   finally{await page.close();}
  }}finally{await browser.close();}
 }
 if(require.main===module)main().catch(()=>{console.error('Worker unavailable; no new submission attempted.');process.exitCode=1;});
-module.exports={schema,fill,fillSiro,ADAPTERS,OFFICE,SPONSORSHIP,VISA_CHOICES,validateApproval,executeApproved,VERSION};
+module.exports={schema,fill,fillSiro,ADAPTERS,OFFICE,SPONSORSHIP,VISA_CHOICES,validateApproval,executeApproved,submissionOutcome,captureEvidence,VERSION};
