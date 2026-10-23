@@ -47,6 +47,7 @@ export default async function AdminPage() {
 
   return (
     <div className="v-admin-page">
+      <p style={{ marginBottom: 28 }}><a href="/admin/flowers-please" style={{ color: '#d0b37c' }}>Pip for Flowers Please — private video activity →</a></p>
       <div className="v-admin-page-header">
         <h1 className="v-admin-page-title">Access Requests</h1>
         <p className="v-admin-page-subtitle">

@@ -27,6 +27,14 @@ const nextConfig = {
           },
         ],
       },
+      ...['/flowers-please/:path*', '/api/flowers-watch/:path*', '/admin/flowers-please/:path*'].map(source => ({
+        source,
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, nosnippet' },
+          { key: 'Cache-Control', value: 'private, no-store, max-age=0' },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+        ],
+      })),
     ];
   },
   async rewrites() {
