@@ -1,6 +1,7 @@
 .vercel
 .env.local
 .env*.local
+node_modules
 node_modules/
 .next/
 .DS_Store

@@ -35,6 +35,8 @@ const nextConfig = {
           { key: 'Referrer-Policy', value: 'no-referrer' },
         ],
       })),
+      {source: '/applications/:path*', headers: [{key: 'Cache-Control', value: 'private, no-store'}, {key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive'}, {key: 'Referrer-Policy', value: 'no-referrer'}]},
+      {source: '/api/applications/:path*', headers: [{key: 'Cache-Control', value: 'private, no-store'}, {key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive'}, {key: 'Referrer-Policy', value: 'no-referrer'}]},
     ];
   },
   async rewrites() {
