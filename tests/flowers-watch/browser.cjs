@@ -47,6 +47,7 @@ const read = async key => { const { data, error } = await store.download('flower
   assert.equal(cookie.httpOnly, true); assert.equal(cookie.sameSite, 'Strict');
   if (base.startsWith('https:')) assert.equal(cookie.secure, true);
   await page.waitForFunction(() => document.querySelector('video').readyState >= 2);
+  await page.waitForFunction(() => document.querySelector('video').textTracks[0]?.cues?.length > 50);
   assert.equal(await page.locator('a[download]').count(), 0);
   assert.equal(await page.locator('a[href$=".mp4"],a[href$=".vtt"],a[href$=".txt"]').count(), 0);
   assert.match(await page.locator('video').getAttribute('controlslist'), /nodownload/);
