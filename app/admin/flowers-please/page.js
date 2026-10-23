@@ -12,7 +12,7 @@ export default async function ViewingActivity() {
   const data = await report();
   const sessions = data.sessions.filter(s => !s.test), unlocks = data.unlocks.filter(s => !s.test);
   return <main className="fp-activity">
-    <header><p className="fp-activity-eyebrow">Private screening</p><h1>Pip viewing activity</h1><p><a href="/flowers-please/watch">Open the screening</a> · <a href="/admin/flowers-please">Refresh report</a></p></header>
+    <header><p className="fp-activity-eyebrow">Private screening</p><h1>Pip viewing activity</h1><p><a href="/flowers-pls/watch">Open the screening</a> · <a href="/admin/flowers-please">Refresh report</a></p></header>
     <p>Activity is attributed to the password used. A shared password does not verify someone’s identity. Times below are New York time.</p>
     <section className="fp-activity-cards" aria-label="Recipients">{data.recipients.map(recipient => {
       const views = sessions.filter(s => s.recipientId === recipient.id);

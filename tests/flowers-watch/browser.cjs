@@ -24,7 +24,7 @@ const read = async key => { const { data, error } = await store.download('flower
    if (response.url() === base + '/api/flowers-watch/session' && response.status() === 200) view = await response.json();
    if (response.url() === base + '/api/flowers-watch/events') result.events.push(response.status());
   });
-  const gate = await page.goto(base + '/flowers-please/watch');
+  const gate = await page.goto(base + '/flowers-pls/watch');
   assert.equal(gate.status(), 200);
   assert.match(gate.headers()['cache-control'], /no-store/);
   assert.match(gate.headers()['x-robots-tag'], /noindex/);
@@ -76,7 +76,7 @@ const read = async key => { const { data, error } = await store.download('flower
   assert.ok([303, 307, 308].includes(viewerAdmin.status()));
   result.checks.push('Gate hides player', 'Media requires password', 'Cross-origin unlock rejected', 'Wrong password rejected', 'Playback and captions work', 'Download links absent', 'Seeking does not count as watching', 'Viewer cannot access activity report');
   const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, storageState: await context.storageState(), isMobile: true, hasTouch: true });
-  const phone = await mobile.newPage(); await phone.goto(base + '/flowers-please/watch');
+  const phone = await mobile.newPage(); await phone.goto(base + '/flowers-pls/watch');
   await phone.getByRole('heading', { name: 'Pip for Flowers Please' }).waitFor();
   assert.equal(await phone.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   await phone.screenshot({ path: out + '/private-watch-mobile.png', fullPage: true });

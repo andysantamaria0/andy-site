@@ -27,7 +27,7 @@ const nextConfig = {
           },
         ],
       },
-      ...['/flowers-please/:path*', '/api/flowers-watch/:path*', '/admin/flowers-please/:path*'].map(source => ({
+      ...['/flowers-pls/:path*', '/flowers-please/:path*', '/api/flowers-watch/:path*', '/admin/flowers-please/:path*'].map(source => ({
         source,
         headers: [
           { key: 'X-Robots-Tag', value: 'noindex, nofollow, nosnippet' },
@@ -49,6 +49,7 @@ const nextConfig = {
     return [
       // /product was the old consulting page; it lives at /consulting now.
       { source: '/product', destination: '/consulting', permanent: true },
+      { source: '/flowers-please/watch', destination: '/flowers-pls/watch', permanent: true },
     ];
   },
 };
