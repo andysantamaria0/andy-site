@@ -1,1 +1,4 @@
 artifacts/
+
+# Local application-preparation utility; not a public portfolio route
+tools/application-desk/

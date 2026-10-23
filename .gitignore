@@ -9,3 +9,7 @@ consulting-projects/
 
 # Claude Code worktrees
 .claude/worktrees/
+
+# Private application research and candidate documents
+/artifacts/application-desk/
+/docs/superpowers/specs/2026-10-21-application-desk-design.md
