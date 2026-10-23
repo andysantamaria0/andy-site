@@ -51,3 +51,9 @@ When changing submission support, deploy the matching site and copy the reviewed
 ### Employer confirmation and diagnostics
 
 Ashby’s default confirmation is “Your application was successfully submitted,” and employers can customize that text. Use its dedicated success/failure/blocked outcome containers instead of guessing a sentence. On success and on a failed confirmation check, save the page text and screenshot under the private receipts directory with mode-0600 files. A missing confirmation after Submit remains uncertain and is never retried automatically. Fixing the detector does not retroactively prove that an earlier application was received.
+
+### Knit form audit
+
+Knit’s Greenhouse form is represented by `lib/applications/knit.mjs` and a public question snapshot in `tests/applications/fixtures/knit-form.json`. Its seven required Yes/No questions are distinct from the role description, which says four PM years while the form asks five relevant years. Preferred name, website and the sponsorship explanation are optional; there is no cover-letter or general essay field. The generic private introduction is excluded from the packet. Profile contact information is reused, and proposed answers carry their evidence notes. Consent and broad experience claims are never inferred by the field mapping. This is preparation support; Greenhouse automatic submission is not enabled.
+
+Run `node --test tests/applications/knit.test.mjs` and, after building, `node tests/applications/knit-browser.cjs [site URL]`. The browser check intercepts its save request and verifies no workspace data changed. The research runner now includes the verified CV timeline and instructions to distinguish literal application fields from job qualifications.

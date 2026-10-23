@@ -1,5 +1,6 @@
 import {owner,sameOrigin,json,read,write,body} from '../../../../lib/applications/server';
 import {blockers,packet,hash,cleanProfile,cleanSiroAnswers,SIRO_JOB_ID,supported,invalidate,log} from '../../../../lib/applications/core.mjs';
+import {isKnit,cleanKnitAnswers} from '../../../../lib/applications/knit.mjs';
 export const dynamic='force-dynamic';
 export async function GET(){if(!await owner())return json({error:'Sign in required'},401);try{const row=await read();const worker=await read('worker');return json({...row,worker:worker.data});}catch{return json({error:'Workspace unavailable'},503);}}
 export async function POST(request){
@@ -9,7 +10,7 @@ export async function POST(request){
  if(input.action==='profile'){if(data.jobs.some(j=>j.status==='submitting'))throw Error('Wait for the active submission to finish.');data.profile=cleanProfile(input.profile);data.jobs.forEach(j=>invalidate(data,j));log(data,'Profile updated.');}
  else if(input.action==='pause'){data.paused=!!input.paused;log(data,data.paused?'Submission queue paused.':'Submission queue resumed.');}
  else if(!j)throw Error('Opportunity not found');
- else if(input.action==='edit'){if(['submitting','submitted','uncertain'].includes(j.status))throw Error('This application is locked after an attempt.');if(typeof input.answer!=='string'||input.answer.length>10000)throw Error('Invalid answer');if(j.id===SIRO_JOB_ID)Object.assign(j,cleanSiroAnswers(input));invalidate(data,j);j.answer=input.answer;j.lessonConfirmed=input.lessonConfirmed===true;j.historyConfirmed=input.historyConfirmed===true;j.notes=String(input.notes||'').slice(0,5000);log(data,`${j.company}: draft saved.`);}
+ else if(input.action==='edit'){if(['submitting','submitted','uncertain'].includes(j.status))throw Error('This application is locked after an attempt.');if(typeof input.answer!=='string'||input.answer.length>10000)throw Error('Invalid answer');if(j.id===SIRO_JOB_ID)Object.assign(j,cleanSiroAnswers(input));if(isKnit(j)){const answers=cleanKnitAnswers(input.knitAnswers);for(const key of Object.keys(j.knitAnswerSources||{}))if(answers[key]!==j.knitAnswers?.[key])delete j.knitAnswerSources[key];j.knitAnswers=answers;}invalidate(data,j);j.answer=input.answer;j.lessonConfirmed=input.lessonConfirmed===true;j.historyConfirmed=input.historyConfirmed===true;j.notes=String(input.notes||'').slice(0,5000);log(data,`${j.company}: draft saved.`);}
  else if(input.action==='approve'){
   if(['approved','submitting','submitted','uncertain'].includes(j.status))throw Error('Application is already approved or attempted.');if(data.paused)throw Error('Resume the queue before approving.');
   const missing=blockers(data,j);if(missing.length)return json({error:missing.join(' ')},422);

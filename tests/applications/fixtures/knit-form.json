@@ -1,0 +1,304 @@
+{
+  "url": "https://job-boards.greenhouse.io/knit/jobs/4234448009",
+  "checkedAt": "2026-10-23",
+  "questions": [
+    {
+      "description": null,
+      "label": "First Name",
+      "required": true,
+      "fields": [
+        {
+          "name": "first_name",
+          "type": "input_text",
+          "values": []
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Last Name",
+      "required": true,
+      "fields": [
+        {
+          "name": "last_name",
+          "type": "input_text",
+          "values": []
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Preferred First Name",
+      "required": false,
+      "fields": [
+        {
+          "name": "preferred_name",
+          "type": "input_text",
+          "values": []
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Email",
+      "required": true,
+      "fields": [
+        {
+          "name": "email",
+          "type": "input_text",
+          "values": []
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Phone",
+      "required": true,
+      "fields": [
+        {
+          "name": "phone",
+          "type": "input_text",
+          "values": []
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Resume/CV",
+      "required": true,
+      "fields": [
+        {
+          "name": "resume",
+          "type": "input_file",
+          "values": []
+        },
+        {
+          "name": "resume_text",
+          "type": "textarea",
+          "values": []
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "LinkedIn Profile",
+      "required": true,
+      "fields": [
+        {
+          "name": "question_5977312009",
+          "type": "input_text",
+          "values": []
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Website",
+      "required": false,
+      "fields": [
+        {
+          "name": "question_5977313009",
+          "type": "input_text",
+          "values": []
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Are you able to work a minimum of 3 days a week in our Midtown Manhattan office?",
+      "required": true,
+      "fields": [
+        {
+          "name": "question_5977314009",
+          "type": "multi_value_single_select",
+          "values": [
+            {
+              "label": "Yes",
+              "value": 1
+            },
+            {
+              "label": "No",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Are you legally authorized to work in the US?",
+      "required": true,
+      "fields": [
+        {
+          "name": "question_5977315009",
+          "type": "multi_value_single_select",
+          "values": [
+            {
+              "label": "Yes",
+              "value": 1
+            },
+            {
+              "label": "No",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Would you require visa sponsorship now or in the future?",
+      "required": true,
+      "fields": [
+        {
+          "name": "question_5977316009",
+          "type": "multi_value_single_select",
+          "values": [
+            {
+              "label": "Yes",
+              "value": 1
+            },
+            {
+              "label": "No",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Can you share a bit more about your current work authorization status and the type of sponsorship you would require, now or in the future?",
+      "required": false,
+      "fields": [
+        {
+          "name": "question_5977317009",
+          "type": "input_text",
+          "values": []
+        }
+      ]
+    },
+    {
+      "description": "<p>Knit's Privacy Policy may be found <a href=\"https://goknit.com/privacy-policy\" target=\"_blank\" rel=\"noopener\">here</a>.&nbsp;</p>",
+      "label": "Do you consent to Knit's Privacy Policy? ",
+      "required": true,
+      "fields": [
+        {
+          "name": "question_5977318009",
+          "type": "multi_value_single_select",
+          "values": [
+            {
+              "label": "Yes",
+              "value": 1
+            },
+            {
+              "label": "No",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Do you have experience with LLM/agent systems, evals, and prompt tooling; RAG, embeddings, vector dbs.",
+      "required": true,
+      "fields": [
+        {
+          "name": "question_5977319009",
+          "type": "multi_value_single_select",
+          "values": [
+            {
+              "label": "Yes",
+              "value": 1
+            },
+            {
+              "label": "No",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Have you worked at an early-stage startup \u2014 Seed, Series A or Series B?",
+      "required": true,
+      "fields": [
+        {
+          "name": "question_5977854009",
+          "type": "multi_value_single_select",
+          "values": [
+            {
+              "label": "Yes",
+              "value": 1
+            },
+            {
+              "label": "No",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Do you have a minimum of 5 years relevant experience?",
+      "required": true,
+      "fields": [
+        {
+          "name": "question_5977855009",
+          "type": "multi_value_single_select",
+          "values": [
+            {
+              "label": "Yes",
+              "value": 1
+            },
+            {
+              "label": "No",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "location_questions": [
+    {
+      "description": null,
+      "label": "Longitude",
+      "required": true,
+      "fields": [
+        {
+          "name": "longitude",
+          "type": "input_hidden",
+          "values": []
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Latitude",
+      "required": true,
+      "fields": [
+        {
+          "name": "latitude",
+          "type": "input_hidden",
+          "values": []
+        }
+      ]
+    },
+    {
+      "description": null,
+      "label": "Location",
+      "required": true,
+      "fields": [
+        {
+          "name": "location",
+          "type": "input_text",
+          "values": []
+        }
+      ]
+    }
+  ]
+}
