@@ -1,0 +1,6 @@
+node_modules/
+*.local.js
+private/
+*.png
+*-brief.txt
+application-desk-pilot.json

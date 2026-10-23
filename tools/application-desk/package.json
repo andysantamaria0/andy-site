@@ -1,0 +1,11 @@
+{
+  "name": "application-desk-pilot",
+  "private": true,
+  "scripts": {
+    "start": "node server.cjs",
+    "test": "node pilot.test.cjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2"
+  }
+}
