@@ -1,0 +1,4 @@
+import {owner,worker,read,db,json,privateHeaders} from '../../../../lib/applications/server';
+import {hash} from '../../../../lib/applications/core.mjs';
+export const dynamic='force-dynamic';
+export async function GET(request){if(!await owner()&&!worker(request))return json({error:'Sign in required'},401);try{const row=await read();const resume=row.data.resume;const {data,error}=await db().storage.from('application-desk-private').download(resume.path);if(error)throw error;const bytes=Buffer.from(await data.arrayBuffer());if(hash(bytes)!==resume.sha256)throw Error('CV integrity check failed');return new Response(bytes,{headers:{...privateHeaders,'Content-Type':'application/pdf','Content-Disposition':'inline; filename="CV_A_Santamaria_A.pdf"','X-Content-Type-Options':'nosniff'}});}catch{return json({error:'Original CV unavailable'},503);}}
