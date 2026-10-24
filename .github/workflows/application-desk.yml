@@ -16,7 +16,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps chrome
+      - run: google-chrome --version || npx playwright install --with-deps chrome
       - run: node --test tests/applications/core.test.mjs tests/applications/workflow.test.mjs tests/applications/knit.test.mjs
       - run: node tests/applications/engine-browser.mjs
       # All employer requests in these tests are intercepted. Production credentials are unnecessary.
