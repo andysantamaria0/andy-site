@@ -1,0 +1,124 @@
+{
+  "version": 2,
+  "engine": "applications-2.0.0",
+  "platform": "ashby",
+  "destination": "https://jobs.ashbyhq.com/siro/89967d63-9647-4d6a-9ef1-8c07e7e0da7b/application",
+  "fields": [
+    {
+      "id": "_systemfield_name",
+      "label": "Name",
+      "type": "text",
+      "required": true,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "_systemfield_name",
+        "controlId": "_systemfield_name"
+      }
+    },
+    {
+      "id": "_systemfield_email",
+      "label": "Email",
+      "type": "email",
+      "required": true,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "_systemfield_email",
+        "controlId": "_systemfield_email"
+      }
+    },
+    {
+      "id": "9aef7b2e-a141-4fe6-b9e0-cee983f20c3d",
+      "label": "LinkedIn URL",
+      "type": "text",
+      "required": true,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "9aef7b2e-a141-4fe6-b9e0-cee983f20c3d",
+        "controlId": "9aef7b2e-a141-4fe6-b9e0-cee983f20c3d"
+      }
+    },
+    {
+      "id": "_systemfield_resume",
+      "label": "Resume",
+      "type": "file",
+      "required": true,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "_systemfield_resume",
+        "controlId": "_systemfield_resume"
+      },
+      "document": "resume"
+    },
+    {
+      "id": "de307a10-c94d-4deb-a92e-b440415bfbfe",
+      "label": "I understand that Siro is in-office in NY (Flatiron) on Tues, Wed, and Thurs and can commit to being in-person.",
+      "type": "choice",
+      "required": true,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Yes"
+        },
+        {
+          "value": "no",
+          "label": "No"
+        }
+      ],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "de307a10-c94d-4deb-a92e-b440415bfbfe",
+        "controlId": ""
+      }
+    },
+    {
+      "id": "b5f5cf57-10ee-454e-999f-cf8af4f216e5",
+      "label": "Do you require visa sponsorship to work in the U.S.?",
+      "type": "radio",
+      "required": true,
+      "options": [
+        {
+          "value": "af6fda33-d7df-47d6-805c-bd6d82cbeed6_b5f5cf57-10ee-454e-999f-cf8af4f216e5-labeled-radio-0",
+          "label": "I require H1B sponsorship or transfer"
+        },
+        {
+          "value": "af6fda33-d7df-47d6-805c-bd6d82cbeed6_b5f5cf57-10ee-454e-999f-cf8af4f216e5-labeled-radio-1",
+          "label": "I require another visa (TN, OPT, etc.)"
+        },
+        {
+          "value": "af6fda33-d7df-47d6-805c-bd6d82cbeed6_b5f5cf57-10ee-454e-999f-cf8af4f216e5-labeled-radio-2",
+          "label": "No visa requirements"
+        }
+      ],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "b5f5cf57-10ee-454e-999f-cf8af4f216e5",
+        "controlId": "af6fda33-d7df-47d6-805c-bd6d82cbeed6_b5f5cf57-10ee-454e-999f-cf8af4f216e5-labeled-radio-0"
+      }
+    }
+  ],
+  "notices": [],
+  "unsupported": [],
+  "checkedAt": "2026-10-23T23:57:37.091Z"
+}

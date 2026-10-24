@@ -1,0 +1,354 @@
+{
+  "version": 2,
+  "engine": "applications-2.0.0",
+  "platform": "ashby",
+  "destination": "https://jobs.ashbyhq.com/The%20Browser%20Company/7225dea4-ae91-46bf-9ecc-8bb7bbeb3914/application",
+  "fields": [
+    {
+      "id": "_systemfield_resume",
+      "label": "Resume",
+      "type": "file",
+      "required": true,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "_systemfield_resume",
+        "controlId": "_systemfield_resume"
+      },
+      "document": "resume"
+    },
+    {
+      "id": "_systemfield_name",
+      "label": "Full Name",
+      "type": "text",
+      "required": true,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "_systemfield_name",
+        "controlId": "_systemfield_name"
+      }
+    },
+    {
+      "id": "135cd5ea-7fc5-48e3-a25a-4f90aa8c8423",
+      "label": "Pronouns",
+      "type": "text",
+      "required": false,
+      "options": [],
+      "maxLength": null,
+      "description": "We'd love to know your pronouns so we use what you prefer!",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "135cd5ea-7fc5-48e3-a25a-4f90aa8c8423",
+        "controlId": "135cd5ea-7fc5-48e3-a25a-4f90aa8c8423"
+      },
+      "omit": true
+    },
+    {
+      "id": "_systemfield_email",
+      "label": "Email",
+      "type": "email",
+      "required": true,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "_systemfield_email",
+        "controlId": "_systemfield_email"
+      }
+    },
+    {
+      "id": "b870720e-25de-4954-9463-a0b56470db61",
+      "label": "Phone",
+      "type": "tel",
+      "required": true,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "b870720e-25de-4954-9463-a0b56470db61",
+        "controlId": "b870720e-25de-4954-9463-a0b56470db61"
+      }
+    },
+    {
+      "id": "009781b8-d594-4795-bab1-234a91ad777f",
+      "label": "Current Company",
+      "type": "text",
+      "required": false,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "009781b8-d594-4795-bab1-234a91ad777f",
+        "controlId": "009781b8-d594-4795-bab1-234a91ad777f"
+      }
+    },
+    {
+      "id": "e6784d77-8a54-44d2-9ad9-df1a36d2bac0",
+      "label": "How many years of professional experience do you have?",
+      "type": "number",
+      "required": true,
+      "options": [],
+      "maxLength": null,
+      "description": "Please do not include internships, co-ops, or academic experience.",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "e6784d77-8a54-44d2-9ad9-df1a36d2bac0",
+        "controlId": "e6784d77-8a54-44d2-9ad9-df1a36d2bac0"
+      }
+    },
+    {
+      "id": "959e67f3-7569-4988-b995-ecee4dc89492",
+      "label": "Share a link or video to something you\u2019ve built with AI. In 2-3 sentences, tell us why you built it and what you learned.",
+      "type": "textarea",
+      "required": true,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "959e67f3-7569-4988-b995-ecee4dc89492",
+        "controlId": "959e67f3-7569-4988-b995-ecee4dc89492"
+      }
+    },
+    {
+      "id": "2d9ed8c3-9a51-48d3-8f02-6faff36eb63b",
+      "label": "LinkedIn",
+      "type": "text",
+      "required": false,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "2d9ed8c3-9a51-48d3-8f02-6faff36eb63b",
+        "controlId": "2d9ed8c3-9a51-48d3-8f02-6faff36eb63b"
+      }
+    },
+    {
+      "id": "2bcfad9b-410b-41c8-8c66-71e921d9829f",
+      "label": "Github",
+      "type": "text",
+      "required": false,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "2bcfad9b-410b-41c8-8c66-71e921d9829f",
+        "controlId": "2bcfad9b-410b-41c8-8c66-71e921d9829f"
+      }
+    },
+    {
+      "id": "24610bfe-868a-461c-aa9c-4a43531c763e",
+      "label": "Twitter",
+      "type": "text",
+      "required": false,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "24610bfe-868a-461c-aa9c-4a43531c763e",
+        "controlId": "24610bfe-868a-461c-aa9c-4a43531c763e"
+      }
+    },
+    {
+      "id": "1da2ffcb-0499-433b-8014-11bf6015bf32",
+      "label": "Portfolio",
+      "type": "text",
+      "required": false,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "1da2ffcb-0499-433b-8014-11bf6015bf32",
+        "controlId": "1da2ffcb-0499-433b-8014-11bf6015bf32"
+      }
+    },
+    {
+      "id": "98a0fd80-3631-4e0f-b603-88ef36425580",
+      "label": "Other",
+      "type": "text",
+      "required": false,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "98a0fd80-3631-4e0f-b603-88ef36425580",
+        "controlId": "98a0fd80-3631-4e0f-b603-88ef36425580"
+      }
+    },
+    {
+      "id": "_systemfield_location",
+      "label": "Location",
+      "type": "location",
+      "required": true,
+      "options": [],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "_systemfield_location",
+        "controlId": ""
+      }
+    },
+    {
+      "id": "3096b610-273f-45f5-9991-7f41f329236d",
+      "label": "Do you require any visas or work authorizations to work for BCNY in the location you are applying to?",
+      "type": "choice",
+      "required": true,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Yes"
+        },
+        {
+          "value": "no",
+          "label": "No"
+        }
+      ],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "3096b610-273f-45f5-9991-7f41f329236d",
+        "controlId": ""
+      }
+    },
+    {
+      "id": "_systemfield_eeoc_gender",
+      "label": "Gender",
+      "type": "radio",
+      "required": false,
+      "options": [
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_gender-labeled-radio-0",
+          "label": "Male"
+        },
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_gender-labeled-radio-1",
+          "label": "Female"
+        },
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_gender-labeled-radio-2",
+          "label": "Decline to self-identify"
+        }
+      ],
+      "maxLength": null,
+      "description": "Input gender",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "_systemfield_eeoc_gender",
+        "controlId": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_gender-labeled-radio-0"
+      },
+      "omit": true
+    },
+    {
+      "id": "_systemfield_eeoc_race",
+      "label": "Race",
+      "type": "radio",
+      "required": false,
+      "options": [
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_race-labeled-radio-0",
+          "label": "Hispanic or Latino"
+        },
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_race-labeled-radio-1",
+          "label": "White (Not Hispanic or Latino)"
+        },
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_race-labeled-radio-2",
+          "label": "Black or African American (Not Hispanic or Latino)"
+        },
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_race-labeled-radio-3",
+          "label": "Native Hawaiian or Other Pacific Islander (Not Hispanic or Latino)"
+        },
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_race-labeled-radio-4",
+          "label": "Asian (Not Hispanic or Latino)"
+        },
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_race-labeled-radio-5",
+          "label": "American Indian or Alaska Native (Not Hispanic or Latino)"
+        },
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_race-labeled-radio-6",
+          "label": "Two or More Races (Not Hispanic or Latino)"
+        },
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_race-labeled-radio-7",
+          "label": "Decline to self-identify"
+        }
+      ],
+      "maxLength": null,
+      "description": "Hispanic or Latino - A person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin regardless of race. White (Not Hispanic or Latino) - A person having origins in any of the original peoples of Europe, the Middle East, or North Africa. Black or African American (Not Hispanic or Latino) - A person having origins in any of the Black racial groups of Africa. Native Hawaiian or Other Pacific Islander (Not Hispanic or Latino) - A person having origins in any of the peoples of Hawaii, Guam, Samoa, or other Pacific Islands. Asian (Not Hispanic or Latino) - A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian Subcontinent, including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam. American Indian or Alaska Native (Not Hispanic or Latino) - A person having origins in any of the original peoples of North and South America (including Central America), and who maintain tribal affiliation or community attachment. Two or More Races (Not Hispanic or Latino) - All persons who identify with more than one of the above five races.",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "_systemfield_eeoc_race",
+        "controlId": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_race-labeled-radio-0"
+      },
+      "omit": true
+    },
+    {
+      "id": "_systemfield_eeoc_veteran_status",
+      "label": "Veteran Status",
+      "type": "radio",
+      "required": false,
+      "options": [
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_veteran_status-labeled-radio-0",
+          "label": "I identify as one or more of the classifications of protected veteran listed above"
+        },
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_veteran_status-labeled-radio-1",
+          "label": "I am not a protected veteran"
+        },
+        {
+          "value": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_veteran_status-labeled-radio-2",
+          "label": "I decline to self-identify for protected veteran status"
+        }
+      ],
+      "maxLength": null,
+      "description": "",
+      "links": [],
+      "locator": {
+        "kind": "ashby",
+        "id": "_systemfield_eeoc_veteran_status",
+        "controlId": "1ae4a22d-d2af-45a4-b122-f6cc1b970d7d__systemfield_eeoc_veteran_status-labeled-radio-0"
+      },
+      "omit": true
+    }
+  ],
+  "notices": [],
+  "unsupported": [],
+  "checkedAt": "2026-10-24T00:00:09.983Z"
+}
