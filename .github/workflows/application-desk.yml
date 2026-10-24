@@ -1,10 +1,11 @@
 name: Application Desk regression checks
 on:
+  workflow_dispatch:
   pull_request:
-    paths: ['lib/applications/**', 'scripts/applications/**', 'app/api/applications/**', 'app/applications/**', 'tests/applications/**', 'package*.json']
+    paths: ['lib/applications/**', 'scripts/applications/**', 'app/api/applications/**', 'app/applications/**', 'tests/applications/**', 'package*.json', '.github/workflows/application-desk.yml']
   push:
     branches: [main, codex/pip-private-watch]
-    paths: ['lib/applications/**', 'scripts/applications/**', 'app/api/applications/**', 'app/applications/**', 'tests/applications/**', 'package*.json']
+    paths: ['lib/applications/**', 'scripts/applications/**', 'app/api/applications/**', 'app/applications/**', 'tests/applications/**', 'package*.json', '.github/workflows/application-desk.yml']
 jobs:
   applications:
     runs-on: ubuntu-latest
