@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 import {createRequire} from 'node:module';
 import {inspect,fillApproved,outcome} from '../../scripts/applications/browser.mjs';
 import {execute,flushOutbox,atomicJSON} from '../../scripts/applications/worker-v2.mjs';
@@ -72,7 +74,7 @@ try {
   console.log(`PASS ${name}/${mode}: ${result.status}; ${posts} submit request(s)`);await context.close();
  }
  // A successful click followed by a lost API response must never click Submit again.
- const dir=await fs.mkdtemp('/private/tmp/application-outbox-test-'),file=dir+'/evidence.json';await atomicJSON(file,{text:'Verified receipt'});
+ const dir=await fs.mkdtemp(join(tmpdir(),'application-outbox-test-')),file=dir+'/evidence.json';await atomicJSON(file,{text:'Verified receipt'});
  const outbox=dir+'/outbox';await atomicJSON(outbox+'/attempt.json',{jobId:'fixture',attempt:'attempt',status:'submitted',receipt:{kind:'success'},files:{json:file},recorded:false});
  let results=0,uploads=0;
  const api=async()=>{results++;if(results===1)throw Error('Lost network response');return {ok:true,recorded:true};},upload=async()=>{uploads++;return {evidence:'attempts/attempt'};};
